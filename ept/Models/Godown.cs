@@ -18,6 +18,8 @@ namespace ept.Models
         public Godown()
         {
             this.Sales = new HashSet<Sale>();
+            this.MaterialInventories = new HashSet<MaterialInventory>();
+            this.MaterialInventories1 = new HashSet<MaterialInventory>();
         }
     
         public short GodownId { get; set; }
@@ -26,5 +28,9 @@ namespace ept.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sales { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MaterialInventory> MaterialInventories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MaterialInventory> MaterialInventories1 { get; set; }
     }
 }
