@@ -1,0 +1,79 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 60px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>{{PageTitle}}</b>
+        <span style="float:right"><b>Date -</b> {{TodaysDate}}</span>
+    </div>
+    <br />
+    <div ng-if="ShowSpinnerStatus" class="loader"></div>
+    <div class="card-body">
+        <form name="addMaterialInventoryDashboardForm">
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
+                    <select select2 id="ddlItemCategory" name="ddlItemCategory" ng-model="ItemCategoryId"
+                            ng-change="GetMaterialsByCategoryId()" class="form-control"
+                            ng-options="item.ItemCategoryId as item.ItemCategoryName for item in ItemCatogoryList" required>
+                        <option value="">--Select Category --</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
+                    <select select2 id="ddlMaterial" name="ddMaterial" ng-model="MaterialId"
+                            class="form-control"
+                            ng-options="item.MaterialId as item.DisplayName for item in MaterialList" required>
+                        <option value="">--Select Material -- </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
+                    <select select2 id="ddlGodown" name="ddGodown" ng-model="GodownId"
+                            class="form-control"
+                            ng-options="item.GodownId as item.GodownName for item in GodownData" required>
+                        <option value="">--Select Godown -- </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <button type="button" class="btn btn-secondary btn-sm" ng-click="search()"><span data-feather="search"></span>Search</button>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-12 nopadding">
+                    <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav ui-grid-selection
+                         class="myGrid" style="height:300px"></div>
+                    <div class="nodatatxt" data-ng-if="gridOptions.data.length==0">No data found</div>
+                </div>
+            </div>
+            <br />
+  
+        </form>
+    </div>
+</div>
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX " />
+</head>
+<body>
+</body>
+<script type="text/javascript">
+    feather.replace();
+    var gearPage = document.getElementById('GearPage');
+    if (null != gearPage) {
+        gearPage.parentNode.removeChild(gearPage);
+        document.title = "Error";
+    }
+</script>
+</html>

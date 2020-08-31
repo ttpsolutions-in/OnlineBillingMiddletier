@@ -1,0 +1,765 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FAEAB656-8EA4-4BA7-9BD4-CFD4743522CD}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>eptView</RootNamespace>
+    <AssemblyName>eptView</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="index.html" />
+    <Content Include="vapp\app.js" />
+    <Content Include="vapp\controllers\EditBillController.js" />
+    <Content Include="vapp\controllers\homeController.js" />
+    <Content Include="vapp\controllers\indexController.js" />
+    <Content Include="vapp\controllers\ItemCategoryDashboardController.js" />
+    <Content Include="vapp\controllers\loginController.js" />
+    <Content Include="vapp\controllers\ManageGodown.js" />
+    <Content Include="vapp\controllers\ManageRetailsController.js" />
+    <Content Include="vapp\controllers\ManageWholeSaleController.js" />
+    <Content Include="vapp\controllers\ManageWholeSaleController_bakcup.js" />
+    <Content Include="vapp\controllers\MaterialInventoryConstroller.js" />
+    <Content Include="vapp\controllers\MaterialInventoryDashboard.js" />
+    <Content Include="vapp\controllers\MaterialsController.js" />
+    <Content Include="vapp\controllers\nextController.js" />
+    <Content Include="vapp\controllers\RegisterController.js" />
+    <Content Include="vapp\controllers\SupplierRetailerController.js" />
+    <Content Include="vapp\controllers\WholeSaleDashboardController.js" />
+    <Content Include="vapp\services\AuthData.js" />
+    <Content Include="vapp\services\CommonService.js" />
+    <Content Include="vapp\services\DigestService.js" />
+    <Content Include="vapp\services\EtradersService.js" />
+    <Content Include="vapp\services\ExceptionHandler.js" />
+    <Content Include="vapp\services\GlobalVariableService.js" />
+    <Content Include="vapp\services\InterceptorService.js" />
+    <Content Include="vapp\services\loginService.js" />
+    <Content Include="vapp\services\PrintService.js" />
+    <Content Include="vAsset\Content\bootstrap-theme.css" />
+    <Content Include="vAsset\Content\bootstrap-theme.min.css" />
+    <Content Include="vAsset\Content\bootstrap.css" />
+    <Content Include="vAsset\Content\bootstrap.min.css" />
+    <Content Include="vAsset\Content\ProjectStyle.css" />
+    <Content Include="vAsset\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="vAsset\Scripts\angular-animate.js" />
+    <Content Include="vAsset\Scripts\angular-local-storage.min.js" />
+    <Content Include="vAsset\Scripts\angular-resource.js" />
+    <Content Include="vAsset\Scripts\angular-route.js" />
+    <Content Include="vAsset\Scripts\angular-sanitize.js" />
+    <Content Include="vAsset\Scripts\angular.js" />
+    <Content Include="vAsset\Scripts\bootstrap.js" />
+    <Content Include="vAsset\Scripts\bootstrap.min.js" />
+    <None Include="vAsset\Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="vAsset\Scripts\jquery-1.9.1.js" />
+    <Content Include="vAsset\Scripts\jquery-1.9.1.min.js" />
+    <Content Include="vContent\bootstrap.css" />
+    <Content Include="vContent\bootstrap.min.css" />
+    <Content Include="vContent\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="vContent\images\document-pdf-icon16-2.png" />
+    <Content Include="vContent\images\document-pdf-icon16.png" />
+    <Content Include="vContent\images\document-pdf-icon24-2.png" />
+    <Content Include="vContent\images\document-pdf-icon24.png" />
+    <Content Include="vContent\images\insite-logo.jpg" />
+    <Content Include="vContent\images\logo.png" />
+    <Content Include="vContent\images\Varroc_Q1_Press_Release.jpg" />
+    <Content Include="vContent\paging.min.js" />
+    <Content Include="vContent\plugins\bootstrap4\.babelrc.js" />
+    <Content Include="vContent\plugins\bootstrap4\assets\brand\bootstrap-outline.svg" />
+    <Content Include="vContent\plugins\bootstrap4\assets\brand\bootstrap-punchout.svg" />
+    <Content Include="vContent\plugins\bootstrap4\assets\brand\bootstrap-social-logo.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\brand\bootstrap-social.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\brand\bootstrap-solid.svg" />
+    <Content Include="vContent\plugins\bootstrap4\assets\css\docs.min.css" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\bootstrap-stack.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\bootstrap-themes.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\android-chrome-192x192.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\android-chrome-512x512.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\apple-touch-icon.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\browserconfig.xml" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\favicon-16x16.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\favicon-32x32.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\mstile-144x144.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\mstile-150x150.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\mstile-310x150.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\mstile-310x310.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\mstile-70x70.png" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\safari-pinned-tab.svg" />
+    <Content Include="vContent\plugins\bootstrap4\assets\js\docs.min.js" />
+    <Content Include="vContent\plugins\bootstrap4\assets\js\src\application.js" />
+    <Content Include="vContent\plugins\bootstrap4\assets\js\src\ie-emulation-modes-warning.js" />
+    <Content Include="vContent\plugins\bootstrap4\assets\js\src\pwa.js" />
+    <Content Include="vContent\plugins\bootstrap4\assets\js\vendor\anchor.min.js" />
+    <Content Include="vContent\plugins\bootstrap4\assets\js\vendor\clipboard.min.js" />
+    <Content Include="vContent\plugins\bootstrap4\assets\js\vendor\holder.min.js" />
+    <Content Include="vContent\plugins\bootstrap4\assets\js\vendor\jquery-slim.min.js" />
+    <Content Include="vContent\plugins\bootstrap4\assets\js\vendor\popper.min.js" />
+    <Content Include="vContent\plugins\bootstrap4\build\change-version.js" />
+    <Content Include="vContent\plugins\bootstrap4\build\generate-sri.js" />
+    <Content Include="vContent\plugins\bootstrap4\build\lint-vars.js" />
+    <Content Include="vContent\plugins\bootstrap4\build\postcss.config.js" />
+    <Content Include="vContent\plugins\bootstrap4\build\rollup.config.js" />
+    <Content Include="vContent\plugins\bootstrap4\build\saucelabs-unit-test.js" />
+    <Content Include="vContent\plugins\bootstrap4\build\vnu-jar.js" />
+    <Content Include="vContent\plugins\bootstrap4\build\workbox.js" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap-grid.css" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap-grid.min.css" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap-reboot.css" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap-reboot.min.css" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap.css" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap.min.css" />
+    <Content Include="vContent\plugins\bootstrap4\dist\js\bootstrap.bundle.js" />
+    <Content Include="vContent\plugins\bootstrap4\dist\js\bootstrap.bundle.min.js" />
+    <Content Include="vContent\plugins\bootstrap4\dist\js\bootstrap.js" />
+    <Content Include="vContent\plugins\bootstrap4\dist\js\bootstrap.min.js" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\album\album.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\album\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\blog\blog.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\blog\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\carousel\carousel.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\carousel\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\checkout\form-validation.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\checkout\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\cover\cover.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\cover\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\dashboard\dashboard.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\dashboard\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\floating-labels\floating-labels.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\floating-labels\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\grid\grid.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\grid\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\jumbotron\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\jumbotron\jumbotron.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\navbar-bottom\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\navbar-fixed\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\navbar-fixed\navbar-top-fixed.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\navbar-static\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\navbar-static\navbar-top.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\navbars\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\navbars\navbar.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\offcanvas\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\offcanvas\offcanvas.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\offcanvas\offcanvas.js" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\pricing\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\pricing\pricing.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\product\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\product\product.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\album.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\blog.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\carousel.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\checkout.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\cover.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\dashboard.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\floating-labels.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\grid.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\jumbotron.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\navbar-bottom.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\navbar-fixed.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\navbar-static.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\navbars.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\offcanvas.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\pricing.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\product.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\sign-in.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\starter-template.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\sticky-footer-navbar.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\screenshots\sticky-footer.png" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\sign-in\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\sign-in\signin.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\starter-template\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\starter-template\starter-template.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\sticky-footer-navbar\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\sticky-footer-navbar\sticky-footer-navbar.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\sticky-footer\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\sticky-footer\sticky-footer.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\tooltip-viewport\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\tooltip-viewport\tooltip-viewport.css" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\tooltip-viewport\tooltip-viewport.js" />
+    <Content Include="vContent\plugins\bootstrap4\favicon.ico" />
+    <Content Include="vContent\plugins\bootstrap4\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\alert.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\button.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\carousel.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\collapse.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\dropdown.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\index.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\modal.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\popover.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\scrollspy.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\tab.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\tooltip.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\util.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\alert.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\button.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\carousel.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\collapse.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\dropdown.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\index.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\modal.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\popover.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\scrollspy.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\tab.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\tooltip.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\src\util.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\index.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\karma.conf.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\alert.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\button.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\carousel.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\collapse.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\dropdown.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\modal.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\popover.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\scrollspy.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\tab.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\tooltip.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\util.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\vendor\jquery-1.9.1.min.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\vendor\qunit.css" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\vendor\qunit.js" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\visual\alert.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\visual\button.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\visual\carousel.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\visual\collapse.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\visual\dropdown.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\visual\modal.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\visual\popover.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\visual\scrollspy.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\visual\tab.html" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\visual\tooltip.html" />
+    <Content Include="vContent\plugins\bootstrap4\package.js" />
+    <Content Include="vContent\plugins\bootstrap4\robots.txt" />
+    <Content Include="vContent\plugins\bootstrap4\sw.js" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\ads.html" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\docs-navbar.html" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\docs-sidebar.html" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\favicons.html" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\footer.html" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\header.html" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\icons\bootstrap.svg" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\icons\download.svg" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\icons\github.svg" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\icons\import.svg" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\icons\lightning.svg" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\icons\menu.svg" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\icons\slack.svg" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\icons\twitter.svg" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\scripts.html" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\social.html" />
+    <Content Include="vContent\plugins\bootstrap4\_layouts\default.html" />
+    <Content Include="vContent\plugins\bootstrap4\_layouts\docs.html" />
+    <Content Include="vContent\plugins\bootstrap4\_layouts\examples.html" />
+    <Content Include="vContent\plugins\bootstrap4\_layouts\home.html" />
+    <Content Include="vContent\plugins\bootstrap4\_layouts\redirect.html" />
+    <Content Include="vContent\plugins\bootstrap4\_layouts\simple.html" />
+    <Content Include="vContent\Scripts\additional-methods.js" />
+    <Content Include="vContent\Scripts\additional-methods.min.js" />
+    <Content Include="vContent\Scripts\angular-animate.js" />
+    <Content Include="vContent\Scripts\angular-animate.min.js" />
+    <Content Include="vContent\Scripts\angular-chart.min.js" />
+    <Content Include="vContent\Scripts\angular-messages.js" />
+    <Content Include="vContent\Scripts\angular-messages.min.js" />
+    <Content Include="vContent\Scripts\angular-pagination.js" />
+    <Content Include="vContent\Scripts\angular-pagination.min.js" />
+    <Content Include="vContent\Scripts\angular-route.js" />
+    <Content Include="vContent\Scripts\angular-route.min.js" />
+    <Content Include="vContent\Scripts\angular-strap.js" />
+    <Content Include="vContent\Scripts\angular-strap.min.js" />
+    <Content Include="vContent\Scripts\angular-strap.tpl.js" />
+    <Content Include="vContent\Scripts\angular-strap.tpl.min.js" />
+    <Content Include="vContent\Scripts\angular-validate.min.js" />
+    <Content Include="vContent\Scripts\angular.js" />
+    <Content Include="vContent\Scripts\angular.min.js" />
+    <Content Include="vContent\Scripts\bootbox.min.js" />
+    <Content Include="vContent\Scripts\bootstrap-tagsinput.js" />
+    <Content Include="vContent\Scripts\bootstrap.bundle.js" />
+    <Content Include="vContent\Scripts\bootstrap.bundle.min.js" />
+    <Content Include="vContent\Scripts\bootstrap.js" />
+    <Content Include="vContent\Scripts\bootstrap.min.js" />
+    <Content Include="vContent\Scripts\bootstrap3-typeahead.js" />
+    <Content Include="vContent\Scripts\Chart.min.js" />
+    <Content Include="vContent\Scripts\customscript.js" />
+    <Content Include="vContent\Scripts\html5shiv.min.js" />
+    <Content Include="vContent\Scripts\ie10-viewport-bug-workaround.js" />
+    <None Include="vContent\Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="vContent\Scripts\jquery-1.9.1.js" />
+    <Content Include="vContent\Scripts\jquery-1.9.1.min.js" />
+    <Content Include="vContent\Scripts\jquery.SPServices-2014.02.js" />
+    <Content Include="vContent\Scripts\jquery.SPServices-2014.02.min.js" />
+    <Content Include="vContent\Scripts\jquery.validate.js" />
+    <Content Include="vContent\Scripts\jquery.validate.min.js" />
+    <Content Include="vContent\Scripts\jszip.js" />
+    <Content Include="vContent\Scripts\LeftNavRedirection.js" />
+    <Content Include="vContent\Scripts\loading-bar.min.js" />
+    <Content Include="vContent\Scripts\mask.js" />
+    <Content Include="vContent\Scripts\maskedinput.js" />
+    <Content Include="vContent\Scripts\moment.js" />
+    <Content Include="vContent\Scripts\moment.min.js" />
+    <Content Include="vContent\Scripts\ng-file-upload-shim.js" />
+    <Content Include="vContent\Scripts\ng-file-upload.js" />
+    <Content Include="vContent\Scripts\ng-infinite-scroll.min.js" />
+    <Content Include="vContent\Scripts\ng-tags-input.min.js" />
+    <Content Include="vContent\Scripts\ngBootbox.js" />
+    <Content Include="vContent\Scripts\ngBootbox.min.js" />
+    <Content Include="vContent\Scripts\paging.js" />
+    <Content Include="vContent\Scripts\paging.min.js" />
+    <Content Include="vContent\Scripts\peoplepicker\angular-resource.min.js" />
+    <Content Include="vContent\Scripts\peoplepicker\autofill.js" />
+    <Content Include="vContent\Scripts\peoplepicker\clientforms.js" />
+    <Content Include="vContent\Scripts\peoplepicker\clientpeoplepicker.js" />
+    <Content Include="vContent\Scripts\peoplepicker\clienttemplates.js" />
+    <Content Include="vContent\Scripts\peoplepicker\config.peoplepicker.js" />
+    <Content Include="vContent\Scripts\peoplepicker\SP.Core.debug.js" />
+    <Content Include="vContent\Scripts\peoplepicker\SP.Core.js" />
+    <Content Include="vContent\Scripts\peoplepicker\SP.debug.js" />
+    <Content Include="vContent\Scripts\peoplepicker\SP.Init.js" />
+    <Content Include="vContent\Scripts\peoplepicker\SP.RequestExecutor.js" />
+    <Content Include="vContent\Scripts\peoplepicker\SP.Runtime.debug.js" />
+    <Content Include="vContent\Scripts\peoplepicker\SP.Runtime.js" />
+    <Content Include="vContent\Scripts\popper.min.js" />
+    <Content Include="vContent\Scripts\respond.min.js" />
+    <Content Include="vContent\Scripts\select2.min.js" />
+    <Content Include="vContent\Scripts\SP2013Accordion.js" />
+    <Content Include="vContent\Scripts\sweetalert-dev.js" />
+    <Content Include="vContent\Scripts\SweetAlert.min.js" />
+    <Content Include="vContent\Scripts\toaster.js" />
+    <Content Include="vContent\Scripts\ui-bootstrap-tpls-2.5.0.min.js" />
+    <Content Include="vContent\Scripts\ui-grid.core.min.js" />
+    <Content Include="vContent\Scripts\ui-grid.min.js" />
+    <Content Include="vContent\Scripts\xlsx.full.min.js" />
+    <Content Include="vContent\Scripts\xlsx.js" />
+    <Content Include="vContent\Site.css" />
+    <Content Include="vContent\style\app.css" />
+    <Content Include="vContent\style\bootstrap-grid.css" />
+    <Content Include="vContent\style\bootstrap-grid.min.css" />
+    <Content Include="vContent\style\bootstrap-reboot.css" />
+    <Content Include="vContent\style\bootstrap-reboot.min.css" />
+    <Content Include="vContent\style\bootstrap-theme.css" />
+    <Content Include="vContent\style\bootstrap-theme.min.css" />
+    <Content Include="vContent\style\bootstrap.css" />
+    <Content Include="vContent\style\bootstrap.min.css" />
+    <Content Include="vContent\style\customstyle.css" />
+    <Content Include="vContent\style\dashboard.css" />
+    <Content Include="vContent\style\emailformater.css" />
+    <Content Include="vContent\style\libs.min.css" />
+    <Content Include="vContent\style\loading-bar.min.css" />
+    <Content Include="vContent\style\ng-tags-input.min.css" />
+    <Content Include="vContent\style\RCICSS.CSS" />
+    <Content Include="vContent\style\select2.css" />
+    <Content Include="vContent\style\select2.min.css" />
+    <Content Include="vContent\style\sticky-footer-navbar.css" />
+    <Content Include="vContent\style\style.css" />
+    <Content Include="vContent\style\toaster.min.css" />
+    <Content Include="vContent\style\ui-bootstrap-csp.css" />
+    <Content Include="vContent\style\ui-grid.min.css" />
+    <Content Include="vContent\sweetalert.css" />
+    <Content Include="vContent\test.txt" />
+    <Content Include="vtemplate\AddGodown.html" />
+    <Content Include="vtemplate\AddMaterialCategory.html" />
+    <Content Include="vtemplate\AddMaterialInventory.html" />
+    <Content Include="vtemplate\AddMaterials.html" />
+    <Content Include="vtemplate\AddRetails.html" />
+    <Content Include="vtemplate\AddSupplierCustomer.html" />
+    <Content Include="vtemplate\Dashboard.html" />
+    <Content Include="vtemplate\EditBill.html" />
+    <Content Include="vtemplate\EditGodown.html" />
+    <Content Include="vtemplate\EditMaterialCategory.html" />
+    <Content Include="vtemplate\EditMaterials.html" />
+    <Content Include="vtemplate\EditSupplierCustomer.html" />
+    <Content Include="vtemplate\GodownDashboard.html" />
+    <Content Include="vtemplate\home.html" />
+    <Content Include="vtemplate\Info.html" />
+    <Content Include="vtemplate\ItemCategoryDashboard.html" />
+    <Content Include="vtemplate\Login.html" />
+    <Content Include="vtemplate\MaterialDashboard.html" />
+    <Content Include="vtemplate\MaterialInventoryDashboard.html" />
+    <Content Include="vtemplate\Next.html" />
+    <Content Include="vtemplate\Register.html" />
+    <Content Include="vtemplate\SupplierCustomerDashboard.html" />
+    <Content Include="vtemplate\ViewWholeSale.html" />
+    <Content Include="vtemplate\WholeSale.html" />
+    <Content Include="vtemplate\WholeSaleDashboard.html" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="vAsset\Content\bootstrap-theme.css.map" />
+    <Content Include="vAsset\Content\bootstrap.css.map" />
+    <Content Include="vAsset\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="vAsset\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="vAsset\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="vAsset\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="vAsset\Scripts\jquery-1.9.1.min.map" />
+    <Content Include="vContent\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="vContent\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="vContent\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="vContent\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="vContent\plugins\bootstrap4\.editorconfig" />
+    <Content Include="vContent\plugins\bootstrap4\.eslintignore" />
+    <Content Include="vContent\plugins\bootstrap4\.eslintrc.json" />
+    <Content Include="vContent\plugins\bootstrap4\.gitattributes" />
+    <Content Include="vContent\plugins\bootstrap4\.github\CONTRIBUTING.md" />
+    <Content Include="vContent\plugins\bootstrap4\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="vContent\plugins\bootstrap4\.gitignore" />
+    <Content Include="vContent\plugins\bootstrap4\.stylelintignore" />
+    <Content Include="vContent\plugins\bootstrap4\.stylelintrc" />
+    <Content Include="vContent\plugins\bootstrap4\.travis.yml" />
+    <Content Include="vContent\plugins\bootstrap4\assets\css\docs.min.css.map" />
+    <Content Include="vContent\plugins\bootstrap4\assets\img\favicons\manifest.json" />
+    <Content Include="vContent\plugins\bootstrap4\assets\js\.eslintrc.json" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\docs.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_ads.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_algolia.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_anchor.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_brand.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_browser-bugs.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_buttons.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_callouts.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_clipboard-js.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_colors.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_component-examples.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_content.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_examples.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_footer.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_masthead.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_nav.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_sidebar.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_skiplink.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_syntax.scss" />
+    <Content Include="vContent\plugins\bootstrap4\assets\scss\_variables.scss" />
+    <Content Include="vContent\plugins\bootstrap4\build\.eslintrc.json" />
+    <Content Include="vContent\plugins\bootstrap4\build\.htmllintrc" />
+    <Content Include="vContent\plugins\bootstrap4\build\gcp-key.json.enc" />
+    <Content Include="vContent\plugins\bootstrap4\build\sauce_browsers.json" />
+    <Content Include="vContent\plugins\bootstrap4\build\ship.sh" />
+    <Content Include="vContent\plugins\bootstrap4\build\upload-preview.sh" />
+    <Content Include="vContent\plugins\bootstrap4\build\workbox.config.json" />
+    <Content Include="vContent\plugins\bootstrap4\CNAME" />
+    <Content Include="vContent\plugins\bootstrap4\CODE_OF_CONDUCT.md" />
+    <Content Include="vContent\plugins\bootstrap4\composer.json" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap-grid.css.map" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap-reboot.css.map" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap.css.map" />
+    <Content Include="vContent\plugins\bootstrap4\dist\css\bootstrap.min.css.map" />
+    <Content Include="vContent\plugins\bootstrap4\dist\js\bootstrap.bundle.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\dist\js\bootstrap.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\dist\js\bootstrap.min.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\about\brand.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\about\license.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\about\overview.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\about\translations.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\browser-bugs.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\alerts.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\badge.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\breadcrumb.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\button-group.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\buttons.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\card.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\carousel.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\collapse.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\dropdowns.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\forms.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\input-group.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\jumbotron.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\list-group.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\modal.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\navbar.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\navs.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\pagination.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\popovers.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\progress.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\scrollspy.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\components\tooltips.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\content\code.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\content\figures.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\content\images.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\content\reboot.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\content\tables.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\content\typography.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\.eslintrc.json" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\examples\.stylelintrc" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\extend\approach.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\extend\icons.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\extend\index.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\getting-started\accessibility.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\getting-started\best-practices.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\getting-started\browsers-devices.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\getting-started\build-tools.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\getting-started\contents.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\getting-started\download.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\getting-started\introduction.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\getting-started\javascript.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\getting-started\theming.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\getting-started\webpack.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\layout\grid.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\layout\media-object.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\layout\overview.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\layout\utilities-for-layout.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\migration.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\borders.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\clearfix.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\close-icon.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\colors.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\display.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\embed.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\flex.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\float.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\image-replacement.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\position.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\screenreaders.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\sizing.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\spacing.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\text.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\vertical-align.md" />
+    <Content Include="vContent\plugins\bootstrap4\docs\4.0\utilities\visibility.md" />
+    <Content Include="vContent\plugins\bootstrap4\Gemfile" />
+    <Content Include="vContent\plugins\bootstrap4\Gemfile.lock" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\alert.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\button.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\carousel.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\collapse.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\dropdown.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\index.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\modal.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\popover.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\scrollspy.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\tab.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\tooltip.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\dist\util.js.map" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\README.md" />
+    <Content Include="vContent\plugins\bootstrap4\js\tests\unit\.eslintrc.json" />
+    <Content Include="vContent\plugins\bootstrap4\LICENSE" />
+    <Content Include="vContent\plugins\bootstrap4\nuget\bootstrap.nuspec" />
+    <Content Include="vContent\plugins\bootstrap4\nuget\bootstrap.sass.nuspec" />
+    <Content Include="vContent\plugins\bootstrap4\nuget\MyGet.ps1" />
+    <Content Include="vContent\plugins\bootstrap4\package-lock.json" />
+    <Content Include="vContent\plugins\bootstrap4\package.json" />
+    <Content Include="vContent\plugins\bootstrap4\README.md" />
+    <Content Include="vContent\plugins\bootstrap4\sache.json" />
+    <Content Include="vContent\plugins\bootstrap4\scss\bootstrap-grid.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\bootstrap-reboot.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\bootstrap.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_alert.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_background-variant.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_badge.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_border-radius.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_box-shadow.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_breakpoints.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_buttons.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_caret.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_clearfix.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_float.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_forms.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_gradients.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_grid-framework.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_grid.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_hover.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_image.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_list-group.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_lists.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_nav-divider.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_navbar-align.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_pagination.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_reset-text.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_resize.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_screen-reader.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_size.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_table-row.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_text-emphasis.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_text-hide.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_text-truncate.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_transition.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\mixins\_visibility.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_align.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_background.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_borders.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_clearfix.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_display.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_embed.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_flex.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_float.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_position.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_screenreaders.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_sizing.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_spacing.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_text.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\utilities\_visibility.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_alert.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_badge.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_breadcrumb.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_button-group.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_buttons.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_card.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_carousel.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_close.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_code.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_custom-forms.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_dropdown.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_forms.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_functions.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_grid.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_images.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_input-group.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_jumbotron.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_list-group.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_media.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_mixins.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_modal.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_nav.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_navbar.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_pagination.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_popover.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_print.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_progress.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_reboot.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_root.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_tables.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_tooltip.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_transitions.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_type.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_utilities.scss" />
+    <Content Include="vContent\plugins\bootstrap4\scss\_variables.scss" />
+    <Content Include="vContent\plugins\bootstrap4\_config.yml" />
+    <Content Include="vContent\plugins\bootstrap4\_data\breakpoints.yml" />
+    <Content Include="vContent\plugins\bootstrap4\_data\browser-bugs.yml" />
+    <Content Include="vContent\plugins\bootstrap4\_data\browser-features.yml" />
+    <Content Include="vContent\plugins\bootstrap4\_data\colors.yml" />
+    <Content Include="vContent\plugins\bootstrap4\_data\examples.yml" />
+    <Content Include="vContent\plugins\bootstrap4\_data\grays.yml" />
+    <Content Include="vContent\plugins\bootstrap4\_data\nav.yml" />
+    <Content Include="vContent\plugins\bootstrap4\_data\theme-colors.yml" />
+    <Content Include="vContent\plugins\bootstrap4\_data\translations.yml" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\callout-danger-async-methods.md" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\callout-info-mediaqueries-breakpoints.md" />
+    <Content Include="vContent\plugins\bootstrap4\_includes\callout-warning-color-assistive-technologies.md" />
+    <Content Include="vContent\plugins\bootstrap4\_plugins\bugify.rb" />
+    <Content Include="vContent\plugins\bootstrap4\_plugins\callout.rb" />
+    <Content Include="vContent\plugins\bootstrap4\_plugins\example.rb" />
+    <Content Include="vContent\plugins\bootstrap4\_plugins\markdown-block.rb" />
+    <Content Include="vContent\Scripts.rar" />
+    <Content Include="vContent\Scripts\bootstrap.bundle.js.map" />
+    <Content Include="vContent\Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="vContent\Scripts\bootstrap.js.map" />
+    <Content Include="vContent\Scripts\bootstrap.min.js.map" />
+    <Content Include="vContent\Scripts\jquery-1.9.1.min.map" />
+    <Content Include="vContent\Scripts\peoplepicker\angular-resource.min.js.map" />
+    <Content Include="vContent\style\bootstrap-grid.css.map" />
+    <Content Include="vContent\style\bootstrap-grid.min.css.map" />
+    <Content Include="vContent\style\bootstrap-reboot.css.map" />
+    <Content Include="vContent\style\bootstrap-reboot.min.css.map" />
+    <Content Include="vContent\style\bootstrap-theme.css.map" />
+    <Content Include="vContent\style\bootstrap.css.map" />
+    <Content Include="vContent\style\bootstrap.min.css.map" />
+    <Content Include="vContent\style\fonts\ui-grid.ttf" />
+    <Content Include="vContent\style\fonts\ui-grid.woff" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>62236</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:62236/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

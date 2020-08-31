@@ -1,0 +1,61 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 60px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>Edit Material Category</b>
+        
+    </div>
+    <div class="card-body">
+        <form name="editMaterialCategoryForm">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="Discription">Category Name</label> <span class="text-danger">*</span>
+                    <input type="text" class="form-control" id="CategoryName" name="CategoryName" placeholder="Enter category name"
+                           ng-model="EditItemCategory.ItemCategoryName" required>
+                    <p ng-show="submitted && editMaterialCategoryForm.ItemCategoryName.$invalid && editMaterialCategoryForm.ItemCategoryName.$pristine"
+                       class="text-danger">Category name is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="chkActive">Active</label>
+                    <input type="checkbox" class="form-control" id="chkActive" name="Active"
+                           ng-model="EditItemCategory.Active">
+                </div>                
+            </div>
+            <br />
+            <br />
+            <hr />
+            <div class="form-row col-md-offset-5">
+                <button type="button" class="btn btn-primary" ng-click="RedirectDashboard()"> <span data-feather="arrow-left"></span> Back</button>&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" ng-click="UpdateItemCategory(editMaterialCategoryForm.$valid)"><span data-feather="save"></span> Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX " />
+</head>
+<body>
+</body>
+
+<script type="text/javascript">
+    feather.replace()
+    var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+</script>
+</html>

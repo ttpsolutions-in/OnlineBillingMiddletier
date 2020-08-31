@@ -1,0 +1,47 @@
+﻿*{font-family:"Segoe UI",Segoe,Tahoma,Helvetica,Arial,sans-serif!important}.largeWidth{background-color:#428bca!important;color:#fff}.paddingCaption{padding-left:45px}ul.select-multiple{width:68%;overflow-y:scroll;max-height:149px}.page-title{height:25px!important;padding:7px 10px;color:#011e4b;font-size:18px!important}.panel-heading a.btn,.table>tbody>tr>td{font-size:14px}.pageHeaderStyle{border-style:solid;border-width:medium;height:45px!important;border-color:azure;background-color:azure;background-size:auto;color:#228b22;margin-bottom: 10px;}.pageHeaderStyle span.pull-right,.pageHeaderStyle span.pull-right a{color:#337ab7;font-size:14px;font-weight:700;text-decoration:none;padding-top:10px;margin-right:5px}#pageTitle{display:none}.panel{box-shadow:10px 10px 15px rgba(0,0,0,.1);border-radius:0}.ms-srch-sb-border,.ms-srch-sb-borderFocused{border-radius:10px;padding:2px}label[name="Select period From"]{padding-left:0;padding-right:2px;padding-top:2px;width:80px;text-align:right}data-ng-form input[type=button]{font-weight:700;color:#0077B0}data-ng-form input[type=button]:focus,data-ng-form input[type=button]:hover,data-ng-form input[type=button]:link{border:1px dotted #0077B0;color:#0077B0}.form-group input[type=datetime],.form-group input[type=text],.ng-scope input[type=search],.ng-scope select,.paginate_button a,data-ng-form input[type=button]{padding:0 9px;/*border:1px solid #0077B0;*/outline:0;/*background:-webkit-gradient(linear,left top,left 25,from(#FFF),color-stop(4%,#C6ECFF),to(#FFF));*/background:-moz-linear-gradient(top,#FFF,#C6ECFF 1px,#FFF 25px);box-shadow:rgba(0,0,0,.1) 0 0 8px;-moz-box-shadow:rgba(0,0,0,.1) 0 0 8px;-webkit-box-shadow:rgba(0,0,0,.1) 0 0 8px}.form-control,select,select.input-sm{height:25px}.dataTables_wrapper .dataTables_paginate .paginate_button{padding:.5em 0}.dataTables_wrapper .dataTables_paginate .paginate_button:hover a,.pagination>.active>a{color:#000}.pagination{margin:5px 0 0}.dataTables_wrapper .dataTables_paginate .paginate_button:hover,.dataTables_wrapper .dataTables_paginate .paginate_button:link{background:0 0;border:none;font-weight:700}#tblRCILevel td a.ng-binding,.table.table-responsive td a{cursor:pointer!important;cursor:hand!important}.form-group label+div.col-xs-8,.headerRow>div,data-ng-form .row:last-child .col-xs-12.col-sm-6.col-md-4.col-lg-4,data-ng-form .row:last-child .col-xs-12.col-sm-6.col-md-4.col-lg-4 .form-group{padding:0}data-ng-form .row .col-xs-12.col-sm-6.col-md-4.col-lg-4 .form-group input{margin-left:0}data-ng-form .row .col-xs-12.col-sm-6.col-md-4.col-lg-4 .form-group.col-xs-6.pull-right{margin-right:0;padding:0 18px 0 0}data-ng-form .row:first-child .col-xs-12.col-sm-6.col-md-4.col-lg-4 .form-group.col-xs-6.pull-right{margin-right:0;padding:0 0 0 20px}.panel-heading{border-bottom:none;padding:10px 1px 0 10px}.panel-heading .btn.btn-primary{padding:9px;border:1px solid #ddd;outline:0;background:-webkit-gradient(linear,left top,left 25,from(#FFF),color-stop(4%,#efefef),to(#FFF));background:-moz-linear-gradient(top,#FFF,#efefef 1px,#FFF 25px);color:#000;border-bottom:none;border-radius:3px 3px 0 0}.dataTables_wrapper .dataTables_length{margin-bottom:10px;margin-top:-15px}.dataTables_wrapper #tblDTable_filter{float:left;left:35%;position:relative;margin-top:-15px}.secHeading{padding-bottom:20px}.secHeading h3{margin-top:0}input[type=button]#btnViewReport{margin-left:1px}tr.largeWidth a.ng-binding.ng-scope{color:#fff}input[type=datetime]{max-width:155px}data-ng-form .row:last-child .col-xs-12.col-sm-6.col-md-4.col-lg-4 .form-group.col-xs-6.pull-right input[type=button]#btnViewReport{margin-left:15px}input[type=button].form-control{width:auto!important;min-width:2em}.pagination>li>a,.pagination>li>span,.table>tbody>tr>td,.table>tbody>tr>th,.table>tfoot>tr>td,.table>tfoot>tr>th,.table>thead>tr>td,.table>thead>tr>th{padding:2px 8px}col-xs-1 pull-left{margin-top:-10px}.exportReport .form-group{padding:0;margin-right:40px}data-ng-form .table tbody tr td,data-ng-form .table tr th{text-align:center}.table>tbody>tr>td:first-child,.table>tbody>tr>th{text-align:left}
+
+meeting-tabs a.ctive{
+	    background: #292b2c;
+    color: #fff;
+    margin-bottom: -1px;
+}
+meeting-tabs a.btn{
+margin: 0;
+    background-color: #73AD21;/*#d2d0d0;*/
+    color: #fff;
+    transition: background-color 0.2s, color 0.2s;
+    padding: 10px;
+    margin-right: 0px;
+    /*border-radius: 10px 10px 0px 0px;*/
+    font-size:15px;
+}
+.panel-default{
+	box-shadow:none;
+	border-radius:0;
+}
+meeting-tabs .list-inline {
+    padding-left: 0;
+    margin-left: -5px;
+    list-style: none;
+    margin:0;
+}
+
+meeting-tabs .list-inline>li {
+    padding-right: 0px;
+    padding-left: 0;
+    margin-bottom:1px;
+}
+
+.requiredfield {
+    font-weight: 700 !important;
+}
+
+.requiredfield:after {
+    content: '*';
+    padding-left: 5px;
+    color: #f00;
+    float: right;
+}
+.has-error{
+	border: 1px solid red!important;
+}

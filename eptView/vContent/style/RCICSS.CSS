@@ -1,0 +1,243 @@
+﻿body{
+	font-family:Segoe UI,Segoe,Calibri,arial, helvetica;
+	font-size:14px !important;	
+}
+.thead-inverse th,.ms-viewheadertr{
+	background-color:ActiveCaption;
+	color:HighlightText;
+	font-weight:bold !important;
+}
+.ms-spGrid-HeaderContentStyle div a {
+	color:black !important;
+	font-weight:bold;
+	font-size:inherit !important;
+}
+.ms-viewheadertr
+{
+	color:black !important;
+	font-weight:bold;
+	font-size:inherit !important;
+
+}
+div[colid="coreContent"]
+{
+	color:black !important;
+	font-weight:bold !important;
+	font-size:13px !important;	
+}
+.ms-verticalAlignTop{
+	vertical-align:middle;
+}
+.form-control{
+	font-size:inherit;
+}
+.btn,.btn-group-sm > .btn, .btn-sm{
+	font-size:inherit;
+	
+}
+input[type=button], input[type=reset], input[type=submit], button{
+	font-size:inherit;
+}
+#DeltaTopNavigation
+{
+display:none;
+}
+#DeltaPlaceHolderPageTitleInTitleArea
+{
+	display:none;
+}
+#pageTitle
+{
+	display:none;
+}
+.nav-tabs > li.active a,.nav-tabs > li.active >a:hover,.nav-tabs > li.active > a:focus
+{
+	background-color: red;
+}
+
+.nav-tabs > li.active a
+{
+	background-color: rgb(0, 114, 198)!important;
+	color: #ffffff !important;
+	font-weight:bold;
+}
+.masterRCIHead {
+
+  text-align: center;
+  color: #cce0f1;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  font-weight: bold;
+  font-size: 2em;
+  margin:-5px 10px 15px;
+  text-align: center;
+ text-shadow: 2px 2px #428bca;
+}
+
+
+#tblDosage>tbody>tr:last-child { background-color:rgb(66, 139, 202);color:white; }
+#tblDosage>tbody>tr:last-child a{ color:white; }
+#tblRCILevel>tbody>tr:last-child { background-color:rgb(66, 139, 202);color:white; }
+#tblRCILevel>tbody>tr:last-child a{ color:white; }
+#tblResponsibility>tbody>tr:last-child { background-color:rgb(66, 139, 202);color:white; }
+#tblResponsibility>tbody>tr:last-child a{ color:white; }
+#tblDTableRegion>tbody>tr:last-child { background-color:rgb(66, 139, 202);color:white; }
+#tblDTableRegion>tbody>tr:last-child a{ color:white; }
+
+
+#tblDosage>tbody>tr>td a[onclick] { cursor: hand; }
+#tblRCILevel>tbody>tr>td a[onclick] { cursor: hand; }
+#tblResponsibility>tbody>tr>td a[onclick] { cursor: hand; }
+#tblDTableRegion>tbody>tr>td a[onclick] { cursor: hand; }
+
+#tblDTableRegion>tbody>tr:last-child { background-color:rgb(66, 139, 202);color:white; }
+#tblDTableRegion>tbody>tr:last-child a{ color:white; }
+#tblunitwiseissue>tbody>tr:last-child a{ color:white; }
+
+
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+    cursor: hand;
+}
+
+.tdserviceCount
+{
+  background-color:YellowGreen;
+  font-weight:bold
+}
+.tdserviceValue
+{
+  background-color:YellowGreen;
+}
+.tdnonserviceCount
+{
+background-color:#FDFD96;
+ font-weight:bold
+}
+.tdnonserviceValue
+{
+background-color:#FDFD96;
+}
+.tdscheduleserviceCount
+{
+  background-color:LightBlue;
+   font-weight:bold
+ }
+.tdscheduleserviceValue
+{
+  background-color:LightBlue; 
+}
+.tdbeyondrciCount
+{
+  background-color:#FF4040;
+   font-weight:bold
+ }
+.tdbeyondrciValue
+{
+  background-color:#FF4040; 
+}
+/*--------------------Mohini----------------------------*/
+#sideNavBox{
+	    background: #fff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding: 3px;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    width:200px!important;
+     margin-left:5px!important;
+     margin-right:5px!important;
+     padding-left:25px;
+}
+
+.ms-core-sideNavBox-removeLeftMargin{
+	margin-left:0;
+}
+#sideNavBox .expanded{
+	border:1px solid #efefef;
+}
+#sideNavBox .expanded .ms-core-listMenu-item{
+	 background: white;
+}
+
+#sideNavBox ul li a
+{
+    display: block;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;    line-height: 1.3;
+    
+}
+#sideNavBox ul li
+{
+	margin:0 0 2px 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    font-weight: normal !important;
+    text-decoration: none;
+    position: relative;
+}
+.ms-core-listMenu-selected{	
+  font-weight: normal !important;
+}
+.panel-default{
+	    background: #fff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding: 3px;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}
+
+.ms-core-listMenu-item {
+    background-color: rgba(239, 239, 239, 0.5);
+}
+.panel-body data-ng-form .row.form-group .col-md-6{
+padding:0;	
+}
+.form-control{
+	height:30px;
+	padding:0px 12px;
+}
+
+#tblRow-2-child table th,tr td table .thead-inverse th{
+	background:cadetblue;
+}
+
+.legendText
+{
+	font-size:10px;padding:3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

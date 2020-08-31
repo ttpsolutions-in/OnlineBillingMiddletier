@@ -1,0 +1,183 @@
+﻿#sideNavBox a[href$="/_layouts/15/viewlsts.aspx"]{  display: none; }
+		
+  
+	
+	#s4-ribbonrow {display: none !important;}	
+	
+   		//	#titleAreaBox {display: none !important;}			
+			//#sideNavBox { display: none }
+			//#contentBox { margin-left: 15px }
+			#titleAreaBox #SearchBox {display: none !important;}/* Hide Site Search Box */
+			//#span.s4-clust { display: none !important;}
+
+		#inplaceSearchDiv_WPQ10_lsparent  {display: none !important;}	
+			.ms-webpartPage-root
+			{
+				border-spacing:5px !important;
+			}	
+			
+			#instasearch
+				{
+				    position: fixed;
+				    left: 590px;
+				    top: 52px;
+				    height: 30px;
+				}
+			
+			.navheader ul {
+			    list-style-type: none;
+			    margin: 0;
+			    padding: 0;
+			    overflow: hidden;
+			    background-color: #333;
+			    position: fixed;
+			    top: 0;
+			    width: 100%;
+			    margin-top:50px;
+			    height:35px;
+			}
+			
+			.navheader li {
+			    float: left;
+			}
+			
+			.navheader li a {
+			    display: block;
+			    color: white;
+			    text-align: center;
+			    padding: 14px 16px;
+			    text-decoration: none;
+			}
+			
+			.navheader li a:hover:not(.active) {
+			    background-color: #0072C6;
+			}
+			
+			
+			//Left Navigation
+			.ms-core-listMenu-verticalBox UL.root > LI > .menu-item{  
+		  font-weight:bold;  
+		  background-color:#5482AB;  
+		  color:#ffffff;  
+		  border-bottom-color:#ffffff;  
+		  border-bottom-style:solid;  
+		  border-bottom-width:1px;  
+		  min-height:25px;  
+		  padding-top:5px;  
+		  padding-left:10px;  
+		  font-size:12px;  
+		  font-family:Arial, Helvetica, Sans-Serif !important;  
+		 }  
+		 .ms-core-listMenu-verticalBox > ul.root > li.static > ul.static > li.static > a:hover {  
+		   color: #ffffff !important;  
+		   background-color:#0072C6!important;  
+		   text-decoration:none;  
+		 }  
+		 .ms-core-listMenu-verticalBox > ul.root > li.selected > a {  
+		    background-image:none;  
+		    background-color:#0072C6;  
+		   color:#ffffff !important;  
+		 }  
+		 .ms-core-listMenu-verticalBox > ul.root > li > a:hover {  
+		    background-image:none;  
+		    background-color:#0072C6;  
+		   color:#ffffff !important;  
+		   text-decoration:underline;  
+		 }  
+		 .ms-core-listMenu-verticalBox > ul.root > li.static > ul.static > li > a {  
+		  font-size:12px;  
+		  padding-left:10px;  
+		  font-family:Arial, Helvetica, Sans-Serif !important;  
+		 }  
+		 .ms-core-listMenu-verticalBox > ul.root > li.static > ul.static > li > a.selected {  
+		   background:none;  
+		    color: #0072C6 !important;  
+		   background-color:#ffffff !important;  
+		    text-decoration: none;  
+		    border: 1px #fff solid;  
+		    font-weight:bold;  
+		 }  
+		 .ms-core-listMenu-verticalBox a.selected  
+		 {  
+		  border: 1px #fff solid !important;  
+		 }  
+		 .ms-core-listMenu-verticalBox UL.root UL  
+		 {  
+		  margin:0px 0px 10px 0px !important;  
+		 }
+		 
+		 #instasearch{
+		 
+		    width: 130px;		   
+		    box-sizing: border-box;
+		    border: 2px solid #ccc;
+		    border-radius: 4px;
+		    font-size: 16px;
+		    background-color: white;
+		    background-image:url('../../SitePages/searchicon.png');
+		    background-position: 3px 3px;
+		    background-repeat: no-repeat;
+		    padding: 4px 20px 4px 40px;
+		    -webkit-transition: width 0.4s ease-in-out;
+		    transition: width 0.4s ease-in-out;
+			}
+			
+			#instasearch:focus {
+			    width: 50%;
+			}
+				
+	#inplaceSearchDiv_WPQ3_lsparent {display: none !important;}
+	#inplaceSearchDiv_WPQ2_lsparent {display: none !important;}
+	/* Set background for every row */
+		.ms-listviewtable > tbody > tr {
+			background: white;
+		}
+
+	/* Set border for every row */
+		.ms-listviewtable > tbody > tr td{
+			border-bottom: 1px solid #AFAFAF !important; /* !important needed over override SharePoint inline style */
+		}
+
+	/* Set background for every alternating row */
+		.ms-listviewtable > tbody > tr.ms-alternating {
+			background: #E2E3E5;
+		}
+
+.ms-searchLabel
+{
+	font-size:12px !important;
+	font-weight:bold !important;
+}
+/* ---------- Table Header Row ----------*/
+
+	/* Remove background set in SharePoint's general data table style 
+		.ms-listviewtable tr.ms-viewheadertr {
+			background: transparent;
+		}
+
+	/* Modify background color */
+	/* 	tr.ms-viewheadertr > th.ms-vh-icon, /* Input box and attachment icon */
+		/* tr.ms-viewheadertr > th.ms-vh, /* Text */
+		/* tr.ms-viewheadertr > th.ms-vh2,tr.ms-viewheadertr > th.ms-vh3 /* Text */ /* {
+	/* 		background: #2E4C70;
+	/* 	}
+
+	/* Modify background color on hover 
+		tr.ms-viewheadertr > th.ms-vh:hover,
+		tr.ms-viewheadertr > th.ms-vh2:hover {
+		            background-color: #273C51;
+		            border-color: #273C51;
+       		}
+
+	/* Modify font color 
+		.ms-viewheadertr a,
+		.ms-viewheadertr div {
+			color: white;
+		}
+
+	/* Modify font color on hover 
+		.ms-viewheadertr a:hover,
+		.ms-viewheadertr div:hover {
+			color: white;
+		}
+			

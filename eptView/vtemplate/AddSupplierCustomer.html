@@ -1,0 +1,90 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 60px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>Add Supplier/Customer</b>
+        <span style="float:right"><b>Date -</b> {{TodaysDate}}</span>
+    </div>
+    <div class="card-body">
+        <form name="addSRform">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="Category">Category</label> <span class="text-danger">*</span>
+                    <select id="Category" name="Category" ng-model="SupplierCustomer.Category" class="form-control"
+                            ng-options="item.Id as item.CategoryName for item in Categories" required>
+                        <option value="">-- Select --</option>
+                    </select>
+                    <p ng-show="submitted && addSRform.Category.$invalid && addSRform.Category.$pristine"
+                       class="text-danger">Category is required.</p>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="Name">Name</label> <span class="text-danger">*</span>
+                    <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter Name"
+                           ng-model="SupplierCustomer.Name" required>
+                    <p ng-show="submitted && addSRform.Name.$invalid && addSRform.Name.$pristine"
+                       class="text-danger">Name is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtContactNo">Contact No.</label> <span class="text-danger">*</span>
+                    <input type="tel" class="form-control" id="ContactNo" name="ContactNo" placeholder="Enter Contact No."
+                           ng-model="SupplierCustomer.ContactNo" required>
+                    <p ng-show="submitted && addSRform.ContactNo.$invalid && addSRform.ContactNo.$pristine"
+                       class="text-danger">Contact No. is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Email">Email</label> <span class="text-danger">*</span>
+                    <input type="email" class="form-control" id="Email" name="Email" placeholder="Enter Email"
+                           ng-model="SupplierCustomer.Email" required>
+                    <p ng-show="submitted && addSRform.Email.$invalid && addSRform.Email.$pristine"
+                       class="text-danger">Email is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Type">Type</label> <span class="text-danger">*</span>
+                    <select id="Type" name="Type" ng-model="SupplierCustomer.Type" class="form-control"
+                            ng-options="item.SRId as item.TypeName for item in Types" required>
+                        <option value="">-- Select --</option>
+                    </select>
+                    <p ng-show="submitted && addSRform.Type.$invalid && addSRform.Type.$pristine"
+                       class="text-danger">Type is required.</p>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="Address">Address</label> <span class="text-danger">*</span>
+                    <textarea class="form-control" id="Address" name="Address" placeholder="Enter Address"
+                              ng-model="SupplierCustomer.Address" required></textarea>
+                    <p ng-show="submitted && addSRform.Address.$invalid && addSRform.Address.$pristine"
+                       class="text-danger">Address is required.</p>
+                </div>
+            </div>
+            <div><hr /></div>
+            <div class="form-row col-md-offset-5">
+                <button type="button" class="btn btn-primary" ng-click="RedirectDashboard()"><span data-feather="arrow-left"></span> Back</button>&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" ng-click="SaveSupplierCustomers(addSRform.$valid)"><span data-feather="save"></span> Save</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<html><head><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"><meta name="Robots" content="NOINDEX " /></head><body></body>
+                <script type="text/javascript">
+                    feather.replace();
+                 var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+                 </script>
+                 </html>

@@ -1,0 +1,63 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 80px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>Materials</b>
+        <a class="btn btn-secondary btn-sm float-right" href="#AddMaterial">Add Material</a>
+    </div>
+    <div ng-if="ShowSpinnerStatus" class="loader"></div>
+    <div class="card-body">
+        <form id="MaterialDashboad">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="searchDisplayName">Display Name</label>
+                    <input type="text" class="form-control input-sm" id="searchDisplayName" name="searchDisplayName"
+                           ng-model="searchDisplayName" placeholder="Enter display name">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="searchDescription">Description</label>
+                    <input type="text" class="form-control input-sm" id="searchDescription" name="searchDescription"
+                           ng-model="searchDescription" placeholder="Enter description">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="searchCategory">Category</label>
+                    <select id="searchCategory" name="searchCategory" ng-model="searchCategory" class="form-control input-sm"
+                             ng-options="item.ItemCategoryId as item.ItemCategoryName for item in ItemCatogoryList" required>
+                        <option value="">-- Select --</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <br />
+                    &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-secondary" ng-click="GetDataForDashboard();" style="margin-top:5px">Search</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 nopadding">
+                    <div ui-grid="gridOptions" ui-grid-pagination
+                         class="myGrid" style="height:480px"></div>
+                    <div class="nodatatxt" data-ng-if="gridOptions.data.length==0">No data found.</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<html><head><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"><meta name="Robots" content="NOINDEX " /></head><body></body>
+                <script type="text/javascript">
+                 var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+                 </script>
+                 </html>

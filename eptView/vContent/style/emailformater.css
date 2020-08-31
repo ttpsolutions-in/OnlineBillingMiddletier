@@ -1,0 +1,92 @@
+﻿.emailbody,.emailfooter{
+    /*font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;*/
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+}
+
+.grid-header {
+    background-color: #d2d2d2;
+    /*border-bottom: 3px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-top: solid 3px #ccc;*/
+    border: 1px solid #000;
+    color: #000;
+    font-size: 9pt;
+    padding: 2px 5px;
+    white-space: nowrap;
+}
+ 
+    .grid-header a {
+        display: inline;
+        color: #000 !important;
+    }
+
+.grid-wrap {
+    padding: 0;
+    position: relative;
+}
+
+.grid-cell {
+    /*border-right: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d2d2d2;*/
+    border: 1px solid #000;
+    font-size: 9pt;
+    padding: 2px 5px;
+}
+/*
+.grid-footer {
+    border: 1px solid #EFECD3;
+}*/
+
+.grid-empty-text {
+    color: #000;
+}
+
+table.grid-table tr td:last-child {
+    border-right: 1px solid #d2d2d2;
+}
+
+table.grid-table {
+    margin-bottom: 10px;
+    /*border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;*/
+    border-collapse: collapse;
+}
+
+/* Grid headers */
+
+.grid-header.sorted-desc .grid-sort-arrow:after,
+.grid-header.sorted-asc .grid-sort-arrow:after {
+    color: #000;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.grid-header.sorted-asc .grid-sort-arrow:after {
+    content: " \2193";
+}
+
+.grid-header.sorted-desc .grid-sort-arrow:after {
+    content: " \2191";
+}
+
+.grid-footer-info {
+    padding: 4px 10px;
+    color: #c54e88;
+    font-weight: bold;
+}
+
+/* Grid body */
+table.grid-table tr.grid-row-selected td {
+    background: #4888C2 !important;
+    color: white;
+}
+
+table.grid-table tr.grid-row-selected a {
+    color: white;
+}
+.text-muted {
+  color: #777;
+}

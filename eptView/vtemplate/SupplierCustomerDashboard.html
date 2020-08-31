@@ -1,0 +1,29 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 80px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>Supplier/Customer </b>
+        <a class="btn btn-secondary btn-sm float-right" href="#AddSupplierCustomer">Add Supplier/Customer</a>
+    </div>
+    <div class="card-body">
+        <form id="wholeSaleDashboad">
+            <div class="form-row">
+                <div class="col-md-12 nopadding">
+                    <div ui-grid="gridOptions" ui-grid-edit ui-grid-pagination  ui-grid-cellnav
+                         class="myGrid" style="height:480px"></div>
+                    <div class="nodatatxt" data-ng-if="gridOptions.data.length==0">No data found.</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
