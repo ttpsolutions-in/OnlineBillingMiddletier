@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EphraimTradersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EphraimTradersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -71,23 +71,23 @@
             <PropertyRef Name="BillNo" />
           </Key>
           <Property Name="BillNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SaleDate" Type="date" />
-          <Property Name="RetailerId" Type="int" />
-          <Property Name="SaleCategoryId" Type="int" />
-          <Property Name="SaleTypeId" Type="int" />
-          <Property Name="GSTApplied" Type="tinyint" />
-          <Property Name="GSTPercentage" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="GSTAmount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="DiscountApplied" Type="tinyint" />
+          <Property Name="SaleDate" Type="date" Nullable="false" />
+          <Property Name="RetailerId" Type="int" Nullable="false" />
+          <Property Name="SaleCategoryId" Type="int" Nullable="false" />
+          <Property Name="SaleTypeId" Type="int" Nullable="false" />
+          <Property Name="GSTApplied" Type="tinyint" Nullable="false" />
+          <Property Name="GSTPercentage" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GSTAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DiscountApplied" Type="tinyint" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="date" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedOn" Type="date" />
-          <Property Name="BillStatus" Type="tinyint" />
+          <Property Name="BillStatus" Type="tinyint" Nullable="false" />
           <Property Name="PaidAmt" Type="decimal" Precision="18" Scale="2" />
           <Property Name="BalanceAmt" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ShowGSTNo" Type="tinyint" />
         </EntityType>
         <EntityType Name="Category">
@@ -152,8 +152,11 @@
           <Property Name="InventoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaterialId" Type="int" Nullable="false" />
           <Property Name="GodownId" Type="smallint" Nullable="false" />
-          <Property Name="Quantity" Type="int" Nullable="false" />
-          <Property Name="SupplierId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentStatus" Type="varchar" MaxLength="10" />
+          <Property Name="PaymentDate" Type="datetime" />
+          <Property Name="SupplierId" Type="int" />
           <Property Name="AddTransfer" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="TransferToGodown" Type="smallint" />
           <Property Name="Comments" Type="varchar" MaxLength="300" />
@@ -161,6 +164,7 @@
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="UpdatedDate" Type="date" Nullable="false" />
+          <Property Name="Active" Type="tinyint" />
         </EntityType>
         <EntityType Name="Materials">
           <Key>
@@ -186,6 +190,7 @@
           <Property Name="BoxQty" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ItemCategoryId" Type="smallint" />
           <Property Name="DisplayName" Type="varchar" MaxLength="250" />
+          <Property Name="Active" Type="tinyint" />
         </EntityType>
         <EntityType Name="SaleCategory">
           <Key>
@@ -199,17 +204,19 @@
             <PropertyRef Name="SaleId" />
           </Key>
           <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MaterialId" Type="int" />
-          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MaterialId" Type="int" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DLP" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="BillNo" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BillNo" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedOn" Type="date" />
-          <Property Name="GodownId" Type="smallint" />
+          <Property Name="GodownId" Type="smallint" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="date" />
+          <Property Name="Active" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="SaleType">
           <Key>
@@ -255,8 +262,61 @@
           <Property Name="UnitId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UnitName" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EphraimTraders.dbo.BillDetailsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BillDetailsView">
+          <Key>
+            <PropertyRef Name="BillNo" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="MaterialId" />
+            <PropertyRef Name="Quantity" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="GodownName" />
+            <PropertyRef Name="GodownId" />
+            <PropertyRef Name="Rate" />
+            <PropertyRef Name="Active" />
+          </Key>
+          <Property Name="BillNo" Type="int" Nullable="false" />
+          <Property Name="RetailerId" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MaterialId" Type="int" Nullable="false" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="250" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DLP" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GodownName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GodownId" Type="smallint" Nullable="false" />
+          <Property Name="GSTApplied" Type="tinyint" />
+          <Property Name="SaleTypeId" Type="int" />
+          <Property Name="SaleCategoryId" Type="int" />
+          <Property Name="GSTPercentage" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="GSTAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DiscountApplied" Type="tinyint" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ShowGSTNo" Type="tinyint" />
+          <Property Name="Contact" Type="varchar" MaxLength="20" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Active" Type="tinyint" Nullable="false" />
+          <Property Name="BillStatus" Type="tinyint" />
+          <Property Name="SaleDate" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ReorderRequired">
+          <Key>
+            <PropertyRef Name="MaterialId" />
+          </Key>
+          <Property Name="MaterialId" Type="int" Nullable="false" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="250" />
+          <Property Name="ReorderLevel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SoldQuantity" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="TotalIncomingQuantity" Type="int" />
+          <Property Name="QIH" Type="decimal" Precision="38" Scale="2" />
+        </EntityType>
         <Association Name="FK__Bills__BillStatu__72C60C4A">
-          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
           <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Status">
@@ -268,7 +328,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Bills__RetailerI__6A30C649">
-          <End Role="SupplierRetailer" Type="Self.SupplierRetailer" Multiplicity="0..1" />
+          <End Role="SupplierRetailer" Type="Self.SupplierRetailer" Multiplicity="1" />
           <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SupplierRetailer">
@@ -280,7 +340,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Bills__SaleCateg__6B24EA82">
-          <End Role="SaleCategory" Type="Self.SaleCategory" Multiplicity="0..1" />
+          <End Role="SaleCategory" Type="Self.SaleCategory" Multiplicity="1" />
           <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SaleCategory">
@@ -292,7 +352,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Bills__SaleTypeI__6C190EBB">
-          <End Role="SaleType" Type="Self.SaleType" Multiplicity="0..1" />
+          <End Role="SaleType" Type="Self.SaleType" Multiplicity="1" />
           <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SaleType">
@@ -328,7 +388,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Sales__BillNo__00200768">
-          <End Role="Bills" Type="Self.Bills" Multiplicity="0..1" />
+          <End Role="Bills" Type="Self.Bills" Multiplicity="1" />
           <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bills">
@@ -340,7 +400,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Sales__GodownId__02FC7413">
-          <End Role="Godown" Type="Self.Godown" Multiplicity="0..1" />
+          <End Role="Godown" Type="Self.Godown" Multiplicity="1" />
           <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Godown">
@@ -352,7 +412,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Sales__MaterialI__7B5B524B">
-          <End Role="Materials" Type="Self.Materials" Multiplicity="0..1" />
+          <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
           <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Materials">
@@ -443,18 +503,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MaterialInventory_Godown">
-          <End Role="SupplierRetailer" Type="Self.SupplierRetailer" Multiplicity="1" />
-          <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SupplierRetailer">
-              <PropertyRef Name="SupplierRetailerId" />
-            </Principal>
-            <Dependent Role="MaterialInventory">
-              <PropertyRef Name="SupplierId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MaterialInventory_GodownId">
           <End Role="Godown" Type="Self.Godown" Multiplicity="1" />
           <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
@@ -464,6 +512,30 @@
             </Principal>
             <Dependent Role="MaterialInventory">
               <PropertyRef Name="GodownId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialInventory_Materials">
+          <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+          <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="MaterialId" />
+            </Principal>
+            <Dependent Role="MaterialInventory">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialInventory_Supplier">
+          <End Role="SupplierRetailer" Type="Self.SupplierRetailer" Multiplicity="0..1" />
+          <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierRetailer">
+              <PropertyRef Name="SupplierRetailerId" />
+            </Principal>
+            <Dependent Role="MaterialInventory">
+              <PropertyRef Name="SupplierId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -502,6 +574,45 @@
           <EntitySet Name="SupplierRetailer" EntityType="Self.SupplierRetailer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplierRetailType" EntityType="Self.SupplierRetailType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BillDetailsView" EntityType="Self.BillDetailsView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BillDetailsView].[BillNo] AS [BillNo], 
+    [BillDetailsView].[RetailerId] AS [RetailerId], 
+    [BillDetailsView].[Name] AS [Name], 
+    [BillDetailsView].[MaterialId] AS [MaterialId], 
+    [BillDetailsView].[DisplayName] AS [DisplayName], 
+    [BillDetailsView].[Quantity] AS [Quantity], 
+    [BillDetailsView].[Discount] AS [Discount], 
+    [BillDetailsView].[DLP] AS [DLP], 
+    [BillDetailsView].[Amount] AS [Amount], 
+    [BillDetailsView].[GodownName] AS [GodownName], 
+    [BillDetailsView].[GodownId] AS [GodownId], 
+    [BillDetailsView].[GSTApplied] AS [GSTApplied], 
+    [BillDetailsView].[SaleTypeId] AS [SaleTypeId], 
+    [BillDetailsView].[SaleCategoryId] AS [SaleCategoryId], 
+    [BillDetailsView].[GSTPercentage] AS [GSTPercentage], 
+    [BillDetailsView].[GSTAmount] AS [GSTAmount], 
+    [BillDetailsView].[DiscountApplied] AS [DiscountApplied], 
+    [BillDetailsView].[TotalAmount] AS [TotalAmount], 
+    [BillDetailsView].[GrandTotal] AS [GrandTotal], 
+    [BillDetailsView].[ShowGSTNo] AS [ShowGSTNo], 
+    [BillDetailsView].[Contact] AS [Contact], 
+    [BillDetailsView].[Rate] AS [Rate], 
+    [BillDetailsView].[Active] AS [Active], 
+    [BillDetailsView].[BillStatus] AS [BillStatus], 
+    [BillDetailsView].[SaleDate] AS [SaleDate]
+    FROM [dbo].[BillDetailsView] AS [BillDetailsView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ReorderRequired" EntityType="Self.ReorderRequired" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ReorderRequired].[MaterialId] AS [MaterialId], 
+    [ReorderRequired].[DisplayName] AS [DisplayName], 
+    [ReorderRequired].[ReorderLevel] AS [ReorderLevel], 
+    [ReorderRequired].[SoldQuantity] AS [SoldQuantity], 
+    [ReorderRequired].[TotalIncomingQuantity] AS [TotalIncomingQuantity], 
+    [ReorderRequired].[QIH] AS [QIH]
+    FROM [dbo].[ReorderRequired] AS [ReorderRequired]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Bills__BillStatu__72C60C4A" Association="Self.FK__Bills__BillStatu__72C60C4A">
             <End Role="Status" EntitySet="Status" />
             <End Role="Bills" EntitySet="Bills" />
@@ -562,12 +673,16 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_MaterialInventory_Godown" Association="Self.FK_MaterialInventory_Godown">
-            <End Role="SupplierRetailer" EntitySet="SupplierRetailer" />
-            <End Role="MaterialInventory" EntitySet="MaterialInventory" />
-          </AssociationSet>
           <AssociationSet Name="FK_MaterialInventory_GodownId" Association="Self.FK_MaterialInventory_GodownId">
             <End Role="Godown" EntitySet="Godown" />
+            <End Role="MaterialInventory" EntitySet="MaterialInventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialInventory_Materials" Association="Self.FK_MaterialInventory_Materials">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="MaterialInventory" EntitySet="MaterialInventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialInventory_Supplier" Association="Self.FK_MaterialInventory_Supplier">
+            <End Role="SupplierRetailer" EntitySet="SupplierRetailer" />
             <End Role="MaterialInventory" EntitySet="MaterialInventory" />
           </AssociationSet>
           <AssociationSet Name="FK_MaterialInventory_TransferToGodown" Association="Self.FK_MaterialInventory_TransferToGodown">
@@ -575,7 +690,8 @@
             <End Role="MaterialInventory" EntitySet="MaterialInventory" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EphraimTradersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -643,29 +759,29 @@
             <PropertyRef Name="BillNo" />
           </Key>
           <Property Name="BillNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SaleDate" Type="DateTime" Precision="0" />
-          <Property Name="RetailerId" Type="Int32" />
-          <Property Name="SaleCategoryId" Type="Int32" />
-          <Property Name="SaleTypeId" Type="Int32" />
-          <Property Name="GSTApplied" Type="Byte" />
-          <Property Name="DiscountApplied" Type="Byte" />
+          <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RetailerId" Type="Int32" Nullable="false" />
+          <Property Name="SaleCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SaleTypeId" Type="Int32" Nullable="false" />
+          <Property Name="GSTApplied" Type="Byte" Nullable="false" />
+          <Property Name="GSTPercentage" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GSTAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DiscountApplied" Type="Byte" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="0" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="0" />
-          <Property Name="BillStatus" Type="Byte" />
+          <Property Name="BillStatus" Type="Byte" Nullable="false" />
           <Property Name="PaidAmt" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="BalanceAmt" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ShowGSTNo" Type="Byte" />
           <NavigationProperty Name="Status" Relationship="Self.FK__Bills__BillStatu__72C60C4A" FromRole="Bills" ToRole="Status" />
           <NavigationProperty Name="SupplierRetailer" Relationship="Self.FK__Bills__RetailerI__6A30C649" FromRole="Bills" ToRole="SupplierRetailer" />
           <NavigationProperty Name="SaleCategory" Relationship="Self.FK__Bills__SaleCateg__6B24EA82" FromRole="Bills" ToRole="SaleCategory" />
           <NavigationProperty Name="SaleType" Relationship="Self.FK__Bills__SaleTypeI__6C190EBB" FromRole="Bills" ToRole="SaleType" />
           <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__BillNo__00200768" FromRole="Bills" ToRole="Sales" />
-          <Property Name="GSTPercentage" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ShowGSTNo" Type="Byte" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -710,8 +826,8 @@
           <Property Name="GodownName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Active" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__GodownId__02FC7413" FromRole="Godown" ToRole="Sales" />
-          <NavigationProperty Name="MaterialInventories" Relationship="EphraimTradersModel.FK_MaterialInventory_GodownId" FromRole="Godown" ToRole="MaterialInventory" />
-          <NavigationProperty Name="MaterialInventories1" Relationship="EphraimTradersModel.FK_MaterialInventory_TransferToGodown" FromRole="Godown" ToRole="MaterialInventory" />
+          <NavigationProperty Name="MaterialInventories" Relationship="Self.FK_MaterialInventory_GodownId" FromRole="Godown" ToRole="MaterialInventory" />
+          <NavigationProperty Name="MaterialInventories1" Relationship="Self.FK_MaterialInventory_TransferToGodown" FromRole="Godown" ToRole="MaterialInventory" />
         </EntityType>
         <EntityType Name="GSTPercentage">
           <Key>
@@ -736,18 +852,23 @@
           <Property Name="InventoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaterialId" Type="Int32" Nullable="false" />
           <Property Name="GodownId" Type="Int16" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="AddTransfer" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TransferToGodown" Type="Int16" />
           <Property Name="Comments" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="SupplierId" Type="Int32" Nullable="false" />
-          <Property Name="AddTransfer" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="TransferToGodown" Type="Int16" />
-          <NavigationProperty Name="Godown" Relationship="EphraimTradersModel.FK_MaterialInventory_GodownId" FromRole="MaterialInventory" ToRole="Godown" />
-          <NavigationProperty Name="Godown1" Relationship="EphraimTradersModel.FK_MaterialInventory_TransferToGodown" FromRole="MaterialInventory" ToRole="Godown" />
-          <NavigationProperty Name="SupplierRetailer" Relationship="EphraimTradersModel.FK_MaterialInventory_Godown" FromRole="MaterialInventory" ToRole="SupplierRetailer" />
+          <Property Name="Active" Type="Byte" />
+          <NavigationProperty Name="Godown" Relationship="Self.FK_MaterialInventory_GodownId" FromRole="MaterialInventory" ToRole="Godown" />
+          <NavigationProperty Name="Godown1" Relationship="Self.FK_MaterialInventory_TransferToGodown" FromRole="MaterialInventory" ToRole="Godown" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_MaterialInventory_Materials" FromRole="MaterialInventory" ToRole="Materials" />
+          <NavigationProperty Name="SupplierRetailer" Relationship="Self.FK_MaterialInventory_Supplier" FromRole="MaterialInventory" ToRole="SupplierRetailer" />
         </EntityType>
         <EntityType Name="Material">
           <Key>
@@ -773,7 +894,9 @@
           <Property Name="BoxQty" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ItemCategoryId" Type="Int16" />
           <Property Name="DisplayName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Byte" />
           <NavigationProperty Name="ItemCategory" Relationship="Self.FK__Materials__ItemC__6225902D" FromRole="Materials" ToRole="ItemCategory" />
+          <NavigationProperty Name="MaterialInventories" Relationship="Self.FK_MaterialInventory_Materials" FromRole="Materials" ToRole="MaterialInventory" />
           <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__MaterialI__7B5B524B" FromRole="Materials" ToRole="Sales" />
         </EntityType>
         <EntityType Name="SaleCategory">
@@ -789,17 +912,19 @@
             <PropertyRef Name="SaleId" />
           </Key>
           <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MaterialId" Type="Int32" />
-          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MaterialId" Type="Int32" Nullable="false" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="DLP" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BillNo" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BillNo" Type="Int32" Nullable="false" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="0" />
-          <Property Name="GodownId" Type="Int16" />
+          <Property Name="GodownId" Type="Int16" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+          <Property Name="Active" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Bill" Relationship="Self.FK__Sales__BillNo__00200768" FromRole="Sales" ToRole="Bills" />
           <NavigationProperty Name="Godown" Relationship="Self.FK__Sales__GodownId__02FC7413" FromRole="Sales" ToRole="Godown" />
           <NavigationProperty Name="Material" Relationship="Self.FK__Sales__MaterialI__7B5B524B" FromRole="Sales" ToRole="Materials" />
@@ -837,8 +962,8 @@
           <Property Name="UpdatedOn" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Bills" Relationship="Self.FK__Bills__RetailerI__6A30C649" FromRole="SupplierRetailer" ToRole="Bills" />
           <NavigationProperty Name="Category1" Relationship="Self.FK__SupplierR__Categ__6AEFE058" FromRole="SupplierRetailer" ToRole="Category" />
+          <NavigationProperty Name="MaterialInventories" Relationship="Self.FK_MaterialInventory_Supplier" FromRole="SupplierRetailer" ToRole="MaterialInventory" />
           <NavigationProperty Name="SupplierRetailType" Relationship="Self.FK__SupplierRe__Type__40058253" FromRole="SupplierRetailer" ToRole="SupplierRetailType" />
-          <NavigationProperty Name="MaterialInventories" Relationship="EphraimTradersModel.FK_MaterialInventory_Godown" FromRole="SupplierRetailer" ToRole="MaterialInventory" />
         </EntityType>
         <EntityType Name="SupplierRetailType">
           <Key>
@@ -854,6 +979,55 @@
           </Key>
           <Property Name="UnitId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UnitName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BillDetailsView">
+          <Key>
+            <PropertyRef Name="BillNo" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="MaterialId" />
+            <PropertyRef Name="Quantity" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="GodownName" />
+            <PropertyRef Name="GodownId" />
+            <PropertyRef Name="Rate" />
+            <PropertyRef Name="Active" />
+          </Key>
+          <Property Name="BillNo" Type="Int32" Nullable="false" />
+          <Property Name="RetailerId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaterialId" Type="Int32" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DLP" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GodownName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GodownId" Type="Int16" Nullable="false" />
+          <Property Name="GSTApplied" Type="Byte" />
+          <Property Name="SaleTypeId" Type="Int32" />
+          <Property Name="SaleCategoryId" Type="Int32" />
+          <Property Name="GSTPercentage" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="GSTAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DiscountApplied" Type="Byte" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ShowGSTNo" Type="Byte" />
+          <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Active" Type="Byte" Nullable="false" />
+          <Property Name="BillStatus" Type="Byte" />
+          <Property Name="SaleDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="ReorderRequired">
+          <Key>
+            <PropertyRef Name="MaterialId" />
+          </Key>
+          <Property Name="MaterialId" Type="Int32" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ReorderLevel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SoldQuantity" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="TotalIncomingQuantity" Type="Int32" />
+          <Property Name="QIH" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -884,7 +1058,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Bills__BillStatu__72C60C4A">
-          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
           <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Status">
@@ -896,7 +1070,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Bills__RetailerI__6A30C649">
-          <End Role="SupplierRetailer" Type="Self.SupplierRetailer" Multiplicity="0..1" />
+          <End Role="SupplierRetailer" Type="Self.SupplierRetailer" Multiplicity="1" />
           <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SupplierRetailer">
@@ -908,7 +1082,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Bills__SaleCateg__6B24EA82">
-          <End Role="SaleCategory" Type="Self.SaleCategory" Multiplicity="0..1" />
+          <End Role="SaleCategory" Type="Self.SaleCategory" Multiplicity="1" />
           <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SaleCategory">
@@ -920,7 +1094,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Bills__SaleTypeI__6C190EBB">
-          <End Role="SaleType" Type="Self.SaleType" Multiplicity="0..1" />
+          <End Role="SaleType" Type="Self.SaleType" Multiplicity="1" />
           <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SaleType">
@@ -932,7 +1106,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Sales__BillNo__00200768">
-          <End Role="Bills" Type="Self.Bill" Multiplicity="0..1" />
+          <End Role="Bills" Type="Self.Bill" Multiplicity="1" />
           <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bills">
@@ -968,7 +1142,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Sales__GodownId__02FC7413">
-          <End Role="Godown" Type="Self.Godown" Multiplicity="0..1" />
+          <End Role="Godown" Type="Self.Godown" Multiplicity="1" />
           <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Godown">
@@ -976,6 +1150,30 @@
             </Principal>
             <Dependent Role="Sales">
               <PropertyRef Name="GodownId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialInventory_GodownId">
+          <End Role="Godown" Type="Self.Godown" Multiplicity="1" />
+          <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Godown">
+              <PropertyRef Name="GodownId" />
+            </Principal>
+            <Dependent Role="MaterialInventory">
+              <PropertyRef Name="GodownId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialInventory_TransferToGodown">
+          <End Role="Godown" Type="Self.Godown" Multiplicity="0..1" />
+          <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Godown">
+              <PropertyRef Name="GodownId" />
+            </Principal>
+            <Dependent Role="MaterialInventory">
+              <PropertyRef Name="TransferToGodown" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -991,8 +1189,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MaterialInventory_Materials">
+          <End Role="Materials" Type="Self.Material" Multiplicity="1" />
+          <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="MaterialId" />
+            </Principal>
+            <Dependent Role="MaterialInventory">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialInventory_Supplier">
+          <End Role="SupplierRetailer" Type="Self.SupplierRetailer" Multiplicity="0..1" />
+          <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierRetailer">
+              <PropertyRef Name="SupplierRetailerId" />
+            </Principal>
+            <Dependent Role="MaterialInventory">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Sales__MaterialI__7B5B524B">
-          <End Role="Materials" Type="Self.Material" Multiplicity="0..1" />
+          <End Role="Materials" Type="Self.Material" Multiplicity="1" />
           <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Materials">
@@ -1019,7 +1241,7 @@
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="EphraimTradersEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EphraimTradersEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -1041,6 +1263,8 @@
           <EntitySet Name="SupplierRetailers" EntityType="Self.SupplierRetailer" />
           <EntitySet Name="SupplierRetailTypes" EntityType="Self.SupplierRetailType" />
           <EntitySet Name="Units" EntityType="Self.Unit" />
+          <EntitySet Name="BillDetailsViews" EntityType="Self.BillDetailsView" />
+          <EntitySet Name="ReorderRequireds" EntityType="Self.ReorderRequired" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -1081,9 +1305,25 @@
             <End Role="Godown" EntitySet="Godowns" />
             <End Role="Sales" EntitySet="Sales" />
           </AssociationSet>
+          <AssociationSet Name="FK_MaterialInventory_GodownId" Association="Self.FK_MaterialInventory_GodownId">
+            <End Role="Godown" EntitySet="Godowns" />
+            <End Role="MaterialInventory" EntitySet="MaterialInventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialInventory_TransferToGodown" Association="Self.FK_MaterialInventory_TransferToGodown">
+            <End Role="Godown" EntitySet="Godowns" />
+            <End Role="MaterialInventory" EntitySet="MaterialInventories" />
+          </AssociationSet>
           <AssociationSet Name="FK__Materials__ItemC__6225902D" Association="Self.FK__Materials__ItemC__6225902D">
             <End Role="ItemCategory" EntitySet="ItemCategories" />
             <End Role="Materials" EntitySet="Materials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialInventory_Materials" Association="Self.FK_MaterialInventory_Materials">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="MaterialInventory" EntitySet="MaterialInventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialInventory_Supplier" Association="Self.FK_MaterialInventory_Supplier">
+            <End Role="SupplierRetailer" EntitySet="SupplierRetailers" />
+            <End Role="MaterialInventory" EntitySet="MaterialInventories" />
           </AssociationSet>
           <AssociationSet Name="FK__Sales__MaterialI__7B5B524B" Association="Self.FK__Sales__MaterialI__7B5B524B">
             <End Role="Materials" EntitySet="Materials" />
@@ -1097,61 +1337,13 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK_MaterialInventory_GodownId" Association="EphraimTradersModel.FK_MaterialInventory_GodownId">
-            <End Role="Godown" EntitySet="Godowns" />
-            <End Role="MaterialInventory" EntitySet="MaterialInventories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MaterialInventory_TransferToGodown" Association="EphraimTradersModel.FK_MaterialInventory_TransferToGodown">
-            <End Role="Godown" EntitySet="Godowns" />
-            <End Role="MaterialInventory" EntitySet="MaterialInventories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MaterialInventory_Godown" Association="EphraimTradersModel.FK_MaterialInventory_Godown">
-            <End Role="SupplierRetailer" EntitySet="SupplierRetailers" />
-            <End Role="MaterialInventory" EntitySet="MaterialInventories" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_MaterialInventory_GodownId">
-          <End Type="EphraimTradersModel.Godown" Role="Godown" Multiplicity="1" />
-          <End Type="EphraimTradersModel.MaterialInventory" Role="MaterialInventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Godown">
-              <PropertyRef Name="GodownId" />
-            </Principal>
-            <Dependent Role="MaterialInventory">
-              <PropertyRef Name="GodownId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MaterialInventory_TransferToGodown">
-          <End Type="EphraimTradersModel.Godown" Role="Godown" Multiplicity="0..1" />
-          <End Type="EphraimTradersModel.MaterialInventory" Role="MaterialInventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Godown">
-              <PropertyRef Name="GodownId" />
-            </Principal>
-            <Dependent Role="MaterialInventory">
-              <PropertyRef Name="TransferToGodown" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MaterialInventory_Godown">
-          <End Type="EphraimTradersModel.SupplierRetailer" Role="SupplierRetailer" Multiplicity="1" />
-          <End Type="EphraimTradersModel.MaterialInventory" Role="MaterialInventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SupplierRetailer">
-              <PropertyRef Name="SupplierRetailerId" />
-            </Principal>
-            <Dependent Role="MaterialInventory">
-              <PropertyRef Name="SupplierId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EphraimTradersModelStoreContainer" CdmEntityContainer="EphraimTradersEntities">
+        <EntityContainerMapping StorageEntityContainer="EphraimTradersModelStoreContainer" CdmEntityContainer="EphraimTradersEntities1">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="EphraimTradersModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -1210,17 +1402,14 @@
           <EntitySetMapping Name="Bills">
             <EntityTypeMapping TypeName="EphraimTradersModel.Bill">
               <MappingFragment StoreEntitySet="Bills">
-                <ScalarProperty Name="ShowGSTNo" ColumnName="ShowGSTNo" />
-                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
-                <ScalarProperty Name="GSTPercentage" ColumnName="GSTPercentage" />
                 <ScalarProperty Name="BillNo" ColumnName="BillNo" />
                 <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
                 <ScalarProperty Name="RetailerId" ColumnName="RetailerId" />
                 <ScalarProperty Name="SaleCategoryId" ColumnName="SaleCategoryId" />
                 <ScalarProperty Name="SaleTypeId" ColumnName="SaleTypeId" />
                 <ScalarProperty Name="GSTApplied" ColumnName="GSTApplied" />
+                <ScalarProperty Name="GSTPercentage" ColumnName="GSTPercentage" />
+                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
                 <ScalarProperty Name="DiscountApplied" ColumnName="DiscountApplied" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -1229,6 +1418,9 @@
                 <ScalarProperty Name="BillStatus" ColumnName="BillStatus" />
                 <ScalarProperty Name="PaidAmt" ColumnName="PaidAmt" />
                 <ScalarProperty Name="BalanceAmt" ColumnName="BalanceAmt" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
+                <ScalarProperty Name="ShowGSTNo" ColumnName="ShowGSTNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1296,18 +1488,22 @@
           <EntitySetMapping Name="MaterialInventories">
             <EntityTypeMapping TypeName="EphraimTradersModel.MaterialInventory">
               <MappingFragment StoreEntitySet="MaterialInventory">
-                <ScalarProperty Name="TransferToGodown" ColumnName="TransferToGodown" />
-                <ScalarProperty Name="AddTransfer" ColumnName="AddTransfer" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="InventoryId" ColumnName="InventoryId" />
                 <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
                 <ScalarProperty Name="GodownId" ColumnName="GodownId" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="AddTransfer" ColumnName="AddTransfer" />
+                <ScalarProperty Name="TransferToGodown" ColumnName="TransferToGodown" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1334,6 +1530,7 @@
                 <ScalarProperty Name="BoxQty" ColumnName="BoxQty" />
                 <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1350,6 +1547,7 @@
               <MappingFragment StoreEntitySet="Sales">
                 <ScalarProperty Name="SaleId" ColumnName="SaleId" />
                 <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="DLP" ColumnName="DLP" />
@@ -1360,6 +1558,7 @@
                 <ScalarProperty Name="GodownId" ColumnName="GodownId" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1409,6 +1608,49 @@
               <MappingFragment StoreEntitySet="Unit">
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BillDetailsViews">
+            <EntityTypeMapping TypeName="EphraimTradersModel.BillDetailsView">
+              <MappingFragment StoreEntitySet="BillDetailsView">
+                <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+                <ScalarProperty Name="RetailerId" ColumnName="RetailerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="DLP" ColumnName="DLP" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="GodownName" ColumnName="GodownName" />
+                <ScalarProperty Name="GodownId" ColumnName="GodownId" />
+                <ScalarProperty Name="GSTApplied" ColumnName="GSTApplied" />
+                <ScalarProperty Name="SaleTypeId" ColumnName="SaleTypeId" />
+                <ScalarProperty Name="SaleCategoryId" ColumnName="SaleCategoryId" />
+                <ScalarProperty Name="GSTPercentage" ColumnName="GSTPercentage" />
+                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
+                <ScalarProperty Name="DiscountApplied" ColumnName="DiscountApplied" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
+                <ScalarProperty Name="ShowGSTNo" ColumnName="ShowGSTNo" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="BillStatus" ColumnName="BillStatus" />
+                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReorderRequireds">
+            <EntityTypeMapping TypeName="EphraimTradersModel.ReorderRequired">
+              <MappingFragment StoreEntitySet="ReorderRequired">
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
+                <ScalarProperty Name="SoldQuantity" ColumnName="SoldQuantity" />
+                <ScalarProperty Name="TotalIncomingQuantity" ColumnName="TotalIncomingQuantity" />
+                <ScalarProperty Name="QIH" ColumnName="QIH" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

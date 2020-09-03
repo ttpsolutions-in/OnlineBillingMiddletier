@@ -12,13 +12,15 @@ ETradersApp.controller("WholeSaleDashboardController", ['PrintService', '$scope'
     //$scope.isAuthenticated = LoginService.isAuthenticated();
     $scope.ID = $routeParams.ID;
     $scope.WholeSaleList = [];
+    $scope.TotalCredit = 0;
     //console.log(LoginService.isAuthenticated());
     var today = new Date();//.toShortFormat();
     console.log(today.setDate(today.getDate() - 1));
     //var todayFormat = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    $scope.searchFromDate = new Date(today);
-    $scope.searchToDate = new Date();
+    $scope.searchFromDate = '';//new Date(today);
+    $scope.searchToDate = '';//new Date();
     $scope.searchBillNo = "";
+    $scope.searchSupplierRetailer = 0;
     $scope.Category = {
         Supplier: 1,
         Customer: 2
@@ -108,10 +110,27 @@ ETradersApp.controller("WholeSaleDashboardController", ['PrintService', '$scope'
 
     };
     $scope.print = function () {
-        PrintService.GetWholeSaleByID($scope.ID);
+        PrintService.GetCustomerBillsNPrint($scope.searchSupplierRetailer);
     }
-        
-    $scope.GetDataForDashboard = function () {
+
+ 
+
+
+    $scope.Export = function () {
+        html2canvas(document.getElementById('tblCustomers'), {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 500
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download("Table.pdf");
+            }
+        });
+    }    
+    $scope.GetDataForDashboard = function (callback) {
         $scope.WholeSaleList = [];
         var lstBill = {
             title: "Bills",
@@ -159,10 +178,11 @@ ETradersApp.controller("WholeSaleDashboardController", ['PrintService', '$scope'
         CommonService.GetListItems(lstBill).then(function (response) {
             if (response && response.data.d.results.length > 0) {
                 $scope.WholeSaleList = response.data.d.results;
-
+                if (callback)
+                    callback();
             }
             $scope.gridOptions.data = $scope.WholeSaleList;
-          //  $scope.hideSpinner();
+            $scope.GetTotalCredit();
         });
     };
 
@@ -264,7 +284,20 @@ ETradersApp.controller("WholeSaleDashboardController", ['PrintService', '$scope'
     $scope.RedirectDashboard = function () {
         $location.path('/');
     };
+    $scope.GetTotalCredit = function () {
+        $scope.TotalCredit = 0;
+        $scope.TotalCash = 0;
 
+        if ($scope.WholeSaleList.length > 0) {
+            angular.forEach($scope.WholeSaleList, function (items) {
+                if (items.SaleType.SaleTypeId == 2)
+                    $scope.TotalCredit += parseFloat(items.TotalAmount);
+                else
+                    $scope.TotalCash += parseFloat(items.TotalAmount);
+            });
+        }
+        //return $scope.TotalCredit.toFixed(2);
+    };
     $scope.init = function () {
         $scope.GetSupplierRetailers();
         $scope.GetGSTPercentage();
@@ -275,7 +308,9 @@ ETradersApp.controller("WholeSaleDashboardController", ['PrintService', '$scope'
             
         }
         else {
-            $scope.GetDataForDashboard();
+            $scope.GetDataForDashboard(function () {
+                $scope.GetTotalCredit();
+            });
         }
     };
 

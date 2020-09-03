@@ -135,6 +135,7 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
                     rowEntity.Amount = result.Amount;
                     rowEntity.IsDiscountApplied = result.IsDiscountApplied;
                 }
+                $scope.GetGrandAmount();
             });
 
         };
@@ -168,7 +169,8 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
             paramdata.GSTApplied = $scope.WholeSale.GSTApplied;
             paramdata.GSTPercentage = $scope.WholeSale.GSTPercentage;
             var results = {};
-            results = CommonService.CalculateGSTNGrandTotal(paramdata);
+            
+            results = CommonService.CalculateGSTNGrandTotal(paramdata.TotalAmount, paramdata.GSTPercentage, paramdata.GSTApplied);
 
             $scope.WholeSale.GrandTotal = results.GrandTotal;
             $scope.WholeSale.GSTAmount = results.GSTAmount;
@@ -252,11 +254,13 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
                         }
                         value.Amount = amount - parseFloat(value.DLP);
                         $scope.WholeSale.TotalAmount = $scope.WholeSale.TotalAmount + parseFloat(value.Amount);
+                        $scope.CalculateGST();
+                        /*
                         if (value.Bill.GSTApplied > 0) {
                             $scope.WholeSale.GSTAmount = $scope.WholeSale.TotalAmount * $scope.WholeSale[0].Bill.GSTPercentage / 100;
                         } else {
                             $scope.WholeSale.GSTAmount = 0;
-                        }
+                        }*/
 
                     });
                     if ($scope.WholeSale[0].Bill.RetailerId != null) {
@@ -349,8 +353,7 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
 
         $scope.SaveNPrint = function (isFormValid) {
             $scope.SubmitItems(isFormValid, function () {
-                PrintService.GetWholeSaleByID($scope.BillNo);
-
+                PrintService.GetSingleBillNPrint($scope.BillNo);
             });
         }
 
@@ -376,7 +379,7 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
         };
 
 
-        $scope.SubmitItems = function (isFormValid) {
+        $scope.SubmitItems = function (isFormValid,callback) {
             try {
                 var isValid = isFormValid;
                 $scope.submitted = !isValid;
@@ -400,7 +403,8 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
                         $scope.RetailerId = $scope.WholeSale[0].Bill.RetailerId;
                         $scope.SaveBillDetails();
                     }
-
+                    if (callback)
+                        callback();
 
                 } else if (!$scope.IsItemSelected && isValid) {
                     toster.pop('warning', "", "Please select Items for submit", 5000, 'trustedHtml');
@@ -430,29 +434,35 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
         };
 
 
-        $scope.SaveBillDetails = function () {
+        $scope.SaveBillDetails = function (mode) {
             try {
                 var saleType = 0;
                 var billStatus = 0;
                 var grandAmount = 0;
                 var balanceAmount = 0;
+                if (mode && mode =='c') {
+                    billStatus = $scope.BillStatus.Cancelled;
+                }
+                else
+                    billStatus = $scope.BillStatus.Active;
+
                 //Cash
                 if ($scope.WholeSale[0].Bill.SaleTypeId == 1 || $scope.WholeSale[0].Bill.SaleTypeId == true) {
                     saleType = $scope.SaleTypeCash;
-                    billStatus = $scope.BillStatus.Active;
-                    grandAmount = $scope.WholeSale.GrandAmount;
+                    //billStatus = $scope.BillStatus.Active;
+                    grandAmount = $scope.WholeSale.TotalAmount;
                     balanceAmount = 0;
                 } else {
                     //Credit
                     saleType = $scope.SaleTypeCredit;
-                    billStatus = $scope.BillStatus.Active;
+                    //billStatus = $scope.BillStatus.Active;
                     grandAmount = 0;
-                    balanceAmount = $scope.WholeSale.GrandAmount;
+                    balanceAmount = $scope.WholeSale.TotalAmount;
                 }
                 var postData = {
                     "RetailerId": $scope.RetailerId,
                     // "SaleCategoryId": $scope.SaleCategoryWholeSale,
-                    "SaleTypeId": saleType,
+                    "SaleTypeId": saleType,                    
                     "GSTApplied": $scope.WholeSale.GSTApplied,
                     "GSTAmount": $scope.WholeSale.GSTAmount.toString(),
                     "GSTPercentage": $scope.GSTPercentage.toString(),
@@ -461,7 +471,7 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
                     "BillStatus": billStatus,               //Cash --> complete, Credit--> pending
                     "PaidAmt": grandAmount.toString(),      //Credit --> 0. cash --> GrandAmount
                     "BalanceAmt": balanceAmount.toString(), // Credit --> GrandAmount ,cash-->0
-                    "GrandTotal": $scope.WholeSale.GrandAmount.toString(),
+                    "GrandTotal": $scope.WholeSale.GrandTotal.toString(),
                     "ShowGSTNo": $scope.WholeSale[0].Bill.ShowGSTNo,
                     "UpdatedOn": new Date()
                 };
@@ -487,13 +497,15 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
 
                                 var salesPostDate = {
                                     "MaterialId": value.MaterialId,//$filter('filter')($scope.MaterialsData, { DisplayName: value.DisplayName }, true)[0].MaterialId,
+                                    "Rate":value.Rate,
                                     "Quantity": value.Quantity.toString(),
                                     "Discount": value.Discount.toString(),
                                     "DLP": value.DLP.toString(),
                                     "Amount": value.Amount.toString(),
                                     "BillNo": $scope.ID,
                                     "GodownId": $filter('filter')($scope.GodownData, { GodownName: value.Godown.GodownName }, true)[0].GodownId,
-                                    "UpdatedOn": new Date()
+                                    "UpdatedOn": new Date(),
+                                    "Active": billStatus
                                 };
                                 if (value.SaleId == 0) {
                                     CommonService.PostData("Sales", salesPostDate).then(function (response1) {

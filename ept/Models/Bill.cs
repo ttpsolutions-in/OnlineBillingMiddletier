@@ -21,23 +21,23 @@ namespace ept.Models
         }
     
         public int BillNo { get; set; }
-        public Nullable<System.DateTime> SaleDate { get; set; }
-        public Nullable<int> RetailerId { get; set; }
-        public Nullable<int> SaleCategoryId { get; set; }
-        public Nullable<int> SaleTypeId { get; set; }
-        public Nullable<byte> GSTApplied { get; set; }
-        public Nullable<byte> DiscountApplied { get; set; }
+        public System.DateTime SaleDate { get; set; }
+        public int RetailerId { get; set; }
+        public int SaleCategoryId { get; set; }
+        public int SaleTypeId { get; set; }
+        public byte GSTApplied { get; set; }
+        public decimal GSTPercentage { get; set; }
+        public decimal GSTAmount { get; set; }
+        public byte DiscountApplied { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
-        public Nullable<byte> BillStatus { get; set; }
+        public byte BillStatus { get; set; }
         public Nullable<decimal> PaidAmt { get; set; }
         public Nullable<decimal> BalanceAmt { get; set; }
-        public Nullable<decimal> GSTPercentage { get; set; }
-        public Nullable<decimal> GSTAmount { get; set; }
-        public Nullable<decimal> TotalAmount { get; set; }
-        public Nullable<decimal> GrandTotal { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal GrandTotal { get; set; }
         public Nullable<byte> ShowGSTNo { get; set; }
     
         public virtual Status Status { get; set; }

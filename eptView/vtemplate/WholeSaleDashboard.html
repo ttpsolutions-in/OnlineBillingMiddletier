@@ -1,4 +1,5 @@
-﻿<style>
+﻿
+<style>
     .nodatatxt {
         position: absolute;
         top: 80px;
@@ -14,8 +15,8 @@
         <b>{{PageTitle}} </b>
     </div>
     <div ng-if="ShowSpinnerStatus" class="loader"></div>
-    <div class="card-body">
-        <form id="wholeSaleDashboad">
+    <div class="card-body" id="tblCustomers">
+        <form id="wholeSaleDashboard">
             <div class="form-row">
                 <div class="form-group col-md-2">
                     <label for="txtOthers">From Date</label>
@@ -34,10 +35,10 @@
                            ng-model="searchBillNo" placeholder="Enter Bill No">
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="SupplierRetailer">Name</label>
+                    <label for="SupplierRetailer">Customer</label>
                     <select id="SupplierRetailer" name="SupplierRetailer" ng-model="searchSupplierRetailer" ng-change="GetContactNo()" class="form-control input-sm"
                             ng-options="item.SupplierRetailerId as item.Name for item in SupplierRetailers" required>
-                        <option value="">-- Select --</option>
+                        <option value="">--Select--</option>
                     </select>
                 </div>
                 <div class="form-group col-md-3">
@@ -51,8 +52,42 @@
                          class="myGrid" style="height:400px"></div>
                     <div class="nodatatxt" data-ng-if="gridOptions.data.length==0">No data found.</div>
                 </div>
-            </div>
+                <div class="col-12">
+                    <table class="table table-sm table-striped table-bordered table-condensed">
+                        <tr>
+                            <td class="text-right">Total Cash</td>
+                            <td class="text-right"><label>{{TotalCash}}</label></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">Total Credit</td>
+                            <td class="text-right"><label>{{TotalCredit}}</label></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" ng-if="searchSupplierRetailer" class="btn btn-primary col-md-offset-5" ng-click="print()"> <span data-feather="printer"></span>Export to PDF</button></td>
+                            <td><button type="button" ng-if="searchSupplierRetailer" class="btn btn-primary col-md-offset-5" ng-click="paybill()"> <span data-feather="arrow-right-circle"></span>Pay Online</button></td>
+                        </tr>
+                    </table>
+
+                </div>
         </form>
+     
     </div>
 </div>
-
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX " />
+</head>
+<body>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript">
+        feather.replace();
+        var gearPage = document.getElementById('GearPage');
+        if (null != gearPage) {
+            gearPage.parentNode.removeChild(gearPage);
+            document.title = "Error";
+        }
+    </script>
+</body>
+</html>

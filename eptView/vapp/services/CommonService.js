@@ -106,15 +106,15 @@ ETradersApp.factory('CommonService', ['$http', '$alert', 'serviceBaseURL', 'Exce
         return promise;
     };
 
-    CommonService.CalculateGSTNGrandTotal = function (BaseData) {
+    CommonService.CalculateGSTNGrandTotal = function (TotalAmount, GSTPercentage, GSTApplied) {
         var calculatedData = {};
         calculatedData.GrandTotal = 0;
         calculatedData.GSTAmount = 0;
-        calculatedData.GrandTotal = BaseData.TotalAmount;
-        var isChecked = BaseData.GSTApplied;
+        calculatedData.GrandTotal = TotalAmount;
+        var isChecked = GSTApplied;
         if (isChecked) {
-            calculatedData.GSTAmount = (parseFloat(BaseData.TotalAmount) * (parseFloat(BaseData.GSTPercentage) / 100)).toFixed(2);
-            calculatedData.GrandTotal = (parseFloat(BaseData.TotalAmount) + parseFloat(calculatedData.GSTAmount)).toFixed(2);
+            calculatedData.GSTAmount = (parseFloat(TotalAmount) * (parseFloat(GSTPercentage) / 100)).toFixed(2);
+            calculatedData.GrandTotal = (parseFloat(TotalAmount) + parseFloat(calculatedData.GSTAmount)).toFixed(2);
         } else {
             calculatedData.GrandTotal = parseFloat(calculatedData.GrandTotal).toFixed(2);
             calculatedData.GSTAmount = 0;
@@ -123,7 +123,7 @@ ETradersApp.factory('CommonService', ['$http', '$alert', 'serviceBaseURL', 'Exce
     };
 
     CommonService.GetGodowns = function () {
-        var GodownData = {};
+        var GodownData = [];
         var lstItems = {
             title: "Godowns",
             fields: ["GodownId", "GodownName"],
@@ -137,6 +137,7 @@ ETradersApp.factory('CommonService', ['$http', '$alert', 'serviceBaseURL', 'Exce
             }
             return GodownData;
         });
+        //return promise;
     };
 
     CommonService.CalculateRowTotalAmount = function (rate,quantity,discount,DLP) {
@@ -153,8 +154,34 @@ ETradersApp.factory('CommonService', ['$http', '$alert', 'serviceBaseURL', 'Exce
         } else {
             totalAmount = amount;
         }
-        result.Amount = parseFloat(totalAmount).toFixed(2) - parseFloat(DLP.toFixed(2));
+        if (DLP)
+            result.Amount = (parseFloat(totalAmount) - parseFloat(DLP)).toFixed(2);
+        else
+            result.Amount = parseFloat(totalAmount).toFixed(2);
+
         return result;
+    }
+    CommonService.getCategory = function () {
+        return Category = {
+            Supplier: 2,
+            Customer: 1
+        };
+    } 
+    CommonService.getAddTransfer = function () {
+        return AddTransfer = [{
+            type: "Add"
+        },
+        {
+            type: "Transfer"
+        }]
+    }
+    CommonService.getPaymentStatus = function () {
+        return PaymentStatus = [{
+            type: "Paid"
+        },
+        {
+            type: "Pending"
+        }]
     }
     return CommonService;
 }]);

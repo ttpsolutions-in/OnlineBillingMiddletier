@@ -17,6 +17,7 @@ namespace ept.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Material()
         {
+            this.MaterialInventories = new HashSet<MaterialInventory>();
             this.Sales = new HashSet<Sale>();
         }
     
@@ -40,8 +41,11 @@ namespace ept.Models
         public Nullable<decimal> BoxQty { get; set; }
         public Nullable<short> ItemCategoryId { get; set; }
         public string DisplayName { get; set; }
+        public Nullable<byte> Active { get; set; }
     
         public virtual ItemCategory ItemCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MaterialInventory> MaterialInventories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sales { get; set; }
     }

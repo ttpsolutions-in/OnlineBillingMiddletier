@@ -19,7 +19,7 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
         $scope.GodownData = {};
         $scope.SupplierCustomers = [];
         $scope.ItemCatogoryList = [];
-        $scope.ItemCatogoryId = 0;
+        $scope.ItemCategoryId = 0;
         $scope.submitted = false;
         $scope.ItemLists = [];
         $scope.Category = {
@@ -50,12 +50,13 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                     editDropdownValueLabel: 'DisplayName', editDropdownIdLabel: 'DisplayName'
                 },
                 {
-                    displayName: 'Godown', field: 'GodownId', cellTooltip: true, enableCellEdit: true,
-                    editableCellTemplate: 'ui-grid/dropdownEditor', editDropdownValueLabel: 'GodownName', editDropdownIdLabel: 'GodownName',
-                    cellClass: 'text-left', headerCellClass: 'text-center'
+                    displayName: 'Quantity', field: 'Quantity', type: 'number', enableCellEdit: true, enableCellEditOnFocus: true, cellTooltip: true,
+                    cellClass: function (grid, row) { return row.entity.Quantity < 0 ? 'text-right text-danger' : 'text-right'; },
+                    editableCellTemplate: '<input type="number" min="1" required ui-grid-editor ng-model="MODEL_COL_FIELD"><div class="invalid-feedback">Value should be greater than zero.</div>',
+                    headerCellClass: 'text-center'
                 },
                 {
-                    displayName: 'Quantity', field: 'Quantity', type: 'number', enableCellEdit: true, enableCellEditOnFocus: true, cellTooltip: true,
+                    displayName: 'Amount', field: 'Amount', type: 'number', enableCellEdit: true, enableCellEditOnFocus: true, cellTooltip: true,
                     cellClass: function (grid, row) { return row.entity.Quantity < 0 ? 'text-right text-danger' : 'text-right'; },
                     editableCellTemplate: '<input type="number" min="1" required ui-grid-editor ng-model="MODEL_COL_FIELD"><div class="invalid-feedback">Value should be greater than zero.</div>',
                     headerCellClass: 'text-center'
@@ -66,8 +67,17 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                     cellClass: 'text-left', headerCellClass: 'text-center'
                 },
                 {
+                    displayName: 'Payment Status', field: 'PaymentStatus', enableCellEdit: true, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center',
+                    editableCellTemplate: 'ui-grid/dropdownEditor', editDropdownValueLabel: 'type', editDropdownIdLabel: 'type'
+                },
+                {
                     displayName: 'Add Transfer', field: 'AddTransfer', enableCellEdit: true, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center',
                     editableCellTemplate: 'ui-grid/dropdownEditor', editDropdownValueLabel: 'type', editDropdownIdLabel: 'type'
+                },
+                {
+                    displayName: 'Godown', field: 'GodownId', cellTooltip: true, enableCellEdit: true,
+                    editableCellTemplate: 'ui-grid/dropdownEditor', editDropdownValueLabel: 'GodownName', editDropdownIdLabel: 'GodownName',
+                    cellClass: 'text-left', headerCellClass: 'text-center'
                 },
                 {
                     displayName: 'Transfer To', field: 'TransferToGodown', cellTooltip: true, enableCellEdit: true,
@@ -88,6 +98,9 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                 },
                 {
                     name: 'StoreMaterialId', field: 'StoreMaterialId', visible: false
+                },
+                {
+                    name: 'StoreMaterialCategoryId', field: 'MaterialCategoryId', visible: false
                 }
             ],
             data: []
@@ -100,15 +113,34 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
             $scope.gridApi = gridApi;
 
             gridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
-                //$scope.showSpinner();
-                var tempMateriallist = GlobalVariableService.getMaterialList();
-                $scope.currentMaterialLst = $filter('filter')(tempMateriallist, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
-                $scope.gridOptions.columnDefs[1].editDropdownOptionsArray = $filter('filter')($scope.currentMaterialLst, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
-                $scope.gridOptions.columnDefs[2].editDropdownOptionsArray = $scope.GodownData;
-                $scope.gridOptions.columnDefs[4].editDropdownOptionsArray = $scope.SupplierCustomers;
-                $scope.gridOptions.columnDefs[5].editDropdownOptionsArray = $scope.AddRemove;
-                $scope.gridOptions.columnDefs[6].editDropdownOptionsArray = $scope.GodownData;
-                //$scope.hideSpinner();
+                var CategoryId = 0;
+                                
+                switch (newRowCol.col.field) {
+                    case "DisplayName":
+                        if (newRowCol.row.entity.MaterialCategoryId == undefined)
+                            CategoryId = $scope.ItemCategoryId;
+                        else
+                            CategoryId = newRowCol.row.entity.MaterialCategoryId;
+                        var tempMateriallist = GlobalVariableService.getMaterialList();
+                        $scope.currentMaterialLst = $filter('filter')(tempMateriallist, { ItemCategoryId: CategoryId }, true);
+                        $scope.gridOptions.columnDefs[1].editDropdownOptionsArray = $scope.currentMaterialLst;
+                            break;                    
+                    case "SupplierId":
+                        $scope.gridOptions.columnDefs[4].editDropdownOptionsArray = $scope.SupplierCustomers;
+                        break;
+                    case "PaymentStatus":
+                        $scope.gridOptions.columnDefs[5].editDropdownOptionsArray = CommonService.getPaymentStatus();
+                        break;
+                    case "AddTransfer":
+                        $scope.gridOptions.columnDefs[6].editDropdownOptionsArray = CommonService.getAddTransfer();
+                        break;
+                    case "GodownId":
+                        $scope.gridOptions.columnDefs[7].editDropdownOptionsArray = $scope.GodownData;
+                        break;
+                    case "TransferToGodown":
+                        $scope.gridOptions.columnDefs[8].editDropdownOptionsArray = $scope.GodownData;
+                        break;
+                }
             });
 
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -131,6 +163,7 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                             break;
                         case "DisplayName":
                             rowEntity.StoreMaterialId = $filter('filter')($scope.currentMaterialLst, { DisplayName: rowEntity.DisplayName }, true)[0].MaterialId;
+                            rowEntity.MaterialCategoryId = $filter('filter')($scope.currentMaterialLst, { DisplayName: rowEntity.DisplayName }, true)[0].ItemCategoryId;
                             break;
                         case "GodownId":
                             rowEntity.StoreGodownId = $filter('filter')($scope.GodownData, { GodownName: rowEntity.GodownName }, true)[0].GodownId;
@@ -141,7 +174,6 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                         case "SupplierId":
                             rowEntity.StoreSupplierId = $filter('filter')($scope.SupplierCustomers, { Name: rowEntity.SupplierId }, true)[0].SupplierRetailerId;
                             break;
-                        
                     }
                 }
             });
@@ -230,7 +262,9 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                     "DisplayName": '--Select material--',
                     "GodownId": '--select godown--',
                     "Quantity": 1,
+                    "Amount":0,
                     "SupplierId": '--select supplier--',
+                    "Payment Status": "--select status--",
                     "AddTransfer": '--type--',
                     "TransferToGodown": '--select godown--',
                     "Comments": "",
@@ -263,16 +297,19 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                         }
                             var MaterialInventoryData = {
                                 "MaterialId": value.StoreMaterialId,//$filter('filter')($scope.MaterialsData, { DisplayName: value.DisplayName }, true)[0].MaterialId,
+                                "Amount": value.Amount.toString(),
+                                "PaymentStatus": value.PaymentStatus.toString(),
                                 "GodownId": value.StoreGodownId,
                                 "SupplierId": value.StoreSupplierId,
-                                "Quantity": value.Quantity,
+                                "Quantity": value.Quantity.toString(),
                                 "AddTransfer": value.AddTransfer.toString(),
                                 "TransferToGodown": value.StoreTransferToGodownId,
                                 "Comments": value.Comments.toString(),
                                 "CreatedBy": 'Mung',
                                 "UpdatedBy": 'Mung',
                                 "CreatedDate": new Date(),
-                                "UpdatedDate": new Date()
+                                "UpdatedDate": new Date(),
+                                "Active":1
                             }
                             $scope.SaveMaterialInventory(MaterialInventoryData);
                         });
@@ -294,6 +331,8 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                     if (response) {
                         CustomerID = parseInt(response.SupplierRetailerId);
                         deferred.resolve(CustomerID);
+                        toaster.pop('success', "", "Inventory Data Saved Successfully", 5000, 'trustedHtml');
+                        $location.path("/MaterialInventoryDashboard");
                     }
                 }, function (data) {
                     //failure callback

@@ -1,8 +1,10 @@
-ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 'serviceBaseURL', 'ExceptionHandler', 'CommonService', function ($location,$http, $alert, $filter, serviceBaseURL, ExceptionHandler, CommonService) {
+ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 'serviceBaseURL', 'ExceptionHandler', 'CommonService', function ($location, $http, $alert, $filter, serviceBaseURL, ExceptionHandler, CommonService) {
 
     var PrintService = {};
     var WholeSale = [];
-    var GSTPercentage = [];
+    //var GSTPercentage = [];
+    var AllCreditBillNos = [];
+    var AllCreditBillDetail = [];
     var SupplierRetailers = [];
     var Category = {
         Supplier: 1,
@@ -13,94 +15,155 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
     PrintService.printBill = function () {
         var WholeSaleOrRetail = '';
         var colspan = 0;
-        if (WholeSale[0].Bill.SaleCategoryId == 1) {
-            WholeSaleOrRetail = 1
-            colspan = 6
-        }
-        else {
-            colspan = 4
-            WholeSaleOrRetail = 2
-        }
-
-
         var content = "";
-        content = '<html>' +
+        var header = '';
+        var body = '';
+        var footer = '';
+        var strOneBillContent = ''
+        var WholeHeader = '';
+        var WholeFooter = '';
+        WholeHeader = '<html>' +
             '<head>' +
             '<link href="vContent/style/bootstrap.min.css" rel="stylesheet" />  ' +
             '<script type="text/javascript" src="vContent/Scripts/angular.min.js"></script>' +
-            '</head>' +
-            '<body>' +
-            '<div id="dvPrintBill" style="margin:150px">  ' +
-            '<div class="row">  ' +
-            '<div class="col-md-12 text-center">  ' +
-            '<h3 style="text-align:center">EPHRAIM TRADERS</h3>  ' +
-            '<span>Churachandpur, Manipur - 795125</span><br />  '
-        if (WholeSale[0].Bill.ShowGSTNo == 1) {
-            content += '<span>GSTIN - 14BKYPT3527Q1Z2</span> '
-        }
-        content +='<hr class="newhr" />  ' +
-            '</div>  ' +
-            '<div class="col-md-12">  ' +
-            '<span><b>Name: ' + WholeSale[0].Bill.Name + ' </b></span>  ' +
-            '<span class="float-right"><b>Bill No.: ' + WholeSale[0].BillNo + '</b></span><br />  ' +
-            '<span><b>Contact No.: ' + WholeSale[0].Bill.Contact + '</b></span>  ' +
-            '<span class="float-right"><b>Bill Date: ' + $filter('date')(WholeSale[0].Bill.SaleDate, "dd/MM/yyyy") + '</b></span>  ' +
-            '</div>  ' +
-            '</div>  ' +
-            '<hr />  ' +
-            '<div class="form-row">  ' +
-            '<div class="col-md-12 nopadding">  ' +
-            '<table class="table table-sm table-striped table-bordered table-condensed">  ' +
-            '<tr>  ' +
-            '<th style="text-align:center">No.</th>  ' +
-            '<th style="text-align:center">Particular</th>  ' +
-            '<th style="text-align:center">Rate</th>  ' +
-            '<th style="text-align:center">Quantity</th>'
-        if (WholeSaleOrRetail == 1) {
-            content += '<th style="text-align:center">Discount</th>  ' +
-                '<th style="text-align:center">DLP</th>'
-        }
+            '<script type="text/javascript" src="vContent/Scripts/pdfmake.0.1.22.min.js"></script>' +
+            '<script type="text/javascript" src="vContent/Scripts/html2canvas.0.4.1.min.js"></script>' +
+            '<script type="text/javascript">' +
+            'var app = angular.module("MyApp", [])' +
+            'app.controller("MyController", function ($scope) {' +
 
-        content += '<th style="text-align:center">Amount</th>  ' +
-            '</tr>  ';
-        var i;
-        for (i = 0; i < WholeSale.length; i++) {
-            content += '<tr><td align="right">' + (i + 1) + '</td> ' +
-                '<td>' + WholeSale[i].Material.DisplayName + '</td> ' +
-                '<td align="right">' + WholeSale[i].Rate + '</td>  ' +
-                '<td align="right">' + WholeSale[i].Quantity + '</td>  '
-            if (WholeSaleOrRetail == 1) {
-                content += '<td align="right">' + WholeSale[i].Discount + '</td>' +
-                    '<td align="right">' + WholeSale[i].DLP + '</td>  '
+            '$scope.Export = function () {' +
+            'html2canvas(document.getElementById("dvPrintBill"), {' +
+            'onrendered: function (canvas) {' +
+            'var data = canvas.toDataURL();' +
+            'var docDefinition = {' +
+            'content: [{' +
+            'image: data,' +
+            'width: 500' +
+            '}]' +
+            '};' +
+            'pdfMake.createPdf(docDefinition).download("Table.pdf");' +
+            '}' +
+            '});' +
+            '}' +
+            '</script > '
+        '</head>' +
+            '<body ng-app="MyApp" ng-controller="MyController">' +
+            //'<body>' +
+            '<div id="dv" style="margin:150px">  ';
+        var previousBillNo = 0;
+        angular.forEach(WholeSale, function (billDetail, key) {
+
+            var currentBillNo = billDetail.BillNo;
+            // data fetched sorted by billno from database
+            // current and previous billno not equal means we need to prepare a new bill.
+            if (currentBillNo != previousBillNo) {
+
+                if (key != 0) {
+                    strOneBillContent += header + body + footer;
+                    header = '';
+                    body = '';
+                    footer = '';
+                }
+
+                if (billDetail.SaleCategoryId == 1) {
+                    WholeSaleOrRetail = 1
+                    colspan = 6
+                }
+                else {
+                    colspan = 4
+                    WholeSaleOrRetail = 2
+                }
+
+                header += '<div id="dvPrintBill" style="margin:150px"><div class="row">  ' +
+                    '<div class="col-md-12 text-center">  ' +
+                    '<h3 style="text-align:center">EPHRAIM TRADERS</h3>  ' +
+                    '<span>Churachandpur, Manipur - 795125</span><br />  '
+                if (billDetail.ShowGSTNo == 1) {
+                    content += '<span>GSTIN - 14BKYPT3527Q1Z2</span> '
+                }
+                header += '<hr class="newhr" />  ' +
+                    '</div>  ' +
+                    '<div class="col-md-12">  ' +
+                    '<span><b>Name: ' + billDetail.Name + ' </b></span>  ' +
+                    '<span class="float-right"><b>Bill No.: ' + billDetail.BillNo + '</b></span><br />  ' +
+                    '<span><b>Contact No.: ' + billDetail.Contact + '</b></span>  ' +
+                    '<span class="float-right"><b>Bill Date: ' + $filter('date')(billDetail.SaleDate, "dd/MM/yyyy") + '</b></span>  ' +
+                    '</div>  ' +
+                    '</div>  ' +
+                    '<hr />  ' +
+                    '<div class="form-row">  ' +
+                    '<div class="col-md-12 nopadding">  ' +
+                    '<table class="table table-sm table-striped table-bordered table-condensed">  ' +
+                    '<tr>  ' +
+                    '<th style="text-align:center">No.</th>  ' +
+                    '<th style="text-align:center">Particular</th>  ' +
+                    '<th style="text-align:center">Rate</th>  ' +
+                    '<th style="text-align:center">Quantity</th>'
+                if (WholeSaleOrRetail == 1) {
+                    header += '<th style="text-align:center">Discount</th>  ' +
+                        '<th style="text-align:center">DLP</th>'
+                }
+
+                header += '<th style="text-align:center">Amount</th>  ' +
+                    '</tr>  ';
+
+                body += '<tr><td align="right">' + key + 1 + '</td> ' +
+                    '<td>' + billDetail.DisplayName + '</td> ' +
+                    '<td align="right">' + billDetail.Rate + '</td>  ' +
+                    '<td align="right">' + billDetail.Quantity + '</td>  '
+                if (WholeSaleOrRetail == 1) {
+                    body += '<td align="right">' + billDetail.Discount + '</td>' +
+                        '<td align="right">' + billDetail.DLP + '</td>  '
+                }
+                body += '<td align="right">' + billDetail.Amount + '</td></tr>';
+
+                footer += '<tr>  ' +
+                    '<td colspan="' + colspan + '" class="text-right">Total Amount</td>  ' +
+                    '<td class="text-right">' + parseFloat(billDetail.TotalAmount).toFixed(2) + '</td>  ' +
+                    '</tr>  ' +
+                    '<tr>  ' +
+                    '<td colspan="' + colspan + '" class="text-right">  ' +
+                    'GST (' + billDetail.GSTPercentage + ' %)' +
+                    '</td>  ' +
+                    '<td class="text-right"><span>' + billDetail.GSTAmount + '</span></td>  ' +
+                    '</tr>  ' +
+                    '<tr>  ' +
+                    '<td colspan="' + colspan + '" class="text-right"> Grand Total</td>  ' +
+                    '<td class="text-right">' + billDetail.GrandTotal + '</td>' +
+                    '</tr>  ' +
+                    '</table>  ' +
+                    '<br />  ' +
+                    '<span>Customer Signature</span>  ' +
+                    '<span class="float-right">For <b>EPHRAIM TRADERS</b><br /><br /> Authorised Signatory</span>  ' +
+                    '</div>  ' +
+                    '</div>  ' +
+                    '</div>  '
+
+
+            } //end of if billno is same.
+            else if (currentBillNo == previousBillNo) {
+                //var i;
+                //for (i = 0; i < billDetail.length; i++) {
+                body += '<tr><td align="right">' + key + 1 + '</td> ' +
+                    '<td>' + billDetail.DisplayName + '</td> ' +
+                    '<td align="right">' + billDetail.Rate + '</td>  ' +
+                    '<td align="right">' + billDetail.Quantity + '</td>  '
+                if (WholeSaleOrRetail == 1) {
+                    body += '<td align="right">' + billDetail.Discount + '</td>' +
+                        '<td align="right">' + billDetail.DLP + '</td>  '
+                }
+                body += '<td align="right">' + billDetail.Amount + '</td></tr>';
+
             }
-            content += '<td align="right">' + WholeSale[i].TotalAmount + '</td></tr>';
-        };
+            previousBillNo = currentBillNo;
+        });
 
+        strOneBillContent += header + body + footer;
 
-        content += '<tr>  ' +
-            '<td colspan="' + colspan + '" class="text-right">Total Amount</td>  ' +
-            '<td class="text-right">' + parseFloat(WholeSale[0].Bill.TotalAmount).toFixed(2) + '</td>  ' +
-            '</tr>  ' +
-            '<tr>  ' +
-            '<td colspan="' + colspan + '" class="text-right">  ' +
-            'GST (' + WholeSale[0].Bill.GSTPercentage + ' %)' +
-            '</td>  ' +
-            '<td class="text-right"><span>' + WholeSale[0].Bill.GSTAmount + '</span></td>  ' +
-            '</tr>  ' +
-            '<tr>  ' +
-            '<td colspan="' + colspan + '" class="text-right"> Grand Total</td>  ' +
-            //'<td class="text-right">' + (WholeSale[0].Bill.PaidAmt > 0 ? WholeSale[0].Bill.PaidAmt : WholeSale[0].Bill.BalanceAmt) + '</td>' +
-            '<td class="text-right">' + WholeSale[0].Bill.GrandTotal + '</td>' +
-            '</tr>  ' +
-            '</table>  ' +
-            '<br />  ' +
-            '<span>Customer Signature</span>  ' +
-            '<span class="float-right">For <b>EPHRAIM TRADERS</b><br /><br /> Authorised Signatory</span>  ' +
-            '</div>  ' +
-            '</div>  ' +
-            '</div>  ' +
-            '</body>  ' +
-            '</html>  ';
+        WholeFooter += '<table style="width:100%"><tr><td><button type="button" class="btn btn-primary col-md-offset-5" ng-click="Export()"> <span data-feather="printer"></span>Export to PDF</button></td></tr></table></body></html>';
+        content = WholeHeader + strOneBillContent + WholeFooter;
+
 
         var mywindow = window.open('', 'PRINT', 'height=800,width=800');
         mywindow.document.write(content);
@@ -109,84 +172,91 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
         mywindow.print();
         //$timeout(function () {
         $location.path('/');
-        //}, 2000);
+        //AllCreditBillDetail = null;
     };
+    PrintService.GetCustomerBillsNPrint = function (CustomerId) {
+        PrintService.GetWholeSaleByID(CustomerId, function () {
+            PrintService.printBill();
+        });
 
-    PrintService.GetWholeSaleByID = function (BillNo) {
-        
-        PrintService.GetSupplierCustomer(function () {
-            PrintService.GetGSTPercentage(function () {
+        /*
+        var lstBill = {
+            title: "Bills",
+            fields: [
+                "BillNo"
+                //,"RetailerId"
+            ],
+            //lookupFields: [""],
+            filter: ["RetailerId eq " + CustomerId + " and SaleTypeId eq 2"],
+            orderBy: "CreatedOn"
+        };
 
-                var lstBill = {
-                    title: "Sales",
-                    fields: [
-                        "*",
-                        "Bill/SaleDate",
-                        "Bill/BillNo",
-                        "Bill/RetailerId",
-                        "Bill/PaidAmt",
-                        "Bill/BalanceAmt",
-                        "Bill/GSTApplied",
-                        "Bill/GSTAmount",
-                        "Bill/GSTPercentage",
-                        "Bill/TotalAmount",
-                        "Bill/SaleTypeId",
-                        "Bill/SaleCategoryId",
-                        "Bill/ShowGSTNo",
-                        "Bill/GrandTotal",
-                        "Material",
-                        "Godown/GodownName",
-                        "Material/WholeSaleRate",
-                        "Material/RetailRate"
-                    ],
-                    lookupFields: ["Bill", "Material", "Godown"],
-                    filter: ["BillNo eq " + BillNo],
-                    //limitTo: "5000",
-                    orderBy: "CreatedOn desc"
-                };
-
-                CommonService.GetListItems(lstBill).then(function (response) {
-                    if (response && response.data.d.results.length > 0) {
-                        WholeSale = response.data.d.results;
-
-                        WholeSale.TotalAmount = 0;
-
-                        angular.forEach(WholeSale, function (value) {
-                            var rate = 0;
-                            if (value.Bill.SaleCategoryId == 1) {
-                                rate = value.Material.WholeSaleRate * value.Quantity;
-                                value.Rate = value.Material.WholeSaleRate;
-                            } else {
-                                rate = value.Material.RetailRate * value.Quantity;
-                                value.Rate = value.Material.RetailRate;
-                                //  $scope.gridOptionsView.columnDefs[6].visible = false;
-                                //  $scope.gridOptionsView.columnDefs[7].visible = false;
-                            }
-
-                            var amount = 0;
-                            var discountAmt = 0;
-                            if (value.Discount > 0) {
-                                discountAmt = rate / 100 * parseFloat(value.Discount);
-                                amount = parseFloat(rate) - parseFloat(discountAmt);
-                            } else {
-                                amount = rate;
-                            }
-                            value.TotalAmount = amount - parseFloat(value.DLP);
-                            WholeSale.TotalAmount = WholeSale.TotalAmount + parseFloat(value.TotalAmount);
-                            if (value.Bill.GSTApplied > 0) {
-                                WholeSale.GSTAmount = WholeSale.TotalAmount * GSTPercentage[0].GST / 100;
-                            } else {
-                                WholeSale.GSTAmount = 0;
-                            }
-
-                        });
-                        WholeSale[0].Bill.Contact = $filter('filter')(SupplierRetailers, { SupplierRetailerId: WholeSale[0].Bill.RetailerId }, true)[0].Contact;
-                        WholeSale[0].Bill.Name = $filter('filter')(SupplierRetailers, { SupplierRetailerId: WholeSale[0].Bill.RetailerId }, true)[0].Name;
-                        PrintService.printBill();
-                    }
+        CommonService.GetListItems(lstBill).then(function (response) {
+            if (response && response.data.d.results.length > 0) {
+                AllCreditBillNos = response.data.d.results;
+                var strBillNo = '';
+                angular.forEach(AllCreditBillNos, function (value, key) {
+                    if (strBillNo.length < 1)
+                        strBillNo = value.BillNo;
+                    else
+                        strBillNo += "," + value.BillNo;
+                })
+                PrintService.GetWholeSaleByID(strBillNo, function () {
+                    PrintService.printBill();
                 });
-            })
-        })
+            }
+        });
+        */
+    }
+    PrintService.GetSingleBillNPrint = function (BillNo) {
+        PrintService.GetWholeSaleByID(BillNo, function () {
+            PrintService.printBill();
+        });
+    }
+    PrintService.GetWholeSaleByID = function (customerId, callback) {
+
+        var lstBill = {
+            title: "BillDetailsViews",
+            fields: [
+                "BillNo",
+                "Name",
+                "SaleDate",
+                "RetailerId",
+                "MaterialId",
+                "DisplayName",
+                "Quantity",
+                "Discount",
+                "DLP",
+                "Amount",
+                "GodownName",
+                "GodownId",
+                "GSTApplied",
+                "SaleTypeId",
+                "SaleCategoryId",
+                "GSTPercentage",
+                "GSTAmount",
+                "DiscountApplied",
+                "TotalAmount",
+                "GrandTotal",
+                "ShowGSTNo",
+                "Contact",
+                "Rate",
+                "Active",
+                "BillStatus"
+            ],
+            //lookupFields: ["Bill", "Material", "Godown","Material/SupplierRetailer"],
+            filter: ["RetailerId eq " + customerId],
+            //limitTo: "5000",
+            orderBy: "BillNo"
+        };
+
+        CommonService.GetListItems(lstBill).then(function (response) {
+            if (response && response.data.d.results.length > 0) {
+                WholeSale = response.data.d.results;
+                if (callback)
+                    callback();
+            }
+        });
     };
     PrintService.GetSupplierCustomer = function (callback) {
         var lstBill = {

@@ -46,5 +46,7 @@ namespace ept.Models
         public virtual DbSet<SupplierRetailer> SupplierRetailers { get; set; }
         public virtual DbSet<SupplierRetailType> SupplierRetailTypes { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<BillDetailsView> BillDetailsViews { get; set; }
+        public virtual DbSet<ReorderRequired> ReorderRequireds { get; set; }
     }
 }

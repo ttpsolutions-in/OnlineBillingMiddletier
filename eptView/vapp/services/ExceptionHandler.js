@@ -1,5 +1,5 @@
 ﻿//Service to Handle exception
-ETradersApp.factory('ExceptionHandler', ['$alert', function ($alert) {
+ETradersApp.factory('ExceptionHandler', ['$location', '$alert', function ($location,$alert) {
 
     var ExceptionHandler = {};
 
@@ -38,7 +38,7 @@ ETradersApp.factory('ExceptionHandler', ['$alert', function ($alert) {
         }
         else if (response == 'Your Session has been expired, please relogin.') {
             alert("Your session has been expired, to continue please re-login.");
-            window.location.href = "Login.aspx";
+            $location.path = '/login';
         }
         else {
             alert("Unknown error occurs while processing your request, notification of error has been sent to administrator.");

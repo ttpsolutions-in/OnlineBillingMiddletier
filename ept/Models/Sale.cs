@@ -15,17 +15,19 @@ namespace ept.Models
     public partial class Sale
     {
         public int SaleId { get; set; }
-        public Nullable<int> MaterialId { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
+        public int MaterialId { get; set; }
+        public decimal Rate { get; set; }
+        public decimal Quantity { get; set; }
         public Nullable<decimal> Discount { get; set; }
         public Nullable<decimal> DLP { get; set; }
-        public Nullable<decimal> Amount { get; set; }
-        public Nullable<int> BillNo { get; set; }
+        public decimal Amount { get; set; }
+        public int BillNo { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
-        public Nullable<short> GodownId { get; set; }
+        public short GodownId { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
+        public byte Active { get; set; }
     
         public virtual Bill Bill { get; set; }
         public virtual Godown Godown { get; set; }

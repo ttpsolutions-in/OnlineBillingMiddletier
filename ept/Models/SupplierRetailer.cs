@@ -36,8 +36,8 @@ namespace ept.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
         public virtual Category Category1 { get; set; }
-        public virtual SupplierRetailType SupplierRetailType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialInventory> MaterialInventories { get; set; }
+        public virtual SupplierRetailType SupplierRetailType { get; set; }
     }
 }

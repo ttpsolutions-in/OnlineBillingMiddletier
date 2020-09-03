@@ -33,6 +33,8 @@ namespace ept
             builder.EntitySet<Material>("Materials");
             builder.EntitySet<MaterialInventory>("MaterialInventories");
             builder.EntitySet<SupplierRetailType>("SupplierRetailTypes");
+            builder.EntitySet<ReorderRequired>("ReorderRequireds");
+            builder.EntitySet<BillDetailsView>("BillDetailsViews");
 
             config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
 

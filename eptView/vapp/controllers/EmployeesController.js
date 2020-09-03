@@ -1,4 +1,4 @@
-ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants', function ($scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
+ETradersApp.controller("EmployeesController", ['$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants', function ($scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
     $scope.ShowSpinnerStatus = false;
 
     $scope.showSpinner = function () {
@@ -42,26 +42,27 @@ ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$l
                     + '</div><script>feather.replace()</script>'
             },
             { name: 'No.', field: 'SrNo', width: 50, visible: false, enableFiltering: false, enableSorting: true, headerCellClass: 'text-right', cellClass: 'text-right', displayName: '#', cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+(grid.options.paginationPageSize*(grid.options.paginationCurrentPage-1))+1}}</div>' },
-            { width:250, displayName: 'Display Name', field: 'DisplayName', cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
-            { width:250, displayName: 'Category', field: 'ItemCategory.ItemCategoryName', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
-            { width:250, displayName: 'Description', field: 'Descriptioin', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
-            { width: 80, displayName: 'Model', field: 'Model', enableCellEdit: false, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
-            { width: 80, displayName: 'Size 1', field: 'Size1', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            { width: 80, displayName: 'Size 2', field: 'Size2', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            //{ width: 80, displayName: 'Std Pkg', field: 'StdPkg', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            //{ width: 80, displayName: 'Box Qty', field: 'BoxQty', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            //{ width: 100, displayName: 'Retail Rate', field: 'RetailRate', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            //{ width: 100, displayName: 'Whole Sale Rate', field: 'WholeSaleRate', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            //{ width: 100, displayName: 'Costing Price', field: 'CostingPrice', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            //{ width: 80, displayName: 'QIH', field: 'QuantityInHand', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            { width: 100, displayName: 'Reorder Level', field: 'ReorderLevel', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            { width: 100, displayName: 'QIH', field: 'QIH', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width:250, displayName: 'Name', field: 'EmployeeName', cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
+            {
+                width: 250, displayName: 'Address', field: 'Address', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left',
+                headerCellClass: 'text-center'
+            },
+            { width:250, displayName: 'Contact No', field: 'ContactNo', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
+            { width: 80, displayName: 'Email', field: 'Email', enableCellEdit: false, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
+            { width: 80, displayName: 'Designation', field: 'Designation', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width: 80, displayName: 'DOB', field: 'DOB', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width: 80, displayName: 'Salary', field: 'Salary', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width: 80, displayName: 'Blood Group', field: 'BloodGroup', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width: 100, displayName: 'Join Date', field: 'JoinDate', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width: 100, displayName: 'Employment Type', field: 'EmploymentType', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width: 100, displayName: 'EmployeeNo', field: 'EmployeeNo', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width: 80, displayName: 'Role', field: 'Role', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             
         ],
         data: []
     };
 
-    $scope.SaveMaterials = function (isFormValid) {
+    $scope.SaveEmployees = function (isFormValid) {
         try {
             var isValid = isFormValid;
             $scope.submitted = !isValid;
@@ -88,7 +89,7 @@ ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$l
                     , "ItemCategoryId": $scope.Material.ItemCategory.ItemCategoryId
                     , "DisplayName": strItemCategoryName.substring(0, strItemCategoryName.indexOf(' ')) + '-' + strItemDescription.substring(0, strItemDescription.indexOf(' ')) + ' ' + $scope.Material.Model + ' ' + $scope.Material.Size1 + ' ' + $scope.Material.Size2
                 };
-                CommonService.PostData("Materials", values).then(function (response) {
+                CommonService.PostData("EmployeeDetails", values).then(function (response) {
                     console.log("response " + response);
                     if (response.MaterialId > 0) {
                         toaster.pop('success', "", "Material Saved Successfully", 5000, 'trustedHtml');
@@ -103,8 +104,8 @@ ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$l
         }
     };
 
-    //Update Materials
-    $scope.UpdateMaterials = function (isFormValid) {
+    //Update Employees
+    $scope.UpdateEmployees = function (isFormValid) {
         try {
             var isValid = isFormValid;
             $scope.submitted = !isValid;
@@ -129,7 +130,7 @@ ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$l
                     , "ItemCategoryId": $scope.EditMaterial.ItemCategory.ItemCategoryId
                     , "DisplayName": strItemCategoryName.substring(0, strItemCategoryName.indexOf(' ')) + '-' + strItemDescription.substring(0, strItemDescription.indexOf(' ')) + ' ' + $scope.EditMaterial.Model + ' ' + $scope.EditMaterial.Size1 + ' ' + $scope.EditMaterial.Size2
                 };
-                CommonService.UpdateData("Materials", values, $scope.ID).then(function (response) {
+                CommonService.UpdateData("MaterialDetail", values, $scope.ID).then(function (response) {
                     console.log("response " + response);
                     if (response != undefined) {
                         toaster.pop('success', "", "Material Data Updated Successfully", 5000, 'trustedHtml');
@@ -159,7 +160,7 @@ ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$l
     $scope.GetDataForDashboard = function () {
         $scope.WholeSaleList = [];
         var lstMaterial = {
-            title: "Materials",
+            title: "MaterialDetail",
             fields: ["*", "ItemCategory/ItemCategoryName"],
             lookupFields: ["ItemCategory"],
             filter:["1 eq 1"],
@@ -190,9 +191,9 @@ ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$l
             $scope.hideSpinner();
         });
     };
-    $scope.GetMaterialsList = function () {
+    $scope.GetEmployeesList = function () {
         var lstBill = {
-            title: "Materials",
+            title: "MaterialDetail",
             fields: ["*","ItemCategory/ItemCategoryName"],
             lookupFields: ["ItemCategory"],
             limitTo:20,
@@ -211,7 +212,7 @@ ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$l
 
     $scope.GetMaterialById = function () {
         var lstBill = {
-            title: "Materials",
+            title: "MaterialDetail",
             fields: ["*"], 
             filter: ["MaterialId eq " + $scope.ID],
             orderBy: "CreatedOn desc"
@@ -232,7 +233,7 @@ ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$l
     };
 
     $scope.RedirectDashboard = function () {
-        $location.path('/Materials');
+        $location.path('/EmployeeDetails');
     };
 
     $scope.init = function () {
@@ -241,7 +242,7 @@ ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$l
                 $scope.GetMaterialById();
             }
             else {
-                $scope.GetMaterialsList();
+                $scope.GetEmployeeDetailsList();
             }
         });
         

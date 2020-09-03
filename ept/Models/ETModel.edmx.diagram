@@ -4,28 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d5e9f31501f849cfb98a79e6b5afa7e1" Name="Diagram1" ZoomLevel="59">
-        <EntityTypeShape EntityType="EphraimTradersModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.AspNetRole" Width="1.5" PointX="7.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUser" Width="1.5" PointX="10" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Bill" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Category" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.EmployeeDetail" Width="1.5" PointX="12" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.EmployeeRole" Width="1.5" PointX="9.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Godown" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.GSTPercentage" Width="1.5" PointX="7.75" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.ItemCategory" Width="1.5" PointX="3" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.MaterialInventory" Width="1.5" PointX="9.75" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Material" Width="1.5" PointX="5.25" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.SaleCategory" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Sale" Width="1.5" PointX="7.5" PointY="2.625" IsExpanded="true" />
+      <Diagram DiagramId="5065170dd4884fe095c0151355126eb2" Name="Diagram1">
+        <EntityTypeShape EntityType="EphraimTradersModel.C__MigrationHistory" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.AspNetRole" Width="1.5" PointX="10.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUserClaim" Width="1.5" PointX="15.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUserLogin" Width="1.5" PointX="15.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUser" Width="1.5" PointX="13" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Bill" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Category" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.EmployeeDetail" Width="1.5" PointX="15" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.EmployeeRole" Width="1.5" PointX="12.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Godown" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.GSTPercentage" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.ItemCategory" Width="1.5" PointX="6" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.MaterialInventory" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Material" Width="1.5" PointX="8.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.SaleCategory" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Sale" Width="1.5" PointX="10.5" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.SaleType" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.Status" Width="1.5" PointX="3" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.SupplierRetailer" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.SupplierRetailType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Unit" Width="1.5" PointX="11.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.SupplierRetailer" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.SupplierRetailType" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Unit" Width="1.5" PointX="14.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.BillDetailsView" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.ReorderRequired" Width="1.5" PointX="2.75" PointY="15.75" IsExpanded="true" />
         <AssociationConnector Association="EphraimTradersModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK__Bills__BillStatu__72C60C4A" ManuallyRouted="false" />
@@ -36,13 +38,14 @@
         <AssociationConnector Association="EphraimTradersModel.FK__SupplierR__Categ__6AEFE058" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK__EmployeeD__EmpRo__3B40CD36" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK__Sales__GodownId__02FC7413" ManuallyRouted="false" />
+        <AssociationConnector Association="EphraimTradersModel.FK_MaterialInventory_GodownId" ManuallyRouted="false" />
+        <AssociationConnector Association="EphraimTradersModel.FK_MaterialInventory_TransferToGodown" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK__Materials__ItemC__6225902D" ManuallyRouted="false" />
+        <AssociationConnector Association="EphraimTradersModel.FK_MaterialInventory_Materials" ManuallyRouted="false" />
+        <AssociationConnector Association="EphraimTradersModel.FK_MaterialInventory_Supplier" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK__Sales__MaterialI__7B5B524B" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK__SupplierRe__Type__40058253" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="EphraimTradersModel.FK_MaterialInventory_GodownId" />
-        <AssociationConnector Association="EphraimTradersModel.FK_MaterialInventory_TransferToGodown" />
-        <AssociationConnector Association="EphraimTradersModel.FK_MaterialInventory_Godown" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

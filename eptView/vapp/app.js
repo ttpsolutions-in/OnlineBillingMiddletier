@@ -117,6 +117,17 @@ ETradersApp.config(['$routeProvider', '$locationProvider',
         }).when("/AddMaterialInventory", {
             templateUrl: '/vtemplate/AddMaterialInventory.html',
             controller: 'MaterialInventoryController'
+        }).when("/AddMaterialInventory/:ID", {
+            templateUrl: '/vtemplate/AddMaterialInventory.html',
+            controller: 'MaterialInventoryController'
+        }).when("/MaterialInventoryDashboard", {
+            templateUrl: '/vtemplate/MaterialInventoryDashboard.html',
+            controller: 'MaterialInventoryDashboardController'
+        }).when("/MaterialsCheckQIH", {
+            templateUrl: '/vtemplate/MaterialQIHDashboard.html',
+            controller: 'MaterialsCheckQIHController'
+            
+
         });
        
 

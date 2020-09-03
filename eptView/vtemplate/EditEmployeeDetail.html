@@ -1,0 +1,127 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 60px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>Edit Material</b>
+        <span style="float:right"><b>Date -</b> {{TodaysDate}}</span>
+    </div>
+    <div class="card-body">
+        <form name="addMaterialForm">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="ItemCategory">Item Category</label> <span class="text-danger">*</span>
+                    <select id="ItemCategory" name="ItemCategory" ng-model="EditMaterial.ItemCategory" class="form-control"
+                            ng-options="item as item.ItemCategoryName for item in ItemCatogoryList" required>
+                        <option value="">-- Select --</option>
+                    </select>
+                    <p ng-show="submitted && addMaterialForm.ItemCategory.$invalid && addMaterialForm.ItemCategory.$pristine"
+                       class="text-danger">Category is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Discription">Description</label> <span class="text-danger">*</span>
+                    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description"
+                           ng-model="EditMaterial.Descriptioin" required>
+                    <p ng-show="submitted && addMaterialForm.description.$invalid && addMaterialForm.description.$pristine"
+                       class="text-danger">Description is required.</p>
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="RetailRate">Retail Rate</label> <span class="text-danger">*</span>
+                    <input type="number" class="form-control" id="RetailRate" name="RetailRate" string-to-number placeholder="Enter Retail Rate"
+                           ng-model="EditMaterial.RetailRate" required>
+                    <p ng-show="submitted && addMaterialForm.RetailRate.$invalid && addMaterialForm.RetailRate.$pristine"
+                       class="text-danger">Retail Rate is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="WholeSaleRate">WholeSale Rate</label> <span class="text-danger">*</span>
+                    <input type="number" class="form-control" id="WholeSaleRate" string-to-number name="WholeSaleRate" placeholder="Enter WholeSale Rate"
+                           ng-model="EditMaterial.WholeSaleRate" required>
+                    <p ng-show="submitted && addMaterialForm.WholeSaleRate.$invalid && addMaterialForm.WholeSaleRate.$pristine"
+                       class="text-danger">WholeSale Rate is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="CostingPrice">Costing Price</label> <span class="text-danger">*</span>
+                    <input type="number" class="form-control" id="CostingPrice" name="CostingPrice"string-to-number  placeholder="Enter Costing Price"
+                           ng-model="EditMaterial.CostingPrice" required>
+                    <p ng-show="submitted && addMaterialForm.CostingPrice.$invalid && addMaterialForm.CostingPrice.$pristine"
+                       class="text-danger">Costing Price is required.</p>
+                </div>
+                <!--<div class="form-group col-md-4">
+                    <label for="QuantityInHand">Quantity In Hand</label> <span class="text-danger">*</span>
+                    <input type="number" class="form-control" id="QuantityInHand" name="QuantityInHand" string-to-number placeholder="Enter Quantity In Hand"
+                           ng-model="EditMaterial.QuantityInHand" required>
+                    <p ng-show="submitted && addMaterialForm.QuantityInHand.$invalid && addMaterialForm.QuantityInHand.$pristine"
+                       class="text-danger">Quantity In Hand is required.</p>
+                </div>-->
+                <div class="form-group col-md-4">
+                    <label for="ReorderLevel">Reorder Level</label> <span class="text-danger">*</span>
+                    <input type="number" class="form-control" id="ReorderLevel" name="ReorderLevel" string-to-number placeholder="Enter Reorder Level"
+                           ng-model="EditMaterial.ReorderLevel" required>
+                    <p ng-show="submitted && addMaterialForm.ReorderLevel.$invalid && addMaterialForm.ReorderLevel.$pristine"
+                       class="text-danger">Reorder Level is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Product">Product</label>
+                    <input type="text" class="form-control" id="Product" name="Product" placeholder="Enter Product"
+                           ng-model="EditMaterial.Product">
+                    <p ng-show="submitted && addMaterialForm.Product.$invalid && addMaterialForm.Product.$pristine"
+                       class="text-danger">Product is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Model">Model</label>
+                    <input type="text" class="form-control" id="Model" name="Model" placeholder="Enter Model"
+                           ng-model="EditMaterial.Model">
+                    <p ng-show="submitted && addMaterialForm.Model.$invalid && addMaterialForm.Model.$pristine"
+                       class="text-danger">Model is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Size1">Size1</label>
+                    <input type="text" class="form-control" id="Size1" name="Size1" string-to-number placeholder="Enter Size1"
+                           ng-model="EditMaterial.Size1">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Size2">Size2</label>
+                    <input type="text" class="form-control" id="Size2" name="Size2" string-to-number placeholder="Enter Size2"
+                           ng-model="EditMaterial.Size2">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="StdPkg">StdPkg</label>
+                    <input type="number" class="form-control" id="StdPkg" name="StdPkg" string-to-number placeholder="Enter StdPkg"
+                           ng-model="EditMaterial.StdPkg">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="BoxQty">BoxQty</label>
+                    <input type="number" class="form-control" id="BoxQty" name="BoxQty" string-to-number placeholder="Enter BoxQty"
+                           ng-model="EditMaterial.BoxQty">
+                </div>
+            </div>
+            <div><hr /></div>
+            <div class="form-row col-md-offset-5">
+                <button type="button" class="btn btn-primary" ng-click="RedirectDashboard()"><span data-feather="arrow-left"></span> Back</button>&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" ng-click="UpdateMaterials(addMaterialForm.$valid)"><span data-feather="save"></span> Save</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<html><head><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"><meta name="Robots" content="NOINDEX " /></head><body></body>
+                <script type="text/javascript">
+                    feather.replace();
+                 var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+                 </script>
+                 </html>

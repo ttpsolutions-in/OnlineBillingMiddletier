@@ -395,6 +395,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                             angular.forEach($scope.gridOptions.data, function (value, key) {
                                 var salesPostDate = {
                                     "MaterialId": value.MaterialId,//$filter('filter')($scope.MaterialsData, { DisplayName: value.DisplayName }, true)[0].MaterialId,
+                                    "Rate": value.RetailRate.toString(),
                                     "GodownId": $filter('filter')($scope.GodownData, { GodownName: value.GodownId }, true)[0].GodownId,
                                     "Quantity": value.Quantity.toString(),
                                     "Discount": value.Discount.toString(),

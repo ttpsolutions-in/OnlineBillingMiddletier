@@ -62,7 +62,7 @@
                         <tr>
                             <td colspan="4"></td>
                             <td class="text-right">Total Amount</td>
-                            <td class="text-right"><label>{{GetGrandAmount()}}</label></td>
+                            <td class="text-right"><label>{{WholeSale.TotalAmount}}</label></td>
                         </tr>
                         <tr>
                             <td colspan="4">
@@ -96,8 +96,9 @@
             <div class="form-row col-md-offset-5 col-sm-offset-5">
                 <a href="#WholeSaleDashboard" class="btn btn-primary float-right btn-sm"><span data-feather="arrow-left"></span> Back</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-primary" ng-click="SubmitItems(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-primary" ng-click="SaveNPrint()"><span data-feather="save"></span> Save <span data-feather="printer"></span> Print</button>
-                
+                <button type="button" class="btn btn-primary" ng-click="SaveBillDetails('c')"><span data-feather="trash"></span> Cancel Bill</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" ng-click="SaveNPrint(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save <span data-feather="printer"></span> Print</button>
+
             </div>
         </form>
     </div>

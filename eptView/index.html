@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-ng-app="ETradersApp">
 <head>
     <title>Ephraim Traders</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,21 +15,70 @@
     <link href="vContent/style/libs.min.css" rel="stylesheet" />
     <link href="vAsset/Content/bootstrap.min.css" rel="stylesheet" />
     <!--<link href="vAsset/Content/ProjectStyle.css" rel="stylesheet" />-->
+    <style>
+        .loader {
+            border: 10px solid #f3f3f3; /* Light grey */
+            border-top: 10px solid #90ee90; /* Blue */
+            border-bottom: 10px solid #90ee90;
+            border-radius: 10%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
 
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        html, body, container {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+
+        form input.ng-invalid {
+            border-color: red;
+        }
+
+        form input.ng-valid {
+            border-color: transparent;
+        }
+
+        input[type="checkbox"] {
+            margin: 0 0 0 !important;
+        }
+    </style>
 </head>
-<body data-ng-app="ETradersApp">
+<body ng-controller="LoginController">
+    {{authData.authenticationData.IsAuthenticated}}
+    {{authData.authenticationData.userName}}
     <nav class="navbar sticky-top bg-info flex-md-nowrap p-0">
-        <a class="navbar-brand bg-info text-white col-sm-3 col-md-2 mr-0" href="#"><span data-feather="layers"></span> &nbsp; Ephraim Traders</a>
+        <a class="navbar-brand bg-info text-white col-sm-3 col-md-2 mr-0" href="#"><span data-feather="layers"></span> &nbsp; <span style="font-size:25px">Ephraim Traders</span></a>
         <div class="navbar-brand col-sm-6 col-md-8 bg-info"></div>
         <!--<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
-        <div class="navbar-nav table col-sm-3 col-md-2">
+        <div class="navbar-nav table col-sm-3 col-md-2" ng-hide="authData.authenticationData.IsAuthenticated">
             <div class="row pull-right">
                 <a class="col-5 nav-link text-center text-white border border-white" href="#login">Sign in</a>
                 <a class="text-center border border-white col-5 nav-link pull-right text-white" href="#Register">Register</a>
                 <span class="col-2">&nbsp;</span>
             </div>
         </div>
+        <div class="navbar-nav table col-sm-3 col-md-2" ng-show="IsAuthenticated">
+            <div class="row pull-right">
+                <a class="col-5 nav-link text-center text-white border border-white">{{userName}}</a>
+                <a class="text-center border border-white col-5 nav-link pull-right text-white" ng-click="logout()" href="#login">Logout</a>
+                <span class="col-2">&nbsp;</span>
+            </div>
+        </div>
     </nav>
+
     <div class="container-fluid">
         <div class="row">
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -38,36 +87,62 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="#WholeSaleDashboard">
                                 <span data-feather="home"></span>
-                                Bills<span class="sr-only">(current)</span>
+                                Sales<span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#WholeSale">
-                                <span data-feather="file"></span>
+                                <span data-feather="package"></span>
                                 Whole Sale
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#AddRetails">
-                                <span data-feather="file"></span>
+                                <span data-feather="grid"></span>
                                 Retail
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#Materials">
-                                <span data-feather="shopping-cart"></span>
+                                <span data-feather="file"></span>
                                 Materials
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#SupplierRetailers">
+                            <a class="nav-link" href="#ItemCategoryDashboard">
+                                <span data-feather="file"></span>
+                                Material Category
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#MaterialInventoryDashboard">
+                                <span data-feather="file"></span>
+                                Material Inventory
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#MaterialsCheckQIH">
+                                <span data-feather="droplet"></span>
+                                Check Material QIH
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#SupplierCustomer">
                                 <span data-feather="users"></span>
-                                Suppliers / Retailers
+                                Suppliers / Customers
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#GodownDashboard">
+                                <span data-feather="folder"></span>
+                                Godown
                             </a>
                         </li>
                     </ul>
                 </div>
             </nav>
+
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
                 <toaster-container toaster-options="{'time-out': 3000,'position-class': 'toast-top-right'}"></toaster-container>
                 <div data-ng-view=""></div>
@@ -283,22 +358,30 @@
 <script type="text/javascript" src="vContent/Scripts/sweetalert-dev.js"></script>
 <script type="text/javascript" src="vContent/Scripts/SweetAlert.min.js"></script>
 <script type="text/javascript" src="vContent/Scripts/ui-grid.min.js"></script>
-
+<script type="text/javascript" src="vContent/Scripts/ui-grid.cellnav.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-grid.edit.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-grid.validate.min.js"></script>
 <script type="text/javascript" src="vapp/services/AuthData.js"></script>
-<script type="text/javascript" src="vapp/services/AuthenticationService.js"></script>
 <script src="vapp/services/DigestService.js"></script>
 <script type="text/javascript" src="vapp/services/loginService.js"></script>
 <script type="text/javascript" src="vapp/controllers/loginController.js"></script>
 <script type="text/javascript" src="vapp/controllers/RegisterController.js"></script>
-
+<script type="text/javascript" src="vapp/controllers/EditBillController.js"></script>
 <script type="text/javascript" src="vapp/services/ExceptionHandler.js"></script>
+<script type="text/javascript" src="vapp/services/GlobalVariableService.js"></script>
 <script type="text/javascript" src="vapp/services/CommonService.js"></script>
 <script type="text/javascript" src="vapp/services/EtradersService.js"></script>
+<script type="text/javascript" src="vapp/services/PrintService.js"></script>
 <script type="text/javascript" src="vapp/controllers/ManageWholeSaleController.js"></script>
 <script type="text/javascript" src="vapp/controllers/WholeSaleDashboardController.js"></script>
 <script type="text/javascript" src="vapp/controllers/ManageRetailsController.js"></script>
 <script type="text/javascript" src="vapp/controllers/SupplierRetailerController.js"></script>
 <script type="text/javascript" src="vapp/controllers/MaterialsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/ItemCategoryDashboardController.js"></script>
+<script type="text/javascript" src="vapp/controllers/ManageGodown.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialInventoryConstroller.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialInventoryDashboard.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialsCheckQIHController.js"></script>
 <script type="text/javascript">
     ETradersApp.constant("Version", "1");
 

@@ -359,6 +359,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                             angular.forEach($scope.gridOptions.data, function (value, key) {
                                 var salesPostDate = {
                                     "MaterialId": value.MaterialId,//$filter('filter')($scope.MaterialsData, { DisplayName: value.DisplayName }, true)[0].MaterialId,
+                                    "Rate": value.WholeSaleRate.toString(),
                                     "Quantity": value.Quantity.toString(),
                                     "Discount": value.Discount.toString(),
                                     "DLP": value.DLP.toString(),
@@ -392,7 +393,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                 $location.path('/');
             });
         }
-
+       
         $scope.GetWholeSaleByID = function (saleId) {
             try {
                 var lstBill = {
