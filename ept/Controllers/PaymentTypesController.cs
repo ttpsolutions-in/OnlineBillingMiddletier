@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
@@ -21,31 +22,30 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Material>("Materials");
-    builder.EntitySet<Sale>("Sales"); 
+    builder.EntitySet<PaymentType>("PaymentTypes");
+    builder.EntitySet<EmployeeAccount>("EmployeeAccounts"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    [Authorize]
-    public class MaterialsController : ODataController
+    public class PaymentTypesController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
 
-        // GET: odata/Materials
+        // GET: odata/PaymentTypes
         [EnableQuery]
-        public IQueryable<Material> GetMaterials()
+        public IQueryable<PaymentType> GetPaymentTypes()
         {
-            return db.Materials;
+            return db.PaymentTypes;
         }
 
-        // GET: odata/Materials(5)
+        // GET: odata/PaymentTypes(5)
         [EnableQuery]
-        public SingleResult<Material> GetMaterial([FromODataUri] int key)
+        public SingleResult<PaymentType> GetPaymentType([FromODataUri] byte key)
         {
-            return SingleResult.Create(db.Materials.Where(material => material.MaterialId == key));
+            return SingleResult.Create(db.PaymentTypes.Where(paymentType => paymentType.PaymentTypeId == key));
         }
 
-        // PUT: odata/Materials(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<Material> patch)
+        // PUT: odata/PaymentTypes(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] byte key, Delta<PaymentType> patch)
         {
             Validate(patch.GetEntity());
 
@@ -54,21 +54,21 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            PaymentType paymentType = await db.PaymentTypes.FindAsync(key);
+            if (paymentType == null)
             {
                 return NotFound();
             }
 
-            patch.Put(material);
+            patch.Put(paymentType);
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MaterialExists(key))
+                if (!PaymentTypeExists(key))
                 {
                     return NotFound();
                 }
@@ -78,26 +78,26 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(material);
+            return Updated(paymentType);
         }
 
-        // POST: odata/Materials
-        public IHttpActionResult Post(Material material)
+        // POST: odata/PaymentTypes
+        public async Task<IHttpActionResult> Post(PaymentType paymentType)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Materials.Add(material);
-            db.SaveChanges();
+            db.PaymentTypes.Add(paymentType);
+            await db.SaveChangesAsync();
 
-            return Created(material);
+            return Created(paymentType);
         }
 
-        // PATCH: odata/Materials(5)
+        // PATCH: odata/PaymentTypes(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<Material> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] byte key, Delta<PaymentType> patch)
         {
             Validate(patch.GetEntity());
 
@@ -106,21 +106,21 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            PaymentType paymentType = await db.PaymentTypes.FindAsync(key);
+            if (paymentType == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(material);
+            patch.Patch(paymentType);
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MaterialExists(key))
+                if (!PaymentTypeExists(key))
                 {
                     return NotFound();
                 }
@@ -130,29 +130,29 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(material);
+            return Updated(paymentType);
         }
 
-        // DELETE: odata/Materials(5)
-        public IHttpActionResult Delete([FromODataUri] int key)
+        // DELETE: odata/PaymentTypes(5)
+        public async Task<IHttpActionResult> Delete([FromODataUri] byte key)
         {
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            PaymentType paymentType = await db.PaymentTypes.FindAsync(key);
+            if (paymentType == null)
             {
                 return NotFound();
             }
 
-            db.Materials.Remove(material);
-            db.SaveChanges();
+            db.PaymentTypes.Remove(paymentType);
+            await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/Materials(5)/Sales
+        // GET: odata/PaymentTypes(5)/EmployeeAccounts
         [EnableQuery]
-        public IQueryable<Sale> GetSales([FromODataUri] int key)
+        public IQueryable<EmployeeAccount> GetEmployeeAccounts([FromODataUri] byte key)
         {
-            return db.Materials.Where(m => m.MaterialId == key).SelectMany(m => m.Sales);
+            return db.PaymentTypes.Where(m => m.PaymentTypeId == key).SelectMany(m => m.EmployeeAccounts);
         }
 
         protected override void Dispose(bool disposing)
@@ -164,9 +164,9 @@ namespace ept.Controllers
             base.Dispose(disposing);
         }
 
-        private bool MaterialExists(int key)
+        private bool PaymentTypeExists(byte key)
         {
-            return db.Materials.Count(e => e.MaterialId == key) > 0;
+            return db.PaymentTypes.Count(e => e.PaymentTypeId == key) > 0;
         }
     }
 }

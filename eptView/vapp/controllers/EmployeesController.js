@@ -1,4 +1,5 @@
-ETradersApp.controller("EmployeesController", ['$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants', function ($scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
+ETradersApp.controller("EmployeesController", ['$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants',
+    function ($scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
     $scope.ShowSpinnerStatus = false;
 
     $scope.showSpinner = function () {
@@ -13,18 +14,27 @@ ETradersApp.controller("EmployeesController", ['$scope', '$filter', '$http', '$l
 
     $scope.TodaysDate = $filter('date')(new Date(), "dd/MM/yyyy");
     $scope.ID = $routeParams.ID;
-    $scope.MaterialList = [];
-    $scope.EditMaterial = {};
+    $scope.EmployeeList = [];
+        $scope.EditEmployee = {};
+        $scope.Employee = {
+            "EmployeeName": ''
+            , "Address": ''
+            , "ContactNo": ''
+            , "Email": ''
+            , "Designation": 0
+            , "DOB": null
+            , "Salary": 0
+            , "BloodGroup": ''
+            , "EmploymentType1": 0
+            , "EmployeeNo": 0
+            , "JoinDate": null
+            , "EmpRoleId": 0
+            ,"Active":1
+
+        }
     $scope.submitted = false;
     //$scope.ItemCatogoryList = [];
-    $scope.Material = {
-          Product: null
-        , Model: null
-        , Size1: null
-        , Size2: null
-        , StdPkg: null
-        , BoxQty: null
-    };
+    
     $scope.gridOptions = {
         enableFiltering: true,
         enableCellEditOnFocus: false,
@@ -38,25 +48,25 @@ ETradersApp.controller("EmployeesController", ['$scope', '$filter', '$http', '$l
         columnDefs: [
             {
                 name: 'Action', width: 80, enableFiltering: false, cellClass: 'text-center', displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
-                    + '<a id="btnView" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditMaterial/{{row.entity.MaterialId}}" ><span data-feather="edit"></span> </a>'
+                    + '<a id="btnView" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditEmployee/{{row.entity.EmployeeNo}}" ><span data-feather="edit"></span> </a>'
                     + '</div><script>feather.replace()</script>'
             },
-            { name: 'No.', field: 'SrNo', width: 50, visible: false, enableFiltering: false, enableSorting: true, headerCellClass: 'text-right', cellClass: 'text-right', displayName: '#', cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+(grid.options.paginationPageSize*(grid.options.paginationCurrentPage-1))+1}}</div>' },
+            { width: 100, displayName: 'Employee No.', field: 'EmployeeNo', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             { width:250, displayName: 'Name', field: 'EmployeeName', cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
             {
                 width: 250, displayName: 'Address', field: 'Address', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left',
                 headerCellClass: 'text-center'
             },
-            { width:250, displayName: 'Contact No', field: 'ContactNo', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
-            { width: 80, displayName: 'Email', field: 'Email', enableCellEdit: false, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
-            { width: 80, displayName: 'Designation', field: 'Designation', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width:150, displayName: 'Contact No', field: 'ContactNo', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
+            { width: 100,displayName: 'Email', field: 'Email', enableCellEdit: false, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
+            { width: 100, displayName: 'Designation', field: 'EmployeeDesignation.Designation', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             { width: 80, displayName: 'DOB', field: 'DOB', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             { width: 80, displayName: 'Salary', field: 'Salary', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             { width: 80, displayName: 'Blood Group', field: 'BloodGroup', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             { width: 100, displayName: 'Join Date', field: 'JoinDate', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            { width: 100, displayName: 'Employment Type', field: 'EmploymentType', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            { width: 100, displayName: 'EmployeeNo', field: 'EmployeeNo', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            { width: 80, displayName: 'Role', field: 'Role', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width: 100, displayName: 'Employment Type', field: 'EmploymentType.EmploymentTypeName', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            
+            { width: 80, displayName: 'Role', field: 'EmployeeRole.RoleName', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             
         ],
         data: []
@@ -66,33 +76,27 @@ ETradersApp.controller("EmployeesController", ['$scope', '$filter', '$http', '$l
         try {
             var isValid = isFormValid;
             $scope.submitted = !isValid;
-            var strItemCategoryName = $scope.Material.ItemCategory.ItemCategoryName;
-            var strItemDescription = $scope.Material.Description;
-
+           
             if (isValid) {
                 var values = {
-                    "Descriptioin": $scope.Material.Description
-                    //, "Unit": $scope.Material.Unit
-                    //, "NoOfPiecePerUnit": $scope.Material.NoOfPiecePerUnit.toString()
-                    , "RetailRate": $scope.Material.RetailRate.toString()
-                    , "WholeSaleRate": $scope.Material.WholeSaleRate.toString()
-                    , "CostingPrice": $scope.Material.CostingPrice.toString()
-                    //, "QuantityInHand": $scope.Material.QuantityInHand.toString()
-                    , "ReorderLevel": $scope.Material.ReorderLevel.toString()
-                    , "CreatedOn":new Date()
-                    , "Product": $scope.Material.Product
-                    , "Model": $scope.Material.Model
-                    , "Size1": $scope.Material.Size1
-                    , "Size2": $scope.Material.Size2
-                    , "StdPkg": $scope.Material.StdPkg == null ? null :$scope.Material.StdPkg.toString()
-                    , "BoxQty": $scope.Material.BoxQty == null ? null :$scope.Material.BoxQty.toString()
-                    , "ItemCategoryId": $scope.Material.ItemCategory.ItemCategoryId
-                    , "DisplayName": strItemCategoryName.substring(0, strItemCategoryName.indexOf(' ')) + '-' + strItemDescription.substring(0, strItemDescription.indexOf(' ')) + ' ' + $scope.Material.Model + ' ' + $scope.Material.Size1 + ' ' + $scope.Material.Size2
+                    "EmployeeName": $scope.Employee.EmployeeName.toString()
+                    , "Address": $scope.Employee.Address.toString()
+                    , "ContactNo": $scope.Employee.ContactNo.toString()
+                    , "Email": $scope.Employee.Email.toString()
+                    , "DesignationId": $scope.Employee.DesignationId === 0 ? null : $scope.Employee.DesignationId
+                    , "DOB": $scope.Employee.DOB
+                    , "Salary": $scope.Employee.Salary
+                    , "BloodGroup": $scope.Employee.BloodGroup.toString()
+                    , "EmploymentTypeId": $scope.Employee.EmploymentTypeId === 0 ? null: $scope.Employee.EmploymentTypeId
+                    , "JoinDate": $scope.Employee.JoinDate
+                    , "EmpRoleId": $scope.Employee.EmpRoleId === 0 ? null: $scope.Employee.EmpRoleId
+                    ,"Active":1
+                    
                 };
                 CommonService.PostData("EmployeeDetails", values).then(function (response) {
                     console.log("response " + response);
-                    if (response.MaterialId > 0) {
-                        toaster.pop('success', "", "Material Saved Successfully", 5000, 'trustedHtml');
+                    if (response.EmployeeNo > 0) {
+                        toaster.pop('success', "", "Employee Detail Saved Successfully", 5000, 'trustedHtml');
                         $scope.RedirectDashboard();
                     }
                 }, function (data) {
@@ -100,7 +104,7 @@ ETradersApp.controller("EmployeesController", ['$scope', '$filter', '$http', '$l
                 });
             }
         } catch (error) {
-            console.log("Exception caught in the SaveSupplierRetailers function. Exception Logged as " + error.message);
+            console.log("Exception caught in the Save employee detail function. Exception Logged as " + error.message);
         }
     };
 
@@ -109,31 +113,26 @@ ETradersApp.controller("EmployeesController", ['$scope', '$filter', '$http', '$l
         try {
             var isValid = isFormValid;
             $scope.submitted = !isValid;
-            var strItemCategoryName = $scope.EditMaterial.ItemCategory.ItemCategoryName;
-            var strItemDescription = $scope.EditMaterial.Descriptioin;
-
+           
             if (isValid) {
                 var values = {
-                    "Descriptioin": $scope.EditMaterial.Descriptioin
-                    , "RetailRate": $scope.EditMaterial.RetailRate.toString()
-                    , "WholeSaleRate": $scope.EditMaterial.WholeSaleRate.toString()
-                    , "CostingPrice": $scope.EditMaterial.CostingPrice.toString()
-                    //, "QuantityInHand": $scope.EditMaterial.QuantityInHand.toString()
-                    , "ReorderLevel": $scope.EditMaterial.ReorderLevel.toString()
-                    , "UpdatedOn": new Date()
-                    , "Product": $scope.EditMaterial.Product
-                    , "Model": $scope.EditMaterial.Model
-                    , "Size1": $scope.EditMaterial.Size1 
-                    , "Size2": $scope.EditMaterial.Size2 
-                    , "StdPkg": $scope.EditMaterial.StdPkg == null ? null : $scope.EditMaterial.StdPkg.toString()
-                    , "BoxQty": $scope.EditMaterial.BoxQty == null ? null : $scope.EditMaterial.BoxQty.toString()
-                    , "ItemCategoryId": $scope.EditMaterial.ItemCategory.ItemCategoryId
-                    , "DisplayName": strItemCategoryName.substring(0, strItemCategoryName.indexOf(' ')) + '-' + strItemDescription.substring(0, strItemDescription.indexOf(' ')) + ' ' + $scope.EditMaterial.Model + ' ' + $scope.EditMaterial.Size1 + ' ' + $scope.EditMaterial.Size2
+                    "EmployeeName": $scope.EditEmployee.EmployeeName.toString()
+                    , "Address": $scope.EditEmployee.Address.toString()
+                    , "ContactNo": $scope.EditEmployee.ContactNo.toString()
+                    , "Email": $scope.EditEmployee.Email.toString()
+                    , "DesignationId": $scope.EditEmployee.DesignationId
+                    , "DOB": $scope.EditEmployee.DOB
+                    , "Salary": $scope.EditEmployee.Salary
+                    , "BloodGroup": $scope.EditEmployee.BloodGroup.toString()
+                    , "EmploymentTypeId": $scope.EditEmployee.EmploymentTypeId
+                    , "JoinDate": $scope.EditEmployee.JoinDate
+                    , "EmpRoleId": $scope.EditEmployee.EmpRoleId
+                    , "Active": 1
                 };
-                CommonService.UpdateData("MaterialDetail", values, $scope.ID).then(function (response) {
+                CommonService.UpdateData("EmployeeDetails", values, $scope.ID).then(function (response) {
                     console.log("response " + response);
                     if (response != undefined) {
-                        toaster.pop('success', "", "Material Data Updated Successfully", 5000, 'trustedHtml');
+                        toaster.pop('success', "", "Employee Data Updated Successfully", 5000, 'trustedHtml');
                         $scope.RedirectDashboard();
                     }
                 }, function (data) {
@@ -141,111 +140,149 @@ ETradersApp.controller("EmployeesController", ['$scope', '$filter', '$http', '$l
                 });
             }
         } catch (error) {
-            console.log("Exception caught in the SaveSupplierRetailers function. Exception Logged as " + error.message);
+            console.log("Exception caught in the update employee function. Exception Logged as " + error.message);
         }
     };
 
-    $scope.GetItemCategory = function (callback) {
+    $scope.GetEmployeeRoles = function (callback) {
         var postData = {
-            title: "ItemCategories",
+            title: "EmployeeRoles",
             fields: ["*"]
         };
         CommonService.GetListItems(postData).then(function (response) {
             if (response && response.data.d.results.length > 0) {
-                $scope.ItemCatogoryList = response.data.d.results;
+                $scope.EmployeeRoles = response.data.d.results;
             }
             callback();
         });
     };
     $scope.GetDataForDashboard = function () {
-        $scope.WholeSaleList = [];
-        var lstMaterial = {
-            title: "MaterialDetail",
-            fields: ["*", "ItemCategory/ItemCategoryName"],
-            lookupFields: ["ItemCategory"],
-            filter:["1 eq 1"],
+        $scope.EmployeeList = [];
+        var lstEmployee = {
+            title: "EmployeeDetails",
+            fields: ["*", "EmployeeRole/RoleName", "EmployeeDesignation/Designation","EmploymentType/EmploymentTypeName"],
+            lookupFields: ["EmployeeRole", "EmploymentType","EmployeeDesignation"],
+            //filter:[" eq 1"],
             limitTo: 20,
-            orderBy: "CreatedOn desc"
+            orderBy: "EmployeeName"
         };
-        if ($scope.searchDisplayName !=='') {
-            lstMaterial.filter = lstMaterial.filter + " and indexof(DisplayName,'" + $scope.searchDisplayName + "') gt -1";
+        if ($scope.searchEmployeeName != undefined && $scope.searchEmployeeName !=='') {
+            lstEmployee.filter = "indexof(EmployeeName,'" + $scope.searchEmployeeName + "') gt -1";
         }
-        if ($scope.searchDescription !== '') {
-            lstMaterial.filter = lstMaterial.filter + " and indexof(Descriptioin,'" + $scope.searchDescription + "') gt -1";
-        }
-        if ($scope.searchCategory > 0) {
-            lstMaterial.filter = lstMaterial.filter + " and ItemCategoryId eq " + $scope.searchCategory;
-        }
-
+        
         $scope.showSpinner();
-        CommonService.GetListItems(lstMaterial).then(function (response) {
+        CommonService.GetListItems(lstEmployee).then(function (response) {
             if (response && response.data.d.results.length > 0) {
-                $scope.MaterialList = response.data.d.results;
+                $scope.EmployeeList = response.data.d.results;
 
             }
             else {
-                $scope.MaterialList = [];
+                $scope.EmployeeList = [];
 
             }
-            $scope.gridOptions.data = $scope.MaterialList;
+            $scope.gridOptions.data = $scope.EmployeeList;
             $scope.hideSpinner();
         });
     };
-    $scope.GetEmployeesList = function () {
-        var lstBill = {
-            title: "MaterialDetail",
-            fields: ["*","ItemCategory/ItemCategoryName"],
-            lookupFields: ["ItemCategory"],
-            limitTo:20,
-            orderBy: "CreatedOn desc"
+    $scope.GetEmploymentTypes = function (callback) {
+        var lstEmploymentTypes = {
+            title: "EmploymentTypes",
+            fields: ["*"]//,//,"ItemCategory/ItemCategoryName"],
+            //lookupFields: ["ItemCategory"],
+
         };
-        $scope.showSpinner();
-        CommonService.GetListItems(lstBill).then(function (response) {
+        
+       
+        CommonService.GetListItems(lstEmploymentTypes).then(function (response) {
             if (response && response.data.d.results.length > 0) {
-                $scope.MaterialList = response.data.d.results;
-                $scope.gridOptions.data = $scope.MaterialList;
+                $scope.EmploymentTypes = response.data.d.results;
+                //$scope.gridOptions.data = $scope.MaterialList;
                 $scope.hideSpinner()
-                
+                if (callback)
+                    callback();
             }
+
+        });
+    };
+    $scope.GetEmployeeDesignation = function (callback) {
+        var lstEmployeeDesignation = {
+            title: "EmployeeDesignations",
+            fields: ["*"]//,//,"ItemCategory/ItemCategoryName"],
+            //lookupFields: ["ItemCategory"],
+
+        };
+                
+        CommonService.GetListItems(lstEmployeeDesignation).then(function (response) {
+            if (response && response.data.d.results.length > 0) {
+                $scope.EmployeeDesignations = response.data.d.results;
+                //$scope.gridOptions.data = $scope.MaterialList;
+                //$scope.hideSpinner()
+                if (callback)
+                    callback();
+            }
+
+        });
+    };
+    $scope.GetEmployeeRole = function (callback) {
+        var lstEmployeeRole = {
+            title: "EmployeeRoles",
+            fields: ["*"]//,//,"ItemCategory/ItemCategoryName"],
+            //lookupFields: ["ItemCategory"],
+            
+        };      
+        
+        CommonService.GetListItems(lstEmployeeRole).then(function (response) {
+            if (response && response.data.d.results.length > 0) {
+                $scope.EmployeeRoles = response.data.d.results;
+                //$scope.gridOptions.data = $scope.MaterialList;
+                $scope.hideSpinner()
+                if (callback)
+                    callback();
+            }
+
         });
     };
 
-    $scope.GetMaterialById = function () {
+    $scope.GetEmployeeById = function () {
         var lstBill = {
-            title: "MaterialDetail",
+            title: "EmployeeDetails",
             fields: ["*"], 
-            filter: ["MaterialId eq " + $scope.ID],
-            orderBy: "CreatedOn desc"
+            filter: ["EmployeeNo eq " + $scope.ID],
+            orderBy: "EmployeeName"
         };
         CommonService.GetListItems(lstBill).then(function (response) {
             if (response && response.data.d.results.length > 0) {
-                $scope.EditMaterial = response.data.d.results[0];
-                $scope.EditMaterial.ItemCategory = $filter('filter')($scope.ItemCatogoryList, { ItemCategoryId: $scope.EditMaterial.ItemCategoryId }, true)[0];
-                $scope.EditMaterial.RetailRate = parseFloat($scope.EditMaterial.RetailRate);
-                $scope.EditMaterial.WholeSaleRate = parseFloat($scope.EditMaterial.WholeSaleRate);
-                $scope.EditMaterial.ReorderLevel = parseFloat($scope.EditMaterial.ReorderLevel);
-                $scope.EditMaterial.CostingPrice = parseFloat($scope.EditMaterial.CostingPrice);
-                //$scope.EditMaterial.QuantityInHand = parseFloat($scope.EditMaterial.QuantityInHand);
-                $scope.EditMaterial.StdPkg = parseFloat($scope.EditMaterial.StdPkg);
-                $scope.EditMaterial.BoxQty = parseFloat($scope.EditMaterial.BoxQty);
+                
+                $scope.EditEmployee = response.data.d.results[0];
+                if ($scope.EditEmployee.JoinDate != null) {
+                    var joinDate = new Date($scope.EditEmployee.JoinDate);
+                    $scope.EditEmployee.JoinDate = joinDate;
+                }
+                if ($scope.EditEmployee.DOB != null) {
+                    var DOB = new Date($scope.EditEmployee.DOB);
+                    $scope.EditEmployee.DOB = DOB;
+                }        
             }
         });
     };
 
     $scope.RedirectDashboard = function () {
-        $location.path('/EmployeeDetails');
+        $location.path('/EmployeeDashboard');
     };
 
     $scope.init = function () {
-        $scope.GetItemCategory(function () {
-            if ($scope.ID > 0) {
-                $scope.GetMaterialById();
-            }
-            else {
-                $scope.GetEmployeeDetailsList();
-            }
+        $scope.GetEmployeeRole(function () {
+            $scope.GetEmployeeDesignation(function () {
+                $scope.GetEmploymentTypes(function () {
+                    if ($scope.ID > 0) {
+                        $scope.GetEmployeeById();
+                    }
+                    else {
+                        $scope.GetDataForDashboard();
+                    }
+                });
+            });
         });
-        
     };
 
     $scope.init();

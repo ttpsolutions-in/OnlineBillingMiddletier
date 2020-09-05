@@ -12,13 +12,16 @@ namespace ept.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ReorderRequired
+    public partial class EmployeeAccount
     {
-        public int MaterialId { get; set; }
-        public string DisplayName { get; set; }
-        public Nullable<decimal> ReorderLevel { get; set; }
-        public Nullable<decimal> SoldQuantity { get; set; }
-        public Nullable<decimal> TotalIncomingQuantity { get; set; }
-        public Nullable<decimal> QIH { get; set; }
+        public short EmpAccountId { get; set; }
+        public short EmployeeNo { get; set; }
+        public byte PaymentType { get; set; }
+        public System.DateTime PaymentDate { get; set; }
+        public decimal Amount { get; set; }
+        public string Remarks { get; set; }
+    
+        public virtual EmployeeDetail EmployeeDetail { get; set; }
+        public virtual PaymentType PaymentType1 { get; set; }
     }
 }

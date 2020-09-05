@@ -97,23 +97,42 @@
           <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="EmployeeAccount">
+          <Key>
+            <PropertyRef Name="EmpAccountId" />
+          </Key>
+          <Property Name="EmpAccountId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeNo" Type="smallint" Nullable="false" />
+          <Property Name="PaymentType" Type="tinyint" Nullable="false" />
+          <Property Name="PaymentDate" Type="date" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Remarks" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="EmployeeDesignation">
+          <Key>
+            <PropertyRef Name="DesignationId" />
+          </Key>
+          <Property Name="DesignationId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="tinyint" Nullable="false" />
+        </EntityType>
         <EntityType Name="EmployeeDetail">
           <Key>
             <PropertyRef Name="EmployeeNo" />
           </Key>
+          <Property Name="EmployeeNo" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ContactNo" Type="varchar" MaxLength="20" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
-          <Property Name="Designation" Type="tinyint" />
-          <Property Name="DOB" Type="date" />
+          <Property Name="DesignationId" Type="tinyint" />
+          <Property Name="DOB" Type="datetime" />
           <Property Name="Salary" Type="int" />
           <Property Name="BloodGroup" Type="varchar" MaxLength="10" />
-          <Property Name="JoinDate" Type="date" />
-          <Property Name="EmploymentType" Type="tinyint" />
-          <Property Name="EmployeeNo" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Role" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="JoinDate" Type="datetime" />
+          <Property Name="EmploymentTypeId" Type="tinyint" />
           <Property Name="EmpRoleId" Type="tinyint" />
+          <Property Name="Active" Type="tinyint" />
         </EntityType>
         <EntityType Name="EmployeeRole">
           <Key>
@@ -121,6 +140,14 @@
           </Key>
           <Property Name="EmpRoleId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EmploymentType">
+          <Key>
+            <PropertyRef Name="EmploymentTypeId" />
+          </Key>
+          <Property Name="EmploymentTypeId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmploymentTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Godown">
           <Key>
@@ -192,6 +219,14 @@
           <Property Name="DisplayName" Type="varchar" MaxLength="250" />
           <Property Name="Active" Type="tinyint" />
         </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeId" />
+          </Key>
+          <Property Name="PaymentTypeId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="tinyint" Nullable="false" />
+        </EntityType>
         <EntityType Name="SaleCategory">
           <Key>
             <PropertyRef Name="SaleCategoryId" />
@@ -217,6 +252,7 @@
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="date" />
           <Property Name="Active" Type="tinyint" Nullable="false" />
+          <Property Name="ItemCategoryId" Type="smallint" />
         </EntityType>
         <EntityType Name="SaleType">
           <Key>
@@ -312,7 +348,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <Property Name="DisplayName" Type="varchar" MaxLength="250" />
           <Property Name="ReorderLevel" Type="decimal" Precision="18" Scale="2" />
           <Property Name="SoldQuantity" Type="decimal" Precision="38" Scale="2" />
-          <Property Name="TotalIncomingQuantity" Type="int" />
+          <Property Name="TotalIncomingQuantity" Type="decimal" Precision="18" Scale="2" />
           <Property Name="QIH" Type="decimal" Precision="38" Scale="2" />
         </EntityType>
         <Association Name="FK__Bills__BillStatu__72C60C4A">
@@ -503,6 +539,54 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeAccount_EmployeeDetail">
+          <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="1" />
+          <End Role="EmployeeAccount" Type="Self.EmployeeAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="EmployeeNo" />
+            </Principal>
+            <Dependent Role="EmployeeAccount">
+              <PropertyRef Name="EmployeeNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeAccount_PaymentType">
+          <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="1" />
+          <End Role="EmployeeAccount" Type="Self.EmployeeAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeId" />
+            </Principal>
+            <Dependent Role="EmployeeAccount">
+              <PropertyRef Name="PaymentType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDetail_EmployeeDesignation">
+          <End Role="EmployeeDesignation" Type="Self.EmployeeDesignation" Multiplicity="0..1" />
+          <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDesignation">
+              <PropertyRef Name="DesignationId" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="DesignationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDetail_EmploymentType">
+          <End Role="EmploymentType" Type="Self.EmploymentType" Multiplicity="0..1" />
+          <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmploymentType">
+              <PropertyRef Name="EmploymentTypeId" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="EmploymentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MaterialInventory_GodownId">
           <End Role="Godown" Type="Self.Godown" Multiplicity="1" />
           <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
@@ -560,13 +644,17 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bills" EntityType="Self.Bills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeAccount" EntityType="Self.EmployeeAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeDesignation" EntityType="Self.EmployeeDesignation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeDetail" EntityType="Self.EmployeeDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmploymentType" EntityType="Self.EmploymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Godown" EntityType="Self.Godown" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GSTPercentage" EntityType="Self.GSTPercentage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemCategory" EntityType="Self.ItemCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialInventory" EntityType="Self.MaterialInventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleCategory" EntityType="Self.SaleCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleType" EntityType="Self.SaleType" Schema="dbo" store:Type="Tables" />
@@ -672,6 +760,22 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAccount_EmployeeDetail" Association="Self.FK_EmployeeAccount_EmployeeDetail">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetail" />
+            <End Role="EmployeeAccount" EntitySet="EmployeeAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAccount_PaymentType" Association="Self.FK_EmployeeAccount_PaymentType">
+            <End Role="PaymentType" EntitySet="PaymentType" />
+            <End Role="EmployeeAccount" EntitySet="EmployeeAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDetail_EmployeeDesignation" Association="Self.FK_EmployeeDetail_EmployeeDesignation">
+            <End Role="EmployeeDesignation" EntitySet="EmployeeDesignation" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDetail_EmploymentType" Association="Self.FK_EmployeeDetail_EmploymentType">
+            <End Role="EmploymentType" EntitySet="EmploymentType" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_MaterialInventory_GodownId" Association="Self.FK_MaterialInventory_GodownId">
             <End Role="Godown" EntitySet="Godown" />
@@ -791,24 +895,49 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="SupplierRetailers" Relationship="Self.FK__SupplierR__Categ__6AEFE058" FromRole="Category" ToRole="SupplierRetailer" />
         </EntityType>
+        <EntityType Name="EmployeeAccount">
+          <Key>
+            <PropertyRef Name="EmpAccountId" />
+          </Key>
+          <Property Name="EmpAccountId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeNo" Type="Int16" Nullable="false" />
+          <Property Name="PaymentType" Type="Byte" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeDetail" Relationship="Self.FK_EmployeeAccount_EmployeeDetail" FromRole="EmployeeAccount" ToRole="EmployeeDetail" />
+          <NavigationProperty Name="PaymentType1" Relationship="Self.FK_EmployeeAccount_PaymentType" FromRole="EmployeeAccount" ToRole="PaymentType" />
+        </EntityType>
+        <EntityType Name="EmployeeDesignation">
+          <Key>
+            <PropertyRef Name="DesignationId" />
+          </Key>
+          <Property Name="DesignationId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="Self.FK_EmployeeDetail_EmployeeDesignation" FromRole="EmployeeDesignation" ToRole="EmployeeDetail" />
+        </EntityType>
         <EntityType Name="EmployeeDetail">
           <Key>
             <PropertyRef Name="EmployeeNo" />
           </Key>
+          <Property Name="EmployeeNo" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ContactNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Designation" Type="Byte" />
-          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="DesignationId" Type="Byte" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
           <Property Name="Salary" Type="Int32" />
           <Property Name="BloodGroup" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="JoinDate" Type="DateTime" Precision="0" />
-          <Property Name="EmploymentType" Type="Byte" />
-          <Property Name="EmployeeNo" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Role" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JoinDate" Type="DateTime" Precision="3" />
+          <Property Name="EmploymentTypeId" Type="Byte" />
           <Property Name="EmpRoleId" Type="Byte" />
+          <Property Name="Active" Type="Byte" />
+          <NavigationProperty Name="EmployeeAccounts" Relationship="Self.FK_EmployeeAccount_EmployeeDetail" FromRole="EmployeeDetail" ToRole="EmployeeAccount" />
+          <NavigationProperty Name="EmployeeDesignation" Relationship="Self.FK_EmployeeDetail_EmployeeDesignation" FromRole="EmployeeDetail" ToRole="EmployeeDesignation" />
           <NavigationProperty Name="EmployeeRole" Relationship="Self.FK__EmployeeD__EmpRo__3B40CD36" FromRole="EmployeeDetail" ToRole="EmployeeRole" />
+          <NavigationProperty Name="EmploymentType" Relationship="Self.FK_EmployeeDetail_EmploymentType" FromRole="EmployeeDetail" ToRole="EmploymentType" />
         </EntityType>
         <EntityType Name="EmployeeRole">
           <Key>
@@ -817,6 +946,15 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <Property Name="EmpRoleId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EmployeeDetails" Relationship="Self.FK__EmployeeD__EmpRo__3B40CD36" FromRole="EmployeeRole" ToRole="EmployeeDetail" />
+        </EntityType>
+        <EntityType Name="EmploymentType">
+          <Key>
+            <PropertyRef Name="EmploymentTypeId" />
+          </Key>
+          <Property Name="EmploymentTypeId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmploymentTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="Self.FK_EmployeeDetail_EmploymentType" FromRole="EmploymentType" ToRole="EmployeeDetail" />
         </EntityType>
         <EntityType Name="Godown">
           <Key>
@@ -899,6 +1037,15 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <NavigationProperty Name="MaterialInventories" Relationship="Self.FK_MaterialInventory_Materials" FromRole="Materials" ToRole="MaterialInventory" />
           <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__MaterialI__7B5B524B" FromRole="Materials" ToRole="Sales" />
         </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeId" />
+          </Key>
+          <Property Name="PaymentTypeId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="EmployeeAccounts" Relationship="Self.FK_EmployeeAccount_PaymentType" FromRole="PaymentType" ToRole="EmployeeAccount" />
+        </EntityType>
         <EntityType Name="SaleCategory">
           <Key>
             <PropertyRef Name="SaleCategoryId" />
@@ -925,6 +1072,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="0" />
           <Property Name="Active" Type="Byte" Nullable="false" />
+          <Property Name="ItemCategoryId" Type="Int16" />
           <NavigationProperty Name="Bill" Relationship="Self.FK__Sales__BillNo__00200768" FromRole="Sales" ToRole="Bills" />
           <NavigationProperty Name="Godown" Relationship="Self.FK__Sales__GodownId__02FC7413" FromRole="Sales" ToRole="Godown" />
           <NavigationProperty Name="Material" Relationship="Self.FK__Sales__MaterialI__7B5B524B" FromRole="Sales" ToRole="Materials" />
@@ -1026,7 +1174,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <Property Name="DisplayName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="ReorderLevel" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="SoldQuantity" Type="Decimal" Precision="38" Scale="2" />
-          <Property Name="TotalIncomingQuantity" Type="Int32" />
+          <Property Name="TotalIncomingQuantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="QIH" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -1129,6 +1277,42 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeAccount_EmployeeDetail">
+          <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="1" />
+          <End Role="EmployeeAccount" Type="Self.EmployeeAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="EmployeeNo" />
+            </Principal>
+            <Dependent Role="EmployeeAccount">
+              <PropertyRef Name="EmployeeNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeAccount_PaymentType">
+          <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="1" />
+          <End Role="EmployeeAccount" Type="Self.EmployeeAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeId" />
+            </Principal>
+            <Dependent Role="EmployeeAccount">
+              <PropertyRef Name="PaymentType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDetail_EmployeeDesignation">
+          <End Role="EmployeeDesignation" Type="Self.EmployeeDesignation" Multiplicity="0..1" />
+          <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDesignation">
+              <PropertyRef Name="DesignationId" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="DesignationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__EmployeeD__EmpRo__3B40CD36">
           <End Role="EmployeeRole" Type="Self.EmployeeRole" Multiplicity="0..1" />
           <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="*" />
@@ -1138,6 +1322,18 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             </Principal>
             <Dependent Role="EmployeeDetail">
               <PropertyRef Name="EmpRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDetail_EmploymentType">
+          <End Role="EmploymentType" Type="Self.EmploymentType" Multiplicity="0..1" />
+          <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmploymentType">
+              <PropertyRef Name="EmploymentTypeId" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="EmploymentTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1241,7 +1437,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="EphraimTradersEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EphraimTradersEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -1249,13 +1445,17 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Bills" EntityType="Self.Bill" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="EmployeeAccounts" EntityType="Self.EmployeeAccount" />
+          <EntitySet Name="EmployeeDesignations" EntityType="Self.EmployeeDesignation" />
           <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetail" />
           <EntitySet Name="EmployeeRoles" EntityType="Self.EmployeeRole" />
+          <EntitySet Name="EmploymentTypes" EntityType="Self.EmploymentType" />
           <EntitySet Name="Godowns" EntityType="Self.Godown" />
           <EntitySet Name="GSTPercentages" EntityType="Self.GSTPercentage" />
           <EntitySet Name="ItemCategories" EntityType="Self.ItemCategory" />
           <EntitySet Name="MaterialInventories" EntityType="Self.MaterialInventory" />
           <EntitySet Name="Materials" EntityType="Self.Material" />
+          <EntitySet Name="PaymentTypes" EntityType="Self.PaymentType" />
           <EntitySet Name="SaleCategories" EntityType="Self.SaleCategory" />
           <EntitySet Name="Sales" EntityType="Self.Sale" />
           <EntitySet Name="SaleTypes" EntityType="Self.SaleType" />
@@ -1297,8 +1497,24 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             <End Role="Category" EntitySet="Categories" />
             <End Role="SupplierRetailer" EntitySet="SupplierRetailers" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAccount_EmployeeDetail" Association="Self.FK_EmployeeAccount_EmployeeDetail">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="EmployeeAccount" EntitySet="EmployeeAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAccount_PaymentType" Association="Self.FK_EmployeeAccount_PaymentType">
+            <End Role="PaymentType" EntitySet="PaymentTypes" />
+            <End Role="EmployeeAccount" EntitySet="EmployeeAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDetail_EmployeeDesignation" Association="Self.FK_EmployeeDetail_EmployeeDesignation">
+            <End Role="EmployeeDesignation" EntitySet="EmployeeDesignations" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK__EmployeeD__EmpRo__3B40CD36" Association="Self.FK__EmployeeD__EmpRo__3B40CD36">
             <End Role="EmployeeRole" EntitySet="EmployeeRoles" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDetail_EmploymentType" Association="Self.FK_EmployeeDetail_EmploymentType">
+            <End Role="EmploymentType" EntitySet="EmploymentTypes" />
             <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
           </AssociationSet>
           <AssociationSet Name="FK__Sales__GodownId__02FC7413" Association="Self.FK__Sales__GodownId__02FC7413">
@@ -1343,7 +1559,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EphraimTradersModelStoreContainer" CdmEntityContainer="EphraimTradersEntities1">
+        <EntityContainerMapping StorageEntityContainer="EphraimTradersModelStoreContainer" CdmEntityContainer="EphraimTradersEntities3">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="EphraimTradersModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -1432,22 +1648,43 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeAccounts">
+            <EntityTypeMapping TypeName="EphraimTradersModel.EmployeeAccount">
+              <MappingFragment StoreEntitySet="EmployeeAccount">
+                <ScalarProperty Name="EmpAccountId" ColumnName="EmpAccountId" />
+                <ScalarProperty Name="EmployeeNo" ColumnName="EmployeeNo" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDesignations">
+            <EntityTypeMapping TypeName="EphraimTradersModel.EmployeeDesignation">
+              <MappingFragment StoreEntitySet="EmployeeDesignation">
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="EmployeeDetails">
             <EntityTypeMapping TypeName="EphraimTradersModel.EmployeeDetail">
               <MappingFragment StoreEntitySet="EmployeeDetail">
+                <ScalarProperty Name="EmployeeNo" ColumnName="EmployeeNo" />
                 <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Salary" ColumnName="Salary" />
                 <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
                 <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
-                <ScalarProperty Name="EmploymentType" ColumnName="EmploymentType" />
-                <ScalarProperty Name="EmployeeNo" ColumnName="EmployeeNo" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="EmploymentTypeId" ColumnName="EmploymentTypeId" />
                 <ScalarProperty Name="EmpRoleId" ColumnName="EmpRoleId" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1456,6 +1693,15 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
               <MappingFragment StoreEntitySet="EmployeeRole">
                 <ScalarProperty Name="EmpRoleId" ColumnName="EmpRoleId" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmploymentTypes">
+            <EntityTypeMapping TypeName="EphraimTradersModel.EmploymentType">
+              <MappingFragment StoreEntitySet="EmploymentType">
+                <ScalarProperty Name="EmploymentTypeId" ColumnName="EmploymentTypeId" />
+                <ScalarProperty Name="EmploymentTypeName" ColumnName="EmploymentTypeName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1534,6 +1780,15 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PaymentTypes">
+            <EntityTypeMapping TypeName="EphraimTradersModel.PaymentType">
+              <MappingFragment StoreEntitySet="PaymentType">
+                <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
+                <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SaleCategories">
             <EntityTypeMapping TypeName="EphraimTradersModel.SaleCategory">
               <MappingFragment StoreEntitySet="SaleCategory">
@@ -1559,6 +1814,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

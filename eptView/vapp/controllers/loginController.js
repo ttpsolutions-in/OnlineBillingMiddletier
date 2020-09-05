@@ -21,6 +21,7 @@ ETradersApp.controller('LoginController', ['$scope', 'LoginService', 'GlobalVari
         UserRole: ''
     }
         $scope.login = function () {
+            $scope.showSpinner();
             LoginService.login($scope.loginData.userName, $scope.loginData.password).then(function (response) {
                 debugger;
                 var data = JSON.stringify(response);
@@ -44,6 +45,7 @@ ETradersApp.controller('LoginController', ['$scope', 'LoginService', 'GlobalVari
                     $location.path('/WholeSaleDashboard');
                     //debugger;
                 }
+                $scope.hideSpinner();
             });
         }
     $scope.logout = function () {

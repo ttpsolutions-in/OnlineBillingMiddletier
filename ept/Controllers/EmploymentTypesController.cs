@@ -21,31 +21,29 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Material>("Materials");
-    builder.EntitySet<Sale>("Sales"); 
+    builder.EntitySet<EmploymentType>("EmploymentTypes");
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    [Authorize]
-    public class MaterialsController : ODataController
+    public class EmploymentTypesController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
 
-        // GET: odata/Materials
+        // GET: odata/EmploymentTypes
         [EnableQuery]
-        public IQueryable<Material> GetMaterials()
+        public IQueryable<EmploymentType> GetEmploymentTypes()
         {
-            return db.Materials;
+            return db.EmploymentTypes;
         }
 
-        // GET: odata/Materials(5)
+        // GET: odata/EmploymentTypes(5)
         [EnableQuery]
-        public SingleResult<Material> GetMaterial([FromODataUri] int key)
+        public SingleResult<EmploymentType> GetEmploymentType([FromODataUri] byte key)
         {
-            return SingleResult.Create(db.Materials.Where(material => material.MaterialId == key));
+            return SingleResult.Create(db.EmploymentTypes.Where(employmentType => employmentType.EmploymentTypeId == key));
         }
 
-        // PUT: odata/Materials(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<Material> patch)
+        // PUT: odata/EmploymentTypes(5)
+        public IHttpActionResult Put([FromODataUri] byte key, Delta<EmploymentType> patch)
         {
             Validate(patch.GetEntity());
 
@@ -54,13 +52,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            EmploymentType employmentType = db.EmploymentTypes.Find(key);
+            if (employmentType == null)
             {
                 return NotFound();
             }
 
-            patch.Put(material);
+            patch.Put(employmentType);
 
             try
             {
@@ -68,7 +66,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MaterialExists(key))
+                if (!EmploymentTypeExists(key))
                 {
                     return NotFound();
                 }
@@ -78,26 +76,26 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(material);
+            return Updated(employmentType);
         }
 
-        // POST: odata/Materials
-        public IHttpActionResult Post(Material material)
+        // POST: odata/EmploymentTypes
+        public IHttpActionResult Post(EmploymentType employmentType)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Materials.Add(material);
+            db.EmploymentTypes.Add(employmentType);
             db.SaveChanges();
 
-            return Created(material);
+            return Created(employmentType);
         }
 
-        // PATCH: odata/Materials(5)
+        // PATCH: odata/EmploymentTypes(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<Material> patch)
+        public IHttpActionResult Patch([FromODataUri] byte key, Delta<EmploymentType> patch)
         {
             Validate(patch.GetEntity());
 
@@ -106,13 +104,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            EmploymentType employmentType = db.EmploymentTypes.Find(key);
+            if (employmentType == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(material);
+            patch.Patch(employmentType);
 
             try
             {
@@ -120,7 +118,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MaterialExists(key))
+                if (!EmploymentTypeExists(key))
                 {
                     return NotFound();
                 }
@@ -130,29 +128,22 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(material);
+            return Updated(employmentType);
         }
 
-        // DELETE: odata/Materials(5)
-        public IHttpActionResult Delete([FromODataUri] int key)
+        // DELETE: odata/EmploymentTypes(5)
+        public IHttpActionResult Delete([FromODataUri] byte key)
         {
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            EmploymentType employmentType = db.EmploymentTypes.Find(key);
+            if (employmentType == null)
             {
                 return NotFound();
             }
 
-            db.Materials.Remove(material);
+            db.EmploymentTypes.Remove(employmentType);
             db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET: odata/Materials(5)/Sales
-        [EnableQuery]
-        public IQueryable<Sale> GetSales([FromODataUri] int key)
-        {
-            return db.Materials.Where(m => m.MaterialId == key).SelectMany(m => m.Sales);
         }
 
         protected override void Dispose(bool disposing)
@@ -164,9 +155,9 @@ namespace ept.Controllers
             base.Dispose(disposing);
         }
 
-        private bool MaterialExists(int key)
+        private bool EmploymentTypeExists(byte key)
         {
-            return db.Materials.Count(e => e.MaterialId == key) > 0;
+            return db.EmploymentTypes.Count(e => e.EmploymentTypeId == key) > 0;
         }
     }
 }

@@ -1,0 +1,83 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 60px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>Employee Payment</b>
+        <span style="float:right"><b>Date -</b> {{TodaysDate}}</span>
+    </div>
+    <div class="card-body">
+        <form name="addEmployeeAccountForm">
+            <div class="form-row">
+                <div class="form-group col-md-4 col-md-offset-3">
+                    <label for="EmployeeNo">Name</label> <span class="text-danger">*</span>
+                    <select id="EmployeeNo" name="EmployeeNo" ng-model="EmployeeAccount.EmployeeNo" class="form-control"
+                            ng-options="item as item.EmployeeName for item in EmployeeList" required>
+                    </select>
+                    <p ng-show="submitted && addEmployeeAccountForm.EmployeeName.$invalid"
+                       class="text-danger">Name is required.</p>
+                </div>
+                <div class="form-group col-md-4 col-md-offset-3">
+                    <label for="Amount">Amount</label> <span class="text-danger">*</span>
+                    <input type="text" class="form-control" id="Amount" name="Amount" placeholder="Enter amount"
+                           ng-model="EmployeeAccount.Amount" required>
+                    <p ng-show="submitted && addEmployeeAccountForm.Amount.$invalid"
+                       class="text-danger">Amount is required.</p>
+                </div>
+                <div class="form-group col-md-4 col-md-offset-3">
+                    <label for="PaymentType">Payment Type</label><span class="text-danger">*</span>
+                    <select id="PaymentType" name="PaymentType" ng-model="EmployeeAccount.PaymentType" class="form-control"
+                            ng-options="item as item.PaymentTypeName for item in PaymentTypes" required>
+                    </select>
+                    <p ng-show="submitted && addEmployeeAccountForm.PaymentTypeName.$invalid"
+                       class="text-danger">Payment type is required.</p>
+                </div>
+                <div class="form-group col-md-4 col-md-offset-3">
+                    <label for="PaymentDate">Payment Date</label><span class="text-danger">*</span>
+                    <input type="date" class="form-control" id="PaymentDate" ng-model="EmployeeAccount.PaymentDate" name="PaymentDate" required />
+                    <p ng-show="submitted && addEmployeeAccountForm.PaymentDate.$invalid"
+                       class="text-danger">Payment type is required.</p>
+                </div>
+                
+                <div class="form-group col-md-4 col-md-offset-3">
+                    <label for="Remarks">Remarks</label>
+                    <textarea type="text" cols="20" rows="5" class="form-control" id="Remarks" name="Remarks" placeholder="Enter remarks"
+                           ng-model="EmployeeAccount.Remarks"></textarea>
+                </div>
+
+            </div>
+                <div><hr /></div>
+
+                <div class="form-row col-md-offset-5">
+                    <button type="button" class="btn btn-primary" ng-click="RedirectDashboard()"><span data-feather="arrow-left"></span> Back</button>&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" ng-click="SaveEmployeeAccounts(addEmployeeAccountForm.$valid)"><span data-feather="save"></span> Save</button>
+
+                </div>
+</form>
+    </div>
+</div>
+
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX " />
+</head>
+<body>
+</body>
+<script type="text/javascript">
+    feather.replace();
+    var gearPage = document.getElementById('GearPage');
+    if (null != gearPage) {
+        gearPage.parentNode.removeChild(gearPage);
+        document.title = "Error";
+    }
+</script>
+</html>

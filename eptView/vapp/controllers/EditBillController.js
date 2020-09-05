@@ -293,7 +293,7 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
             $scope.MaterialLists = $filter('filter')($scope.MaterialsData, { ItemCategoryId: $scope.WholeSale.ItemCategory }, true);
             //$scope.hideSpinner();
         };
-        $scope.GetGodowns = function () {
+        $scope.GetGodowns = function (callback) {
             var lstItems = {
                 title: "Godowns",
                 fields: ["GodownId", "GodownName"],
@@ -305,9 +305,11 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
                     $scope.GodownData = response.data.d.results;
                     
                 }
+                if (callback)
+                    callback();
             });
         };
-        $scope.GetGSTPercentageById = function () {
+        $scope.GetGSTPercentageById = function (callback) {
             var postData = {
                 title: "GSTPercentages",
                 fields: ["*"],
@@ -317,10 +319,12 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
                 if (response && response.data.d.results.length > 0) {
                     $scope.GSTPercentage = response.data.d.results[0].GST;
                 }
+                if (callback)
+                    callback();
             });
         };
 
-        $scope.GetItemCategory = function () {
+        $scope.GetItemCategory = function (callback) {
             var postData = {
                 title: "ItemCategories",
                 fields: ["*"],
@@ -330,13 +334,15 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
                 if (response && response.data.d.results.length > 0) {
                     $scope.ItemCatogoryList = response.data.d.results;
                     //console.log($scope.ItemCatogoryList);
-                    //callback();
+                    
                 }
+                if (callback)
+                    callback();
             });
         };
 
 
-        $scope.GetSupplierRetailer = function () {
+        $scope.GetSupplierRetailer = function (callback) {
             var postData = {
                 title: "SupplierRetailers",
                 fields: ["*"],
@@ -346,8 +352,10 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
                 if (response && response.data.d.results.length > 0) {
                     $scope.SupplierRetailers = response.data.d.results;
                     //console.log($scope.SupplierRetailers);
-                    //callback();
+                   
                 }
+                if (callback)
+                    callback();
             });
         };
 
@@ -540,15 +548,21 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
         };
         
         $scope.init = function () {
-            GlobalVariableService.getTokenInfo();
             $scope.showSpinner();
-            $scope.GetItemCategory();
-            $scope.GetSupplierRetailer();
-            $scope.GetGodowns();
-            $scope.GetGSTPercentageById();
-            if ($scope.ID > 0) {
-                $scope.GetBillByID();
-            }
+
+            GlobalVariableService.getTokenInfo();
+            
+            $scope.GetItemCategory(function () {
+                $scope.GetSupplierRetailer(function () {
+                    $scope.GetGodowns(function () {
+                        $scope.GetGSTPercentageById(function () {
+                            if ($scope.ID > 0) {
+                                $scope.GetBillByID();
+                            }
+                        });
+                    });
+                });
+            });
             $scope.hideSpinner();
         };
 

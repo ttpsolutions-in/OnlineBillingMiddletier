@@ -222,14 +222,18 @@
     <Compile Include="Controllers\BillDetailsViewsController.cs" />
     <Compile Include="Controllers\BillsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\EmployeeAccountsController.cs" />
+    <Compile Include="Controllers\EmployeeDesignationsController.cs" />
     <Compile Include="Controllers\EmployeeDetailsController.cs" />
     <Compile Include="Controllers\EmployeeRolesController.cs" />
+    <Compile Include="Controllers\EmploymentTypesController.cs" />
     <Compile Include="Controllers\GodownsController.cs" />
     <Compile Include="Controllers\GSTPercentagesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemCategoriesController.cs" />
     <Compile Include="Controllers\MaterialInventoriesController.cs" />
     <Compile Include="Controllers\MaterialsController.cs" />
+    <Compile Include="Controllers\PaymentTypesController.cs" />
     <Compile Include="Controllers\ReorderRequiredsController.cs" />
     <Compile Include="Controllers\SaleCategoriesController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
@@ -268,10 +272,19 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmployeeAccount.cs">
+      <DependentUpon>ETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeDesignation.cs">
+      <DependentUpon>ETModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmployeeDetail.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EmployeeRole.cs">
+      <DependentUpon>ETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmploymentType.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ETModel.Context.cs">
@@ -303,6 +316,9 @@
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MaterialInventory.cs">
+      <DependentUpon>ETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PaymentType.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReorderRequired.cs">

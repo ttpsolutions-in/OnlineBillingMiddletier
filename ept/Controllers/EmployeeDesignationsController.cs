@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
@@ -21,31 +22,29 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Material>("Materials");
-    builder.EntitySet<Sale>("Sales"); 
+    builder.EntitySet<EmployeeDesignation>("EmployeeDesignations");
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    [Authorize]
-    public class MaterialsController : ODataController
+    public class EmployeeDesignationsController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
 
-        // GET: odata/Materials
+        // GET: odata/EmployeeDesignations
         [EnableQuery]
-        public IQueryable<Material> GetMaterials()
+        public IQueryable<EmployeeDesignation> GetEmployeeDesignations()
         {
-            return db.Materials;
+            return db.EmployeeDesignations;
         }
 
-        // GET: odata/Materials(5)
+        // GET: odata/EmployeeDesignations(5)
         [EnableQuery]
-        public SingleResult<Material> GetMaterial([FromODataUri] int key)
+        public SingleResult<EmployeeDesignation> GetEmployeeDesignation([FromODataUri] byte key)
         {
-            return SingleResult.Create(db.Materials.Where(material => material.MaterialId == key));
+            return SingleResult.Create(db.EmployeeDesignations.Where(employeeDesignation => employeeDesignation.DesignationId == key));
         }
 
-        // PUT: odata/Materials(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<Material> patch)
+        // PUT: odata/EmployeeDesignations(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] byte key, Delta<EmployeeDesignation> patch)
         {
             Validate(patch.GetEntity());
 
@@ -54,21 +53,21 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            EmployeeDesignation employeeDesignation = await db.EmployeeDesignations.FindAsync(key);
+            if (employeeDesignation == null)
             {
                 return NotFound();
             }
 
-            patch.Put(material);
+            patch.Put(employeeDesignation);
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MaterialExists(key))
+                if (!EmployeeDesignationExists(key))
                 {
                     return NotFound();
                 }
@@ -78,26 +77,26 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(material);
+            return Updated(employeeDesignation);
         }
 
-        // POST: odata/Materials
-        public IHttpActionResult Post(Material material)
+        // POST: odata/EmployeeDesignations
+        public async Task<IHttpActionResult> Post(EmployeeDesignation employeeDesignation)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Materials.Add(material);
-            db.SaveChanges();
+            db.EmployeeDesignations.Add(employeeDesignation);
+            await db.SaveChangesAsync();
 
-            return Created(material);
+            return Created(employeeDesignation);
         }
 
-        // PATCH: odata/Materials(5)
+        // PATCH: odata/EmployeeDesignations(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<Material> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] byte key, Delta<EmployeeDesignation> patch)
         {
             Validate(patch.GetEntity());
 
@@ -106,21 +105,21 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            EmployeeDesignation employeeDesignation = await db.EmployeeDesignations.FindAsync(key);
+            if (employeeDesignation == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(material);
+            patch.Patch(employeeDesignation);
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MaterialExists(key))
+                if (!EmployeeDesignationExists(key))
                 {
                     return NotFound();
                 }
@@ -130,29 +129,22 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(material);
+            return Updated(employeeDesignation);
         }
 
-        // DELETE: odata/Materials(5)
-        public IHttpActionResult Delete([FromODataUri] int key)
+        // DELETE: odata/EmployeeDesignations(5)
+        public async Task<IHttpActionResult> Delete([FromODataUri] byte key)
         {
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            EmployeeDesignation employeeDesignation = await db.EmployeeDesignations.FindAsync(key);
+            if (employeeDesignation == null)
             {
                 return NotFound();
             }
 
-            db.Materials.Remove(material);
-            db.SaveChanges();
+            db.EmployeeDesignations.Remove(employeeDesignation);
+            await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET: odata/Materials(5)/Sales
-        [EnableQuery]
-        public IQueryable<Sale> GetSales([FromODataUri] int key)
-        {
-            return db.Materials.Where(m => m.MaterialId == key).SelectMany(m => m.Sales);
         }
 
         protected override void Dispose(bool disposing)
@@ -164,9 +156,9 @@ namespace ept.Controllers
             base.Dispose(disposing);
         }
 
-        private bool MaterialExists(int key)
+        private bool EmployeeDesignationExists(byte key)
         {
-            return db.Materials.Count(e => e.MaterialId == key) > 0;
+            return db.EmployeeDesignations.Count(e => e.DesignationId == key) > 0;
         }
     }
 }

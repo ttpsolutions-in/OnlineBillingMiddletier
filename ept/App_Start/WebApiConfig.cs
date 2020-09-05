@@ -33,6 +33,11 @@ namespace ept
             builder.EntitySet<Material>("Materials");
             builder.EntitySet<MaterialInventory>("MaterialInventories");
             builder.EntitySet<SupplierRetailType>("SupplierRetailTypes");
+            builder.EntitySet<EmploymentType>("EmploymentTypes");
+            builder.EntitySet<EmployeeDesignation>("EmployeeDesignations");
+            builder.EntitySet<EmployeeAccount>("EmployeeAccounts");
+            builder.EntitySet<PaymentType>("PaymentTypes");
+
             builder.EntitySet<ReorderRequired>("ReorderRequireds");
             builder.EntitySet<BillDetailsView>("BillDetailsViews");
 

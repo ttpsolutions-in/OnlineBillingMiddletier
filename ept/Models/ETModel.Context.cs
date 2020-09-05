@@ -32,13 +32,17 @@ namespace ept.Models
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<EmployeeAccount> EmployeeAccounts { get; set; }
+        public virtual DbSet<EmployeeDesignation> EmployeeDesignations { get; set; }
         public virtual DbSet<EmployeeDetail> EmployeeDetails { get; set; }
         public virtual DbSet<EmployeeRole> EmployeeRoles { get; set; }
+        public virtual DbSet<EmploymentType> EmploymentTypes { get; set; }
         public virtual DbSet<Godown> Godowns { get; set; }
         public virtual DbSet<GSTPercentage> GSTPercentages { get; set; }
         public virtual DbSet<ItemCategory> ItemCategories { get; set; }
         public virtual DbSet<MaterialInventory> MaterialInventories { get; set; }
         public virtual DbSet<Material> Materials { get; set; }
+        public virtual DbSet<PaymentType> PaymentTypes { get; set; }
         public virtual DbSet<SaleCategory> SaleCategories { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<SaleType> SaleTypes { get; set; }

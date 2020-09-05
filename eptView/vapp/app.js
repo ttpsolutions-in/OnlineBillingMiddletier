@@ -126,11 +126,27 @@ ETradersApp.config(['$routeProvider', '$locationProvider',
         }).when("/MaterialsCheckQIH", {
             templateUrl: '/vtemplate/MaterialQIHDashboard.html',
             controller: 'MaterialsCheckQIHController'
-            
-
+        }).when("/EmployeeDashboard", {
+            templateUrl: '/vtemplate/EmployeesDashboard.html',
+            controller: 'EmployeesController'    
+        }).when("/AddEmployee", {
+            templateUrl: '/vtemplate/AddEmployee.html',
+            controller: 'EmployeesController'    
+        }).when("/EditEmployee/:ID", {
+            templateUrl: '/vtemplate/EditEmployeeDetail.html',
+            controller: 'EmployeesController'    
+        }).when("/EditEmployeeAccount/:ID", {
+            templateUrl: '/vtemplate/EditEmployeeAccount.html',
+            controller: 'EmployeeAccountController'    
+        }).when("/PayEmployee", {
+            templateUrl: '/vtemplate/AddEmployeeAccount.html',
+            controller: 'EmployeeAccountController'    
+        }).when("/EmployeeAccountDashboard", {
+            templateUrl: '/vtemplate/EmployeeAccountDashboard.html',
+            controller: 'EmployeeAccountController'
         });
-       
-
+        
+        
     }]);
 
 

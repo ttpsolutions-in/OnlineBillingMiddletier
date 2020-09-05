@@ -28,6 +28,7 @@ namespace ept.Models
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public byte Active { get; set; }
+        public Nullable<short> ItemCategoryId { get; set; }
     
         public virtual Bill Bill { get; set; }
         public virtual Godown Godown { get; set; }
