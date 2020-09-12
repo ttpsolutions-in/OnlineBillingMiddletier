@@ -419,6 +419,9 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['GlobalVariableS
         };
 
         $scope.init = function () {
+
+            GlobalVariableService.validateUrl($location.$$path);
+
             $scope.GetSupplierRetailers();
             $scope.GetGodown();
             $scope.GetDataForDashboard();

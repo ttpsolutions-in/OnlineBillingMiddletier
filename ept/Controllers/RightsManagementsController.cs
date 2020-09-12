@@ -22,31 +22,31 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Godown>("Godowns");
-    builder.EntitySet<Sale>("Sales"); 
-    builder.EntitySet<MaterialInventory>("MaterialInventories"); 
+    builder.EntitySet<RightsManagement>("RightsManagements");
+    builder.EntitySet<EmployeeRole>("EmployeeRoles"); 
+    builder.EntitySet<Right>("Rights"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class GodownsController : ODataController
+    public class RightsManagementsController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
 
-        // GET: odata/Godowns
+        // GET: odata/RightsManagements
         [EnableQuery]
-        public IQueryable<Godown> GetGodowns()
+        public IQueryable<RightsManagement> GetRightsManagements()
         {
-            return db.Godowns;
+            return db.RightsManagements;
         }
 
-        // GET: odata/Godowns(5)
+        // GET: odata/RightsManagements(5)
         [EnableQuery]
-        public SingleResult<Godown> GetGodown([FromODataUri] short key)
+        public SingleResult<RightsManagement> GetRightsManagement([FromODataUri] byte key)
         {
-            return SingleResult.Create(db.Godowns.Where(godown => godown.GodownId == key));
+            return SingleResult.Create(db.RightsManagements.Where(rightsManagement => rightsManagement.RightsManagementId == key));
         }
 
-        // PUT: odata/Godowns(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] short key, Delta<Godown> patch)
+        // PUT: odata/RightsManagements(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] byte key, Delta<RightsManagement> patch)
         {
             Validate(patch.GetEntity());
 
@@ -55,13 +55,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Godown godown = await db.Godowns.FindAsync(key);
-            if (godown == null)
+            RightsManagement rightsManagement = await db.RightsManagements.FindAsync(key);
+            if (rightsManagement == null)
             {
                 return NotFound();
             }
 
-            patch.Put(godown);
+            patch.Put(rightsManagement);
 
             try
             {
@@ -69,7 +69,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GodownExists(key))
+                if (!RightsManagementExists(key))
                 {
                     return NotFound();
                 }
@@ -79,26 +79,26 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(godown);
+            return Updated(rightsManagement);
         }
 
-        // POST: odata/Godowns
-        public async Task<IHttpActionResult> Post(Godown godown)
+        // POST: odata/RightsManagements
+        public async Task<IHttpActionResult> Post(RightsManagement rightsManagement)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Godowns.Add(godown);
+            db.RightsManagements.Add(rightsManagement);
             await db.SaveChangesAsync();
 
-            return Created(godown);
+            return Created(rightsManagement);
         }
 
-        // PATCH: odata/Godowns(5)
+        // PATCH: odata/RightsManagements(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] short key, Delta<Godown> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] byte key, Delta<RightsManagement> patch)
         {
             Validate(patch.GetEntity());
 
@@ -107,13 +107,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Godown godown = await db.Godowns.FindAsync(key);
-            if (godown == null)
+            RightsManagement rightsManagement = await db.RightsManagements.FindAsync(key);
+            if (rightsManagement == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(godown);
+            patch.Patch(rightsManagement);
 
             try
             {
@@ -121,7 +121,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GodownExists(key))
+                if (!RightsManagementExists(key))
                 {
                     return NotFound();
                 }
@@ -131,43 +131,36 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(godown);
+            return Updated(rightsManagement);
         }
 
-        // DELETE: odata/Godowns(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] short key)
+        // DELETE: odata/RightsManagements(5)
+        public async Task<IHttpActionResult> Delete([FromODataUri] byte key)
         {
-            Godown godown = await db.Godowns.FindAsync(key);
-            if (godown == null)
+            RightsManagement rightsManagement = await db.RightsManagements.FindAsync(key);
+            if (rightsManagement == null)
             {
                 return NotFound();
             }
 
-            db.Godowns.Remove(godown);
+            db.RightsManagements.Remove(rightsManagement);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/Godowns(5)/Sales
+        // GET: odata/RightsManagements(5)/EmployeeRole
         [EnableQuery]
-        public IQueryable<Sale> GetSales([FromODataUri] short key)
+        public SingleResult<EmployeeRole> GetEmployeeRole([FromODataUri] byte key)
         {
-            return db.Godowns.Where(m => m.GodownId == key).SelectMany(m => m.Sales);
+            return SingleResult.Create(db.RightsManagements.Where(m => m.RightsManagementId == key).Select(m => m.EmployeeRole));
         }
 
-        // GET: odata/Godowns(5)/MaterialInventories
+        // GET: odata/RightsManagements(5)/Right
         [EnableQuery]
-        public IQueryable<MaterialInventory> GetMaterialInventories([FromODataUri] short key)
+        public SingleResult<Right> GetRight([FromODataUri] byte key)
         {
-            return db.Godowns.Where(m => m.GodownId == key).SelectMany(m => m.MaterialInventories);
-        }
-
-        // GET: odata/Godowns(5)/MaterialInventories1
-        [EnableQuery]
-        public IQueryable<MaterialInventory> GetMaterialInventories1([FromODataUri] short key)
-        {
-            return db.Godowns.Where(m => m.GodownId == key).SelectMany(m => m.MaterialInventories1);
+            return SingleResult.Create(db.RightsManagements.Where(m => m.RightsManagementId == key).Select(m => m.Right));
         }
 
         protected override void Dispose(bool disposing)
@@ -179,9 +172,9 @@ namespace ept.Controllers
             base.Dispose(disposing);
         }
 
-        private bool GodownExists(short key)
+        private bool RightsManagementExists(byte key)
         {
-            return db.Godowns.Count(e => e.GodownId == key) > 0;
+            return db.RightsManagements.Count(e => e.RightsManagementId == key) > 0;
         }
     }
 }

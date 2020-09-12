@@ -1,6 +1,9 @@
-ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http', '$location', '$routeParams', '$timeout', 'toaster',
-    'GlobalVariableService', 'CommonService', 'uiGridConstants', 'PrintService', function ($scope, $filter, $q, $http, $location, $routeParams, $timeout,
+ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', '$q', '$http', '$location', '$routeParams', '$timeout', 'toaster',
+    'GlobalVariableService', 'CommonService', 'uiGridConstants', 'PrintService', function ($rootScope,$scope, $filter, $q, $http, $location, $routeParams, $timeout,
         toaster, GlobalVariableService, CommonService, uiGridConstants, PrintService) {
+
+        $scope.tokenInfo = {};
+        
 
         $scope.ShowSpinnerStatus = false;
 
@@ -10,7 +13,9 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
         $scope.hideSpinner = function () {
             $scope.ShowSpinnerStatus = false;
         }
-
+        $scope.RightsText = {
+            "CancelBill": "CancelBill"
+        }
         $scope.PageTitle = "Edit Bill";
         $scope.ID = $routeParams.ID;
         $scope.BillNo = $routeParams.ID;
@@ -164,13 +169,13 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
 
         $scope.CalculateGST = function () {
 
-            var paramdata = {};
-            paramdata.TotalAmount = $scope.WholeSale.TotalAmount;
-            paramdata.GSTApplied = $scope.WholeSale.GSTApplied;
-            paramdata.GSTPercentage = $scope.WholeSale.GSTPercentage;
+            //var paramdata = {};
+            //paramdata.TotalAmount = $scope.WholeSale.TotalAmount;
+            //paramdata.GSTApplied = $scope.WholeSale.GSTApplied;
+            //paramdata.GSTPercentage = $scope.WholeSale.GSTPercentage;
             var results = {};
             
-            results = CommonService.CalculateGSTNGrandTotal(paramdata.TotalAmount, paramdata.GSTPercentage, paramdata.GSTApplied);
+            results = CommonService.CalculateGSTNGrandTotal($scope.WholeSale.TotalAmount, $scope.WholeSale.GSTPercentage, $scope.WholeSale.GSTApplied);
 
             $scope.WholeSale.GrandTotal = results.GrandTotal;
             $scope.WholeSale.GSTAmount = results.GSTAmount;
@@ -548,9 +553,13 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
         };
         
         $scope.init = function () {
-            $scope.showSpinner();
+            
+                GlobalVariableService.validateUrl($location.$$path);
+            
 
-            GlobalVariableService.getTokenInfo();
+            //$scope.showSpinner();
+
+            var tokens= GlobalVariableService.getTokenInfo();
             
             $scope.GetItemCategory(function () {
                 $scope.GetSupplierRetailer(function () {
@@ -558,6 +567,8 @@ ETradersApp.controller("EditBillController", ['$scope', '$filter', '$q', '$http'
                         $scope.GetGSTPercentageById(function () {
                             if ($scope.ID > 0) {
                                 $scope.GetBillByID();
+                                $scope.CancelBillRights = GlobalVariableService.getARights(tokens.UserRole,$scope.RightsText.CancelBill);
+                               
                             }
                         });
                     });

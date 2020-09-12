@@ -56,20 +56,22 @@
         }
     </style>
 </head>
-<body ng-controller="LoginController">
-    {{authData.authenticationData.IsAuthenticated}}
-    {{authData.authenticationData.userName}}
+<body ng-controller="indexController">
+
     <nav class="navbar sticky-top bg-info flex-md-nowrap p-0">
-        <a class="navbar-brand bg-info text-white col-sm-3 col-md-2 mr-0" href="#"><span data-feather="layers"></span> &nbsp; <span style="font-size:25px">Ephraim Traders</span></a>
-        <div class="navbar-brand col-sm-6 col-md-8 bg-info"></div>
+        <a class="navbar-brand bg-info text-white col-sm-3 col-md-2 mr-0" href="#"><span data-feather="layers"></span>
+        <!--&nbsp; <span style="font-size:25px">Ephraim Traders</span>-->
+               
+        </a>
+        <div class="navbar-brand col-sm-6 col-md-8 bg-info"><img src="/vContent/images/ephraimtraders.png" class="mt-0" style="border-radius:8px;margin-left:20px;margin-top:0px;position:inherit" width="210" /></div>
         <!--<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
-        <div class="navbar-nav table col-sm-3 col-md-2" ng-hide="authData.authenticationData.IsAuthenticated">
+        <!--<div class="navbar-nav table col-sm-3 col-md-2">
             <div class="row pull-right">
                 <a class="col-5 nav-link text-center text-white border border-white" href="#login">Sign in</a>
                 <a class="text-center border border-white col-5 nav-link pull-right text-white" href="#Register">Register</a>
                 <span class="col-2">&nbsp;</span>
             </div>
-        </div>
+        </div>-->
         <div class="navbar-nav table col-sm-3 col-md-2" ng-show="IsAuthenticated">
             <div class="row pull-right">
                 <a class="col-5 nav-link text-center text-white border border-white">{{userName}}</a>
@@ -81,10 +83,16 @@
 
     <div class="container-fluid">
         <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="border-radius:5px">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
+                        <li class="nav-item" ng-repeat="item in UserRights">
+                            <a class="nav-link active" href="{{item.MenuUrl}}">
+                                <span data-feather="{{item.FeatherName}}"></span>
+                                {{item.DisplayName}}<span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <!--<li class="nav-item">
                             <a class="nav-link active" href="#WholeSaleDashboard">
                                 <span data-feather="home"></span>
                                 Sales<span class="sr-only">(current)</span>
@@ -151,6 +159,18 @@
                                 Employee Accounts
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="dropdown-item" href="#RightsDashboard">
+                                <span data-feather="folder"></span>
+                                Rights
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="dropdown-item" href="#RightsManagementDashboard">
+                                <span data-feather="folder"></span>
+                                Rights Management
+                            </a>
+                        </li>-->
                     </ul>
                 </div>
             </nav>
@@ -373,7 +393,7 @@
 <script type="text/javascript" src="vContent/Scripts/ui-grid.cellnav.min.js"></script>
 <script type="text/javascript" src="vContent/Scripts/ui-grid.edit.min.js"></script>
 <script type="text/javascript" src="vContent/Scripts/ui-grid.validate.min.js"></script>
-<script type="text/javascript" src="vapp/services/AuthData.js"></script>
+
 <script src="vapp/services/DigestService.js"></script>
 <script type="text/javascript" src="vapp/services/loginService.js"></script>
 <script type="text/javascript" src="vapp/controllers/loginController.js"></script>
@@ -396,6 +416,9 @@
 <script type="text/javascript" src="vapp/controllers/MaterialsCheckQIHController.js"></script>
 <script type="text/javascript" src="vapp/controllers/EmployeesController.js"></script>
 <script type="text/javascript" src="vapp/controllers/EmployeeAccountsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/RightsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/RightsManagementController.js"></script>
+<script type="text/javascript" src="vapp/controllers/indexController.js"></script>
 <script type="text/javascript">
     ETradersApp.constant("Version", "1");
 

@@ -1,12 +1,17 @@
 ﻿//Service to call Local Rest API
-ETradersApp.factory('CommonService', ['$http', '$alert', 'serviceBaseURL', 'ExceptionHandler', function ($http, $alert, serviceBaseURL, ExceptionHandler) {
+ETradersApp.factory('CommonService', ['GlobalVariableService', '$http', '$alert', 'Config', 'ExceptionHandler',
+    function (GlobalVariableService, $http, $alert, Config, ExceptionHandler) {
 
     var CommonService = {};
-
-
+    
     CommonService.GetListItems = function (list) {
+
+        var tokenInfo = GlobalVariableService.getTokenInfo();
+        var AccessToken = tokenInfo.AccessToken;
+
+
         var url;
-        url = serviceBaseURL + "/odata/" + list.title + "?$select=" + list.fields.toString();
+        url = Config.ServiceBaseURL + "/odata/" + list.title + "?$select=" + list.fields.toString();
 
         if (list.hasOwnProperty('lookupFields') && list.lookupFields.toString().length > 0) {
             url += "&$expand=" + list.lookupFields.toString();
@@ -26,7 +31,10 @@ ETradersApp.factory('CommonService', ['$http', '$alert', 'serviceBaseURL', 'Exce
             method: 'GET',
             cache: false,
             url: url,
-            headers: { "Accept": "application/json; odata=verbose" }
+            headers: {
+                "Accept": "application/json; odata=verbose",
+                "Authorization": "Bearer " + AccessToken
+            }
         }
         //Return Json File Response
         var promise = $http(req).then(function (response) {
@@ -42,13 +50,18 @@ ETradersApp.factory('CommonService', ['$http', '$alert', 'serviceBaseURL', 'Exce
 
     //Save data 
     CommonService.PostData = function (model, data) {
+        var tokenInfo = GlobalVariableService.getTokenInfo();
+        var AccessToken = tokenInfo.AccessToken;
+
+
         //Prepare request object
         var req = {
             method: 'POST',
             cache: false,
-            url: serviceBaseURL + '/odata/' + model,
+            url: Config.ServiceBaseURL + '/odata/' + model,
             headers: {
-                'Content-Type': 'application/json; odata=verbose'
+                'Content-Type': 'application/json; odata=verbose',
+                'Authorization': 'Bearer ' + AccessToken
             },
             data: data
         };
@@ -64,13 +77,17 @@ ETradersApp.factory('CommonService', ['$http', '$alert', 'serviceBaseURL', 'Exce
     };
     //Delete Data
     CommonService.DeleteData = function (model, id) {
+        var tokenInfo = GlobalVariableService.getTokenInfo();
+        var AccessToken = tokenInfo.AccessToken;
+
         //Prepare request object
         var req = {
             method: 'DELETE',
             cache: false,
-            url: serviceBaseURL + '/odata/' + model + '/(' + id + ')',
+            url: Config.ServiceBaseURL + '/odata/' + model + '/(' + id + ')',
             headers: {
-                'Content-Type': 'application/json; odata=verbose'
+                'Content-Type': 'application/json; odata=verbose',
+                'Authorization' : 'Bearer ' + AccessToken
             },
 
         };
@@ -85,13 +102,16 @@ ETradersApp.factory('CommonService', ['$http', '$alert', 'serviceBaseURL', 'Exce
     };
     //Update Data
     CommonService.UpdateData = function (model, data, id) {
+        var tokenInfo = GlobalVariableService.getTokenInfo();
+        var AccessToken = tokenInfo.AccessToken;
         //Prepare request object
         var req = {
             method: 'PATCH',
             cache: false,
-            url: serviceBaseURL + '/odata/' + model + '/(' + id + ')',
+            url: Config.ServiceBaseURL + '/odata/' + model + '/(' + id + ')',
             headers: {
-                'Content-Type': 'application/json; odata=verbose'
+                'Content-Type': 'application/json; odata=verbose',
+                'Authorization' :'Bearer ' + AccessToken
             },
             data: data
         };
@@ -131,14 +151,56 @@ ETradersApp.factory('CommonService', ['$http', '$alert', 'serviceBaseURL', 'Exce
             orderBy: "GodownName"
         };
         //$scope.showSpinner();
-        CommonService.GetListItems(lstItems).then(function (response) {
+        var promise =CommonService.GetListItems(lstItems).then(function (response) {
             if (response && response.data.d.results.length > 0) {
                 GodownData = response.data.d.results;
             }
             return GodownData;
         });
-        //return promise;
+        return promise;
     };
+
+    CommonService.getMaterials = function (callback) {
+        var lstItems = {
+            title: "Materials",
+            fields: ["MaterialId", "DisplayName", "RetailRate", "WholeSaleRate", "ItemCategoryId", "ItemCategory/ItemCategoryId"],
+            lookupFields: ["ItemCategory"],
+            orderBy: "DisplayName desc"
+        };
+         CommonService.GetListItems(lstItems).then(function (response) {
+            if (response && response.data.d.results.length > 0) {
+                GlobalVariableService.setMaterialList(response.data.d.results);
+                //return JSON.parse($window.sessionStorage["MaterialList"]);                
+             }
+             if (callback)
+                 callback();
+        });
+        //return promise;
+    }
+        CommonService.fetchRoleRights = function (RoleName,callback) {
+        
+        var lstRightsManagement = {
+            title: "RoleRightsViews",
+            fields: ["*"],
+            //lookupFields: ["EmployeeRole", "Right"],
+            filter: ["RoleName eq '" + RoleName +"'"],
+            orderBy: "DisplayOrder"
+        };
+            //if (RoleName != "Admin")
+            //    lstRightsManagement.filter = "RoleName eq '" + RoleName + "'";
+
+        CommonService.GetListItems(lstRightsManagement).then(function (response) {
+            if (response && response.data.d.results.length > 0) {
+                GlobalVariableService.setRoleRights(response.data.d.results);
+            }
+            else {
+                GlobalVariableService.setRoleRights();
+
+            }   
+            if (callback)
+                callback();
+        });
+    }
 
     CommonService.CalculateRowTotalAmount = function (rate,quantity,discount,DLP) {
 

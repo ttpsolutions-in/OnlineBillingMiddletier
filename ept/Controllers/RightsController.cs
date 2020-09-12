@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
@@ -21,31 +22,30 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Material>("Materials");
-    builder.EntitySet<Sale>("Sales"); 
+    builder.EntitySet<Right>("Rights");
+    builder.EntitySet<RightsManagement>("RightsManagements"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    //[Authorize]
-    public class MaterialsController : ODataController
+    public class RightsController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
 
-        // GET: odata/Materials
+        // GET: odata/Rights
         [EnableQuery]
-        public IQueryable<Material> GetMaterials()
+        public IQueryable<Right> GetRights()
         {
-            return db.Materials;
+            return db.Rights;
         }
 
-        // GET: odata/Materials(5)
+        // GET: odata/Rights(5)
         [EnableQuery]
-        public SingleResult<Material> GetMaterial([FromODataUri] int key)
+        public SingleResult<Right> GetRight([FromODataUri] short key)
         {
-            return SingleResult.Create(db.Materials.Where(material => material.MaterialId == key));
+            return SingleResult.Create(db.Rights.Where(right => right.RightsId == key));
         }
 
-        // PUT: odata/Materials(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<Material> patch)
+        // PUT: odata/Rights(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] short key, Delta<Right> patch)
         {
             Validate(patch.GetEntity());
 
@@ -54,21 +54,21 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            Right right = await db.Rights.FindAsync(key);
+            if (right == null)
             {
                 return NotFound();
             }
 
-            patch.Put(material);
+            patch.Put(right);
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MaterialExists(key))
+                if (!RightExists(key))
                 {
                     return NotFound();
                 }
@@ -78,26 +78,26 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(material);
+            return Updated(right);
         }
 
-        // POST: odata/Materials
-        public IHttpActionResult Post(Material material)
+        // POST: odata/Rights
+        public async Task<IHttpActionResult> Post(Right right)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Materials.Add(material);
-            db.SaveChanges();
+            db.Rights.Add(right);
+            await db.SaveChangesAsync();
 
-            return Created(material);
+            return Created(right);
         }
 
-        // PATCH: odata/Materials(5)
+        // PATCH: odata/Rights(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<Material> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] short key, Delta<Right> patch)
         {
             Validate(patch.GetEntity());
 
@@ -106,21 +106,21 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            Right right = await db.Rights.FindAsync(key);
+            if (right == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(material);
+            patch.Patch(right);
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MaterialExists(key))
+                if (!RightExists(key))
                 {
                     return NotFound();
                 }
@@ -130,29 +130,29 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(material);
+            return Updated(right);
         }
 
-        // DELETE: odata/Materials(5)
-        public IHttpActionResult Delete([FromODataUri] int key)
+        // DELETE: odata/Rights(5)
+        public async Task<IHttpActionResult> Delete([FromODataUri] short key)
         {
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            Right right = await db.Rights.FindAsync(key);
+            if (right == null)
             {
                 return NotFound();
             }
 
-            db.Materials.Remove(material);
-            db.SaveChanges();
+            db.Rights.Remove(right);
+            await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/Materials(5)/Sales
+        // GET: odata/Rights(5)/RightsManagements
         [EnableQuery]
-        public IQueryable<Sale> GetSales([FromODataUri] int key)
+        public IQueryable<RightsManagement> GetRightsManagements([FromODataUri] short key)
         {
-            return db.Materials.Where(m => m.MaterialId == key).SelectMany(m => m.Sales);
+            return db.Rights.Where(m => m.RightsId == key).SelectMany(m => m.RightsManagements);
         }
 
         protected override void Dispose(bool disposing)
@@ -164,9 +164,9 @@ namespace ept.Controllers
             base.Dispose(disposing);
         }
 
-        private bool MaterialExists(int key)
+        private bool RightExists(short key)
         {
-            return db.Materials.Count(e => e.MaterialId == key) > 0;
+            return db.Rights.Count(e => e.RightsId == key) > 0;
         }
     }
 }

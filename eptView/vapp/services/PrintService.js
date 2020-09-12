@@ -1,4 +1,5 @@
-ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 'serviceBaseURL', 'ExceptionHandler', 'CommonService', function ($location, $http, $alert, $filter, serviceBaseURL, ExceptionHandler, CommonService) {
+ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 'Config', 'ExceptionHandler', 'CommonService',
+    function ($location, $http, $alert, $filter, Config, ExceptionHandler, CommonService) {
 
     var PrintService = {};
     var WholeSale = [];
@@ -25,32 +26,12 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
         WholeHeader = '<html>' +
             '<head>' +
             '<link href="vContent/style/bootstrap.min.css" rel="stylesheet" />  ' +
-            '<script type="text/javascript" src="vContent/Scripts/angular.min.js"></script>' +
-            '<script type="text/javascript" src="vContent/Scripts/pdfmake.0.1.22.min.js"></script>' +
-            '<script type="text/javascript" src="vContent/Scripts/html2canvas.0.4.1.min.js"></script>' +
-            '<script type="text/javascript">' +
-            'var app = angular.module("MyApp", [])' +
-            'app.controller("MyController", function ($scope) {' +
-
-            '$scope.Export = function () {' +
-            'html2canvas(document.getElementById("dvPrintBill"), {' +
-            'onrendered: function (canvas) {' +
-            'var data = canvas.toDataURL();' +
-            'var docDefinition = {' +
-            'content: [{' +
-            'image: data,' +
-            'width: 500' +
-            '}]' +
-            '};' +
-            'pdfMake.createPdf(docDefinition).download("Table.pdf");' +
-            '}' +
-            '});' +
-            '}' +
-            '</script > '
-        '</head>' +
-            '<body ng-app="MyApp" ng-controller="MyController">' +
-            //'<body>' +
-            '<div id="dv" style="margin:150px">  ';
+            '<script type="text/javascript" src="vContent/Scripts/angular.min.js"></script>' +           
+            '<style>@media print {'+
+                    '.footer { page -break-after: always; }' +
+            '}</style></head>' +
+            '<body>' +
+            '<div id="dv" style="margin:25px">  ';
         var previousBillNo = 0;
         angular.forEach(WholeSale, function (billDetail, key) {
 
@@ -138,7 +119,7 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
                     '<span class="float-right">For <b>EPHRAIM TRADERS</b><br /><br /> Authorised Signatory</span>  ' +
                     '</div>  ' +
                     '</div>  ' +
-                    '</div>  '
+                    '</div> <div class="footer"></div> '
 
 
             } //end of if billno is same.
@@ -161,59 +142,36 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
 
         strOneBillContent += header + body + footer;
 
-        WholeFooter += '<table style="width:100%"><tr><td><button type="button" class="btn btn-primary col-md-offset-5" ng-click="Export()"> <span data-feather="printer"></span>Export to PDF</button></td></tr></table></body></html>';
+        //WholeFooter += '<table style="width:100%"><tr><td><button type="button" class="btn btn-primary col-md-offset-5" ng-click="Export()"> <span data-feather="printer"></span>Export to PDF</button></td></tr></table>
+        WholeFooter +='</body ></html > ';
         content = WholeHeader + strOneBillContent + WholeFooter;
 
 
         var mywindow = window.open('', 'PRINT', 'height=800,width=800');
-        mywindow.document.write(content);
-        mywindow.document.close();
-        mywindow.focus();
-        mywindow.print();
+        
+            mywindow.document.write(content);
+        setTimeout(function () {
+            mywindow.document.close();
+            mywindow.focus();
+
+            mywindow.print();
+        }, 2000);
+        
         //$timeout(function () {
         $location.path('/');
         //AllCreditBillDetail = null;
     };
     PrintService.GetCustomerBillsNPrint = function (CustomerId) {
-        PrintService.GetWholeSaleByID(CustomerId, function () {
+        PrintService.GetWholeSaleByID(CustomerId,0, function () {
             PrintService.printBill();
         });
-
-        /*
-        var lstBill = {
-            title: "Bills",
-            fields: [
-                "BillNo"
-                //,"RetailerId"
-            ],
-            //lookupFields: [""],
-            filter: ["RetailerId eq " + CustomerId + " and SaleTypeId eq 2"],
-            orderBy: "CreatedOn"
-        };
-
-        CommonService.GetListItems(lstBill).then(function (response) {
-            if (response && response.data.d.results.length > 0) {
-                AllCreditBillNos = response.data.d.results;
-                var strBillNo = '';
-                angular.forEach(AllCreditBillNos, function (value, key) {
-                    if (strBillNo.length < 1)
-                        strBillNo = value.BillNo;
-                    else
-                        strBillNo += "," + value.BillNo;
-                })
-                PrintService.GetWholeSaleByID(strBillNo, function () {
-                    PrintService.printBill();
-                });
-            }
-        });
-        */
     }
     PrintService.GetSingleBillNPrint = function (BillNo) {
-        PrintService.GetWholeSaleByID(BillNo, function () {
+        PrintService.GetWholeSaleByID(0,BillNo, function () {
             PrintService.printBill();
         });
     }
-    PrintService.GetWholeSaleByID = function (customerId, callback) {
+    PrintService.GetWholeSaleByID = function (customerId,billNo, callback) {
 
         var lstBill = {
             title: "BillDetailsViews",
@@ -245,10 +203,14 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
                 "BillStatus"
             ],
             //lookupFields: ["Bill", "Material", "Godown","Material/SupplierRetailer"],
-            filter: ["RetailerId eq " + customerId],
+            //filter: ["RetailerId eq " + customerId],
             //limitTo: "5000",
             orderBy: "BillNo"
         };
+        if (customerId == 0)
+            lstBill.filter = "BillNo eq " + billNo
+        else
+            lstBill.filter = "RetailerId eq " + customerId
 
         CommonService.GetListItems(lstBill).then(function (response) {
             if (response && response.data.d.results.length > 0) {

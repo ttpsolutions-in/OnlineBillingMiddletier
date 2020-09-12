@@ -6,6 +6,7 @@
             </div>
             <div class="row col-md-4">
                 <h2 class="form-login-heading col-md-12">Login</h2>
+                <div ng-if="ShowSpinnerStatus" class="loader"></div><br />                
                 <div class="form-group col-md-12">
                     <input type="text" class="form-control" placeholder="User name" data-ng-model="loginData.userName" required autofocus>
                 </div>

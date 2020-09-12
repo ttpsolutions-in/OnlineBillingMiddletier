@@ -1,8 +1,8 @@
 ﻿
-ETradersApp.service('LoginService', ['$http', '$q', 'GlobalVariableService', 'authData', 'serviceBaseURL', 'ExceptionHandler',
-    function ($http, $q, GlobalVariableService, authData, serviceBaseURL, ExceptionHandler) {
+ETradersApp.service('LoginService', ['Config','$http', '$q', 'GlobalVariableService', 'ExceptionHandler',
+    function (Config,$http, $q, GlobalVariableService, ExceptionHandler) {
 
-        var loginServiceURL = serviceBaseURL + '/token';
+        var loginServiceURL = Config.ServiceBaseURL + '/token';
         
         var tokenInfo = {
             accessToken: '',
@@ -43,7 +43,7 @@ ETradersApp.service('LoginService', ['$http', '$q', 'GlobalVariableService', 'au
             var req = {
                 method: 'POST',
                 cache: false,
-                url: serviceBaseURL + '/api/Account/Register',
+                url: Config.ServiceBaseURL + '/api/Account/Register',
                 headers: {
                     'Content-Type': 'application/json'
                 },

@@ -70,6 +70,9 @@
     <Content Include="index.html" />
     <Content Include="vapp\app.js" />
     <Content Include="vapp\controllers\EditBillController.js" />
+    <Content Include="vapp\controllers\EmployeeAccountsController.js" />
+    <Content Include="vapp\controllers\EmployeesController.js" />
+    <Content Include="vapp\controllers\ExportToPDFController.js" />
     <Content Include="vapp\controllers\homeController.js" />
     <Content Include="vapp\controllers\indexController.js" />
     <Content Include="vapp\controllers\ItemCategoryDashboardController.js" />
@@ -80,6 +83,7 @@
     <Content Include="vapp\controllers\ManageWholeSaleController_bakcup.js" />
     <Content Include="vapp\controllers\MaterialInventoryConstroller.js" />
     <Content Include="vapp\controllers\MaterialInventoryDashboard.js" />
+    <Content Include="vapp\controllers\MaterialsCheckQIHController.js" />
     <Content Include="vapp\controllers\MaterialsController.js" />
     <Content Include="vapp\controllers\nextController.js" />
     <Content Include="vapp\controllers\RegisterController.js" />
@@ -413,6 +417,8 @@
     <Content Include="vContent\style\ui-grid.min.css" />
     <Content Include="vContent\sweetalert.css" />
     <Content Include="vContent\test.txt" />
+    <Content Include="vtemplate\AddEmployee.html" />
+    <Content Include="vtemplate\AddEmployeeAccount.html" />
     <Content Include="vtemplate\AddGodown.html" />
     <Content Include="vtemplate\AddMaterialCategory.html" />
     <Content Include="vtemplate\AddMaterialInventory.html" />
@@ -421,10 +427,14 @@
     <Content Include="vtemplate\AddSupplierCustomer.html" />
     <Content Include="vtemplate\Dashboard.html" />
     <Content Include="vtemplate\EditBill.html" />
+    <Content Include="vtemplate\EditEmployeeAccount.html" />
+    <Content Include="vtemplate\EditEmployeeDetail.html" />
     <Content Include="vtemplate\EditGodown.html" />
     <Content Include="vtemplate\EditMaterialCategory.html" />
     <Content Include="vtemplate\EditMaterials.html" />
     <Content Include="vtemplate\EditSupplierCustomer.html" />
+    <Content Include="vtemplate\EmployeeAccountDashboard.html" />
+    <Content Include="vtemplate\EmployeesDashboard.html" />
     <Content Include="vtemplate\GodownDashboard.html" />
     <Content Include="vtemplate\home.html" />
     <Content Include="vtemplate\Info.html" />

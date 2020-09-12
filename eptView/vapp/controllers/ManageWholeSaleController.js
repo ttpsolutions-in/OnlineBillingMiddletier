@@ -147,12 +147,12 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
         };
 
         $scope.CalculateGST = function () {
-            var paramdata = {};
-            paramdata.TotalAmount = $scope.WholeSale.TotalAmount;
-            paramdata.GSTApplied = $scope.WholeSale.GSTApplied;
-            paramdata.GSTPercentage = $scope.WholeSale.GSTPercentage;
+            //var paramdata = {};
+            //paramdata.TotalAmount = $scope.WholeSale.TotalAmount;
+            //paramdata.GSTApplied = $scope.WholeSale.GSTApplied;
+            //paramdata.GSTPercentage = $scope.WholeSale.GSTPercentage;
             var results = {};
-            results = CommonService.CalculateGSTNGrandTotal(paramdata);
+            results = CommonService.CalculateGSTNGrandTotal($scope.WholeSale.TotalAmount, $scope.WholeSale.GSTPercentage, $scope.WholeSale.GSTApplied);
 
             $scope.WholeSale.GrandTotal = results.GrandTotal;
             $scope.WholeSale.GSTAmount = results.GSTAmount;
@@ -284,7 +284,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                     }
 
 
-                    $location.path('/');
+                    //$location.path('/');
 
                 } else if (!$scope.IsItemSelected && isValid) {
                     toster.pop('warning', "", "Please select Items for submit", 5000, 'trustedHtml');
@@ -366,7 +366,8 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                                     "Amount": value.Amount.toString(),
                                     "BillNo": response.BillNo,
                                     "GodownId": $filter('filter')($scope.GodownData, { GodownName: value.GodownId }, true)[0].GodownId,
-                                    "CreatedOn": new Date()
+                                    "CreatedOn": new Date(),
+                                    "Active": 1
                                 };
                                 CommonService.PostData("Sales", salesPostDate).then(function (response1) {
                                     if (response1.SaleId > 0) {
@@ -375,6 +376,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                                             //$scope.GetWholeSaleByID(response.BillNo);
                                             toaster.pop('success', "", "Data saved successfully", 5000, 'trustedHtml');
                                             isAlertDone = true;
+                                            if (callback)
                                             callback();
                                         }
                                     }
@@ -389,88 +391,88 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
         };
         $scope.SaveNPrint = function (isFormValid) {
             $scope.SubmitItems(isFormValid, function () {
-                PrintService.GetWholeSaleByID($scope.BillNo);
-                $location.path('/');
+                PrintService.GetSingleBillNPrint($scope.BillNo);
+                //$location.path('/');
             });
         }
        
-        $scope.GetWholeSaleByID = function (saleId) {
-            try {
-                var lstBill = {
-                    title: "Sales",
-                    fields: [
-                        "*",
-                        "Bill/SaleDate",
-                        "Bill/BillNo",
-                        "Bill/RetailerId",
-                        "Bill/PaidAmt",
-                        "Bill/BalanceAmt",
-                        "Bill/GSTApplied",
-                        "Bill/GSTPercentage",
-                        "Bill/GSTAmount",
-                        "Bill/TotalAmount",
-                        "Bill/GrandTotal",
-                        "Bill/SaleTypeId",
-                        "Bill/SaleCategoryId",
-                        "Bill/ShowGSTNo",
-                        "Material",
-                        "Material/WholeSaleRate",
-                        "Material/RetailRate"
-                    ],
-                    lookupFields: ["Bill", "Material"],
-                    filter: ["BillNo eq " + saleId],
-                    //limitTo: "5000",
-                    orderBy: "CreatedOn desc"
-                };
+        //$scope.GetWholeSaleByID = function (saleId) {
+        //    try {
+        //        var lstBill = {
+        //            title: "Sales",
+        //            fields: [
+        //                "*",
+        //                "Bill/SaleDate",
+        //                "Bill/BillNo",
+        //                "Bill/RetailerId",
+        //                "Bill/PaidAmt",
+        //                "Bill/BalanceAmt",
+        //                "Bill/GSTApplied",
+        //                "Bill/GSTPercentage",
+        //                "Bill/GSTAmount",
+        //                "Bill/TotalAmount",
+        //                "Bill/GrandTotal",
+        //                "Bill/SaleTypeId",
+        //                "Bill/SaleCategoryId",
+        //                "Bill/ShowGSTNo",
+        //                "Material",
+        //                "Material/WholeSaleRate",
+        //                "Material/RetailRate"
+        //            ],
+        //            lookupFields: ["Bill", "Material"],
+        //            filter: ["BillNo eq " + saleId],
+        //            //limitTo: "5000",
+        //            orderBy: "CreatedOn desc"
+        //        };
 
-                CommonService.GetListItems(lstBill).then(function (response) {
-                    if (response && response.data.d.results.length > 0) {
-                        $scope.printWholeSale = response.data.d.results;
+        //        CommonService.GetListItems(lstBill).then(function (response) {
+        //            if (response && response.data.d.results.length > 0) {
+        //                $scope.printWholeSale = response.data.d.results;
 
-                        $scope.printWholeSale.TotalAmount = 0;
-                        $scope.printWholeSale[0].Bill.Contact = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.printWholeSale[0].Bill.RetailerId }, true)[0].Contact;
-                        $scope.printWholeSale[0].Bill.Name = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.printWholeSale[0].Bill.RetailerId }, true)[0].Name;
-                        angular.forEach($scope.printWholeSale, function (value) {
-                            var rate = 0;
-                            if (value.Bill.SaleCategoryId == 1) {
-                                rate = value.Material.WholeSaleRate * value.Quantity;
-                                value.Rate = value.Material.WholeSaleRate;
-                            } else {
-                                rate = value.Material.RetailRate * value.Quantity;
-                                value.Rate = value.Material.RetailRate;
-                            }
-                        });
-                        /*   var amount = 0;
-                           var discountAmt = 0;
-                           if (value.Discount > 0) {
-                               discountAmt = rate / 100 * parseFloat(value.Discount);
-                               amount = parseFloat(rate) - parseFloat(discountAmt);
-                           } else {
-                               amount = rate;
-                           }
-                           value.TotalAmount = amount - parseFloat(value.DLP);
-                           $scope.printWholeSale.TotalAmount = $scope.printWholeSale.TotalAmount + parseFloat(value.TotalAmount);
-                           if (value.Bill.GSTApplied > 0) {
-                               $scope.printWholeSale.GSTAmount = $scope.printWholeSale.TotalAmount * $scope.WholeSale.GSTPercentage / 100;
-                           } else {
-                               $scope.printWholeSale.GSTAmount = 0;
-                           }
-                           */
-                        $scope.printBill();
+        //                $scope.printWholeSale.TotalAmount = 0;
+        //                $scope.printWholeSale[0].Bill.Contact = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.printWholeSale[0].Bill.RetailerId }, true)[0].Contact;
+        //                $scope.printWholeSale[0].Bill.Name = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.printWholeSale[0].Bill.RetailerId }, true)[0].Name;
+        //                angular.forEach($scope.printWholeSale, function (value) {
+        //                    var rate = 0;
+        //                    if (value.Bill.SaleCategoryId == 1) {
+        //                        rate = value.Material.WholeSaleRate * value.Quantity;
+        //                        value.Rate = value.Material.WholeSaleRate;
+        //                    } else {
+        //                        rate = value.Material.RetailRate * value.Quantity;
+        //                        value.Rate = value.Material.RetailRate;
+        //                    }
+        //                });
+        //                /*   var amount = 0;
+        //                   var discountAmt = 0;
+        //                   if (value.Discount > 0) {
+        //                       discountAmt = rate / 100 * parseFloat(value.Discount);
+        //                       amount = parseFloat(rate) - parseFloat(discountAmt);
+        //                   } else {
+        //                       amount = rate;
+        //                   }
+        //                   value.TotalAmount = amount - parseFloat(value.DLP);
+        //                   $scope.printWholeSale.TotalAmount = $scope.printWholeSale.TotalAmount + parseFloat(value.TotalAmount);
+        //                   if (value.Bill.GSTApplied > 0) {
+        //                       $scope.printWholeSale.GSTAmount = $scope.printWholeSale.TotalAmount * $scope.WholeSale.GSTPercentage / 100;
+        //                   } else {
+        //                       $scope.printWholeSale.GSTAmount = 0;
+        //                   }
+        //                   */
+        //                PrintService.printBill();
 
-                        //});
-                    }
-                });
-            } catch (error) {
-                console.log("Exception caught in the getSalebyId function. Exception Logged as " + error.message);
-            }
-        };
+        //                //});
+        //            }
+        //        });
+        //    } catch (error) {
+        //        console.log("Exception caught in the getSalebyId function. Exception Logged as " + error.message);
+        //    }
+        //};
 
         $scope.RedirectDashboard = function () {
             $location.path('/WholeSaleDashboardController');
         };
         $scope.init = function () {
-            //$scope.showSpinner();
+            GlobalVariableService.validateUrl($location.$$path);
             $scope.GetItemCategory();
             $scope.GetSupplierRetailer();
             $scope.GetGodowns();

@@ -86,16 +86,16 @@
                                     <label>Cash <input type="checkbox" disabled ng-checked="WholeSale[0].Bill.SaleTypeId==2?0:1" /></label>
                                     &nbsp;&nbsp;&nbsp;
                                     <span>
-                                        GST ({{GSTPercentage[0].GST}}%) <input type="checkbox" disabled ng-checked="WholeSale[0].Bill.GSTApplied"
-                                                                               ng-true-value="1" ng-false-value="0" />
+                                        GST ({{WholeSale[0].Bill.GSTPercentage}}%) <input type="checkbox" disabled ng-checked="WholeSale[0].Bill.GSTApplied"
+                                                                            ng-true-value="1" ng-false-value="0" />
                                     </span>
                                 </div>
                             </td>
-                            <td class="text-right"><span>{{WholeSale.GSTAmount.toFixed(2)}} </span></td>
+                            <td class="text-right"><span>{{WholeSale[0].Bill.GSTAmount}} </span></td>
                         </tr>
                         <tr>
                             <td colspan="{{WholeSale[0].Bill.SaleCategoryId == 1?7:5}}" class="text-right"> Grand Total</td>
-                            <td class="text-right">{{WholeSale[0].Bill.BalanceAmt}}</td>
+                            <td class="text-right">{{WholeSale[0].Bill.GrandTotal}}</td>
                         </tr>
                     </table>
                 </div>

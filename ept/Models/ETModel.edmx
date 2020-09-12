@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EphraimTradersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EphraimTradersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -139,7 +139,8 @@
             <PropertyRef Name="EmpRoleId" />
           </Key>
           <Property Name="EmpRoleId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="tinyint" />
         </EntityType>
         <EntityType Name="EmploymentType">
           <Key>
@@ -225,6 +226,29 @@
           </Key>
           <Property Name="PaymentTypeId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PaymentTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rights">
+          <Key>
+            <PropertyRef Name="RightsId" />
+          </Key>
+          <Property Name="RightsId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RightsName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FeatherName" Type="varchar" MaxLength="20" />
+          <Property Name="MenuUrl" Type="varchar" MaxLength="100" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="100" />
+          <Property Name="PID" Type="smallint" />
+          <Property Name="Menu" Type="tinyint" />
+          <Property Name="DisplayOrder" Type="tinyint" />
+          <Property Name="Active" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RightsManagement">
+          <Key>
+            <PropertyRef Name="RightsManagementId" />
+          </Key>
+          <Property Name="RightsManagementId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RightsId" Type="smallint" Nullable="false" />
+          <Property Name="RoleId" Type="tinyint" Nullable="false" />
           <Property Name="Active" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="SaleCategory">
@@ -339,6 +363,19 @@ warning 6002: The table/view 'EphraimTraders.dbo.BillDetailsView' does not have 
           <Property Name="SaleDate" Type="date" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'EphraimTraders.dbo.CurrentUserRoleRightsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CurrentUserRoleRightsView">
+          <Key>
+            <PropertyRef Name="RightsId" />
+            <PropertyRef Name="RightsName" />
+            <PropertyRef Name="HasRights" />
+          </Key>
+          <Property Name="RightsId" Type="smallint" Nullable="false" />
+          <Property Name="RightsName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleId" Type="tinyint" />
+          <Property Name="HasRights" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ReorderRequired">
           <Key>
@@ -350,6 +387,45 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <Property Name="SoldQuantity" Type="decimal" Precision="38" Scale="2" />
           <Property Name="TotalIncomingQuantity" Type="decimal" Precision="18" Scale="2" />
           <Property Name="QIH" Type="decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EphraimTraders.dbo.RightsForAssignment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RightsForAssignment">
+          <Key>
+            <PropertyRef Name="RightsId" />
+            <PropertyRef Name="RightsName" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="Active" />
+            <PropertyRef Name="RMActive" />
+            <PropertyRef Name="RoleName" />
+            <PropertyRef Name="RightsManagementId" />
+          </Key>
+          <Property Name="RightsId" Type="smallint" Nullable="false" />
+          <Property Name="RightsName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleId" Type="tinyint" Nullable="false" />
+          <Property Name="Active" Type="tinyint" Nullable="false" />
+          <Property Name="RMActive" Type="tinyint" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RightsManagementId" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RoleRightsView">
+          <Key>
+            <PropertyRef Name="RightsId" />
+            <PropertyRef Name="RightsName" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RightsId" Type="smallint" Nullable="false" />
+          <Property Name="RightsName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleId" Type="tinyint" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+          <Property Name="FeatherName" Type="nvarchar" MaxLength="10" />
+          <Property Name="MenuUrl" Type="varchar" MaxLength="100" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="100" />
+          <Property Name="PID" Type="smallint" />
+          <Property Name="DisplayOrder" Type="tinyint" />
+          <Property Name="Menu" Type="tinyint" />
         </EntityType>
         <Association Name="FK__Bills__BillStatu__72C60C4A">
           <End Role="Status" Type="Self.Status" Multiplicity="1" />
@@ -635,6 +711,30 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RightsManagement_EmployeeRole">
+          <End Role="EmployeeRole" Type="Self.EmployeeRole" Multiplicity="1" />
+          <End Role="RightsManagement" Type="Self.RightsManagement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeRole">
+              <PropertyRef Name="EmpRoleId" />
+            </Principal>
+            <Dependent Role="RightsManagement">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RightsManagement_Rights">
+          <End Role="Rights" Type="Self.Rights" Multiplicity="1" />
+          <End Role="RightsManagement" Type="Self.RightsManagement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rights">
+              <PropertyRef Name="RightsId" />
+            </Principal>
+            <Dependent Role="RightsManagement">
+              <PropertyRef Name="RightsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EphraimTradersModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -655,6 +755,8 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <EntitySet Name="MaterialInventory" EntityType="Self.MaterialInventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rights" EntityType="Self.Rights" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RightsManagement" EntityType="Self.RightsManagement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleCategory" EntityType="Self.SaleCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleType" EntityType="Self.SaleType" Schema="dbo" store:Type="Tables" />
@@ -691,6 +793,14 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
     [BillDetailsView].[SaleDate] AS [SaleDate]
     FROM [dbo].[BillDetailsView] AS [BillDetailsView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="CurrentUserRoleRightsView" EntityType="Self.CurrentUserRoleRightsView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CurrentUserRoleRightsView].[RightsId] AS [RightsId], 
+    [CurrentUserRoleRightsView].[RightsName] AS [RightsName], 
+    [CurrentUserRoleRightsView].[RoleId] AS [RoleId], 
+    [CurrentUserRoleRightsView].[HasRights] AS [HasRights]
+    FROM [dbo].[CurrentUserRoleRightsView] AS [CurrentUserRoleRightsView]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ReorderRequired" EntityType="Self.ReorderRequired" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ReorderRequired].[MaterialId] AS [MaterialId], 
@@ -700,6 +810,31 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
     [ReorderRequired].[TotalIncomingQuantity] AS [TotalIncomingQuantity], 
     [ReorderRequired].[QIH] AS [QIH]
     FROM [dbo].[ReorderRequired] AS [ReorderRequired]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RightsForAssignment" EntityType="Self.RightsForAssignment" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RightsForAssignment].[RightsId] AS [RightsId], 
+    [RightsForAssignment].[RightsName] AS [RightsName], 
+    [RightsForAssignment].[RoleId] AS [RoleId], 
+    [RightsForAssignment].[Active] AS [Active], 
+    [RightsForAssignment].[RMActive] AS [RMActive], 
+    [RightsForAssignment].[RoleName] AS [RoleName], 
+    [RightsForAssignment].[RightsManagementId] AS [RightsManagementId]
+    FROM [dbo].[RightsForAssignment] AS [RightsForAssignment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RoleRightsView" EntityType="Self.RoleRightsView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RoleRightsView].[RightsId] AS [RightsId], 
+    [RoleRightsView].[RightsName] AS [RightsName], 
+    [RoleRightsView].[RoleId] AS [RoleId], 
+    [RoleRightsView].[RoleName] AS [RoleName], 
+    [RoleRightsView].[FeatherName] AS [FeatherName], 
+    [RoleRightsView].[MenuUrl] AS [MenuUrl], 
+    [RoleRightsView].[DisplayName] AS [DisplayName], 
+    [RoleRightsView].[PID] AS [PID], 
+    [RoleRightsView].[DisplayOrder] AS [DisplayOrder], 
+    [RoleRightsView].[Menu] AS [Menu]
+    FROM [dbo].[RoleRightsView] AS [RoleRightsView]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__Bills__BillStatu__72C60C4A" Association="Self.FK__Bills__BillStatu__72C60C4A">
             <End Role="Status" EntitySet="Status" />
@@ -793,9 +928,16 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             <End Role="Godown" EntitySet="Godown" />
             <End Role="MaterialInventory" EntitySet="MaterialInventory" />
           </AssociationSet>
+          <AssociationSet Name="FK_RightsManagement_EmployeeRole" Association="Self.FK_RightsManagement_EmployeeRole">
+            <End Role="EmployeeRole" EntitySet="EmployeeRole" />
+            <End Role="RightsManagement" EntitySet="RightsManagement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RightsManagement_Rights" Association="Self.FK_RightsManagement_Rights">
+            <End Role="Rights" EntitySet="Rights" />
+            <End Role="RightsManagement" EntitySet="RightsManagement" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EphraimTradersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -944,8 +1086,10 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             <PropertyRef Name="EmpRoleId" />
           </Key>
           <Property Name="EmpRoleId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Byte" />
           <NavigationProperty Name="EmployeeDetails" Relationship="Self.FK__EmployeeD__EmpRo__3B40CD36" FromRole="EmployeeRole" ToRole="EmployeeDetail" />
+          <NavigationProperty Name="RightsManagements" Relationship="Self.FK_RightsManagement_EmployeeRole" FromRole="EmployeeRole" ToRole="RightsManagement" />
         </EntityType>
         <EntityType Name="EmploymentType">
           <Key>
@@ -1045,6 +1189,32 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <Property Name="PaymentTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Active" Type="Byte" Nullable="false" />
           <NavigationProperty Name="EmployeeAccounts" Relationship="Self.FK_EmployeeAccount_PaymentType" FromRole="PaymentType" ToRole="EmployeeAccount" />
+        </EntityType>
+        <EntityType Name="Right">
+          <Key>
+            <PropertyRef Name="RightsId" />
+          </Key>
+          <Property Name="RightsId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RightsName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="RightsManagements" Relationship="Self.FK_RightsManagement_Rights" FromRole="Rights" ToRole="RightsManagement" />
+          <Property Name="FeatherName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MenuUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PID" Type="Int16" />
+          <Property Name="DisplayOrder" Type="Byte" />
+          <Property Name="Menu" Type="Byte" />
+        </EntityType>
+        <EntityType Name="RightsManagement">
+          <Key>
+            <PropertyRef Name="RightsManagementId" />
+          </Key>
+          <Property Name="RightsManagementId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RightsId" Type="Int16" Nullable="false" />
+          <Property Name="RoleId" Type="Byte" Nullable="false" />
+          <Property Name="Active" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="EmployeeRole" Relationship="Self.FK_RightsManagement_EmployeeRole" FromRole="RightsManagement" ToRole="EmployeeRole" />
+          <NavigationProperty Name="Right" Relationship="Self.FK_RightsManagement_Rights" FromRole="RightsManagement" ToRole="Rights" />
         </EntityType>
         <EntityType Name="SaleCategory">
           <Key>
@@ -1166,6 +1336,17 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <Property Name="BillStatus" Type="Byte" />
           <Property Name="SaleDate" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="CurrentUserRoleRightsView">
+          <Key>
+            <PropertyRef Name="RightsId" />
+            <PropertyRef Name="RightsName" />
+            <PropertyRef Name="HasRights" />
+          </Key>
+          <Property Name="RightsId" Type="Int16" Nullable="false" />
+          <Property Name="RightsName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleId" Type="Byte" />
+          <Property Name="HasRights" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="ReorderRequired">
           <Key>
             <PropertyRef Name="MaterialId" />
@@ -1176,6 +1357,23 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <Property Name="SoldQuantity" Type="Decimal" Precision="38" Scale="2" />
           <Property Name="TotalIncomingQuantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="QIH" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityType Name="RoleRightsView">
+          <Key>
+            <PropertyRef Name="RightsId" />
+            <PropertyRef Name="RightsName" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RightsId" Type="Int16" Nullable="false" />
+          <Property Name="RightsName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleId" Type="Byte" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FeatherName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MenuUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PID" Type="Int16" />
+          <Property Name="DisplayOrder" Type="Byte" />
+          <Property Name="Menu" Type="Byte" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -1337,6 +1535,18 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RightsManagement_EmployeeRole">
+          <End Role="EmployeeRole" Type="Self.EmployeeRole" Multiplicity="1" />
+          <End Role="RightsManagement" Type="Self.RightsManagement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeRole">
+              <PropertyRef Name="EmpRoleId" />
+            </Principal>
+            <Dependent Role="RightsManagement">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Sales__GodownId__02FC7413">
           <End Role="Godown" Type="Self.Godown" Multiplicity="1" />
           <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
@@ -1421,6 +1631,18 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RightsManagement_Rights">
+          <End Role="Rights" Type="Self.Right" Multiplicity="1" />
+          <End Role="RightsManagement" Type="Self.RightsManagement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rights">
+              <PropertyRef Name="RightsId" />
+            </Principal>
+            <Dependent Role="RightsManagement">
+              <PropertyRef Name="RightsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SupplierRe__Type__40058253">
           <End Role="SupplierRetailType" Type="Self.SupplierRetailType" Multiplicity="1" />
           <End Role="SupplierRetailer" Type="Self.SupplierRetailer" Multiplicity="*" />
@@ -1437,7 +1659,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="EphraimTradersEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EphraimTradersEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -1456,6 +1678,8 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <EntitySet Name="MaterialInventories" EntityType="Self.MaterialInventory" />
           <EntitySet Name="Materials" EntityType="Self.Material" />
           <EntitySet Name="PaymentTypes" EntityType="Self.PaymentType" />
+          <EntitySet Name="Rights" EntityType="Self.Right" />
+          <EntitySet Name="RightsManagements" EntityType="Self.RightsManagement" />
           <EntitySet Name="SaleCategories" EntityType="Self.SaleCategory" />
           <EntitySet Name="Sales" EntityType="Self.Sale" />
           <EntitySet Name="SaleTypes" EntityType="Self.SaleType" />
@@ -1464,7 +1688,9 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           <EntitySet Name="SupplierRetailTypes" EntityType="Self.SupplierRetailType" />
           <EntitySet Name="Units" EntityType="Self.Unit" />
           <EntitySet Name="BillDetailsViews" EntityType="Self.BillDetailsView" />
+          <EntitySet Name="CurrentUserRoleRightsViews" EntityType="Self.CurrentUserRoleRightsView" />
           <EntitySet Name="ReorderRequireds" EntityType="Self.ReorderRequired" />
+          <EntitySet Name="RoleRightsViews" EntityType="Self.RoleRightsView" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -1517,6 +1743,10 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             <End Role="EmploymentType" EntitySet="EmploymentTypes" />
             <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_RightsManagement_EmployeeRole" Association="Self.FK_RightsManagement_EmployeeRole">
+            <End Role="EmployeeRole" EntitySet="EmployeeRoles" />
+            <End Role="RightsManagement" EntitySet="RightsManagements" />
+          </AssociationSet>
           <AssociationSet Name="FK__Sales__GodownId__02FC7413" Association="Self.FK__Sales__GodownId__02FC7413">
             <End Role="Godown" EntitySet="Godowns" />
             <End Role="Sales" EntitySet="Sales" />
@@ -1545,6 +1775,10 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             <End Role="Materials" EntitySet="Materials" />
             <End Role="Sales" EntitySet="Sales" />
           </AssociationSet>
+          <AssociationSet Name="FK_RightsManagement_Rights" Association="Self.FK_RightsManagement_Rights">
+            <End Role="Rights" EntitySet="Rights" />
+            <End Role="RightsManagement" EntitySet="RightsManagements" />
+          </AssociationSet>
           <AssociationSet Name="FK__SupplierRe__Type__40058253" Association="Self.FK__SupplierRe__Type__40058253">
             <End Role="SupplierRetailType" EntitySet="SupplierRetailTypes" />
             <End Role="SupplierRetailer" EntitySet="SupplierRetailers" />
@@ -1553,13 +1787,32 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="RightsForAssignments" EntityType="EphraimTradersModel.RightsForAssignment" />
         </EntityContainer>
+        <EntityType Name="RightsForAssignment">
+          <Key>
+            <PropertyRef Name="RightsId" />
+            <PropertyRef Name="RightsName" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="Active" />
+            <PropertyRef Name="RMActive" />
+            <PropertyRef Name="RoleName" />
+            <PropertyRef Name="RightsManagementId" />
+          </Key>
+          <Property Name="RightsId" Type="Int16" Nullable="false" />
+          <Property Name="RightsName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="Byte" Nullable="false" />
+          <Property Name="Active" Type="Byte" Nullable="false" />
+          <Property Name="RMActive" Type="Byte" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RightsManagementId" Type="Byte" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EphraimTradersModelStoreContainer" CdmEntityContainer="EphraimTradersEntities3">
+        <EntityContainerMapping StorageEntityContainer="EphraimTradersModelStoreContainer" CdmEntityContainer="EphraimTradersEntities1">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="EphraimTradersModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -1693,6 +1946,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
               <MappingFragment StoreEntitySet="EmployeeRole">
                 <ScalarProperty Name="EmpRoleId" ColumnName="EmpRoleId" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1785,6 +2039,31 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
               <MappingFragment StoreEntitySet="PaymentType">
                 <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
                 <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rights">
+            <EntityTypeMapping TypeName="EphraimTradersModel.Right">
+              <MappingFragment StoreEntitySet="Rights">
+                <ScalarProperty Name="Menu" ColumnName="Menu" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+                <ScalarProperty Name="FeatherName" ColumnName="FeatherName" />
+                <ScalarProperty Name="RightsId" ColumnName="RightsId" />
+                <ScalarProperty Name="RightsName" ColumnName="RightsName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RightsManagements">
+            <EntityTypeMapping TypeName="EphraimTradersModel.RightsManagement">
+              <MappingFragment StoreEntitySet="RightsManagement">
+                <ScalarProperty Name="RightsManagementId" ColumnName="RightsManagementId" />
+                <ScalarProperty Name="RightsId" ColumnName="RightsId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1898,6 +2177,16 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CurrentUserRoleRightsViews">
+            <EntityTypeMapping TypeName="EphraimTradersModel.CurrentUserRoleRightsView">
+              <MappingFragment StoreEntitySet="CurrentUserRoleRightsView">
+                <ScalarProperty Name="RightsId" ColumnName="RightsId" />
+                <ScalarProperty Name="RightsName" ColumnName="RightsName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="HasRights" ColumnName="HasRights" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ReorderRequireds">
             <EntityTypeMapping TypeName="EphraimTradersModel.ReorderRequired">
               <MappingFragment StoreEntitySet="ReorderRequired">
@@ -1910,6 +2199,22 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RoleRightsViews">
+            <EntityTypeMapping TypeName="EphraimTradersModel.RoleRightsView">
+              <MappingFragment StoreEntitySet="RoleRightsView">
+                <ScalarProperty Name="Menu" ColumnName="Menu" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+                <ScalarProperty Name="FeatherName" ColumnName="FeatherName" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RightsId" ColumnName="RightsId" />
+                <ScalarProperty Name="RightsName" ColumnName="RightsName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="EphraimTradersModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
@@ -1918,6 +2223,19 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="RightsForAssignments">
+            <EntityTypeMapping TypeName="EphraimTradersModel.RightsForAssignment">
+              <MappingFragment StoreEntitySet="RightsForAssignment">
+                <ScalarProperty Name="RightsManagementId" ColumnName="RightsManagementId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RMActive" ColumnName="RMActive" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RightsName" ColumnName="RightsName" />
+                <ScalarProperty Name="RightsId" ColumnName="RightsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

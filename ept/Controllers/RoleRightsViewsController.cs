@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
@@ -21,31 +22,29 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Material>("Materials");
-    builder.EntitySet<Sale>("Sales"); 
+    builder.EntitySet<RoleRightsView>("RoleRightsViews");
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    //[Authorize]
-    public class MaterialsController : ODataController
+    public class RoleRightsViewsController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
 
-        // GET: odata/Materials
+        // GET: odata/RoleRightsViews
         [EnableQuery]
-        public IQueryable<Material> GetMaterials()
+        public IQueryable<RoleRightsView> GetRoleRightsViews()
         {
-            return db.Materials;
+            return db.RoleRightsViews;
         }
 
-        // GET: odata/Materials(5)
+        // GET: odata/RoleRightsViews(5)
         [EnableQuery]
-        public SingleResult<Material> GetMaterial([FromODataUri] int key)
+        public SingleResult<RoleRightsView> GetRoleRightsView([FromODataUri] short key)
         {
-            return SingleResult.Create(db.Materials.Where(material => material.MaterialId == key));
+            return SingleResult.Create(db.RoleRightsViews.Where(roleRightsView => roleRightsView.RightsId == key));
         }
 
-        // PUT: odata/Materials(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<Material> patch)
+        // PUT: odata/RoleRightsViews(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] short key, Delta<RoleRightsView> patch)
         {
             Validate(patch.GetEntity());
 
@@ -54,21 +53,21 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            RoleRightsView roleRightsView = await db.RoleRightsViews.FindAsync(key);
+            if (roleRightsView == null)
             {
                 return NotFound();
             }
 
-            patch.Put(material);
+            patch.Put(roleRightsView);
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MaterialExists(key))
+                if (!RoleRightsViewExists(key))
                 {
                     return NotFound();
                 }
@@ -78,26 +77,41 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(material);
+            return Updated(roleRightsView);
         }
 
-        // POST: odata/Materials
-        public IHttpActionResult Post(Material material)
+        // POST: odata/RoleRightsViews
+        public async Task<IHttpActionResult> Post(RoleRightsView roleRightsView)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Materials.Add(material);
-            db.SaveChanges();
+            db.RoleRightsViews.Add(roleRightsView);
 
-            return Created(material);
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (RoleRightsViewExists(roleRightsView.RightsId))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Created(roleRightsView);
         }
 
-        // PATCH: odata/Materials(5)
+        // PATCH: odata/RoleRightsViews(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<Material> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] short key, Delta<RoleRightsView> patch)
         {
             Validate(patch.GetEntity());
 
@@ -106,21 +120,21 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            RoleRightsView roleRightsView = await db.RoleRightsViews.FindAsync(key);
+            if (roleRightsView == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(material);
+            patch.Patch(roleRightsView);
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MaterialExists(key))
+                if (!RoleRightsViewExists(key))
                 {
                     return NotFound();
                 }
@@ -130,29 +144,22 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(material);
+            return Updated(roleRightsView);
         }
 
-        // DELETE: odata/Materials(5)
-        public IHttpActionResult Delete([FromODataUri] int key)
+        // DELETE: odata/RoleRightsViews(5)
+        public async Task<IHttpActionResult> Delete([FromODataUri] short key)
         {
-            Material material = db.Materials.Find(key);
-            if (material == null)
+            RoleRightsView roleRightsView = await db.RoleRightsViews.FindAsync(key);
+            if (roleRightsView == null)
             {
                 return NotFound();
             }
 
-            db.Materials.Remove(material);
-            db.SaveChanges();
+            db.RoleRightsViews.Remove(roleRightsView);
+            await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET: odata/Materials(5)/Sales
-        [EnableQuery]
-        public IQueryable<Sale> GetSales([FromODataUri] int key)
-        {
-            return db.Materials.Where(m => m.MaterialId == key).SelectMany(m => m.Sales);
         }
 
         protected override void Dispose(bool disposing)
@@ -164,9 +171,9 @@ namespace ept.Controllers
             base.Dispose(disposing);
         }
 
-        private bool MaterialExists(int key)
+        private bool RoleRightsViewExists(short key)
         {
-            return db.Materials.Count(e => e.MaterialId == key) > 0;
+            return db.RoleRightsViews.Count(e => e.RightsId == key) > 0;
         }
     }
 }

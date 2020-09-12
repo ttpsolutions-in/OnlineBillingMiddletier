@@ -43,6 +43,8 @@ namespace ept.Models
         public virtual DbSet<MaterialInventory> MaterialInventories { get; set; }
         public virtual DbSet<Material> Materials { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+        public virtual DbSet<Right> Rights { get; set; }
+        public virtual DbSet<RightsManagement> RightsManagements { get; set; }
         public virtual DbSet<SaleCategory> SaleCategories { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<SaleType> SaleTypes { get; set; }
@@ -51,6 +53,9 @@ namespace ept.Models
         public virtual DbSet<SupplierRetailType> SupplierRetailTypes { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<BillDetailsView> BillDetailsViews { get; set; }
+        public virtual DbSet<CurrentUserRoleRightsView> CurrentUserRoleRightsViews { get; set; }
         public virtual DbSet<ReorderRequired> ReorderRequireds { get; set; }
+        public virtual DbSet<RoleRightsView> RoleRightsViews { get; set; }
+        public virtual DbSet<RightsForAssignment> RightsForAssignments { get; set; }
     }
 }

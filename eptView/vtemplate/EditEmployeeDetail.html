@@ -16,6 +16,7 @@
     </div>
     <div class="card-body">
         <form name="editEmployeeForm">
+            <br />
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="EmployeeName">Name</label> <span class="text-danger">*</span>
@@ -52,19 +53,17 @@
                     </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="DOB">DOB</label>
-                    <input type="date" class="form-control" id="DOB" name="DOB" placeholder="Enter DOB"
-                           ng-model="EditEmployee.DOB">
+                    <label for="BloodGroup">Blood Group</label>
+                    <input type="text" class="form-control" id="BloodGroup" name="BloodGroup" placeholder="Enter Blood Group"
+                           ng-model="EditEmployee.BloodGroup">
                 </div>
+                
                 <div class="form-group col-md-4">
                     <label for="Salary">Salary</label>
                     <input type="number" class="form-control" id="Salary" name="Salary" placeholder="Enter salary"
                            ng-model="EditEmployee.Salary">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="BloodGroup">Blood Group</label>
-                    <input type="text" class="form-control" id="BloodGroup" name="BloodGroup" placeholder="Enter Blood Group"
-                           ng-model="EditEmployee.BloodGroup">
+                    <p ng-show="submitted && editEmployeeForm.Salary.$invalid"
+                       class="text-danger">Salary is required.</p>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="EmploymentType">Employment Type</label>
@@ -72,6 +71,13 @@
                             ng-options="item.EmploymentTypeId as item.EmploymentTypeName for item in EmploymentTypes">
                     </select>
                 </div>
+                <div class="form-group col-md-4">
+                    <label for="DOB">DOB</label>
+                    <input type="date" class="form-control" id="DOB" name="DOB" placeholder="Enter DOB"
+                           ng-model="EditEmployee.DOB">
+                </div>
+
+                
                 <div class="form-group col-md-4">
                     <label for="JoinDate">Joining Date</label>
                     <input type="date" class="form-control" id="JoinDate" name="JoinDate" placeholder="Enter joining date"
@@ -85,6 +91,7 @@
                 </div>
             </div>
             <div>
+                <br />
                 <hr />
             </div>
             <div class="form-row col-md-offset-5">

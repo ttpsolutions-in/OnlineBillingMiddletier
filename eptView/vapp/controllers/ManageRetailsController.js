@@ -21,7 +21,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
         $scope.RetailData.ContactNo = null;
         $scope.MaterialLists = [];
         $scope.MaterialsData = [];
-        $scope.GodownData = {};
+        $scope.GodownData = [];
         $scope.SupplierCustomers = [];
         $scope.ItemCatogoryList = [];
         $scope.ItemLists = [];
@@ -109,7 +109,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
             gridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
                 //$scope.showSpinner();
                 var tempMateriallist = GlobalVariableService.getMaterialList();
-                    $scope.currentMaterialLst = $filter('filter')(tempMateriallist, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
+                $scope.currentMaterialLst = $filter('filter')(tempMateriallist, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
                 $scope.gridOptions.columnDefs[3].editDropdownOptionsArray = $filter('filter')($scope.currentMaterialLst, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
                 $scope.gridOptions.columnDefs[5].editDropdownOptionsArray = $scope.GodownData;
                 //$scope.hideSpinner();
@@ -145,7 +145,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
         $scope.GetGrandAmount = function () {
             $scope.RetailData.TotalAmount = 0;
             angular.forEach($scope.ItemLists, function (items) {
-                $scope.RetailData.TotalAmount = $scope.RetailData.TotalAmount + items.Amount;
+                $scope.RetailData.TotalAmount = parseFloat($scope.RetailData.TotalAmount) + parseFloat(items.Amount);
             });
             $scope.CalculateGST();
 
@@ -160,12 +160,12 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
 
         $scope.CalculateGST = function () {
 
-            var paramdata = {};
-            paramdata.TotalAmount = $scope.RetailData.TotalAmount;
-            paramdata.GSTApplied = $scope.RetailData.GSTApplied;
-            paramdata.GSTPercentage = $scope.RetailData.GSTPercentage;
+            //var paramdata = {};
+            //paramdata.TotalAmount = $scope.RetailData.TotalAmount;
+            //paramdata.GSTApplied = $scope.RetailData.GSTApplied;
+            //paramdata.GSTPercentage = $scope.RetailData.GSTPercentage;
             var results = {};
-            results = CommonService.CalculateGSTNGrandTotal(paramdata);
+            results = CommonService.CalculateGSTNGrandTotal($scope.RetailData.TotalAmount, $scope.RetailData.GSTPercentage,$scope.RetailData.GSTApplied);
 
             $scope.RetailData.GrandTotal = results.GrandTotal;
             $scope.RetailData.GSTAmount = results.GSTAmount;
@@ -214,8 +214,14 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
             $scope.MaterialLists = $filter('filter')($scope.MaterialsData, { ItemCategoryId: $scope.RetailData.ItemCategory }, true);
             // $scope.hideSpinner();
         };
-        $scope.GetGodowns = function () {
-            $scope.GodownData = CommonService.GetGodowns()
+        $scope.GetGodowns = function (callback) {
+             CommonService.GetGodowns().then(
+                function (result) {
+                     $scope.GodownData = result;
+                     if (callback)
+                         callback();
+                 });
+            
             /*var lstItems = {
                 title: "Godowns",
                 fields: ["GodownId", "GodownName"],
@@ -243,7 +249,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
             });
         };
 
-        $scope.GetItemCategory = function () {
+        $scope.GetItemCategory = function (callback) {
             var postData = {
                 title: "ItemCategories",
                 fields: ["*"],
@@ -254,13 +260,15 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                 if (response && response.data.d.results.length > 0) {
                     $scope.ItemCatogoryList = response.data.d.results;
                     //  console.log($scope.ItemCatogoryList);
+                    if (callback)
+                        callback()
                 }
 
             });
         };
 
 
-        $scope.GetSupplierCustomer = function () {
+        $scope.GetSupplierCustomer = function (callback) {
             var postData = {
                 title: "SupplierRetailers",
                 fields: ["*"],
@@ -270,7 +278,8 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                 if (response && response.data.d.results.length > 0) {
                     $scope.SupplierCustomers = response.data.d.results;
                     // console.log($scope.SupplierRetailers);
-
+                    if (callback)
+                        callback();
                 }
             });
         };
@@ -334,8 +343,8 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
         };
         $scope.SaveNPrint = function (isFormValid) {
             $scope.SubmitItems(isFormValid, function () {
-                PrintService.GetWholeSaleByID($scope.BillNo);
-               
+                PrintService.GetSingleBillNPrint($scope.BillNo);
+
             });
         }
 
@@ -402,7 +411,8 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                                     "DLP": value.DLP.toString(),
                                     "Amount": value.Amount.toString(),
                                     "BillNo": response.BillNo.toString(),
-                                    "CreatedOn": new Date()
+                                    "CreatedOn": new Date(),
+                                    "Active":1
                                 };
                                 CommonService.PostData("Sales", salesPostDate).then(function (response1) {
                                     if (response1.SaleId > 0) {
@@ -423,13 +433,21 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
             }
         };
 
-        $scope.init = function () {
+        $scope.init = async function () {
             //$scope.showSpinner();
-            $scope.GetItemCategory();
-            $scope.GetSupplierCustomer();
-            $scope.GetGodowns();
-            $scope.GetGSTPercentageById();
+            GlobalVariableService.validateUrl($location.$$path);
+            await $scope.GetItemCategory();
+            await $scope.GetSupplierCustomer();
+            await $scope.GetGodowns();
+            await $scope.GetGSTPercentageById();
 
+            //$scope.GetItemCategory(function () {
+            //    $scope.GetSupplierCustomer(function () {
+            //        $scope.GetGodowns(function () {
+            //            $scope.GetGSTPercentageById();
+            //        });
+            //    });
+            //});
         };
 
         $scope.init();

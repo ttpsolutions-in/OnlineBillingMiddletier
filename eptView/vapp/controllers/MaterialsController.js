@@ -1,4 +1,5 @@
-ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants', function ($scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
+ETradersApp.controller("MaterialsController", ['GlobalVariableService', '$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants',
+    function (GlobalVariableService,$scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
     $scope.ShowSpinnerStatus = false;
 
     $scope.showSpinner = function () {
@@ -236,6 +237,9 @@ ETradersApp.controller("MaterialsController", ['$scope', '$filter', '$http', '$l
     };
 
     $scope.init = function () {
+
+        GlobalVariableService.validateUrl($location.$$path);
+
         $scope.GetItemCategory(function () {
             if ($scope.ID > 0) {
                 $scope.GetMaterialById();

@@ -1,4 +1,5 @@
-ETradersApp.controller("MaterialsCheckQIHController", ['$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants', function ($scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
+ETradersApp.controller("MaterialsCheckQIHController", ['GlobalVariableService','$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants',
+    function (GlobalVariableService,$scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
     $scope.ShowSpinnerStatus = false;
 
     $scope.showSpinner = function () {
@@ -64,6 +65,7 @@ ETradersApp.controller("MaterialsCheckQIHController", ['$scope', '$filter', '$ht
     };
 
     $scope.init = function () {
+        GlobalVariableService.validateUrl($location.$$path);
         $scope.GetMaterialsList();
     };
 

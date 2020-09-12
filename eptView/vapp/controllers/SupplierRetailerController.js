@@ -1,4 +1,5 @@
-ETradersApp.controller("SupplierCustomerController", ['$scope', '$filter', '$http', '$location', '$routeParams', '$timeout', 'toaster', 'CommonService', 'uiGridConstants', function ($scope, $filter, $http, $location, $routeParams, $timeout, toaster, CommonService, uiGridConstants) {
+ETradersApp.controller("SupplierCustomerController", ['GlobalVariableService','$scope', '$filter', '$http', '$location', '$routeParams', '$timeout', 'toaster', 'CommonService', 'uiGridConstants',
+    function (GlobalVariableService,$scope, $filter, $http, $location, $routeParams, $timeout, toaster, CommonService, uiGridConstants) {
 
     $scope.TodaysDate = $filter('date')(new Date(), "dd/MM/yyyy");
     $scope.ID = $routeParams.ID;
@@ -44,24 +45,30 @@ ETradersApp.controller("SupplierCustomerController", ['$scope', '$filter', '$htt
             var isValid = isFormValid;
             $scope.submitted = !isValid;
             if (isValid) {
-                var supplierCustomers = {
-                    "Name": $scope.SupplierCustomer.Name,
-                    "Address": $scope.SupplierCustomer.Address,
-                    "Email": $scope.SupplierCustomer.Email,
-                    "Contact": $scope.SupplierCustomer.ContactNo,
-                    "Type": $scope.SupplierCustomer.Type,
-                    "Category": $scope.SupplierCustomer.Category,
-                    "CreatedOn": new Date()
-                };
-                CommonService.PostData("SupplierRetailers", supplierCustomers).then(function (response) {
-                    console.log("response " + response);
-                    if (response.SupplierRetailerId > 0) {
-                        toaster.pop('success', "", "Supplier/Customer Saved Successfully", 5000, 'trustedHtml');
-                        $scope.RedirectDashboard();
-                    }
-                }, function (data) {
-                    console.log(data);
-                });
+                var duplicate = $filter('filter')($scope.SupplierCustomersList, { Name: $scope.SupplierCustomer.Name }, true);
+                if (duplicate != undefined && duplicate.length > 0) {
+                    toaster.pop('error', "", "Supplier/Customer already exists!", 5000, 'trustedHtml');
+                }
+                else {
+                    var supplierCustomers = {
+                        "Name": $scope.SupplierCustomer.Name,
+                        "Address": $scope.SupplierCustomer.Address,
+                        "Email": $scope.SupplierCustomer.Email,
+                        "Contact": $scope.SupplierCustomer.ContactNo,
+                        "Type": $scope.SupplierCustomer.Type,
+                        "Category": $scope.SupplierCustomer.Category,
+                        "CreatedOn": new Date()
+                    };
+                    CommonService.PostData("SupplierRetailers", supplierCustomers).then(function (response) {
+                        console.log("response " + response);
+                        if (response.SupplierRetailerId > 0) {
+                            toaster.pop('success', "", "Supplier/Customer Saved Successfully", 5000, 'trustedHtml');
+                            $scope.RedirectDashboard();
+                        }
+                    }, function (data) {
+                        console.log(data);
+                    });
+                }
             }
         } catch (error) {
             console.log("Exception caught in the SaveSupplierCustomers function. Exception Logged as " + error.message);
@@ -74,24 +81,33 @@ ETradersApp.controller("SupplierCustomerController", ['$scope', '$filter', '$htt
             var isValid = isFormValid;
             $scope.submitted = !isValid;
             if (isValid) {
-                var supplierCustomers = {
-                    "Name": $scope.EditSupplierCustomer.Name,
-                    "Address": $scope.EditSupplierCustomer.Address,
-                    "Email": $scope.EditSupplierCustomer.Email,
-                    "Contact": $scope.EditSupplierCustomer.Contact,
-                    "Type": $scope.EditSupplierCustomer.Type,
-                    "Category": $scope.EditSupplierCustomer.Category,
-                    "UpdatedOn": new Date()
-                };
-                CommonService.UpdateData("SupplierRetailers", supplierCustomers, $scope.ID).then(function (response) {
-                    console.log("response " + response);
-                    if (response != undefined) {
-                        toaster.pop('success', "", "Supplier/Customer Updated Successfully", 5000, 'trustedHtml');
-                        $scope.RedirectDashboard();
-                    }
-                }, function (data) {
-                    console.log(data);
+                var duplicate = $filter('filter')($scope.SupplierCustomersList, function (value, key) {
+                    if (value.Name.toUpperCase() == $scope.EditSupplierCustomer.Name.toUpperCase() && value.SupplierRetailerId != $scope.ID)
+                        return true;
                 });
+                if (duplicate != undefined && duplicate.length > 0)
+                    toaster.pop('error', "", "Supplier/Customer already exists!", 5000, 'trustedHtml');
+                else {
+
+                    var supplierCustomers = {
+                        "Name": $scope.EditSupplierCustomer.Name,
+                        "Address": $scope.EditSupplierCustomer.Address,
+                        "Email": $scope.EditSupplierCustomer.Email,
+                        "Contact": $scope.EditSupplierCustomer.Contact,
+                        "Type": $scope.EditSupplierCustomer.Type,
+                        "Category": $scope.EditSupplierCustomer.Category,
+                        "UpdatedOn": new Date()
+                    };
+                    CommonService.UpdateData("SupplierRetailers", supplierCustomers, $scope.ID).then(function (response) {
+                        console.log("response " + response);
+                        if (response != undefined) {
+                            toaster.pop('success', "", "Supplier/Customer Updated Successfully", 5000, 'trustedHtml');
+                            $scope.RedirectDashboard();
+                        }
+                    }, function (data) {
+                        console.log(data);
+                    });
+                }
             }
         } catch (error) {
             console.log("Exception caught in the SaveSupplierCustomers function. Exception Logged as " + error.message);
@@ -157,15 +173,14 @@ ETradersApp.controller("SupplierCustomerController", ['$scope', '$filter', '$htt
     };
 
     $scope.init = function () {
+
+        GlobalVariableService.validateUrl($location.$$path);
+
         $scope.GetCategories();
         $scope.GetSupplierCustomerTypes();
+        $scope.GetSupplierCustomersById();
+        $scope.GetSupplierCustomers();
         
-        if ($scope.ID > 0) {
-            $scope.GetSupplierCustomersById();
-        }
-        else {
-            $scope.GetSupplierCustomers();
-        }
     };
 
     $scope.init();

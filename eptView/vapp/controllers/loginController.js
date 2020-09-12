@@ -1,63 +1,112 @@
 ﻿
-ETradersApp.controller('LoginController', ['$scope', 'LoginService', 'GlobalVariableService', 'authData', '$location', 'AuthenticationData', function ($scope, LoginService, GlobalVariableService, authData, $location, AuthenticationData) {
-    $scope.ShowSpinnerStatus = false;
+ETradersApp.controller('LoginController', ['Config', '$scope', 'LoginService', 'GlobalVariableService', 'CommonService', '$location', '$window',
+    function (Config, $scope, LoginService, GlobalVariableService, CommonService, $location, $window) {
 
-    $scope.showSpinner = function () {
-        $scope.ShowSpinnerStatus = true;
-    }
-    $scope.hideSpinner = function () {
+        $scope.UserRights = {
+            "GodownView": 0,
+            "MasterEdit": 0,
+            "MasterView": 0,
+            "MaterialCategoryEdit": 0,
+            "MaterialCategoryView": 0,
+            "MaterialEdit": 0,
+            "MaterialInventoryEdit": 0,
+            "MaterialInventoryView": 0,
+            "MaterialView": 0,
+            "RetailEdit": 0,
+            "RetailView": 0,
+            "Rights": 0,
+            "RightsManagementEdit": 0,
+            "RightsManagementView": 0,
+            "SupplierCustomerEdit": 0,
+            "SupplierCustomerView": 0,
+            "WholeSaleEdit": 0,
+            "WholeSaleView": 0,
+        }
+        $scope.tokenInfo = {};
+
         $scope.ShowSpinnerStatus = false;
-    }
-    $scope.loginData = {
-        userName: "",
-        password: ""
-    };
-    $scope.errorMessage = '';
-    //$scope.IsAuthenticated = false;
-    //$scope.userName = '';
-    var tokenInfo = {
-        accessToken: '',
-        UserName: '',
-        UserRole: ''
-    }
+
+        $scope.showSpinner = function () {
+            $scope.ShowSpinnerStatus = true;
+        }
+        $scope.hideSpinner = function () {
+            $scope.ShowSpinnerStatus = false;
+        }
+        $scope.loginData = {
+            userName: "",
+            password: ""
+        };
+        $scope.errorMessage = '';
+        //$scope.IsAuthenticated = false;
+        //$scope.userName = '';
+        var tokenInfo = {
+            AccessToken: '',
+            UserName: '',
+            UserRole: ''
+        }
         $scope.login = function () {
             $scope.showSpinner();
             LoginService.login($scope.loginData.userName, $scope.loginData.password).then(function (response) {
                 debugger;
                 var data = JSON.stringify(response);
                 if (data.includes('error')) {
-
-                    $scope.IsAuthenticated = authData.authenticationData.IsAuthenticated = false;
-                    $scope.userName = authData.authenticationData.userName = "";
                     console.log("login error: ", data)
                     $scope.errorMessage = response.error_description;
                 }
                 else {
-                    
-                    tokenInfo.accessToken = response.accessToken;
+
+                    tokenInfo.AccessToken = response.access_token;
                     tokenInfo.UserName = response.userName;
                     tokenInfo.UserRole = '';
-
                     GlobalVariableService.setTokenInfo(tokenInfo);
+                    var lstRole = {
+                        title: "EmployeeDetails",
+                        fields: ["EmpRoleId", "EmployeeRole/RoleName"],
+                        lookupFields: ["EmployeeRole"],
+                        filter: ["Email eq '" + tokenInfo.UserName + "' and Active eq 1"]//,
+                        //orderBy: "EmployeeName"
+                    };
+                    CommonService.GetListItems(lstRole).then(function (response) {
 
-                    GlobalVariableService.getMaterials();
-                    console.log("login successful")
-                    $location.path('/WholeSaleDashboard');
-                    //debugger;
+                        if (response && response.data.d.results.length > 0 && !data.includes('error')) {
+
+                            var result = response.data.d.results[0];
+
+                            tokenInfo.UserRole = result.EmployeeRole.RoleName;
+                            GlobalVariableService.setTokenInfo(tokenInfo);
+                            $scope.afterLoginSuccess(tokenInfo.UserRole);
+
+                            console.log("login successful")
+                            //$window.location.href = Config.ServiceBaseURL + "/index.html#/WholeSaleDashboard"
+                            //$location.path('/WholeSaleDashboard');
+                        }
+                        else {
+                            $scope.errorMessage = "No User Role defined";
+                            GlobalVariableService.removeToken();
+                        }
+                    }, function (error) {
+                        $scope.errorMessage = "No User Role defined";
+                        console.log(error);
+                        GlobalVariableService.removeToken();
+                    });
+
                 }
                 $scope.hideSpinner();
             });
         }
-    $scope.logout = function () {
-        GlobalVariableService.removeToken();
-        authData.authenticationData.IsAuthenticated = false;
-        authData.authenticationData.userName = "";
+        $scope.logout = function () {
+            GlobalVariableService.removeToken();
+        }
+        $scope.afterLoginSuccess = function (RoleName) {
+            CommonService.getMaterials(function () {
+                CommonService.fetchRoleRights(RoleName, function () {
+                    $window.location.href = Config.ServiceBaseURL + "/index.html#/WholeSaleDashboard";
+                });
+            });
+        }
+        $scope.init = function () {
 
-    }
-    $scope.init = function () {
 
-        $scope.IsAuthenticated = authData.authenticationData.IsAuthenticated;
-        $scope.userName = authData.authenticationData.userName;        
-    }
-    $scope.init();
-}]);
+        }
+        $scope.init();
+    }]);

@@ -22,31 +22,29 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Godown>("Godowns");
-    builder.EntitySet<Sale>("Sales"); 
-    builder.EntitySet<MaterialInventory>("MaterialInventories"); 
+    builder.EntitySet<RightsForAssignment>("RightsForAssignments");
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class GodownsController : ODataController
+    public class RightsForAssignmentsController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
 
-        // GET: odata/Godowns
+        // GET: odata/RightsForAssignments
         [EnableQuery]
-        public IQueryable<Godown> GetGodowns()
+        public IQueryable<RightsForAssignment> GetRightsForAssignments()
         {
-            return db.Godowns;
+            return db.RightsForAssignments;
         }
 
-        // GET: odata/Godowns(5)
+        // GET: odata/RightsForAssignments(5)
         [EnableQuery]
-        public SingleResult<Godown> GetGodown([FromODataUri] short key)
+        public SingleResult<RightsForAssignment> GetRightsForAssignment([FromODataUri] short key)
         {
-            return SingleResult.Create(db.Godowns.Where(godown => godown.GodownId == key));
+            return SingleResult.Create(db.RightsForAssignments.Where(rightsForAssignment => rightsForAssignment.RightsId == key));
         }
 
-        // PUT: odata/Godowns(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] short key, Delta<Godown> patch)
+        // PUT: odata/RightsForAssignments(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] short key, Delta<RightsForAssignment> patch)
         {
             Validate(patch.GetEntity());
 
@@ -55,13 +53,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Godown godown = await db.Godowns.FindAsync(key);
-            if (godown == null)
+            RightsForAssignment rightsForAssignment = await db.RightsForAssignments.FindAsync(key);
+            if (rightsForAssignment == null)
             {
                 return NotFound();
             }
 
-            patch.Put(godown);
+            patch.Put(rightsForAssignment);
 
             try
             {
@@ -69,7 +67,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GodownExists(key))
+                if (!RightsForAssignmentExists(key))
                 {
                     return NotFound();
                 }
@@ -79,26 +77,41 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(godown);
+            return Updated(rightsForAssignment);
         }
 
-        // POST: odata/Godowns
-        public async Task<IHttpActionResult> Post(Godown godown)
+        // POST: odata/RightsForAssignments
+        public async Task<IHttpActionResult> Post(RightsForAssignment rightsForAssignment)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Godowns.Add(godown);
-            await db.SaveChangesAsync();
+            db.RightsForAssignments.Add(rightsForAssignment);
 
-            return Created(godown);
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (RightsForAssignmentExists(rightsForAssignment.RightsId))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Created(rightsForAssignment);
         }
 
-        // PATCH: odata/Godowns(5)
+        // PATCH: odata/RightsForAssignments(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] short key, Delta<Godown> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] short key, Delta<RightsForAssignment> patch)
         {
             Validate(patch.GetEntity());
 
@@ -107,13 +120,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Godown godown = await db.Godowns.FindAsync(key);
-            if (godown == null)
+            RightsForAssignment rightsForAssignment = await db.RightsForAssignments.FindAsync(key);
+            if (rightsForAssignment == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(godown);
+            patch.Patch(rightsForAssignment);
 
             try
             {
@@ -121,7 +134,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GodownExists(key))
+                if (!RightsForAssignmentExists(key))
                 {
                     return NotFound();
                 }
@@ -131,43 +144,22 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(godown);
+            return Updated(rightsForAssignment);
         }
 
-        // DELETE: odata/Godowns(5)
+        // DELETE: odata/RightsForAssignments(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] short key)
         {
-            Godown godown = await db.Godowns.FindAsync(key);
-            if (godown == null)
+            RightsForAssignment rightsForAssignment = await db.RightsForAssignments.FindAsync(key);
+            if (rightsForAssignment == null)
             {
                 return NotFound();
             }
 
-            db.Godowns.Remove(godown);
+            db.RightsForAssignments.Remove(rightsForAssignment);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET: odata/Godowns(5)/Sales
-        [EnableQuery]
-        public IQueryable<Sale> GetSales([FromODataUri] short key)
-        {
-            return db.Godowns.Where(m => m.GodownId == key).SelectMany(m => m.Sales);
-        }
-
-        // GET: odata/Godowns(5)/MaterialInventories
-        [EnableQuery]
-        public IQueryable<MaterialInventory> GetMaterialInventories([FromODataUri] short key)
-        {
-            return db.Godowns.Where(m => m.GodownId == key).SelectMany(m => m.MaterialInventories);
-        }
-
-        // GET: odata/Godowns(5)/MaterialInventories1
-        [EnableQuery]
-        public IQueryable<MaterialInventory> GetMaterialInventories1([FromODataUri] short key)
-        {
-            return db.Godowns.Where(m => m.GodownId == key).SelectMany(m => m.MaterialInventories1);
         }
 
         protected override void Dispose(bool disposing)
@@ -179,9 +171,9 @@ namespace ept.Controllers
             base.Dispose(disposing);
         }
 
-        private bool GodownExists(short key)
+        private bool RightsForAssignmentExists(short key)
         {
-            return db.Godowns.Count(e => e.GodownId == key) > 0;
+            return db.RightsForAssignments.Count(e => e.RightsId == key) > 0;
         }
     }
 }

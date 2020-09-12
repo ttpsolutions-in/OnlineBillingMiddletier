@@ -1,11 +1,13 @@
-﻿ETradersApp.factory('GlobalVariableService', ['$http', '$q', '$window', 'CommonService','$location',
-    function ($http, $q, $window, CommonService, $location) {
+﻿ETradersApp.factory('GlobalVariableService', ['Config','$http', '$q', '$window', '$location', '$filter',
+    function (Config,$http, $q, $window, $location, $filter) {
         var GlobalVariableService = {};
         var materialList = {};
         var MaterialListKey = 'MaterialList';
         var TokenInfoKey = 'TokenInfo';
+        var RoleRightsKey = "RoleRights";
+        var LoginURl = Config.ServiceBaseURL + '/login.html';
         var tokenInfo = {
-            accessToken: '',
+            AccessToken: '',
             UserName: '',
             UserRole: ''
         }
@@ -13,13 +15,24 @@
 
             $window.sessionStorage[TokenInfoKey] = JSON.stringify(data);
         }
+        GlobalVariableService.setRoleRights = function (data) {
 
-        GlobalVariableService.getTokenInfo = function () {
-            if ($window.sessionStorage[TokenInfoKey]) {
-                return JSON.stringify($window.sessionStorage[TokenInfoKey]);
+            $window.sessionStorage[RoleRightsKey] = JSON.stringify(data);
+        }
+        GlobalVariableService.getRoleRights = function () {
+            if ($window.sessionStorage[RoleRightsKey]) {
+                //console.log($window.sessionStorage[RoleRightsKey]);
+                return JSON.parse($window.sessionStorage[RoleRightsKey]);
             }
             else
-                $location.path('/login');
+                $window.location.href = LoginURl
+        }
+        GlobalVariableService.getTokenInfo = function () {
+            if ($window.sessionStorage[TokenInfoKey]) {
+                return JSON.parse($window.sessionStorage[TokenInfoKey]);
+            }
+            else
+                $window.location.href=LoginURl;
         }
         GlobalVariableService.setMaterialList = function (data) {
 
@@ -27,35 +40,34 @@
                 $window.sessionStorage[MaterialListKey] = JSON.stringify(data);
             }
         }
+        GlobalVariableService.getARights = function (pRoleName, pRightsName) {
+            var RoleRights = GlobalVariableService.getRoleRights();
+            var checkRights = $filter('filter')(RoleRights, (value, key) => {
+                return (value.RoleName == pRoleName && value.RightsName == pRightsName)
+            }, true);
+            if (checkRights != undefined && checkRights.length > 0) {
+                return true;
+            }
+            else
+                return false;
+
+        }
 
         GlobalVariableService.getMaterialList = function () {
             if ($window.sessionStorage[MaterialListKey] == undefined || $window.sessionStorage[MaterialListKey] == null) {
-                $location.path('/login');//return GlobalVariableService.getMaterials();
+                $location.path(LoginURl);//return GlobalVariableService.getMaterials();
             }
             else
                 return JSON.parse($window.sessionStorage[MaterialListKey]);
-            
+
 
         }
-        GlobalVariableService.getMaterials = function () {
-            var lstItems = {
-                title: "Materials",
-                fields: ["MaterialId", "DisplayName","RetailRate", "WholeSaleRate", "ItemCategoryId", "ItemCategory/ItemCategoryId"],
-                lookupFields: ["ItemCategory"],
-                orderBy: "DisplayName desc"
-            };
-            CommonService.GetListItems(lstItems).then(function (response) {
-                if (response && response.data.d.results.length > 0) {
-                    GlobalVariableService.setMaterialList(response.data.d.results);
-                    //return JSON.parse($window.sessionStorage["MaterialList"]);
-                }
-            });
 
-        }
         GlobalVariableService.removeToken = function () {
 
             $window.sessionStorage[TokenInfoKey] = null;
             $window.sessionStorage[MaterialListKey] = null;
+            $window.sessionStorage[RoleRightsKey] = null;
         }
 
         //GlobalVariableService.init = function () {
@@ -69,12 +81,25 @@
 
             tokenInfo = JSON.parse($window.sessionStorage[TokenInfoKey]);
 
-            if ((tokenInfo !== undefined) && (tokenInfo.accessToken !== undefined) && (tokenInfo.accessToken !== null) && (tokenInfo.accessToken !== "")) {
-                http.defaults.headers.common['Authorization'] = 'Bearer ' + tokenInfo.accessToken;
+            if ((tokenInfo !== undefined) && (tokenInfo.AccessToken !== undefined) && (tokenInfo.AccessToken !== null) && (tokenInfo.AccessToken !== "")) {
+                http.defaults.headers.common['Authorization'] = 'Bearer ' + tokenInfo.AccessToken;
                 http.defaults.headers.common['Content-Type'] = 'application/json';
             }
         }
-
+        GlobalVariableService.validateUrl = function (pUrl) {
+            var AllRights = GlobalVariableService.getRoleRights();
+            var invalidPage = true;
+            pUrl = pUrl.replace('/', '');
+            for (i = 0; i < AllRights.length; i++) {                
+                if (pUrl.indexOf(AllRights[i].MenuUrl.replace('#','')) > -1 && AllRights[i].Menu === 1)
+                {
+                    invalidPage = false;
+                    break;
+                }
+            }
+            if (invalidPage)
+                $location.path('/invalid');            
+        }
         return GlobalVariableService;
 
     }

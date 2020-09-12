@@ -1,13 +1,17 @@
-﻿(function () {
+﻿
+ETradersApp.controller('indexController', ['GlobalVariableService','$filter', '$scope', '$location', 'LoginService',
+    function (GlobalVariableService, $filter, $scope, $location, loginService) {
 
-'use strict';
-app.controller('indexController', ['$scope', '$location', 'authData','LoginService', function ($scope, $location, authData, loginService) {
+        $scope.logOut = function () {
+            loginService.logOut();
+            $location.path('/home');
+        }
+        $scope.init = function () {
+            GlobalVariableService.validateUrl($location.$$path);
 
-    $scope.logOut = function () {
-        loginService.logOut();
-        $location.path('/home');
-    }
-    $scope.authentication = authData.authenticationData;
-
-}]);
-})();
+            var AllRights =GlobalVariableService.getRoleRights();
+            $scope.UserRights = $filter('filter')(AllRights, { Menu: 1 }, true);
+            $scope.tokenInfo = GlobalVariableService.getTokenInfo();
+        }
+        $scope.init();
+    }]);

@@ -11,17 +11,21 @@
 </style>
 <div class="card">
     <div class="card-header">
-        <b>Employee Accounts</b>
-        <a class="btn btn-secondary btn-sm float-right" href="#PayEmployee">Pay Employee</a>
+        <b>Role Rights</b>
+        <a class="btn btn-secondary btn-sm float-right" href="#AddRightsManagement">Add Role Rights</a>
     </div>
 
     <div class="card-body">
-        <form id="MaterialDashboad">
+        <form id="RightsManagementDashboad">
             <div class="form-row">
                 <div class="form-group col-md-2">
-                    <label for="searchEmployeeName">Name</label>
-                    <input type="text" class="form-control input-sm" id="searchEmployeeName" name="searchEmployeeName"
-                           ng-model="searchEmployeeName" placeholder="Enter name">
+                    <label for="searchRoleName">Role</label>
+                    <select id="RoleName" name="RoleName" ng-model="MainRoleId" ng-change="" class="form-control"
+                            ng-options="item.EmpRoleId as item.RoleName for item in EmployeeRolesList">
+                        <option value="">--select role-- <span class="text-danger pull-right">*</span></option>
+                    </select>
+                    <p ng-show="submitted && RightsManagementDashboad.RoleName.$invalid && !RightsManagementDashboad.RoleName.$pristine"
+                       class="text-danger">Role name is required.</p>
                 </div>
                 <div class="form-group col-md-3">
                     <br />
@@ -31,28 +35,14 @@
             <div class="form-row">
                 <div class="col-md-12 nopadding">
                     <div ui-grid="gridOptions" ui-grid-pagination
-                         class="myGrid" style="height:350px"></div>
+                         class="myGrid" style="height:480px"></div>
                     <div class="nodatatxt" data-ng-if="gridOptions.data.length==0">No data found.</div>
                 </div>
             </div>
-            <table class="table table-sm table-striped table-bordered table-condensed">
-                <tr>
-                    <td class="text-right">Carry forward</td>
-                    <td class="text-right"><label>{{TotalCarryForwardFromPreviousMonth}}</label></td>
-                </tr>
-                <tr>
-                    <td class="text-right">Salary</td>
-                    <td class="text-right"><label>{{TotalSalary}}</label></td>
-                </tr>
-                <tr>
-                    <td class="text-right">Advance</td>
-                    <td class="text-right"><label>{{TotalAdvance}}</label></td>
-                </tr>
-                <tr>
-                    <td class="text-right">Balance</td>
-                    <td class="text-right"><label>{{TotalBalance}}</label></td>
-                </tr>
-            </table>
+            <div class="form-row col-md-offset-5">                
+                <button type="button" class="btn btn-primary" ng-click="SaveRightsManagements()"><span data-feather="save"></span>Save</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <!--<button type="button" class="btn btn-primary" ng-click="SaveNPrint(addRetailForm.$valid)"><span data-feather="save"></span>Save & <span data-feather="printer"></span>Print</button>-->
+            </div>
         </form>
     </div>
 </div>

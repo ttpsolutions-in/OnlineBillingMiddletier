@@ -1,4 +1,5 @@
-﻿ETradersApp.controller("GodownController", ['$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants', function ($scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
+﻿ETradersApp.controller("GodownController", ['GlobalVariableService','$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants',
+    function (GlobalVariableService,$scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
     $scope.ShowSpinnerStatus = false;
 
     $scope.showSpinner = function () {
@@ -29,13 +30,14 @@
         paginationPageSizes: [25, 50, 75],
         paginationPageSize: 25,
         columnDefs: [
+
+            { width: 350, displayName: 'Godown', field: 'GodownName', cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
+            { width: 150, displayName: 'Active', field: 'Active', enableFiltering: false, enableCellEdit: false, cellTooltip: true, cellClass: 'text-center', headerCellClass: 'text-center' },
             {
                 name: 'Action', width: 80, enableFiltering: false, cellClass: 'text-center', displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
                     + '<a id="btnView" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditGodown/{{row.entity.GodownId}}" ><span data-feather="edit"></span> </a>'
                     + '</div><script>feather.replace()</script>'
             },
-            { width: 350, displayName: 'Godown', field: 'GodownName', cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
-            { width: 150, displayName: 'Active', field: 'Active', enableFiltering: false, enableCellEdit: false, cellTooltip: true, cellClass: 'text-center', headerCellClass: 'text-center' }
         ],
         data: []
     };
@@ -45,19 +47,26 @@
             var isValid = isFormValid;
             $scope.submitted = !isValid;
             if (isValid) {
-                var values = {
-                    "GodownName": $scope.Godown.GodownName
-                    , "Active": $scope.Godown.Active == true ? '1' : 0
-                };
-                CommonService.PostData("Godown", values).then(function (response) {
-                    //console.log("response " + response);
-                    if (response.GodownId > 0) {
-                        toaster.pop('success', "", "Godown name saved successfully", 5000, 'trustedHtml');
-                        $scope.RedirectDashboard();
-                    }
-                }, function (data) {
-                    console.log(data);
-                });
+                var duplicate = $filter('filter')($scope.GodownList, { GodownName: $scope.Godown.GodownName }, true);
+                if (duplicate != undefined && duplicate.length > 0) {
+                    toaster.pop('error', "", "Godown name already exists!", 5000, 'trustedHtml');
+                }
+                else {
+
+                    var values = {
+                        "GodownName": $scope.Godown.GodownName
+                        , "Active": $scope.Godown.Active == true ? '1' : 0
+                    };
+                    CommonService.PostData("Godowns", values).then(function (response) {
+                        //console.log("response " + response);
+                        if (response.GodownId > 0) {
+                            toaster.pop('success', "", "Godown name saved successfully", 5000, 'trustedHtml');
+                            $scope.RedirectDashboard();
+                        }
+                    }, function (data) {
+                        console.log(data);
+                    });
+                }
             }
         } catch (error) {
             console.log("Exception caught in the SaveGodown function. Exception Logged as " + error.message);
@@ -70,25 +79,38 @@
             var isValid = isFormValid;
             $scope.submitted = !isValid;
             if (isValid) {
-                var values = {
-                    "GodownName": $scope.EditGodown.GodownName
-                    , "Active": $scope.EditGodown.Active == true ? '1' : '0'
-                };
-                CommonService.UpdateData("Godowns", values, $scope.ID).then(function (response) {
-                    console.log("response " + response);
-                    if (response != undefined) {
-                        toaster.pop('success', "", "Godown Data Updated Successfully", 5000, 'trustedHtml');
-                        $scope.RedirectDashboard();
+                var duplicate = 0;
+                angular.forEach($scope.GodownList, function (value, key) {
+                    if (value.GodownName == $scope.EditGodown.GodownName && value.GodownId != $scope.ID) {
+                        duplicate = 1;
+                        return;
                     }
-                }, function (data) {
-                    console.log(data);
                 });
+
+                if (duplicate ==1 ) {
+                    toaster.pop('error', "", "Godown name already exists!", 5000, 'trustedHtml');
+                }
+                else {
+                    var values = {
+                        "GodownName": $scope.EditGodown.GodownName
+                        , "Active": $scope.EditGodown.Active == true ? '1' : '0'
+                    };
+                    CommonService.UpdateData("Godowns", values, $scope.ID).then(function (response) {
+                        console.log("response " + response);
+                        if (response != undefined) {
+                            toaster.pop('success', "", "Godown Data Updated Successfully", 10000, 'trustedHtml');
+                            $scope.RedirectDashboard();
+                        }
+                    }, function (data) {
+                        console.log(data);
+                    });
+                }
             }
         } catch (error) {
             console.log("Exception caught in the UpdateGodown function. Exception Logged as " + error.message);
         }
-    };
 
+    };
 
     $scope.GetGodownList = function () {
         var lstGodown = {
@@ -128,13 +150,10 @@
     };
 
     $scope.init = function () {
+        GlobalVariableService.validateUrl($location.$$path);
+        $scope.GetGodownById();
+        $scope.GetGodownList();
 
-        if ($scope.ID > 0) {
-            $scope.GetGodownById();
-        }
-        else {
-            $scope.GetGodownList();
-        }
     };
 
     $scope.init();

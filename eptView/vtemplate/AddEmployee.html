@@ -52,17 +52,6 @@
                     </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="DOB">DOB</label>
-                    <input type="date" class="form-control" id="DOB" name="DOB" placeholder="Enter DOB"
-                           ng-model="Employee.DOB">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="DOB">Employment Type</label>
-                    <select id="EmploymentType" name="EmploymentType" ng-model="Employee.EmploymentTypeId" class="form-control"
-                            ng-options="item.EmploymentTypeId as item.EmploymentTypeName for item in EmploymentTypes">
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
                     <label for="Salary">Salary</label>
                     <input type="number" class="form-control" id="Salary" name="Salary" placeholder="Enter Salary"
                            ng-model="Employee.Salary">
@@ -73,12 +62,25 @@
                            ng-model="Employee.BloodGroup">
                 </div>
                 <div class="form-group col-md-4">
+                    <label for="DOB">Employment Type</label>
+                    <select id="EmploymentType" name="EmploymentType" ng-model="Employee.EmploymentTypeId" class="form-control"
+                            ng-options="item.EmploymentTypeId as item.EmploymentTypeName for item in EmploymentTypes">
+                    </select>
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="DOB">DOB</label>
+                    <input type="date" class="form-control" id="DOB" name="DOB" placeholder="Enter DOB"
+                           ng-model="Employee.DOB">
+                </div>
+
+                <div class="form-group col-md-4">
                     <label for="JoinDate">Joining Date</label>
                     <input type="date" class="form-control" id="JoinDate" name="JoinDate" placeholder="Enter JoinDate"
                            ng-model="Employee.JoinDate">
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="EmpRoleId">Role</label> 
+                    <label for="EmpRoleId">Role</label>
                     <select id="EmpRoleId" name="EmpRoleId" ng-model="Employee.EmpRoleId" class="form-control"
                             ng-options="item.EmpRoleId as item.RoleName for item in EmployeeRoles">
                     </select>

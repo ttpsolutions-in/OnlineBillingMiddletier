@@ -1,5 +1,5 @@
-ETradersApp.controller("EmployeeAccountController", ['$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants',
-    function ($scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
+ETradersApp.controller("EmployeeAccountController", ['GlobalVariableService','$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants',
+    function (GlobalVariableService,$scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
         $scope.ShowSpinnerStatus = false;
 
         $scope.showSpinner = function () {
@@ -8,24 +8,29 @@ ETradersApp.controller("EmployeeAccountController", ['$scope', '$filter', '$http
         $scope.hideSpinner = function () {
             $scope.ShowSpinnerStatus = false;
         }
-        $scope.searchCategory = '';
-        $scope.searchDisplayName = '';
-        $scope.searchDescription = '';
+        $scope.TotalPreviousAdvance = 0;
+        $scope.TotalPreviousSalary = 0;
+        $scope.TotalCarryForwardFromPreviousMonth = 0;
+        $scope.TotalAdvance = 0;
+        $scope.TotalSalary = 0;
+        $scope.TotalBalance = 0;
 
-        $scope.TodaysDate = $filter('date')(new Date(), "dd/MM/yyyy");
+        $scope.TodaysDate = $filter('date')(new Date(), "dd-MM-yyyy");
+        //$scope.EmployeeAccount.PaymentDate = $scope.TodaysDate;
         $scope.ID = $routeParams.ID;
         $scope.EmployeeAccountList = [];
         $scope.EmployeeList = [];
         $scope.EditEmployeeAccount = {};
         $scope.EmployeeAccount = {
-            "EmpAccountId": 0
-            , "EmployeeNo": 0
-            , "Amount": 0
-            , "PaymentType": 0
+            "EmpAccountId": null
+            , "EmployeeNo": null
+            , "Amount": null
+            , "PaymentType": null
             , "PaymentDate": null
             , "Remarks": ''
 
         }
+        $scope.EmployeeAccount.PaymentDate = new Date();//$scope.TodaysDate;
         $scope.submitted = false;
         //$scope.ItemCatogoryList = [];
 
@@ -45,7 +50,7 @@ ETradersApp.controller("EmployeeAccountController", ['$scope', '$filter', '$http
                 { width: 100, displayName: 'Employee No.', field: 'EmployeeNo', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
                 { width: 250, displayName: 'Name', field: 'EmployeeDetail.EmployeeName', cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
                 {
-                    width: 250, displayName: 'Amount', field: 'Amount', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left',
+                    width: 250, displayName: 'Amount', field: 'Amount', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-right',
                     headerCellClass: 'text-center'
                 },
                 { width: 150, displayName: 'Payment Type', field: 'PaymentType1.PaymentTypeName', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
@@ -53,7 +58,7 @@ ETradersApp.controller("EmployeeAccountController", ['$scope', '$filter', '$http
                     width: 100, displayName: 'Date', field: 'PaymentDate', enableCellEdit: false,
                     type: 'date', cellFilter: 'date:\'dd-MM-yyyy\'', cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center'
                 },
-                { width: 100, displayName: 'Remarks', field: 'Remarks', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+                { width: 100, displayName: 'Remarks', field: 'Remarks', enableCellEdit: false, cellTooltip: true, headerCellClass: 'text-center' },
                 {
                     name: 'Action', width: 80, enableFiltering: false, cellClass: 'text-center', displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
                         + '<a id="btnView" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditEmployeeAccount/{{row.entity.EmployeeNo}}" ><span data-feather="edit"></span> </a>'
@@ -72,9 +77,9 @@ ETradersApp.controller("EmployeeAccountController", ['$scope', '$filter', '$http
 
                 if (isValid) {
                     var values = {
-                        "EmployeeNo": $scope.EmployeeAccount.EmployeeNo.EmployeeNo
+                        "EmployeeNo": $scope.EmployeeAccount.EmployeeNo
                         , "Amount": $scope.EmployeeAccount.Amount.toString()
-                        , "PaymentType": $scope.EmployeeAccount.PaymentType.PaymentTypeId
+                        , "PaymentType": $scope.EmployeeAccount.PaymentType
                         , "PaymentDate": $filter('date')($scope.EmployeeAccount.PaymentDate, 'yyyy-MM-dd')
                         , "Remarks": $scope.EmployeeAccount.Remarks.toString()
                     };
@@ -152,8 +157,32 @@ ETradersApp.controller("EmployeeAccountController", ['$scope', '$filter', '$http
             CommonService.GetListItems(lstEmployeeAccount).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
                     $scope.EmployeeAccountList = response.data.d.results;
+                    var todayMonth = new Date().getMonth();
+                    $scope.TotalPreviousAdvance = 0;
+                    $scope.TotalPreviousSalary = 0;
+                    $scope.TotalAdvance = 0;
+                    $scope.TotalSalary = 0;
+                    $scope.TotalCarryForwardFromPreviousMonth = 0;
 
-
+                    angular.forEach($scope.EmployeeAccountList, function (value, key) {
+                        var PaymentDateMonth = new Date(value.PaymentDate).getMonth();
+                        if (value.PaymentType1.PaymentTypeName == "Advance") {
+                            if (PaymentDateMonth < todayMonth) {
+                                $scope.TotalPreviousAdvance += parseFloat(value.Amount);
+                            }
+                            else
+                                $scope.TotalAdvance += parseFloat(value.Amount);
+                        }
+                        else {
+                            if (PaymentDateMonth < todayMonth) {
+                                $scope.TotalPreviousSalary += parseFloat(value.Amount);
+                            }
+                            else
+                                $scope.TotalSalary += parseFloat(value.Amount);
+                        }
+                    })
+                    $scope.TotalCarryForwardFromPreviousMonth = parseFloat($scope.TotalPreviousSalary) - parseFloat($scope.TotalPreviousAdvance)
+                    $scope.TotalBalance = ($scope.TotalCarryForwardFromPreviousMonth + $scope.TotalSalary) - $scope.TotalAdvance
                 }
                 else {
                     $scope.EmployeeAccountList = [];
@@ -199,7 +228,9 @@ ETradersApp.controller("EmployeeAccountController", ['$scope', '$filter', '$http
                         var paymentDate = new Date($scope.EditEmployeeAccount.PaymentDate);
                         $scope.EditEmployeeAccount.PaymentDate = paymentDate;
                     }
-                    //$scope.EditEmployeeAccount
+                    $scope.EditEmployeeAccount.Amount = parseInt(Math.trunc($scope.EditEmployeeAccount.Amount));
+                    if ($scope.EditEmployeeAccount.PaymentDate == null)
+                        $scope.EditEmployeeAccount.PaymentDate = $scope.TodaysDate;
                 }
             });
         };
@@ -209,6 +240,7 @@ ETradersApp.controller("EmployeeAccountController", ['$scope', '$filter', '$http
         };
 
         $scope.init = function () {
+            GlobalVariableService.validateUrl($location.$$path);
             $scope.GetEmployeeDetails(function () {
                 $scope.GetPaymentTypes(function () {
                     if ($scope.ID > 0) {

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en" data-ng-app="ETradersApp">
+<head>
+    <title>Ephraim Traders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="vContent/style/bootstrap.min.css" rel="stylesheet" />
+    <link href="vContent/style/ng-tags-input.min.css" rel="stylesheet" />
+    <!--<link href="vContent/style/customstyle.css" rel="stylesheet" />-->
+    <link href="vContent/style/select2.min.css" rel="stylesheet" />
+    <link href="vContent/sweetalert.css" rel="stylesheet" />
+    <link href="vContent/style/toaster.min.css" rel="stylesheet" />
+    <link href="vContent/style/dashboard.css" rel="stylesheet" />
+    <link href="vContent/style/ui-grid.min.css" rel="stylesheet" />
+    <link href="vContent/style/libs.min.css" rel="stylesheet" />
+    <link href="vAsset/Content/bootstrap.min.css" rel="stylesheet" />
+    <!--<link href="vAsset/Content/ProjectStyle.css" rel="stylesheet" />-->
+    <style>
+        .loader {
+            border: 10px solid #f3f3f3; /* Light grey */
+            border-top: 10px solid #90ee90; /* Blue */
+            border-bottom: 10px solid #90ee90;
+            border-radius: 10%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        html, body, container {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+
+        /* form input.ng-invalid {
+            border-color: red;
+        }
+        */
+        .navbar-brand {
+            box-shadow: 0 0 0 !important;
+        }
+
+        form input.ng-valid {
+            border-color: transparent;
+        }
+
+        input[type="checkbox"] {
+            margin: 0 0 0 !important;
+        }
+
+        .angular-with-newlines {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body ng-controller="RegisterController" data-ng-app="ETradersApp">
+    <nav class="navbar sticky-top bg-info flex-md-nowrap p-0 mb-0"></nav>
+    <div class="jumbotron bg-light">
+    </div>
+
+    <div class="card col-md-6 col-md-offset-3">
+        <form role="form">
+            <div class="row">
+                <div class="col-md-2">
+                    &nbsp;
+                </div>
+                <div class="table m-5">
+                    <!--<div class="row well bg-light" data-ng-hide="successMessage != ''">-->
+                    <div class="row mt-5 ml-5 mr-2 pull-left">
+                        <img src="/vContent/images/ephraimtraders.png" style="border-radius:8px" width="250" />
+                    </div>
+                    
+                    <div class="row mr-5">
+                        <h2 class="form-login-heading col-md-12">Create Login</h2>
+                        <div class="form-group col-md-12 col-sm-12">
+                            <input type="text" class="form-control" placeholder="Email" data-ng-model="UserDetails.Email" required autofocus>
+                        </div>
+                        <div class="form-group col-md-12 col-sm-12">
+                            <input type="password" class="form-control" placeholder="Password" data-ng-model="UserDetails.Password" required>
+                        </div>
+                        <div class="form-group col-md-12 col-sm-12">
+                            <input type="password" class="form-control" placeholder="Confirm Password" data-ng-model="UserDetails.ConfirmPassword" required>
+                        </div>
+                        <div class="form-group col-md-12 col-sm-12">
+                            <button class="btn btn-md btn-info btn-block" type="button" ng-click="Register()">Submit</button>
+                        </div>
+                    </div>
+                    <div class="row well bg-light alert-success panel-default" data-ng-hide="successMessage == ''">
+                        <span class="col-md-12" ng-bind-html="successMessage" style="text-align:left"></span>
+                        <a class="card col-md-12" href="#login">Login</a>
+                    </div>
+                    <div class="row well bg-light alert-danger panel-default" style="text-align:left" data-ng-hide="errorMessage == ''">
+                        <span class="col-md-12" ng-bind-html="errorMessage"></span>
+                    </div>
+
+                </div>
+                <div class="col-md-2">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="vContent/Scripts/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/popper.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular-route.min.js"></script>
+<script type="text/javascript" src="vAsset/Scripts/angular-local-storage.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular-animate.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular-strap.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular-strap.tpl.js"></script>
+<script type="text/javascript" src="vContent/Scripts/Chart.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/maskedinput.js"></script>
+<script type="text/javascript" src="vContent/Scripts/select2.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ng-tags-input.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/jszip.js"></script>
+<script type="text/javascript" src="vContent/Scripts/xlsx.full.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/xlsx.js"></script>
+<script type="text/javascript" src="vContent/Scripts/toaster.js"></script>
+<script type="text/javascript" src="vapp/app.js"></script>
+<script type="text/javascript" src="vContent/Scripts/sweetalert-dev.js"></script>
+<script type="text/javascript" src="vContent/Scripts/SweetAlert.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-grid.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-grid.cellnav.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-grid.edit.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-grid.validate.min.js"></script>
+
+<script src="vapp/services/DigestService.js"></script>
+<script type="text/javascript" src="vapp/services/loginService.js"></script>
+<script type="text/javascript" src="vapp/controllers/loginController.js"></script>
+<script type="text/javascript" src="vapp/controllers/RegisterController.js"></script>
+<script type="text/javascript" src="vapp/controllers/EditBillController.js"></script>
+<script type="text/javascript" src="vapp/services/ExceptionHandler.js"></script>
+<script type="text/javascript" src="vapp/services/GlobalVariableService.js"></script>
+<script type="text/javascript" src="vapp/services/CommonService.js"></script>
+<script type="text/javascript" src="vapp/services/EtradersService.js"></script>
+<script type="text/javascript" src="vapp/services/PrintService.js"></script>
+<script type="text/javascript" src="vapp/controllers/ManageWholeSaleController.js"></script>
+<script type="text/javascript" src="vapp/controllers/WholeSaleDashboardController.js"></script>
+<script type="text/javascript" src="vapp/controllers/ManageRetailsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/SupplierRetailerController.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/ItemCategoryDashboardController.js"></script>
+<script type="text/javascript" src="vapp/controllers/ManageGodown.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialInventoryConstroller.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialInventoryDashboard.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialsCheckQIHController.js"></script>
+<script type="text/javascript" src="vapp/controllers/EmployeesController.js"></script>
+<script type="text/javascript" src="vapp/controllers/EmployeeAccountsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/RightsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/RightsManagementController.js"></script>
+<script type="text/javascript">
+    ETradersApp.constant("Version", "1");
+
+</script>
+

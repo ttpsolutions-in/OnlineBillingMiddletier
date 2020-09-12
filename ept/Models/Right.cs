@@ -12,21 +12,24 @@ namespace ept.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EmployeeRole
+    public partial class Right
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EmployeeRole()
+        public Right()
         {
-            this.EmployeeDetails = new HashSet<EmployeeDetail>();
             this.RightsManagements = new HashSet<RightsManagement>();
         }
     
-        public byte EmpRoleId { get; set; }
-        public string RoleName { get; set; }
-        public Nullable<byte> Active { get; set; }
+        public short RightsId { get; set; }
+        public string RightsName { get; set; }
+        public byte Active { get; set; }
+        public string FeatherName { get; set; }
+        public string MenuUrl { get; set; }
+        public string DisplayName { get; set; }
+        public Nullable<short> PID { get; set; }
+        public Nullable<byte> DisplayOrder { get; set; }
+        public Nullable<byte> Menu { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmployeeDetail> EmployeeDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RightsManagement> RightsManagements { get; set; }
     }

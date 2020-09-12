@@ -17,7 +17,7 @@
     <div class="card-body">
         <form name="addSRform">
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-4 col-md-offset-2">
                     <label for="Category">Category</label> <span class="text-danger">*</span>
                     <select id="Category" name="Category" ng-model="SupplierCustomer.Category" class="form-control"
                             ng-options="item.Id as item.CategoryName for item in Categories" required>
@@ -34,7 +34,7 @@
                     <p ng-show="submitted && addSRform.Name.$invalid && addSRform.Name.$pristine"
                        class="text-danger">Name is required.</p>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-4 col-md-offset-2">
                     <label for="txtContactNo">Contact No.</label> <span class="text-danger">*</span>
                     <input type="tel" class="form-control" id="ContactNo" name="ContactNo" placeholder="Enter Contact No."
                            ng-model="SupplierCustomer.ContactNo" required>
@@ -48,7 +48,7 @@
                     <p ng-show="submitted && addSRform.Email.$invalid && addSRform.Email.$pristine"
                        class="text-danger">Email is required.</p>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-4 col-md-offset-2">
                     <label for="Type">Type</label> <span class="text-danger">*</span>
                     <select id="Type" name="Type" ng-model="SupplierCustomer.Type" class="form-control"
                             ng-options="item.SRId as item.TypeName for item in Types" required>
@@ -57,9 +57,7 @@
                     <p ng-show="submitted && addSRform.Type.$invalid && addSRform.Type.$pristine"
                        class="text-danger">Type is required.</p>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-4">
                     <label for="Address">Address</label> <span class="text-danger">*</span>
                     <textarea class="form-control" id="Address" name="Address" placeholder="Enter Address"
                               ng-model="SupplierCustomer.Address" required></textarea>

@@ -345,6 +345,8 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
 
         $scope.init = function () {
 
+            GlobalVariableService.validateUrl($location.$$path);
+
             $scope.GetItemCategory();
             $scope.GetSupplierCustomer();
             $scope.GetGodowns();

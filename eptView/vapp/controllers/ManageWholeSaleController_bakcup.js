@@ -1,4 +1,5 @@
-ETradersApp.controller("ManageWholeSaleController", ['$scope', '$filter', '$http', '$location', '$routeParams', '$timeout', 'toaster', 'CommonService', function ($scope, $filter, $http, $location, $routeParams, $timeout, toaster, CommonService) {
+ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService','$scope', '$filter', '$http', '$location', '$routeParams', '$timeout', 'toaster', 'CommonService',
+    function (GlobalVariableService,$scope, $filter, $http, $location, $routeParams, $timeout, toaster, CommonService) {
     $scope.PageTitle = "Whole Sale";
     $scope.BillNo = "2020-07/01";
     $scope.TodaysDate = $filter('date')(new Date(), "dd/MM/yyyy");
