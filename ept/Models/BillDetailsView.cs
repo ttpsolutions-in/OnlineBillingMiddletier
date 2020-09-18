@@ -15,7 +15,7 @@ namespace ept.Models
     public partial class BillDetailsView
     {
         public int BillNo { get; set; }
-        public Nullable<int> RetailerId { get; set; }
+        public int RetailerId { get; set; }
         public string Name { get; set; }
         public int MaterialId { get; set; }
         public string DisplayName { get; set; }
@@ -25,19 +25,19 @@ namespace ept.Models
         public decimal Amount { get; set; }
         public string GodownName { get; set; }
         public short GodownId { get; set; }
-        public Nullable<byte> GSTApplied { get; set; }
-        public Nullable<int> SaleTypeId { get; set; }
-        public Nullable<int> SaleCategoryId { get; set; }
-        public Nullable<decimal> GSTPercentage { get; set; }
-        public Nullable<decimal> GSTAmount { get; set; }
-        public Nullable<byte> DiscountApplied { get; set; }
-        public Nullable<decimal> TotalAmount { get; set; }
-        public Nullable<decimal> GrandTotal { get; set; }
+        public byte GSTApplied { get; set; }
+        public int SaleTypeId { get; set; }
+        public int SaleCategoryId { get; set; }
+        public decimal GSTPercentage { get; set; }
+        public decimal GSTAmount { get; set; }
+        public byte DiscountApplied { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal GrandTotal { get; set; }
         public Nullable<byte> ShowGSTNo { get; set; }
         public string Contact { get; set; }
         public decimal Rate { get; set; }
         public byte Active { get; set; }
-        public Nullable<byte> BillStatus { get; set; }
-        public Nullable<System.DateTime> SaleDate { get; set; }
+        public byte BillStatus { get; set; }
+        public System.DateTime SaleDate { get; set; }
     }
 }

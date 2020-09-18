@@ -17,7 +17,7 @@ namespace ept
     {
         public static void Register(HttpConfiguration config)
         {
-            //config.Filters.Add(new AuthorizeAttribute());
+            config.Filters.Add(new AuthorizeAttribute());
 
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Bill>("Bills");
@@ -41,11 +41,12 @@ namespace ept
             builder.EntitySet<PaymentType>("PaymentTypes");
             builder.EntitySet<RightsManagement>("RightsManagements");
             builder.EntitySet<Right>("Rights");
+            
             builder.EntitySet<RoleRightsView>("RoleRightsViews");
             builder.EntitySet<RightsForAssignment>("RightsForAssignments");
-
             builder.EntitySet<ReorderRequired>("ReorderRequireds");
             builder.EntitySet<BillDetailsView>("BillDetailsViews");
+            builder.EntitySet<SaleQuantityAmountForReport>("SaleQuantityAmountForReports");
 
             config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
 

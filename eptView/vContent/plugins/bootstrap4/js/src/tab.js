@@ -32,7 +32,7 @@ const Tab = (($) => {
   }
 
   const ClassName = {
-    DROPDOWN_MENU : 'dropdown-menu',
+    DROPDOWN_Rights : 'dropdown-Rights',
     ACTIVE        : 'active',
     DISABLED      : 'disabled',
     FADE          : 'fade',
@@ -46,7 +46,7 @@ const Tab = (($) => {
     ACTIVE_UL             : '> li > .active',
     DATA_TOGGLE           : '[data-toggle="tab"], [data-toggle="pill"], [data-toggle="list"]',
     DROPDOWN_TOGGLE       : '.dropdown-toggle',
-    DROPDOWN_ACTIVE_CHILD : '> .dropdown-menu .active'
+    DROPDOWN_ACTIVE_CHILD : '> .dropdown-Rights .active'
   }
 
   /**
@@ -196,7 +196,7 @@ const Tab = (($) => {
       $(element).addClass(ClassName.SHOW)
 
       if (element.parentNode &&
-          $(element.parentNode).hasClass(ClassName.DROPDOWN_MENU)) {
+          $(element.parentNode).hasClass(ClassName.DROPDOWN_Rights)) {
         const dropdownElement = $(element).closest(Selector.DROPDOWN)[0]
         if (dropdownElement) {
           $(dropdownElement).find(Selector.DROPDOWN_TOGGLE).addClass(ClassName.ACTIVE)

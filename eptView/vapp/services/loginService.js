@@ -60,6 +60,31 @@ ETradersApp.service('LoginService', ['Config','$http', '$q', 'GlobalVariableServ
             });
             return promise;
         }
+        this.ChangePassword = function (data) {
+            var tokenInfo = GlobalVariableService.getTokenInfo();
+            var AccessToken = tokenInfo.AccessToken;
+
+            var req = {
+                method: 'POST',
+                cache: false,
+                url: Config.ServiceBaseURL + '/api/Account/ChangePassword',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + AccessToken
+                },
+                data: data
+            };
+            //debugger;
+            var promise = $http(req).then(function (response) {
+                return response;
+            }, function (error) {
+                //Exception Handling
+                console.log("error at change password :" + JSON.stringify(error))
+                ExceptionHandler.HandleException(error);
+                return error;
+            });
+            return promise;
+        }
         this.logOut = function () {
             GlobalVariableService.removeToken();            
         }

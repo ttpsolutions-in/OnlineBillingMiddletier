@@ -95,14 +95,14 @@
             </div>
             <div class="form-row col-md-offset-5 col-sm-offset-5">
                 <div class="pr-4"><a href="#WholeSaleDashboard" class="btn btn-primary float-right"><span data-feather="arrow-left"></span> Back</a></div>
-                <div class="pr-4">
+                <!--<div class="pr-4">
                     <button type="button" class="btn btn-primary" ng-click="SubmitItems(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save</button>
+                </div>-->
+                <div class="pr-4">
+                    <button type="button" class="btn btn-primary" ng-if="CancelBillRights.length>0" ng-click="SaveBillDetails('c')"><span data-feather="trash"></span> Cancel Bill</button>
                 </div>
                 <div class="pr-4">
-                    <button type="button" class="btn btn-primary" ng-if="CancelBillRights" ng-click="SaveBillDetails('c')"><span data-feather="trash"></span> Cancel Bill</button>
-                </div>
-                <div class="pr-4">
-                    <button type="button" class="btn btn-primary" ng-click="SaveNPrint(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save <span data-feather="printer"></span> Print</button>
+                    <button type="button" class="btn btn-primary" ng-click="SaveNPrint(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save</button>
                 </div>
             </div>
         </form>

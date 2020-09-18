@@ -393,6 +393,8 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                     "BillStatus": billStatus,  //Cash --> complete, Credit--> pending
                     "PaidAmt": grandAmount.toString(), //Credit --> 0. cash --> GrandAmount
                     "BalanceAmt": balanceAmount.toString(), // Credit --> GrandAmount ,cash-->0
+                    "CreatedBy": $scope.tokens.UserName.toString(),
+                    "CreatedOn": new Date()
                 };
                 CommonService.PostData("Bills", postData).then(function (response) {
                     if (response.BillNo > 0) {
@@ -412,7 +414,8 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                                     "Amount": value.Amount.toString(),
                                     "BillNo": response.BillNo.toString(),
                                     "CreatedOn": new Date(),
-                                    "Active":1
+                                    "Active": 1,
+                                    "ItemCategoryId": value.ItemCategoryId
                                 };
                                 CommonService.PostData("Sales", salesPostDate).then(function (response1) {
                                     if (response1.SaleId > 0) {
@@ -436,6 +439,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
         $scope.init = async function () {
             //$scope.showSpinner();
             GlobalVariableService.validateUrl($location.$$path);
+            $scope.tokens = GlobalVariableService.getTokenInfo();
             await $scope.GetItemCategory();
             await $scope.GetSupplierCustomer();
             await $scope.GetGodowns();

@@ -74,8 +74,10 @@ ETradersApp.controller('LoginController', ['Config', '$scope', 'LoginService', '
 
                             tokenInfo.UserRole = result.EmployeeRole.RoleName;
                             GlobalVariableService.setTokenInfo(tokenInfo);
-                            $scope.afterLoginSuccess(tokenInfo.UserRole);
-
+                            //$scope.afterLoginSuccess(tokenInfo.UserRole);
+                            CommonService.fetchRoleRights(tokenInfo.UserRole, function () {
+                                $window.location.href = Config.ServiceBaseURL + "/index.html#/WholeSaleDashboard";
+                            });
                             console.log("login successful")
                             //$window.location.href = Config.ServiceBaseURL + "/index.html#/WholeSaleDashboard"
                             //$location.path('/WholeSaleDashboard');

@@ -3151,7 +3151,7 @@ tbody.collapse.show {
   margin-left: 0;
 }
 
-.dropdown-menu {
+.dropdown-Rights {
   position: absolute;
   top: 100%;
   left: 0;
@@ -3171,7 +3171,7 @@ tbody.collapse.show {
   border-radius: 0.25rem;
 }
 
-.dropup .dropdown-menu {
+.dropup .dropdown-Rights {
   margin-top: 0;
   margin-bottom: 0.125rem;
 }
@@ -3193,7 +3193,7 @@ tbody.collapse.show {
   margin-left: 0;
 }
 
-.dropright .dropdown-menu {
+.dropright .dropdown-Rights {
   margin-top: 0;
   margin-left: 0.125rem;
 }
@@ -3218,7 +3218,7 @@ tbody.collapse.show {
   vertical-align: 0;
 }
 
-.dropleft .dropdown-menu {
+.dropleft .dropdown-Rights {
   margin-top: 0;
   margin-right: 0.125rem;
 }
@@ -3293,7 +3293,7 @@ tbody.collapse.show {
   background-color: transparent;
 }
 
-.dropdown-menu.show {
+.dropdown-Rights.show {
   display: block;
 }
 
@@ -3893,7 +3893,7 @@ tbody.collapse.show {
   border-color: #dee2e6 #dee2e6 #fff;
 }
 
-.nav-tabs .dropdown-menu {
+.nav-tabs .dropdown-Rights {
   margin-top: -1px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -3996,7 +3996,7 @@ tbody.collapse.show {
   padding-left: 0;
 }
 
-.navbar-nav .dropdown-menu {
+.navbar-nav .dropdown-Rights {
   position: static;
   float: none;
 }
@@ -4069,10 +4069,10 @@ tbody.collapse.show {
     -ms-flex-direction: row;
     flex-direction: row;
   }
-  .navbar-expand-sm .navbar-nav .dropdown-menu {
+  .navbar-expand-sm .navbar-nav .dropdown-Rights {
     position: absolute;
   }
-  .navbar-expand-sm .navbar-nav .dropdown-menu-right {
+  .navbar-expand-sm .navbar-nav .dropdown-Rights-right {
     right: 0;
     left: auto;
   }
@@ -4095,7 +4095,7 @@ tbody.collapse.show {
   .navbar-expand-sm .navbar-toggler {
     display: none;
   }
-  .navbar-expand-sm .dropup .dropdown-menu {
+  .navbar-expand-sm .dropup .dropdown-Rights {
     top: auto;
     bottom: 100%;
   }
@@ -4125,10 +4125,10 @@ tbody.collapse.show {
     -ms-flex-direction: row;
     flex-direction: row;
   }
-  .navbar-expand-md .navbar-nav .dropdown-menu {
+  .navbar-expand-md .navbar-nav .dropdown-Rights {
     position: absolute;
   }
-  .navbar-expand-md .navbar-nav .dropdown-menu-right {
+  .navbar-expand-md .navbar-nav .dropdown-Rights-right {
     right: 0;
     left: auto;
   }
@@ -4151,7 +4151,7 @@ tbody.collapse.show {
   .navbar-expand-md .navbar-toggler {
     display: none;
   }
-  .navbar-expand-md .dropup .dropdown-menu {
+  .navbar-expand-md .dropup .dropdown-Rights {
     top: auto;
     bottom: 100%;
   }
@@ -4181,10 +4181,10 @@ tbody.collapse.show {
     -ms-flex-direction: row;
     flex-direction: row;
   }
-  .navbar-expand-lg .navbar-nav .dropdown-menu {
+  .navbar-expand-lg .navbar-nav .dropdown-Rights {
     position: absolute;
   }
-  .navbar-expand-lg .navbar-nav .dropdown-menu-right {
+  .navbar-expand-lg .navbar-nav .dropdown-Rights-right {
     right: 0;
     left: auto;
   }
@@ -4207,7 +4207,7 @@ tbody.collapse.show {
   .navbar-expand-lg .navbar-toggler {
     display: none;
   }
-  .navbar-expand-lg .dropup .dropdown-menu {
+  .navbar-expand-lg .dropup .dropdown-Rights {
     top: auto;
     bottom: 100%;
   }
@@ -4237,10 +4237,10 @@ tbody.collapse.show {
     -ms-flex-direction: row;
     flex-direction: row;
   }
-  .navbar-expand-xl .navbar-nav .dropdown-menu {
+  .navbar-expand-xl .navbar-nav .dropdown-Rights {
     position: absolute;
   }
-  .navbar-expand-xl .navbar-nav .dropdown-menu-right {
+  .navbar-expand-xl .navbar-nav .dropdown-Rights-right {
     right: 0;
     left: auto;
   }
@@ -4263,7 +4263,7 @@ tbody.collapse.show {
   .navbar-expand-xl .navbar-toggler {
     display: none;
   }
-  .navbar-expand-xl .dropup .dropdown-menu {
+  .navbar-expand-xl .dropup .dropdown-Rights {
     top: auto;
     bottom: 100%;
   }
@@ -4292,11 +4292,11 @@ tbody.collapse.show {
   flex-direction: row;
 }
 
-.navbar-expand .navbar-nav .dropdown-menu {
+.navbar-expand .navbar-nav .dropdown-Rights {
   position: absolute;
 }
 
-.navbar-expand .navbar-nav .dropdown-menu-right {
+.navbar-expand .navbar-nav .dropdown-Rights-right {
   right: 0;
   left: auto;
 }
@@ -4324,7 +4324,7 @@ tbody.collapse.show {
   display: none;
 }
 
-.navbar-expand .dropup .dropdown-menu {
+.navbar-expand .dropup .dropdown-Rights {
   top: auto;
   bottom: 100%;
 }

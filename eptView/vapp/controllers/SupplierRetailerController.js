@@ -46,8 +46,12 @@ ETradersApp.controller("SupplierCustomerController", ['GlobalVariableService','$
             $scope.submitted = !isValid;
             if (isValid) {
                 var duplicate = $filter('filter')($scope.SupplierCustomersList, { Name: $scope.SupplierCustomer.Name }, true);
+                var duplicateEmail = $filter('filter')($scope.SupplierCustomersList, { Name: $scope.SupplierCustomer.Email }, true);
                 if (duplicate != undefined && duplicate.length > 0) {
                     toaster.pop('error', "", "Supplier/Customer already exists!", 5000, 'trustedHtml');
+                }
+                else if (duplicateEmail != undefined && duplicateEmail.length > 0) {
+                    toaster.pop('error', "", "Supplier/Customer's email already exists!", 5000, 'trustedHtml');
                 }
                 else {
                     var supplierCustomers = {
@@ -85,8 +89,15 @@ ETradersApp.controller("SupplierCustomerController", ['GlobalVariableService','$
                     if (value.Name.toUpperCase() == $scope.EditSupplierCustomer.Name.toUpperCase() && value.SupplierRetailerId != $scope.ID)
                         return true;
                 });
+                var duplicateEmail = $filter('filter')($scope.SupplierCustomersList, function (value, key) {
+                    if (value.Email.toUpperCase() == $scope.EditSupplierCustomer.Email.toUpperCase() && value.SupplierRetailerId != $scope.ID)
+                        return true;
+                });
                 if (duplicate != undefined && duplicate.length > 0)
                     toaster.pop('error', "", "Supplier/Customer already exists!", 5000, 'trustedHtml');
+                else if (duplicateEmail != undefined && duplicateEmail.length > 0) {
+                    toaster.pop('error', "", "Supplier/Customer's email already exists!", 5000, 'trustedHtml');
+                }
                 else {
 
                     var supplierCustomers = {

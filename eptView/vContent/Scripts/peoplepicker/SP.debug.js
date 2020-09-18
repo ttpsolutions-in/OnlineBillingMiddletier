@@ -684,7 +684,7 @@ SP.ULS.$3c = function SP_ULS$$3c() {
 
     if (SP.ScriptUtility.isNullOrUndefined($v_0) || $v_0.closed) {
         try {
-            $v_0 = window.open('/_layouts/' + SP.OfficeVersion.majorVersion + '/blank.htm', null, 'width=400,height=200,scrollbars=yes,resizable=yes,status=no,location=no,menubar=no,toolbar=no');
+            $v_0 = window.open('/_layouts/' + SP.OfficeVersion.majorVersion + '/blank.htm', null, 'width=400,height=200,scrollbars=yes,resizable=yes,status=no,location=no,Rightsbar=no,toolbar=no');
         }
         catch ($$e_1) {
             SP.ULS.$3N = true;
@@ -15658,13 +15658,13 @@ SP.WebTemplateCollection.prototype = {
     }
 };
 Type.registerNamespace('SP.UI');
-SP.UI.PopoutMenu = function SP_UI_PopoutMenu(launcherId, menuId, iconId, launcherOpenCssClass, textDirection, closeIconUrl, isClustered, closeIconOffsetLeft, closeIconOffsetTop, closeIconHeight, closeIconWidth) {
-    this.$$d_closeMenu = Function.createDelegate(this, this.closeMenu);
-    this.$$d_onMenuMouseOver = Function.createDelegate(this, this.onMenuMouseOver);
-    this.$$d_onMenuMouseOut = Function.createDelegate(this, this.onMenuMouseOut);
+SP.UI.PopoutRights = function SP_UI_PopoutRights(launcherId, RightsId, iconId, launcherOpenCssClass, textDirection, closeIconUrl, isClustered, closeIconOffsetLeft, closeIconOffsetTop, closeIconHeight, closeIconWidth) {
+    this.$$d_closeRights = Function.createDelegate(this, this.closeRights);
+    this.$$d_onRightsMouseOver = Function.createDelegate(this, this.onRightsMouseOver);
+    this.$$d_onRightsMouseOut = Function.createDelegate(this, this.onRightsMouseOut);
     this.$r_0 = -1;
     this.$A_0 = $get(launcherId);
-    this.$1_0 = $get(menuId);
+    this.$1_0 = $get(RightsId);
     this.$1j_0 = launcherOpenCssClass;
     this.$3W_0 = textDirection;
     this.$1g_0 = closeIconUrl;
@@ -15684,39 +15684,39 @@ SP.UI.PopoutMenu = function SP_UI_PopoutMenu(launcherId, menuId, iconId, launche
         throw Error.argument('launcherId');
     }
     if (SP.ScriptUtility.isNullOrUndefined(this.$1_0)) {
-        throw Error.argument('menuId');
+        throw Error.argument('RightsId');
     }
-    this.$1l_0 = this.$$d_onMenuMouseOut;
-    this.$1m_0 = this.$$d_onMenuMouseOver;
-    this.$1k_0 = SP.UI.PopoutMenu.onMenuClick;
+    this.$1l_0 = this.$$d_onRightsMouseOut;
+    this.$1m_0 = this.$$d_onRightsMouseOver;
+    this.$1k_0 = SP.UI.PopoutRights.onRightsClick;
     $addHandler(this.$1_0, 'mouseout', this.$1l_0);
     $addHandler(this.$1_0, 'mouseover', this.$1m_0);
     $addHandler(this.$1_0, 'click', this.$1k_0);
 };
-SP.UI.PopoutMenu.beginModal = function SP_UI_PopoutMenu$beginModal() {
-    if (SP.UI.PopoutMenu.$L) {
+SP.UI.PopoutRights.beginModal = function SP_UI_PopoutRights$beginModal() {
+    if (SP.UI.PopoutRights.$L) {
         return;
     }
-    if (!SP.UI.PopoutMenu.$1h) {
-        $addHandler(document, 'keydown', SP.UI.PopoutMenu.onModalKeyDown);
-        var $v_0 = SP.UI.PopoutMenu.onCloseEvent;
+    if (!SP.UI.PopoutRights.$1h) {
+        $addHandler(document, 'keydown', SP.UI.PopoutRights.onModalKeyDown);
+        var $v_0 = SP.UI.PopoutRights.onCloseEvent;
 
         $addHandler(window, 'scroll', $v_0);
         $addHandler(document.body, 'click', $v_0);
-        SP.UI.PopoutMenu.$1h = true;
+        SP.UI.PopoutRights.$1h = true;
     }
-    SP.UI.PopoutMenu.$L = true;
+    SP.UI.PopoutRights.$L = true;
 };
-SP.UI.PopoutMenu.endModal = function SP_UI_PopoutMenu$endModal() {
-    if (!SP.UI.PopoutMenu.$L) {
+SP.UI.PopoutRights.endModal = function SP_UI_PopoutRights$endModal() {
+    if (!SP.UI.PopoutRights.$L) {
         return;
     }
-    SP.UI.PopoutMenu.$L = false;
+    SP.UI.PopoutRights.$L = false;
 };
-SP.UI.PopoutMenu.onMenuClick = function SP_UI_PopoutMenu$onMenuClick(evt) {
+SP.UI.PopoutRights.onRightsClick = function SP_UI_PopoutRights$onRightsClick(evt) {
     evt.stopPropagation();
-    if (!SP.ScriptUtility.isNullOrUndefined(SP.UI.PopoutMenu._activePopoutMenuInstance)) {
-        SP.UI.PopoutMenu._activePopoutMenuInstance.closeMenu();
+    if (!SP.ScriptUtility.isNullOrUndefined(SP.UI.PopoutRights._activePopoutRightsInstance)) {
+        SP.UI.PopoutRights._activePopoutRightsInstance.closeRights();
     }
     var $v_0 = evt.target;
 
@@ -15725,24 +15725,24 @@ SP.UI.PopoutMenu.onMenuClick = function SP_UI_PopoutMenu$onMenuClick(evt) {
         STSNavigate($v_0.href);
     }
 };
-SP.UI.PopoutMenu.onModalKeyDown = function SP_UI_PopoutMenu$onModalKeyDown(evt) {
-    if (!SP.UI.PopoutMenu.$L) {
+SP.UI.PopoutRights.onModalKeyDown = function SP_UI_PopoutRights$onModalKeyDown(evt) {
+    if (!SP.UI.PopoutRights.$L) {
         return;
     }
     if (evt && evt.rawEvent) {
         if (evt.rawEvent.keyCode === 27) {
-            SP.UI.PopoutMenu._activePopoutMenuInstance.closeMenu();
+            SP.UI.PopoutRights._activePopoutRightsInstance.closeRights();
         }
     }
 };
-SP.UI.PopoutMenu.onCloseEvent = function SP_UI_PopoutMenu$onCloseEvent(evt) {
-    if (!SP.UI.PopoutMenu.$L) {
+SP.UI.PopoutRights.onCloseEvent = function SP_UI_PopoutRights$onCloseEvent(evt) {
+    if (!SP.UI.PopoutRights.$L) {
         return;
     }
-    SP.UI.PopoutMenu._activePopoutMenuInstance.closeMenu();
+    SP.UI.PopoutRights._activePopoutRightsInstance.closeRights();
     evt.preventDefault();
 };
-SP.UI.PopoutMenu.ensureCSSClassOnElement = function SP_UI_PopoutMenu$ensureCSSClassOnElement(element, cssClass) {
+SP.UI.PopoutRights.ensureCSSClassOnElement = function SP_UI_PopoutRights$ensureCSSClassOnElement(element, cssClass) {
     if (SP.ScriptUtility.isNullOrUndefined(element)) {
         return;
     }
@@ -15756,13 +15756,13 @@ SP.UI.PopoutMenu.ensureCSSClassOnElement = function SP_UI_PopoutMenu$ensureCSSCl
     $v_1 = $v_1.trim();
     element.className = $v_1;
 };
-SP.UI.PopoutMenu.removeCSSClassFromElement = function SP_UI_PopoutMenu$removeCSSClassFromElement(element, cssClass) {
+SP.UI.PopoutRights.removeCSSClassFromElement = function SP_UI_PopoutRights$removeCSSClassFromElement(element, cssClass) {
     if (SP.ScriptUtility.isNullOrUndefined(element)) {
         return;
     }
     element.className = element.className.replace(cssClass, '');
 };
-SP.UI.PopoutMenu.getViewPortWidth = function SP_UI_PopoutMenu$getViewPortWidth() {
+SP.UI.PopoutRights.getViewPortWidth = function SP_UI_PopoutRights$getViewPortWidth() {
     var $v_0 = window.innerWidth;
 
     if (SP.ScriptUtility.isNullOrUndefined($v_0)) {
@@ -15773,7 +15773,7 @@ SP.UI.PopoutMenu.getViewPortWidth = function SP_UI_PopoutMenu$getViewPortWidth()
     }
     return $v_0;
 };
-SP.UI.PopoutMenu.getViewPortHeight = function SP_UI_PopoutMenu$getViewPortHeight() {
+SP.UI.PopoutRights.getViewPortHeight = function SP_UI_PopoutRights$getViewPortHeight() {
     var $v_0 = window.innerHeight;
 
     if (SP.ScriptUtility.isNullOrUndefined($v_0)) {
@@ -15784,7 +15784,7 @@ SP.UI.PopoutMenu.getViewPortHeight = function SP_UI_PopoutMenu$getViewPortHeight
     }
     return $v_0;
 };
-SP.UI.PopoutMenu.getViewableTop = function SP_UI_PopoutMenu$getViewableTop() {
+SP.UI.PopoutRights.getViewableTop = function SP_UI_PopoutRights$getViewableTop() {
     var $v_0;
 
     $v_0 = window.pageXOffset;
@@ -15796,7 +15796,7 @@ SP.UI.PopoutMenu.getViewableTop = function SP_UI_PopoutMenu$getViewableTop() {
     }
     return $v_0;
 };
-SP.UI.PopoutMenu.getViewableLeft = function SP_UI_PopoutMenu$getViewableLeft() {
+SP.UI.PopoutRights.getViewableLeft = function SP_UI_PopoutRights$getViewableLeft() {
     var $v_0;
 
     $v_0 = window.pageYOffset;
@@ -15808,28 +15808,28 @@ SP.UI.PopoutMenu.getViewableLeft = function SP_UI_PopoutMenu$getViewableLeft() {
     }
     return $v_0;
 };
-SP.UI.PopoutMenu.get_activePopoutMenuInstance = function SP_UI_PopoutMenu$get_activePopoutMenuInstance() {
-    return SP.UI.PopoutMenu._activePopoutMenuInstance;
+SP.UI.PopoutRights.get_activePopoutRightsInstance = function SP_UI_PopoutRights$get_activePopoutRightsInstance() {
+    return SP.UI.PopoutRights._activePopoutRightsInstance;
 };
-SP.UI.PopoutMenu.set_activePopoutMenuInstance = function SP_UI_PopoutMenu$set_activePopoutMenuInstance(value) {
-    SP.UI.PopoutMenu._activePopoutMenuInstance = value;
+SP.UI.PopoutRights.set_activePopoutRightsInstance = function SP_UI_PopoutRights$set_activePopoutRightsInstance(value) {
+    SP.UI.PopoutRights._activePopoutRightsInstance = value;
     return value;
 };
-SP.UI.PopoutMenu.createPopoutMenuInstanceAndLaunch = function SP_UI_PopoutMenu$createPopoutMenuInstanceAndLaunch(anchorId, menuId, iconId, anchorOpenCss, textDirection, closeIconUrl, isClustered, x, y, height, width) {
-    if (!SP.ScriptUtility.isNullOrUndefined(SP.UI.PopoutMenu._activePopoutMenuInstance)) {
-        SP.UI.PopoutMenu._activePopoutMenuInstance.closeMenu();
+SP.UI.PopoutRights.createPopoutRightsInstanceAndLaunch = function SP_UI_PopoutRights$createPopoutRightsInstanceAndLaunch(anchorId, RightsId, iconId, anchorOpenCss, textDirection, closeIconUrl, isClustered, x, y, height, width) {
+    if (!SP.ScriptUtility.isNullOrUndefined(SP.UI.PopoutRights._activePopoutRightsInstance)) {
+        SP.UI.PopoutRights._activePopoutRightsInstance.closeRights();
         return;
     }
-    var $v_0 = new SP.UI.PopoutMenu(anchorId, menuId, iconId, anchorOpenCss, textDirection, closeIconUrl, isClustered, x, y, height, width);
+    var $v_0 = new SP.UI.PopoutRights(anchorId, RightsId, iconId, anchorOpenCss, textDirection, closeIconUrl, isClustered, x, y, height, width);
 
-    $v_0.launchMenu();
+    $v_0.launchRights();
 };
-SP.UI.PopoutMenu.closeActivePopoutMenuInstance = function SP_UI_PopoutMenu$closeActivePopoutMenuInstance() {
-    if (!SP.ScriptUtility.isNullOrUndefined(SP.UI.PopoutMenu._activePopoutMenuInstance)) {
-        SP.UI.PopoutMenu._activePopoutMenuInstance.closeMenu();
+SP.UI.PopoutRights.closeActivePopoutRightsInstance = function SP_UI_PopoutRights$closeActivePopoutRightsInstance() {
+    if (!SP.ScriptUtility.isNullOrUndefined(SP.UI.PopoutRights._activePopoutRightsInstance)) {
+        SP.UI.PopoutRights._activePopoutRightsInstance.closeRights();
     }
 };
-SP.UI.PopoutMenu.prototype = {
+SP.UI.PopoutRights.prototype = {
     $A_0: null,
     $1_0: null,
     $s_0: null,
@@ -15845,16 +15845,16 @@ SP.UI.PopoutMenu.prototype = {
     $1l_0: null,
     $1m_0: null,
     $1k_0: null,
-    launchMenu: function SP_UI_PopoutMenu$launchMenu() {
-        if (this._menuLaunched) {
+    launchRights: function SP_UI_PopoutRights$launchRights() {
+        if (this._RightsLaunched) {
             return;
         }
-        if (SP.UI.PopoutMenu._activePopoutMenuInstance) {
-            SP.UI.PopoutMenu._activePopoutMenuInstance.closeMenu();
+        if (SP.UI.PopoutRights._activePopoutRightsInstance) {
+            SP.UI.PopoutRights._activePopoutRightsInstance.closeRights();
         }
-        SP.UI.PopoutMenu._activePopoutMenuInstance = this;
-        SP.UI.PopoutMenu.beginModal();
-        SP.UI.PopoutMenu.ensureCSSClassOnElement(this.$A_0, this.$1j_0);
+        SP.UI.PopoutRights._activePopoutRightsInstance = this;
+        SP.UI.PopoutRights.beginModal();
+        SP.UI.PopoutRights.ensureCSSClassOnElement(this.$A_0, this.$1j_0);
         this.$1_0.style.display = 'block';
         this.$1_0.style.visibility = 'hidden';
         this.$1_0.style.position = 'absolute';
@@ -15874,33 +15874,33 @@ SP.UI.PopoutMenu.prototype = {
             }
             this.$1_0.style.width = $v_1 + 'px';
         }
-        this.positionMenu();
+        this.positionRights();
         this.$1_0.style.visibility = 'visible';
         if (Sys.Browser.agent === Sys.Browser.InternetExplorer) {
             this.$1_0.parentNode.insertBefore(this.get_backFrame(), this.$1_0);
             this.positionBackFrame(this.$1_0);
         }
-        this.$A_0.rel = '_spPopoutMenuIsOpen';
-        this._menuLaunched = true;
+        this.$A_0.rel = '_spPopoutRightsIsOpen';
+        this._RightsLaunched = true;
     },
-    closeMenu: function SP_UI_PopoutMenu$closeMenu() {
-        if (!this._menuLaunched) {
+    closeRights: function SP_UI_PopoutRights$closeRights() {
+        if (!this._RightsLaunched) {
             return;
         }
         this.$1_0.style.display = 'none';
         if (Sys.Browser.agent === Sys.Browser.InternetExplorer) {
             this.$1_0.parentNode.removeChild(this.get_backFrame());
         }
-        SP.UI.PopoutMenu.endModal();
-        SP.UI.PopoutMenu.removeCSSClassFromElement(this.$A_0, this.$1j_0);
+        SP.UI.PopoutRights.endModal();
+        SP.UI.PopoutRights.removeCSSClassFromElement(this.$A_0, this.$1j_0);
         if (!SP.ScriptUtility.isNullOrEmptyString(this.$1g_0)) {
             this.$5J_0();
         }
         this.$A_0.rel = '';
-        this._menuLaunched = false;
-        SP.UI.PopoutMenu._activePopoutMenuInstance = null;
+        this._RightsLaunched = false;
+        SP.UI.PopoutRights._activePopoutRightsInstance = null;
     },
-    $5J_0: function SP_UI_PopoutMenu$$5J_0() {
+    $5J_0: function SP_UI_PopoutRights$$5J_0() {
         this.$h_0.src = this.$1g_0;
         if (this.$3S_0) {
             this.$h_0.style.top = '-' + this.$3U_0 + 'px';
@@ -15909,7 +15909,7 @@ SP.UI.PopoutMenu.prototype = {
             this.$s_0.style.width = this.$3V_0 + 'px';
         }
     },
-    positionBackFrame: function SP_UI_PopoutMenu$positionBackFrame(elem) {
+    positionBackFrame: function SP_UI_PopoutRights$positionBackFrame(elem) {
         var $v_0 = !SP.ScriptUtility.isNullOrUndefined(elem.offsetParent);
         var $v_1 = AbsTop(elem) - ($v_0 ? AbsTop(elem.offsetParent) : 0);
         var $v_2 = AbsLeft(elem) - ($v_0 ? AbsLeft(elem.offsetParent) : 0);
@@ -15921,7 +15921,7 @@ SP.UI.PopoutMenu.prototype = {
         (this.get_backFrame()).style.width = $v_3 + 'px';
         (this.get_backFrame()).style.height = $v_4 + 'px';
     },
-    positionMenu: function SP_UI_PopoutMenu$positionMenu() {
+    positionRights: function SP_UI_PopoutRights$positionRights() {
         var $v_0 = this.$1_0.offsetWidth;
         var $v_1 = this.$1_0.offsetHeight;
         var $v_2 = !SP.ScriptUtility.isNullOrUndefined(this.$1_0.offsetParent);
@@ -15929,10 +15929,10 @@ SP.UI.PopoutMenu.prototype = {
         var $v_4 = this.$A_0.offsetHeight;
         var $v_5 = AbsTop(this.$A_0) - ($v_2 ? AbsTop(this.$1_0.offsetParent) : 0);
         var $v_6 = AbsLeft(this.$A_0) - ($v_2 ? AbsLeft(this.$1_0.offsetParent) : 0);
-        var $v_7 = SP.UI.PopoutMenu.getViewPortWidth();
-        var $v_8 = SP.UI.PopoutMenu.getViewPortHeight();
-        var $v_9 = SP.UI.PopoutMenu.getViewableTop();
-        var $v_A = SP.UI.PopoutMenu.getViewableLeft();
+        var $v_7 = SP.UI.PopoutRights.getViewPortWidth();
+        var $v_8 = SP.UI.PopoutRights.getViewPortHeight();
+        var $v_9 = SP.UI.PopoutRights.getViewableTop();
+        var $v_A = SP.UI.PopoutRights.getViewableLeft();
 
         if (this.get_defaultLaunchRight()) {
             if (this.$3M_0($v_0, $v_1, $v_3, $v_4, $v_5, $v_6, $v_7, $v_8, $v_9, $v_A)) {
@@ -15965,11 +15965,11 @@ SP.UI.PopoutMenu.prototype = {
             this.$3L_0($v_0, $v_1, $v_3, $v_4, $v_5, $v_6, $v_7, $v_8, $v_9, $v_A);
         }
     },
-    positionMenuWithCoordinates: function SP_UI_PopoutMenu$positionMenuWithCoordinates(left, top) {
+    positionRightsWithCoordinates: function SP_UI_PopoutRights$positionRightsWithCoordinates(left, top) {
         this.$1_0.style.top = top + 6 + 'px';
         this.$1_0.style.left = left + 'px';
     },
-    $4a_0: function SP_UI_PopoutMenu$$4a_0($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9) {
+    $4a_0: function SP_UI_PopoutRights$$4a_0($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9) {
         var $v_0 = $p5 + $p2 - $p0;
 
         if ($v_0 < $p9) {
@@ -15980,10 +15980,10 @@ SP.UI.PopoutMenu.prototype = {
         if ($v_1 < $p8) {
             return false;
         }
-        this.positionMenuWithCoordinates($v_0, $v_1);
+        this.positionRightsWithCoordinates($v_0, $v_1);
         return true;
     },
-    $3L_0: function SP_UI_PopoutMenu$$3L_0($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9) {
+    $3L_0: function SP_UI_PopoutRights$$3L_0($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9) {
         var $v_0 = $p5 + $p2 - $p0;
 
         if ($v_0 < $p9) {
@@ -15995,10 +15995,10 @@ SP.UI.PopoutMenu.prototype = {
         if ($v_1 > $v_2) {
             return false;
         }
-        this.positionMenuWithCoordinates($v_0, $p4 + $p3);
+        this.positionRightsWithCoordinates($v_0, $p4 + $p3);
         return true;
     },
-    $4b_0: function SP_UI_PopoutMenu$$4b_0($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9) {
+    $4b_0: function SP_UI_PopoutRights$$4b_0($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9) {
         var $v_0 = $p5 + $p0;
         var $v_1 = $p9 + $p6;
 
@@ -16010,10 +16010,10 @@ SP.UI.PopoutMenu.prototype = {
         if ($v_2 < $p8) {
             return false;
         }
-        this.positionMenuWithCoordinates($p5, $v_2);
+        this.positionRightsWithCoordinates($p5, $v_2);
         return true;
     },
-    $3M_0: function SP_UI_PopoutMenu$$3M_0($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9) {
+    $3M_0: function SP_UI_PopoutRights$$3M_0($p0, $p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9) {
         var $v_0 = $p5 + $p0;
         var $v_1 = $p9 + $p6;
 
@@ -16026,26 +16026,26 @@ SP.UI.PopoutMenu.prototype = {
         if ($v_2 > $v_3) {
             return false;
         }
-        this.positionMenuWithCoordinates($p5, $p4 + $p3);
+        this.positionRightsWithCoordinates($p5, $p4 + $p3);
         return true;
     },
-    onMenuMouseOver: function SP_UI_PopoutMenu$onMenuMouseOver(evt) {
+    onRightsMouseOver: function SP_UI_PopoutRights$onRightsMouseOver(evt) {
         window.clearTimeout(this.$r_0);
     },
-    onMenuMouseOut: function SP_UI_PopoutMenu$onMenuMouseOut(evt) {
+    onRightsMouseOut: function SP_UI_PopoutRights$onRightsMouseOut(evt) {
         window.clearTimeout(this.$r_0);
-        this.$r_0 = window.setTimeout(this.$$d_closeMenu, 1500);
+        this.$r_0 = window.setTimeout(this.$$d_closeRights, 1500);
     },
-    _menuLaunched: false,
-    get_menuLaunched: function SP_UI_PopoutMenu$get_menuLaunched() {
-        return this._menuLaunched;
+    _RightsLaunched: false,
+    get_RightsLaunched: function SP_UI_PopoutRights$get_RightsLaunched() {
+        return this._RightsLaunched;
     },
-    set_menuLaunched: function SP_UI_PopoutMenu$set_menuLaunched(value) {
-        this._menuLaunched = value;
+    set_RightsLaunched: function SP_UI_PopoutRights$set_RightsLaunched(value) {
+        this._RightsLaunched = value;
         return value;
     },
     _backFrame: null,
-    get_backFrame: function SP_UI_PopoutMenu$get_backFrame() {
+    get_backFrame: function SP_UI_PopoutRights$get_backFrame() {
         if (!this._backFrame) {
             this._backFrame = document.createElement('iframe');
             this._backFrame.style.zIndex = 1001;
@@ -16054,10 +16054,10 @@ SP.UI.PopoutMenu.prototype = {
         }
         return this._backFrame;
     },
-    get_defaultLaunchRight: function SP_UI_PopoutMenu$get_defaultLaunchRight() {
+    get_defaultLaunchRight: function SP_UI_PopoutRights$get_defaultLaunchRight() {
         return this.$3W_0 === 'ltr';
     },
-    dispose: function SP_UI_PopoutMenu$dispose() {
+    dispose: function SP_UI_PopoutRights$dispose() {
         $removeHandler(this.$1_0, 'mouseout', this.$1l_0);
         $removeHandler(this.$1_0, 'mouseover', this.$1m_0);
         $removeHandler(this.$1_0, 'click', this.$1k_0);
@@ -16135,17 +16135,17 @@ SP.UI.Status.removeStatus = function SP_UI_Status$removeStatus(sid) {
 SP.UI.Status.removeAllStatus = function SP_UI_Status$removeAllStatus(hide) {
     removeAllStatus(hide);
 };
-SP.UI.Menu = function SP_UI_Menu($p0) {
+SP.UI.Rights = function SP_UI_Rights($p0) {
     this.$J_0 = $p0;
 };
-SP.UI.Menu.create = function SP_UI_Menu$create(id) {
-    var $v_0 = CMenu(id);
+SP.UI.Rights.create = function SP_UI_Rights$create(id) {
+    var $v_0 = CRights(id);
 
-    return new SP.UI.Menu($v_0);
+    return new SP.UI.Rights($v_0);
 };
-SP.UI.Menu.prototype = {
+SP.UI.Rights.prototype = {
     $J_0: null,
-    addMenuItem: function SP_UI_Menu$addMenuItem(text, actionScriptText, imageSourceUrl, imageAlternateText, sequenceNumber, description, id) {
+    addRightsItem: function SP_UI_Rights$addRightsItem(text, actionScriptText, imageSourceUrl, imageAlternateText, sequenceNumber, description, id) {
         var $v_0 = CAMOpt(this.$J_0, text, actionScriptText, imageSourceUrl, imageAlternateText, sequenceNumber, description);
 
         if (id) {
@@ -16153,47 +16153,47 @@ SP.UI.Menu.prototype = {
         }
         return $v_0;
     },
-    addSeparator: function SP_UI_Menu$addSeparator() {
+    addSeparator: function SP_UI_Rights$addSeparator() {
         CAMSep(this.$J_0);
     },
-    addSubMenu: function SP_UI_Menu$addSubMenu(text, imageSourceUrl, imageAlternateText, sequenceNumber, description, id) {
+    addSubRights: function SP_UI_Rights$addSubRights(text, imageSourceUrl, imageAlternateText, sequenceNumber, description, id) {
         var $v_0 = CASubM(this.$J_0, text, imageSourceUrl, imageAlternateText, sequenceNumber, description);
 
         if (id) {
             $v_0.id = id;
         }
-        return new SP.UI.Menu($v_0);
+        return new SP.UI.Rights($v_0);
     },
-    show: function SP_UI_Menu$show(relativeElement, forceRefresh, flipTopLevelMenu, yOffset) {
-        OMenu(this.$J_0, relativeElement, forceRefresh, flipTopLevelMenu, yOffset);
+    show: function SP_UI_Rights$show(relativeElement, forceRefresh, flipTopLevelRights, yOffset) {
+        ORights(this.$J_0, relativeElement, forceRefresh, flipTopLevelRights, yOffset);
     },
-    showFilterMenu: function SP_UI_Menu$showFilterMenu(relativeElement, forceRefresh, flipTopLevelMenu, yOffset, fShowClose, fShowCheckBoxes) {
-        OMenu(this.$J_0, relativeElement, forceRefresh, flipTopLevelMenu, yOffset, fShowClose, fShowCheckBoxes);
+    showFilterRights: function SP_UI_Rights$showFilterRights(relativeElement, forceRefresh, flipTopLevelRights, yOffset, fShowClose, fShowCheckBoxes) {
+        ORights(this.$J_0, relativeElement, forceRefresh, flipTopLevelRights, yOffset, fShowClose, fShowCheckBoxes);
     },
-    hideIcons: function SP_UI_Menu$hideIcons() {
+    hideIcons: function SP_UI_Rights$hideIcons() {
         this.$J_0.setAttribute('hideicons', 'true');
     },
-    showIcons: function SP_UI_Menu$showIcons() {
+    showIcons: function SP_UI_Rights$showIcons() {
         this.$J_0.setAttribute('hideicons', 'false');
     }
 };
-SP.UI.MenuTest = function SP_UI_MenuTest() {
+SP.UI.RightsTest = function SP_UI_RightsTest() {
 };
-SP.UI.MenuTest.setup = function SP_UI_MenuTest$setup(relativeElement) {
-    SP.UI.MenuTest.$g = relativeElement;
-    relativeElement.attachEvent('onclick', SP.UI.MenuTest.$52);
+SP.UI.RightsTest.setup = function SP_UI_RightsTest$setup(relativeElement) {
+    SP.UI.RightsTest.$g = relativeElement;
+    relativeElement.attachEvent('onclick', SP.UI.RightsTest.$52);
 };
-SP.UI.MenuTest.$52 = function SP_UI_MenuTest$$52() {
-    var $v_0 = SP.UI.MenuTest.$g._menu;
+SP.UI.RightsTest.$52 = function SP_UI_RightsTest$$52() {
+    var $v_0 = SP.UI.RightsTest.$g._Rights;
 
     if (!$v_0) {
-        $v_0 = SP.UI.Menu.create(SP.UI.MenuTest.$g.id + '_menu');
-        SP.UI.MenuTest.$g._menu = $v_0;
-        $v_0.addMenuItem('Option 1', null, null, null, 0, null, null);
+        $v_0 = SP.UI.Rights.create(SP.UI.RightsTest.$g.id + '_Rights');
+        SP.UI.RightsTest.$g._Rights = $v_0;
+        $v_0.addRightsItem('Option 1', null, null, null, 0, null, null);
         $v_0.addSeparator();
-        $v_0.addMenuItem('Option 2', 'window.location=\'http://www.microsoft.com\';', null, null, 0, null, null);
+        $v_0.addRightsItem('Option 2', 'window.location=\'http://www.microsoft.com\';', null, null, 0, null, null);
     }
-    $v_0.show(SP.UI.MenuTest.$g, false, false, -1);
+    $v_0.show(SP.UI.RightsTest.$g, false, false, -1);
 };
 Type.registerNamespace('SP.Utilities');
 SP.Utilities.DateTimeFormat = function() {
@@ -16763,7 +16763,7 @@ Type.registerNamespace('SP.Application.UI');
 SP.Application.UI.DefaultFormsInformationRequestor = function() {
 };
 SP.Application.UI.DefaultFormsInformationRequestor.registerInterface('SP.Application.UI.DefaultFormsInformationRequestor');
-SP.Application.UI.ViewSelectorMenuOptions = function SP_Application_UI_ViewSelectorMenuOptions() {
+SP.Application.UI.ViewSelectorRightsOptions = function SP_Application_UI_ViewSelectorRightsOptions() {
 };
 SP.Application.UI.ViewInformationRequestor = function() {
 };
@@ -16782,17 +16782,17 @@ SP.Application.UI.DefaultFormsInformation.prototype = {
     DefaultForms: null,
     OtherForms: null
 };
-SP.Application.UI.DefaultFormsMenuBuilder = function SP_Application_UI_DefaultFormsMenuBuilder($p0) {
+SP.Application.UI.DefaultFormsRightsBuilder = function SP_Application_UI_DefaultFormsRightsBuilder($p0) {
     this.$$d_$5C_0 = Function.createDelegate(this, this.$5C_0);
     this.$$d_$5D_0 = Function.createDelegate(this, this.$5D_0);
     this.$I_0 = $p0;
 };
-SP.Application.UI.DefaultFormsMenuBuilder.getDefaultFormsInformation = function SP_Application_UI_DefaultFormsMenuBuilder$getDefaultFormsInformation(requestor, listId) {
-    var $v_0 = new SP.Application.UI.DefaultFormsMenuBuilder(listId);
+SP.Application.UI.DefaultFormsRightsBuilder.getDefaultFormsInformation = function SP_Application_UI_DefaultFormsRightsBuilder$getDefaultFormsInformation(requestor, listId) {
+    var $v_0 = new SP.Application.UI.DefaultFormsRightsBuilder(listId);
 
     $v_0.$3e_0(requestor);
 };
-SP.Application.UI.DefaultFormsMenuBuilder.$1s = function SP_Application_UI_DefaultFormsMenuBuilder$$1s($p0) {
+SP.Application.UI.DefaultFormsRightsBuilder.$1s = function SP_Application_UI_DefaultFormsRightsBuilder$$1s($p0) {
     if (!SP.ScriptUtility.isNullOrUndefined($p0)) {
         if ($p0.startsWith('~list/')) {
             $p0 = $p0.substr(6);
@@ -16803,7 +16803,7 @@ SP.Application.UI.DefaultFormsMenuBuilder.$1s = function SP_Application_UI_Defau
     }
     return $p0;
 };
-SP.Application.UI.DefaultFormsMenuBuilder.$4t = function SP_Application_UI_DefaultFormsMenuBuilder$$4t($p0, $p1) {
+SP.Application.UI.DefaultFormsRightsBuilder.$4t = function SP_Application_UI_DefaultFormsRightsBuilder$$4t($p0, $p1) {
     var $v_0 = new SP.Application.UI.DefaultFormsInformation();
 
     $v_0.DefaultForms = new SP.Application.UI.FormsInfo();
@@ -16820,19 +16820,19 @@ SP.Application.UI.DefaultFormsMenuBuilder.$4t = function SP_Application_UI_Defau
         var $v_2 = new SP.Application.UI.FormsInfo();
 
         $v_2.ContentTypeName = $v_1.get_name();
-        $v_2.NewFormUrl = SP.Application.UI.DefaultFormsMenuBuilder.$1s($v_1.get_newFormUrl());
-        $v_2.DisplayFormUrl = SP.Application.UI.DefaultFormsMenuBuilder.$1s($v_1.get_displayFormUrl());
-        $v_2.EditFormUrl = SP.Application.UI.DefaultFormsMenuBuilder.$1s($v_1.get_editFormUrl());
+        $v_2.NewFormUrl = SP.Application.UI.DefaultFormsRightsBuilder.$1s($v_1.get_newFormUrl());
+        $v_2.DisplayFormUrl = SP.Application.UI.DefaultFormsRightsBuilder.$1s($v_1.get_displayFormUrl());
+        $v_2.EditFormUrl = SP.Application.UI.DefaultFormsRightsBuilder.$1s($v_1.get_editFormUrl());
         Array.add($v_0.OtherForms, $v_2);
     }
     return $v_0;
 };
-SP.Application.UI.DefaultFormsMenuBuilder.prototype = {
+SP.Application.UI.DefaultFormsRightsBuilder.prototype = {
     $I_0: null,
     $H_0: null,
     $2D_0: null,
     $9_0: null,
-    $5F_0: function SP_Application_UI_DefaultFormsMenuBuilder$$5F_0() {
+    $5F_0: function SP_Application_UI_DefaultFormsRightsBuilder$$5F_0() {
         var $v_0 = SP.ClientContext.get_current();
         var $v_1 = $v_0.get_web();
 
@@ -16844,21 +16844,21 @@ SP.Application.UI.DefaultFormsMenuBuilder.prototype = {
         $v_2.retrieve(['Name', 'DisplayFormUrl', 'NewFormUrl', 'EditFormUrl']);
         return $v_0;
     },
-    $3e_0: function SP_Application_UI_DefaultFormsMenuBuilder$$3e_0($p0) {
+    $3e_0: function SP_Application_UI_DefaultFormsRightsBuilder$$3e_0($p0) {
         var $v_0 = this.$5F_0();
 
         this.$9_0 = $p0;
         $v_0.executeQueryAsync(this.$$d_$5D_0, this.$$d_$5C_0);
     },
-    $5D_0: function SP_Application_UI_DefaultFormsMenuBuilder$$5D_0($p0, $p1) {
+    $5D_0: function SP_Application_UI_DefaultFormsRightsBuilder$$5D_0($p0, $p1) {
         if (!SP.ScriptUtility.isNullOrUndefined(this.$9_0)) {
-            var $v_0 = SP.Application.UI.DefaultFormsMenuBuilder.$4t(this.$H_0, this.$2D_0);
+            var $v_0 = SP.Application.UI.DefaultFormsRightsBuilder.$4t(this.$H_0, this.$2D_0);
 
             this.$9_0.onDefaultFormsInformationRetrieveSuccess($v_0);
         }
         this.$9_0 = null;
     },
-    $5C_0: function SP_Application_UI_DefaultFormsMenuBuilder$$5C_0($p0, $p1) {
+    $5C_0: function SP_Application_UI_DefaultFormsRightsBuilder$$5C_0($p0, $p1) {
         if ($p1 && !SP.ScriptUtility.isNullOrUndefined($p1.get_message())) { }
         if (!SP.ScriptUtility.isNullOrUndefined(this.$9_0)) {
             this.$9_0.onDefaultFormsInformationRetrieveFailure();
@@ -16881,10 +16881,10 @@ SP.Application.UI.ViewSelectorGroups.prototype = {
     DefaultView: null,
     ViewCreation: null
 };
-SP.Application.UI.ViewSelectorMenuItem = function SP_Application_UI_ViewSelectorMenuItem() {
+SP.Application.UI.ViewSelectorRightsItem = function SP_Application_UI_ViewSelectorRightsItem() {
     this.Sequence = Number.MAX_VALUE;
 };
-SP.Application.UI.ViewSelectorMenuItem.prototype = {
+SP.Application.UI.ViewSelectorRightsItem.prototype = {
     Text: '',
     ActionScriptText: '',
     NavigateUrl: '',
@@ -16894,17 +16894,17 @@ SP.Application.UI.ViewSelectorMenuItem.prototype = {
     ItemType: '',
     GroupId: 0
 };
-SP.Application.UI.ViewSelectorSubMenu = function SP_Application_UI_ViewSelectorSubMenu() {
+SP.Application.UI.ViewSelectorSubRights = function SP_Application_UI_ViewSelectorSubRights() {
 };
-SP.Application.UI.ViewSelectorSubMenu.prototype = {
+SP.Application.UI.ViewSelectorSubRights.prototype = {
     Text: '',
     ImageSourceUrl: '',
-    SubMenuItems: null
+    SubRightsItems: null
 };
-SP.Application.UI.ServerMenus = function SP_Application_UI_ServerMenus() {
-    this.MenuItems = [];
+SP.Application.UI.ServerRightss = function SP_Application_UI_ServerRightss() {
+    this.RightsItems = [];
 };
-SP.Application.UI.ViewSelectorMenuBuilder = function SP_Application_UI_ViewSelectorMenuBuilder($p0, $p1) {
+SP.Application.UI.ViewSelectorRightsBuilder = function SP_Application_UI_ViewSelectorRightsBuilder($p0, $p1) {
     this.$$d_$4q_0 = Function.createDelegate(this, this.$4q_0);
     this.$$d_$4r_0 = Function.createDelegate(this, this.$4r_0);
     this.$U_0 = $p0;
@@ -16913,30 +16913,30 @@ SP.Application.UI.ViewSelectorMenuBuilder = function SP_Application_UI_ViewSelec
     this.$4V_0 = $p1.viewParameters;
     this.$1I_0 = $p1;
 };
-SP.Application.UI.ViewSelectorMenuBuilder.get_filterMenuItemsCallback = function SP_Application_UI_ViewSelectorMenuBuilder$get_filterMenuItemsCallback() {
-    return SP.Application.UI.ViewSelectorMenuBuilder.$n;
+SP.Application.UI.ViewSelectorRightsBuilder.get_filterRightsItemsCallback = function SP_Application_UI_ViewSelectorRightsBuilder$get_filterRightsItemsCallback() {
+    return SP.Application.UI.ViewSelectorRightsBuilder.$n;
 };
-SP.Application.UI.ViewSelectorMenuBuilder.set_filterMenuItemsCallback = function SP_Application_UI_ViewSelectorMenuBuilder$set_filterMenuItemsCallback(value) {
-    SP.Application.UI.ViewSelectorMenuBuilder.$n = value;
+SP.Application.UI.ViewSelectorRightsBuilder.set_filterRightsItemsCallback = function SP_Application_UI_ViewSelectorRightsBuilder$set_filterRightsItemsCallback(value) {
+    SP.Application.UI.ViewSelectorRightsBuilder.$n = value;
     return value;
 };
-SP.Application.UI.ViewSelectorMenuBuilder.showMenu = function SP_Application_UI_ViewSelectorMenuBuilder$showMenu(elem, options) {
-    var $v_0 = elem._menu;
+SP.Application.UI.ViewSelectorRightsBuilder.showRights = function SP_Application_UI_ViewSelectorRightsBuilder$showRights(elem, options) {
+    var $v_0 = elem._Rights;
 
     if ($v_0) {
         $v_0.show(elem, false, false, -1);
         return;
     }
-    var $v_1 = new SP.Application.UI.ViewSelectorMenuBuilder(elem, options);
+    var $v_1 = new SP.Application.UI.ViewSelectorRightsBuilder(elem, options);
 
     $v_1.$4i_0();
 };
-SP.Application.UI.ViewSelectorMenuBuilder.getViewInformation = function SP_Application_UI_ViewSelectorMenuBuilder$getViewInformation(requestor, options) {
-    var $v_0 = new SP.Application.UI.ViewSelectorMenuBuilder(null, options);
+SP.Application.UI.ViewSelectorRightsBuilder.getViewInformation = function SP_Application_UI_ViewSelectorRightsBuilder$getViewInformation(requestor, options) {
+    var $v_0 = new SP.Application.UI.ViewSelectorRightsBuilder(null, options);
 
     $v_0.$3e_0(requestor);
 };
-SP.Application.UI.ViewSelectorMenuBuilder.prototype = {
+SP.Application.UI.ViewSelectorRightsBuilder.prototype = {
     $U_0: null,
     $I_0: null,
     $3B_0: null,
@@ -16944,11 +16944,11 @@ SP.Application.UI.ViewSelectorMenuBuilder.prototype = {
     $4V_0: null,
     $9_0: null,
     $12_0: false,
-    $3b_0: function SP_Application_UI_ViewSelectorMenuBuilder$$3b_0($p0, $p1) {
+    $3b_0: function SP_Application_UI_ViewSelectorRightsBuilder$$3b_0($p0, $p1) {
         var $v_0 = SP.PageContextInfo.get_webServerRelativeUrl();
         var $v_1 = new SP.Utilities.UrlBuilder($v_0);
 
-        $v_1.combinePath('_layouts/' + SP.OfficeVersion.majorVersion + '/vsmenu.aspx');
+        $v_1.combinePath('_layouts/' + SP.OfficeVersion.majorVersion + '/vsRights.aspx');
         $v_1.addKeyValueQueryString('List', this.$I_0.toString('B'));
         $v_1.addKeyValueQueryString('View', this.$3B_0.toString('B'));
         $v_1.addKeyValueQueryString('Source', window.location.href);
@@ -16957,30 +16957,30 @@ SP.Application.UI.ViewSelectorMenuBuilder.prototype = {
         $v_2 += '&' + this.$1I_0.viewParameters;
         SP.PageRequest.doPost($v_2, '', 'application/json', $p0, $p1);
     },
-    $4i_0: function SP_Application_UI_ViewSelectorMenuBuilder$$4i_0() {
+    $4i_0: function SP_Application_UI_ViewSelectorRightsBuilder$$4i_0() {
         this.$12_0 = true;
         this.$3b_0(this.$$d_$4r_0, this.$$d_$4q_0);
     },
-    $3e_0: function SP_Application_UI_ViewSelectorMenuBuilder$$3e_0($p0) {
+    $3e_0: function SP_Application_UI_ViewSelectorRightsBuilder$$3e_0($p0) {
         this.$12_0 = false;
         this.$9_0 = $p0;
         this.$3b_0(this.$$d_$4r_0, this.$$d_$4q_0);
     },
-    $4r_0: function SP_Application_UI_ViewSelectorMenuBuilder$$4r_0($p0, $p1) {
-        var $v_0 = new SP.Application.UI.ServerMenus();
+    $4r_0: function SP_Application_UI_ViewSelectorRightsBuilder$$4r_0($p0, $p1) {
+        var $v_0 = new SP.Application.UI.ServerRightss();
 
-        $v_0.MenuItems = eval(($p1.get_executor()).get_responseData());
-        if (SP.Application.UI.ViewSelectorMenuBuilder.$n) {
-            $v_0.MenuItems = SP.Application.UI.ViewSelectorMenuBuilder.$n($v_0.MenuItems);
+        $v_0.RightsItems = eval(($p1.get_executor()).get_responseData());
+        if (SP.Application.UI.ViewSelectorRightsBuilder.$n) {
+            $v_0.RightsItems = SP.Application.UI.ViewSelectorRightsBuilder.$n($v_0.RightsItems);
         }
         if (this.$9_0) {
-            var $v_1 = this.$4l_0($v_0.MenuItems);
+            var $v_1 = this.$4l_0($v_0.RightsItems);
 
             this.$9_0.onViewInformationReturned($v_1);
             this.$9_0 = null;
         }
         if (this.$U_0 && this.$12_0) {
-            this.$4k_0(this.$U_0, $v_0.MenuItems);
+            this.$4k_0(this.$U_0, $v_0.RightsItems);
             this.$12_0 = false;
         }
         this.$U_0 = null;
@@ -16988,20 +16988,20 @@ SP.Application.UI.ViewSelectorMenuBuilder.prototype = {
         this.$3B_0 = null;
         this.$4V_0 = null;
     },
-    $4k_0: function SP_Application_UI_ViewSelectorMenuBuilder$$4k_0($p0, $p1) {
+    $4k_0: function SP_Application_UI_ViewSelectorRightsBuilder$$4k_0($p0, $p1) {
         var $v_0 = $p0.id;
 
         if (SP.ScriptUtility.isNullOrEmptyString($v_0)) {
             $v_0 = SP.UI.UIUtility.generateRandomElementId();
         }
-        $v_0 = $v_0 + '_menu';
-        var $v_1 = SP.UI.Menu.create($v_0);
+        $v_0 = $v_0 + '_Rights';
+        var $v_1 = SP.UI.Rights.create($v_0);
 
         this.$4g_0($v_1, $p1);
-        this.$U_0._menu = $v_1;
+        this.$U_0._Rights = $v_1;
         $v_1.show(this.$U_0, false, false, -1);
     },
-    $4g_0: function SP_Application_UI_ViewSelectorMenuBuilder$$4g_0($p0, $p1) {
+    $4g_0: function SP_Application_UI_ViewSelectorRightsBuilder$$4g_0($p0, $p1) {
         var $v_0 = null;
         var $v_1 = false;
         var $v_2 = SP.Application.UI.BrowserUtility.$51();
@@ -17010,13 +17010,13 @@ SP.Application.UI.ViewSelectorMenuBuilder.prototype = {
             var $v_4 = $p1[$v_3];
             var $v_5 = $v_4.ItemType;
 
-            if ($v_5 === 'SubMenu') {
+            if ($v_5 === 'SubRights') {
                 $v_1 = true;
                 if (!$v_2) {
-                    $v_0 = $p0.addSubMenu($v_4.Text, $v_4.ImageSourceUrl, null, $v_4.Sequence, $v_4.Description, $v_4.Id);
+                    $v_0 = $p0.addSubRights($v_4.Text, $v_4.ImageSourceUrl, null, $v_4.Sequence, $v_4.Description, $v_4.Id);
                 }
             }
-            else if ($v_5 === 'MenuItem') {
+            else if ($v_5 === 'RightsItem') {
                 if ($v_1) {
                     if (!$v_2) {
                         this.$3X_0($v_0, $v_4);
@@ -17026,10 +17026,10 @@ SP.Application.UI.ViewSelectorMenuBuilder.prototype = {
                     this.$3X_0($p0, $v_4);
                 }
             }
-            else if ($v_5 === 'SubMenuEnd') {
+            else if ($v_5 === 'SubRightsEnd') {
                 $v_1 = false;
             }
-            else if ($v_5 === 'MenuSeparator') {
+            else if ($v_5 === 'RightsSeparator') {
                 if ($v_1) {
                     if (!$v_2) {
                         $v_0.addSeparator();
@@ -17041,10 +17041,10 @@ SP.Application.UI.ViewSelectorMenuBuilder.prototype = {
             }
         }
     },
-    $3X_0: function SP_Application_UI_ViewSelectorMenuBuilder$$3X_0($p0, $p1) {
-        $p0.addMenuItem($p1.Text, $p1.ActionScriptText, $p1.ImageSourceUrl, null, $p1.Sequence, $p1.Description, $p1.Id);
+    $3X_0: function SP_Application_UI_ViewSelectorRightsBuilder$$3X_0($p0, $p1) {
+        $p0.addRightsItem($p1.Text, $p1.ActionScriptText, $p1.ImageSourceUrl, null, $p1.Sequence, $p1.Description, $p1.Id);
     },
-    $4l_0: function SP_Application_UI_ViewSelectorMenuBuilder$$4l_0($p0) {
+    $4l_0: function SP_Application_UI_ViewSelectorRightsBuilder$$4l_0($p0) {
         var $v_0 = new SP.Application.UI.ViewSelectorGroups();
 
         $v_0.ModeratedViews = [];
@@ -17061,12 +17061,12 @@ SP.Application.UI.ViewSelectorMenuBuilder.prototype = {
             var $v_5 = $v_4.ItemType;
             var $v_6 = $v_4.GroupId;
 
-            if ($v_5 === 'SubMenu') {
+            if ($v_5 === 'SubRights') {
                 $v_2 = true;
-                $v_1 = new SP.Application.UI.ViewSelectorSubMenu();
+                $v_1 = new SP.Application.UI.ViewSelectorSubRights();
                 $v_1.Text = $v_4.Text;
                 $v_1.ImageSourceUrl = $v_4.ImageSourceUrl;
-                $v_1.SubMenuItems = [];
+                $v_1.SubRightsItems = [];
                 switch ($v_6) {
                 case 300:
                     Array.add($v_0.PublicViews, $v_1);
@@ -17085,15 +17085,15 @@ SP.Application.UI.ViewSelectorMenuBuilder.prototype = {
                     break;
                 }
             }
-            else if ($v_5 === 'SubMenuEnd') {
+            else if ($v_5 === 'SubRightsEnd') {
                 $v_2 = false;
             }
-            else if ($v_5 === 'MenuSeparator') {
+            else if ($v_5 === 'RightsSeparator') {
                 continue;
             }
             else {
                 if ($v_2) {
-                    Array.add($v_1.SubMenuItems, $v_4);
+                    Array.add($v_1.SubRightsItems, $v_4);
                 }
                 else {
                     switch ($v_6) {
@@ -17130,7 +17130,7 @@ SP.Application.UI.ViewSelectorMenuBuilder.prototype = {
         }
         return $v_0;
     },
-    $4q_0: function SP_Application_UI_ViewSelectorMenuBuilder$$4q_0($p0, $p1) {
+    $4q_0: function SP_Application_UI_ViewSelectorRightsBuilder$$4q_0($p0, $p1) {
     }
 };
 SP.Application.UI.MoreColorsPicker = function SP_Application_UI_MoreColorsPicker(e) {
@@ -20821,25 +20821,25 @@ SP.WebResponseInfo.registerClass('SP.WebResponseInfo', SP.ClientValueObject);
 SP.WebTemplate.registerClass('SP.WebTemplate', SP.ClientObject);
 SP.WebTemplatePropertyNames.registerClass('SP.WebTemplatePropertyNames');
 SP.WebTemplateCollection.registerClass('SP.WebTemplateCollection', SP.ClientObjectCollection);
-SP.UI.PopoutMenu.registerClass('SP.UI.PopoutMenu', null, Sys.IDisposable);
+SP.UI.PopoutRights.registerClass('SP.UI.PopoutRights', null, Sys.IDisposable);
 SP.UI.AttractModeControl.registerClass('SP.UI.AttractModeControl', Sys.UI.Control);
 SP.UI.Status.registerClass('SP.UI.Status');
-SP.UI.Menu.registerClass('SP.UI.Menu');
-SP.UI.MenuTest.registerClass('SP.UI.MenuTest');
+SP.UI.Rights.registerClass('SP.UI.Rights');
+SP.UI.RightsTest.registerClass('SP.UI.RightsTest');
 SP.Utilities.Utility.registerClass('SP.Utilities.Utility');
 SP.Utilities.EmailProperties.registerClass('SP.Utilities.EmailProperties', SP.ClientValueObject);
 SP.Utilities.PrincipalInfo.registerClass('SP.Utilities.PrincipalInfo', SP.ClientValueObject);
 SP.Utilities.WikiPageCreationInformation.registerClass('SP.Utilities.WikiPageCreationInformation', SP.ClientValueObject);
-SP.Application.UI.ViewSelectorMenuOptions.registerClass('SP.Application.UI.ViewSelectorMenuOptions');
+SP.Application.UI.ViewSelectorRightsOptions.registerClass('SP.Application.UI.ViewSelectorRightsOptions');
 SP.Application.UI.FormsInfo.registerClass('SP.Application.UI.FormsInfo');
 SP.Application.UI.DefaultFormsInformation.registerClass('SP.Application.UI.DefaultFormsInformation');
-SP.Application.UI.DefaultFormsMenuBuilder.registerClass('SP.Application.UI.DefaultFormsMenuBuilder');
+SP.Application.UI.DefaultFormsRightsBuilder.registerClass('SP.Application.UI.DefaultFormsRightsBuilder');
 SP.Application.UI.BrowserUtility.registerClass('SP.Application.UI.BrowserUtility');
 SP.Application.UI.ViewSelectorGroups.registerClass('SP.Application.UI.ViewSelectorGroups');
-SP.Application.UI.ViewSelectorMenuItem.registerClass('SP.Application.UI.ViewSelectorMenuItem');
-SP.Application.UI.ViewSelectorSubMenu.registerClass('SP.Application.UI.ViewSelectorSubMenu');
-SP.Application.UI.ServerMenus.registerClass('SP.Application.UI.ServerMenus');
-SP.Application.UI.ViewSelectorMenuBuilder.registerClass('SP.Application.UI.ViewSelectorMenuBuilder');
+SP.Application.UI.ViewSelectorRightsItem.registerClass('SP.Application.UI.ViewSelectorRightsItem');
+SP.Application.UI.ViewSelectorSubRights.registerClass('SP.Application.UI.ViewSelectorSubRights');
+SP.Application.UI.ServerRightss.registerClass('SP.Application.UI.ServerRightss');
+SP.Application.UI.ViewSelectorRightsBuilder.registerClass('SP.Application.UI.ViewSelectorRightsBuilder');
 SP.Application.UI.MoreColorsPicker.registerClass('SP.Application.UI.MoreColorsPicker', Sys.UI.Control);
 SP.Application.UI.MappedColor.registerClass('SP.Application.UI.MappedColor');
 SP.Application.UI.MoreColorsPage.registerClass('SP.Application.UI.MoreColorsPage', Sys.UI.Control);
@@ -21540,9 +21540,9 @@ function sp_initialize() {
     SP.WebTemplatePropertyNames.lcid = 'Lcid';
     SP.WebTemplatePropertyNames.name = 'Name';
     SP.WebTemplatePropertyNames.title = 'Title';
-    SP.UI.PopoutMenu.$L = false;
-    SP.UI.PopoutMenu.$1h = false;
-    SP.UI.PopoutMenu._activePopoutMenuInstance = null;
+    SP.UI.PopoutRights.$L = false;
+    SP.UI.PopoutRights.$1h = false;
+    SP.UI.PopoutRights._activePopoutRightsInstance = null;
     SP.UI.AttractModeControl.defaultAttractModeIcon = '256_icdocset.gif';
     SP.UI.AttractModeControl.cssAttractMode = 'ms-attractMode';
     SP.UI.AttractModeControl.cssAttractModeBackground = 'ms-attractMode-Background';
@@ -21550,10 +21550,10 @@ function sp_initialize() {
     SP.UI.AttractModeControl.cssAttractModeWrapper = 'ms-attractMode-Wrapper';
     SP.UI.AttractModeControl.cssAttractModeIcon = 'ms-attractMode-Icon';
     SP.UI.AttractModeControl.cssAttractModeText = 'ms-attractMode-Text';
-    SP.UI.MenuTest.$g = null;
+    SP.UI.RightsTest.$g = null;
     SP.Utilities.Utility.layoutS_LATESTVERSION_RELATIVE_URL = '_layouts/' + SP.OfficeVersion.majorVersion + '/';
     SP.Utilities.Utility.layoutS_LATESTVERSION_URL = '/' + SP.Utilities.Utility.layoutS_LATESTVERSION_RELATIVE_URL;
-    SP.Application.UI.ViewSelectorMenuBuilder.$n = null;
+    SP.Application.UI.ViewSelectorRightsBuilder.$n = null;
     SP.Application.UI.MoreColorsPicker.$i = null;
     SP.Application.UI.MappedColor.$P = null;
     SP.Application.UI.MappedColor.$y = null;

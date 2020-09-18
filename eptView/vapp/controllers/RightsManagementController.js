@@ -78,7 +78,7 @@ ETradersApp.controller("RightsManagementController", ['$timeout', 'GlobalVariabl
                     $scope.gridOptions.data = null;
                     toaster.pop('success', "", "Role Rights Detail Saved Successfully", 5000, 'trustedHtml');
                     //$scope.RedirectDashboard();
-                    $scope.GetDataForDashboard();
+                    //$scope.GetDataForDashboard();
                     
                 });
 
@@ -171,7 +171,7 @@ ETradersApp.controller("RightsManagementController", ['$timeout', 'GlobalVariabl
         };
         $scope.GetDataForDashboard = function () {
 
-            $scope.RightsManagementList = [];
+            $scope.RightsManagementList = null;
             $scope.gridOptions.data = null;
 
             var roleName = $filter('filter')($scope.EmployeeRolesList, { EmpRoleId: $scope.MainRoleId }, true)[0].RoleName;

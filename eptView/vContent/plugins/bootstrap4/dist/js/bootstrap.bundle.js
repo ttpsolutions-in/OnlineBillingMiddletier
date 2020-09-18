@@ -3877,16 +3877,16 @@ var Dropdown = function ($$$1) {
     DROPUP: 'dropup',
     DROPRIGHT: 'dropright',
     DROPLEFT: 'dropleft',
-    MENURIGHT: 'dropdown-menu-right',
-    MENULEFT: 'dropdown-menu-left',
+    RightsRIGHT: 'dropdown-Rights-right',
+    RightsLEFT: 'dropdown-Rights-left',
     POSITION_STATIC: 'position-static'
   };
   var Selector = {
     DATA_TOGGLE: '[data-toggle="dropdown"]',
     FORM_CHILD: '.dropdown form',
-    MENU: '.dropdown-menu',
+    Rights: '.dropdown-Rights',
     NAVBAR_NAV: '.navbar-nav',
-    VISIBLE_ITEMS: '.dropdown-menu .dropdown-item:not(.disabled)'
+    VISIBLE_ITEMS: '.dropdown-Rights .dropdown-item:not(.disabled)'
   };
   var AttachmentMap = {
     TOP: 'top-start',
@@ -3922,7 +3922,7 @@ var Dropdown = function ($$$1) {
       this._element = element;
       this._popper = null;
       this._config = this._getConfig(config);
-      this._menu = this._getMenuElement();
+      this._Rights = this._getRightsElement();
       this._inNavbar = this._detectNavbar();
 
       this._addEventListeners();
@@ -3939,9 +3939,9 @@ var Dropdown = function ($$$1) {
 
       var parent = Dropdown._getParentFromElement(this._element);
 
-      var isActive = $$$1(this._menu).hasClass(ClassName.SHOW);
+      var isActive = $$$1(this._Rights).hasClass(ClassName.SHOW);
 
-      Dropdown._clearMenus();
+      Dropdown._clearRightss();
 
       if (isActive) {
         return;
@@ -3970,11 +3970,11 @@ var Dropdown = function ($$$1) {
         var element = this._element; // For dropup with alignment we use the parent as popper container
 
         if ($$$1(parent).hasClass(ClassName.DROPUP)) {
-          if ($$$1(this._menu).hasClass(ClassName.MENULEFT) || $$$1(this._menu).hasClass(ClassName.MENURIGHT)) {
+          if ($$$1(this._Rights).hasClass(ClassName.RightsLEFT) || $$$1(this._Rights).hasClass(ClassName.RightsRIGHT)) {
             element = parent;
           }
         } // If boundary is not `scrollParent`, then set position to `static`
-        // to allow the menu to "escape" the scroll parent's boundaries
+        // to allow the Rights to "escape" the scroll parent's boundaries
         // https://github.com/twbs/bootstrap/issues/24251
 
 
@@ -3982,7 +3982,7 @@ var Dropdown = function ($$$1) {
           $$$1(parent).addClass(ClassName.POSITION_STATIC);
         }
 
-        this._popper = new Popper(element, this._menu, this._getPopperConfig());
+        this._popper = new Popper(element, this._Rights, this._getPopperConfig());
       } // If this is a touch-enabled device we add extra
       // empty mouseover listeners to the body's immediate children;
       // only needed because of broken event delegation on iOS
@@ -3997,7 +3997,7 @@ var Dropdown = function ($$$1) {
 
       this._element.setAttribute('aria-expanded', true);
 
-      $$$1(this._menu).toggleClass(ClassName.SHOW);
+      $$$1(this._Rights).toggleClass(ClassName.SHOW);
       $$$1(parent).toggleClass(ClassName.SHOW).trigger($$$1.Event(Event.SHOWN, relatedTarget));
     };
 
@@ -4005,7 +4005,7 @@ var Dropdown = function ($$$1) {
       $$$1.removeData(this._element, DATA_KEY);
       $$$1(this._element).off(EVENT_KEY);
       this._element = null;
-      this._menu = null;
+      this._Rights = null;
 
       if (this._popper !== null) {
         this._popper.destroy();
@@ -4040,14 +4040,14 @@ var Dropdown = function ($$$1) {
       return config;
     };
 
-    _proto._getMenuElement = function _getMenuElement() {
-      if (!this._menu) {
+    _proto._getRightsElement = function _getRightsElement() {
+      if (!this._Rights) {
         var parent = Dropdown._getParentFromElement(this._element);
 
-        this._menu = $$$1(parent).find(Selector.MENU)[0];
+        this._Rights = $$$1(parent).find(Selector.Rights)[0];
       }
 
-      return this._menu;
+      return this._Rights;
     };
 
     _proto._getPlacement = function _getPlacement() {
@@ -4057,14 +4057,14 @@ var Dropdown = function ($$$1) {
       if ($parentDropdown.hasClass(ClassName.DROPUP)) {
         placement = AttachmentMap.TOP;
 
-        if ($$$1(this._menu).hasClass(ClassName.MENURIGHT)) {
+        if ($$$1(this._Rights).hasClass(ClassName.RightsRIGHT)) {
           placement = AttachmentMap.TOPEND;
         }
       } else if ($parentDropdown.hasClass(ClassName.DROPRIGHT)) {
         placement = AttachmentMap.RIGHT;
       } else if ($parentDropdown.hasClass(ClassName.DROPLEFT)) {
         placement = AttachmentMap.LEFT;
-      } else if ($$$1(this._menu).hasClass(ClassName.MENURIGHT)) {
+      } else if ($$$1(this._Rights).hasClass(ClassName.RightsRIGHT)) {
         placement = AttachmentMap.BOTTOMEND;
       }
 
@@ -4126,7 +4126,7 @@ var Dropdown = function ($$$1) {
       });
     };
 
-    Dropdown._clearMenus = function _clearMenus(event) {
+    Dropdown._clearRightss = function _clearRightss(event) {
       if (event && (event.which === RIGHT_MOUSE_BUTTON_WHICH || event.type === 'keyup' && event.which !== TAB_KEYCODE)) {
         return;
       }
@@ -4145,7 +4145,7 @@ var Dropdown = function ($$$1) {
           continue;
         }
 
-        var dropdownMenu = context._menu;
+        var dropdownRights = context._Rights;
 
         if (!$$$1(parent).hasClass(ClassName.SHOW)) {
           continue;
@@ -4169,7 +4169,7 @@ var Dropdown = function ($$$1) {
         }
 
         toggles[i].setAttribute('aria-expanded', 'false');
-        $$$1(dropdownMenu).removeClass(ClassName.SHOW);
+        $$$1(dropdownRights).removeClass(ClassName.SHOW);
         $$$1(parent).removeClass(ClassName.SHOW).trigger($$$1.Event(Event.HIDDEN, relatedTarget));
       }
     };
@@ -4193,8 +4193,8 @@ var Dropdown = function ($$$1) {
       //  - If space key => not a dropdown command
       //  - If key is other than escape
       //    - If key is not up or down => not a dropdown command
-      //    - If trigger inside the menu => not a dropdown command
-      if (/input|textarea/i.test(event.target.tagName) ? event.which === SPACE_KEYCODE || event.which !== ESCAPE_KEYCODE && (event.which !== ARROW_DOWN_KEYCODE && event.which !== ARROW_UP_KEYCODE || $$$1(event.target).closest(Selector.MENU).length) : !REGEXP_KEYDOWN.test(event.which)) {
+      //    - If trigger inside the Rights => not a dropdown command
+      if (/input|textarea/i.test(event.target.tagName) ? event.which === SPACE_KEYCODE || event.which !== ESCAPE_KEYCODE && (event.which !== ARROW_DOWN_KEYCODE && event.which !== ARROW_UP_KEYCODE || $$$1(event.target).closest(Selector.Rights).length) : !REGEXP_KEYDOWN.test(event.which)) {
         return;
       }
 
@@ -4269,7 +4269,7 @@ var Dropdown = function ($$$1) {
    */
 
 
-  $$$1(document).on(Event.KEYDOWN_DATA_API, Selector.DATA_TOGGLE, Dropdown._dataApiKeydownHandler).on(Event.KEYDOWN_DATA_API, Selector.MENU, Dropdown._dataApiKeydownHandler).on(Event.CLICK_DATA_API + " " + Event.KEYUP_DATA_API, Dropdown._clearMenus).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (event) {
+  $$$1(document).on(Event.KEYDOWN_DATA_API, Selector.DATA_TOGGLE, Dropdown._dataApiKeydownHandler).on(Event.KEYDOWN_DATA_API, Selector.Rights, Dropdown._dataApiKeydownHandler).on(Event.CLICK_DATA_API + " " + Event.KEYUP_DATA_API, Dropdown._clearRightss).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -5764,7 +5764,7 @@ var ScrollSpy = function ($$$1) {
   };
   var ClassName = {
     DROPDOWN_ITEM: 'dropdown-item',
-    DROPDOWN_MENU: 'dropdown-menu',
+    DROPDOWN_Rights: 'dropdown-Rights',
     ACTIVE: 'active'
   };
   var Selector = {
@@ -6067,7 +6067,7 @@ var Tab = function ($$$1) {
     CLICK_DATA_API: "click" + EVENT_KEY + DATA_API_KEY
   };
   var ClassName = {
-    DROPDOWN_MENU: 'dropdown-menu',
+    DROPDOWN_Rights: 'dropdown-Rights',
     ACTIVE: 'active',
     DISABLED: 'disabled',
     FADE: 'fade',
@@ -6080,7 +6080,7 @@ var Tab = function ($$$1) {
     ACTIVE_UL: '> li > .active',
     DATA_TOGGLE: '[data-toggle="tab"], [data-toggle="pill"], [data-toggle="list"]',
     DROPDOWN_TOGGLE: '.dropdown-toggle',
-    DROPDOWN_ACTIVE_CHILD: '> .dropdown-menu .active'
+    DROPDOWN_ACTIVE_CHILD: '> .dropdown-Rights .active'
     /**
      * ------------------------------------------------------------------------
      * Class Definition
@@ -6213,7 +6213,7 @@ var Tab = function ($$$1) {
       Util.reflow(element);
       $$$1(element).addClass(ClassName.SHOW);
 
-      if (element.parentNode && $$$1(element.parentNode).hasClass(ClassName.DROPDOWN_MENU)) {
+      if (element.parentNode && $$$1(element.parentNode).hasClass(ClassName.DROPDOWN_Rights)) {
         var dropdownElement = $$$1(element).closest(Selector.DROPDOWN)[0];
 
         if (dropdownElement) {

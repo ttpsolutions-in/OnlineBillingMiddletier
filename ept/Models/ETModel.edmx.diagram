@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="EphraimTradersModel.Category" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.EmployeeAccount" Width="1.5" PointX="18.25" PointY="13.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.EmployeeDesignation" Width="1.5" PointX="10.75" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.EmployeeDetail" Width="1.5" PointX="13" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.EmployeeDetail" Width="1.5" PointX="13.125" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.EmployeeRole" Width="1.5" PointX="10.75" PointY="13.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.EmploymentType" Width="1.5" PointX="10.75" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.Godown" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
@@ -61,6 +61,7 @@
         <AssociationConnector Association="EphraimTradersModel.FK__SupplierRe__Type__40058253" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EphraimTradersModel.RightsForAssignment" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EphraimTradersModel.SaleQuantityAmountForReport" Width="1.5" PointX="15.375" PointY="16.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -17,7 +17,7 @@ var SP2013QLAccordion = {
     
   // Initialization function
   init: function (){
-    var levels = document.querySelectorAll('.ms-core-listMenu-verticalBox li');
+    var levels = document.querySelectorAll('.ms-core-listRights-verticalBox li');
     
     if (levels.length) {
       for (var i = 0; i < levels.length; i++) {
@@ -38,7 +38,7 @@ var SP2013QLAccordion = {
       // Detect IE8 or lower to turn off animation
       if (document.all && !document.addEventListener) SP2013QLAccordion.useAnimation = false;
       
-      var switches = document.querySelectorAll('.ms-core-listMenu-verticalBox .switch');
+      var switches = document.querySelectorAll('.ms-core-listRights-verticalBox .switch');
       // Add collapse/expand event to switch nodes
       if (switches.length) {
         for (var j = 0; j < switches.length; j++) {

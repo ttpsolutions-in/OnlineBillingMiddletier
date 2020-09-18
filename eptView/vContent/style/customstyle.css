@@ -23,7 +23,7 @@ body, * {
     display: none;
 }
 
-ul#zz12_RootAspMenu > li > a.selected.ms-navedit-linkNode {
+ul#zz12_RootAspRights > li > a.selected.ms-navedit-linkNode {
     display: none;
 }
 
@@ -65,7 +65,7 @@ label.form-control {
     min-height: 34px;
 }
 
-.ms-siteactions-root > span > a.ms-core-menu-root {
+.ms-siteactions-root > span > a.ms-core-Rights-root {
     height: auto !important;
     width: auto !important;
 }
@@ -299,7 +299,7 @@ a.navbar-brand div.logo {
     padding: 30px 10px;
 }
 
-.navbar-fixed-top .dropdown-menu li a {
+.navbar-fixed-top .dropdown-Rights li a {
     padding: 10px 3px !important;
     color: #555 !important;
     font-size: 15px !important;
@@ -309,7 +309,7 @@ a.navbar-brand div.logo {
 
 
 @media (min-width: 768px) {
-    ul.nav li:hover > ul.dropdown-menu {
+    ul.nav li:hover > ul.dropdown-Rights {
         display: block;
     }
 }
@@ -653,7 +653,7 @@ button {
     display: none !important;
 }
 
-.bs-sidebar ul.root li.ms-listMenu-editLink {
+.bs-sidebar ul.root li.ms-listRights-editLink {
     display: none !important;
 }
 
@@ -806,7 +806,7 @@ text-decoration:none;
     }
 /*End color*/
 
-/* approve status sub-menu css */
+/* approve status sub-Rights css */
 .mb15 {
     margin-bottom: 15px;
 }
@@ -815,7 +815,7 @@ a {
     outline: none;
 }
 
-.sub-status-menuicon .glyphicon {
+.sub-status-Rightsicon .glyphicon {
     width: 17px;
     height: 20px;
 }
@@ -1020,7 +1020,7 @@ a {
         text-align: center;
     }
 
-    .navbar-nav .system-dropdown.open .dropdown-menu {
+    .navbar-nav .system-dropdown.open .dropdown-Rights {
         position: absolute;
         float: left;
         background-color: #fff;

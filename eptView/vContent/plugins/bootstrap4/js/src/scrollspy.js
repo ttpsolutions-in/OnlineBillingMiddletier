@@ -42,7 +42,7 @@ const ScrollSpy = (($) => {
 
   const ClassName = {
     DROPDOWN_ITEM : 'dropdown-item',
-    DROPDOWN_MENU : 'dropdown-menu',
+    DROPDOWN_Rights : 'dropdown-Rights',
     ACTIVE        : 'active'
   }
 

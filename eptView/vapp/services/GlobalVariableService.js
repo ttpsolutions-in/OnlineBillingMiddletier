@@ -27,12 +27,14 @@
             else
                 $window.location.href = LoginURl
         }
-        GlobalVariableService.getTokenInfo = function () {
+        GlobalVariableService.getTokenInfo = function (callback) {
             if ($window.sessionStorage[TokenInfoKey]) {
                 return JSON.parse($window.sessionStorage[TokenInfoKey]);
             }
             else
-                $window.location.href=LoginURl;
+                $window.location.href = LoginURl;
+            if (callback)
+                callback();
         }
         GlobalVariableService.setMaterialList = function (data) {
 
@@ -88,6 +90,8 @@
         }
         GlobalVariableService.validateUrl = function (pUrl) {
             var AllRights = GlobalVariableService.getRoleRights();
+            if (AllRights == null)
+                $window.location.href = LoginURl;
             var invalidPage = true;
             pUrl = pUrl.replace('/', '');
             for (i = 0; i < AllRights.length; i++) {                
@@ -98,7 +102,9 @@
                 }
             }
             if (invalidPage)
-                $location.path('/invalid');            
+                $location.path('/invalid');
+            
+
         }
         return GlobalVariableService;
 

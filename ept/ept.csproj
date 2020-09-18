@@ -240,6 +240,7 @@
     <Compile Include="Controllers\RightsManagementsController.cs" />
     <Compile Include="Controllers\RoleRightsViewsController.cs" />
     <Compile Include="Controllers\SaleCategoriesController.cs" />
+    <Compile Include="Controllers\SaleQuantityAmountForReportsController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\SaleTypesController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
@@ -347,6 +348,9 @@
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SaleCategory.cs">
+      <DependentUpon>ETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SaleQuantityAmountForReport.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SaleType.cs">

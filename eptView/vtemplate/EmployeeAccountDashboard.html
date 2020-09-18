@@ -35,23 +35,23 @@
                     <div class="nodatatxt" data-ng-if="gridOptions.data.length==0">No data found.</div>
                 </div>
             </div>
-            <table class="table table-sm table-striped table-bordered table-condensed">
+            <table class="table table-sm table-striped table-bordered table-condensed" ng-if="TotalAdvance>0">
                 <tr>
-                    <td class="text-right">Carry forward</td>
+                    <td class="text-right">Carry forward from previous months (Advance - Salary)</td>
                     <td class="text-right"><label>{{TotalCarryForwardFromPreviousMonth}}</label></td>
                 </tr>
                 <tr>
-                    <td class="text-right">Salary</td>
+                    <td class="text-right">Current Month Salary Paid</td>
                     <td class="text-right"><label>{{TotalSalary}}</label></td>
                 </tr>
                 <tr>
-                    <td class="text-right">Advance</td>
+                    <td class="text-right">Current Month Total Advance Paid</td>
                     <td class="text-right"><label>{{TotalAdvance}}</label></td>
                 </tr>
-                <tr>
+                <!--<tr>
                     <td class="text-right">Balance</td>
                     <td class="text-right"><label>{{TotalBalance}}</label></td>
-                </tr>
+                </tr>-->
             </table>
         </form>
     </div>

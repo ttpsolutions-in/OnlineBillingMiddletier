@@ -3246,7 +3246,7 @@
   		return urlConfigHtml;
   	}
 
-  	// Handle "click" events on toolbar checkboxes and "change" for select menus.
+  	// Handle "click" events on toolbar checkboxes and "change" for select Rightss.
   	// Updates the URL with the new state of `config.urlConfig` values.
   	function toolbarChanged() {
   		var updatedUrl,
@@ -3255,7 +3255,7 @@
   		    field = this,
   		    params = {};
 
-  		// Detect if field is a select menu or a checkbox
+  		// Detect if field is a select Rights or a checkbox
   		if ("selectedIndex" in field) {
   			value = field.options[field.selectedIndex].value || undefined;
   		} else {

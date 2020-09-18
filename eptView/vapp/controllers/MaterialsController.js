@@ -37,11 +37,7 @@ ETradersApp.controller("MaterialsController", ['GlobalVariableService', '$scope'
         paginationPageSizes: [25, 50, 75],
         paginationPageSize: 25,
         columnDefs: [
-            {
-                name: 'Action', width: 80, enableFiltering: false, cellClass: 'text-center', displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
-                    + '<a id="btnView" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditMaterial/{{row.entity.MaterialId}}" ><span data-feather="edit"></span> </a>'
-                    + '</div><script>feather.replace()</script>'
-            },
+            
             { name: 'No.', field: 'SrNo', width: 50, visible: false, enableFiltering: false, enableSorting: true, headerCellClass: 'text-right', cellClass: 'text-right', displayName: '#', cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+(grid.options.paginationPageSize*(grid.options.paginationCurrentPage-1))+1}}</div>' },
             { width:250, displayName: 'Display Name', field: 'DisplayName', cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
             { width:250, displayName: 'Category', field: 'ItemCategory.ItemCategoryName', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
@@ -55,9 +51,13 @@ ETradersApp.controller("MaterialsController", ['GlobalVariableService', '$scope'
             //{ width: 100, displayName: 'Whole Sale Rate', field: 'WholeSaleRate', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             //{ width: 100, displayName: 'Costing Price', field: 'CostingPrice', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             //{ width: 80, displayName: 'QIH', field: 'QuantityInHand', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            { width: 100, displayName: 'Reorder Level', field: 'ReorderLevel', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+            //{ width: 100, displayName: 'Reorder Level', field: 'ReorderLevel', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             { width: 100, displayName: 'QIH', field: 'QIH', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-            
+            {
+                name: 'Action', width: 80, enableFiltering: false, cellClass: 'text-center', displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
+                    + '<a id="btnView" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditMaterial/{{row.entity.MaterialId}}" ><span data-feather="edit"></span> </a>'
+                    + '</div><script>feather.replace()</script>'
+            },
         ],
         data: []
     };
@@ -121,12 +121,12 @@ ETradersApp.controller("MaterialsController", ['GlobalVariableService', '$scope'
                     //, "QuantityInHand": $scope.EditMaterial.QuantityInHand.toString()
                     , "ReorderLevel": $scope.EditMaterial.ReorderLevel.toString()
                     , "UpdatedOn": new Date()
-                    , "Product": $scope.EditMaterial.Product
-                    , "Model": $scope.EditMaterial.Model
-                    , "Size1": $scope.EditMaterial.Size1 
-                    , "Size2": $scope.EditMaterial.Size2 
-                    , "StdPkg": $scope.EditMaterial.StdPkg == null ? null : $scope.EditMaterial.StdPkg.toString()
-                    , "BoxQty": $scope.EditMaterial.BoxQty == null ? null : $scope.EditMaterial.BoxQty.toString()
+                    , "Product": $scope.EditMaterial.Product==null?'':$scope.EditMaterial.Product.toString()
+                    , "Model": $scope.EditMaterial.Model == null ? '' : $scope.EditMaterial.Model.toString()
+                    , "Size1": $scope.EditMaterial.Size1 == null ? '' : $scope.EditMaterial.Size1.toString()
+                    , "Size2": $scope.EditMaterial.Size2 == null ? '' : $scope.EditMaterial.Size2.toString()
+                    , "StdPkg": isNaN($scope.EditMaterial.StdPkg)? "0" : $scope.EditMaterial.StdPkg.toString()
+                    , "BoxQty": isNaN($scope.EditMaterial.BoxQty) ? "0" : $scope.EditMaterial.BoxQty.toString()
                     , "ItemCategoryId": $scope.EditMaterial.ItemCategory.ItemCategoryId
                     , "DisplayName": strItemCategoryName.substring(0, strItemCategoryName.indexOf(' ')) + '-' + strItemDescription.substring(0, strItemDescription.indexOf(' ')) + ' ' + $scope.EditMaterial.Model + ' ' + $scope.EditMaterial.Size1 + ' ' + $scope.EditMaterial.Size2
                 };
@@ -224,7 +224,7 @@ ETradersApp.controller("MaterialsController", ['GlobalVariableService', '$scope'
                 $scope.EditMaterial.RetailRate = parseFloat($scope.EditMaterial.RetailRate);
                 $scope.EditMaterial.WholeSaleRate = parseFloat($scope.EditMaterial.WholeSaleRate);
                 $scope.EditMaterial.ReorderLevel = parseFloat($scope.EditMaterial.ReorderLevel);
-                $scope.EditMaterial.CostingPrice = parseFloat($scope.EditMaterial.CostingPrice);
+                //$scope.EditMaterial.CostingPrice = $scope.EditMaterial.CostingPrice;
                 //$scope.EditMaterial.QuantityInHand = parseFloat($scope.EditMaterial.QuantityInHand);
                 $scope.EditMaterial.StdPkg = parseFloat($scope.EditMaterial.StdPkg);
                 $scope.EditMaterial.BoxQty = parseFloat($scope.EditMaterial.BoxQty);

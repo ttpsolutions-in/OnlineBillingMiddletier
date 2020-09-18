@@ -24,27 +24,32 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
         var WholeHeader = '';
         var WholeFooter = '';
         WholeHeader = '<html>' +
-            '<head>' +
+            '<head><title>Print Preview</title>' +
             '<link href="vContent/style/bootstrap.min.css" rel="stylesheet" />  ' +
             '<script type="text/javascript" src="vContent/Scripts/angular.min.js"></script>' +           
-            '<style>@media print {'+
-                    '.footer { page -break-after: always; }' +
-            '}</style></head>' +
+            //'<style>@media print {'+
+            //        '.footer { page -break-after: always; }' +
+            //'}</style></head>' +
             '<body>' +
             '<div id="dv" style="margin:25px">  ';
         var previousBillNo = 0;
+        var slno = 0;
         angular.forEach(WholeSale, function (billDetail, key) {
-
+            //parseInt(key) + parseInt(1);
             var currentBillNo = billDetail.BillNo;
             // data fetched sorted by billno from database
             // current and previous billno not equal means we need to prepare a new bill.
+            slno = parseInt(slno) + parseInt(1);
             if (currentBillNo != previousBillNo) {
+                slno = 0;
+                slno = parseInt(slno) + parseInt(1);
 
                 if (key != 0) {
                     strOneBillContent += header + body + footer;
                     header = '';
                     body = '';
                     footer = '';
+                    
                 }
 
                 if (billDetail.SaleCategoryId == 1) {
@@ -56,12 +61,12 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
                     WholeSaleOrRetail = 2
                 }
 
-                header += '<div id="dvPrintBill" style="margin:150px"><div class="row">  ' +
+                header += '<div id="dvPrintBill" style="margin:150px" class="mt-5"><div class="row">  ' +
                     '<div class="col-md-12 text-center">  ' +
                     '<h3 style="text-align:center">EPHRAIM TRADERS</h3>  ' +
                     '<span>Churachandpur, Manipur - 795125</span><br />  '
                 if (billDetail.ShowGSTNo == 1) {
-                    content += '<span>GSTIN - 14BKYPT3527Q1Z2</span> '
+                    header += '<span>GSTIN - 14BKYPT3527Q1Z2</span> '
                 }
                 header += '<hr class="newhr" />  ' +
                     '</div>  ' +
@@ -89,7 +94,10 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
                 header += '<th style="text-align:center">Amount</th>  ' +
                     '</tr>  ';
 
-                body += '<tr><td align="right">' + key + 1 + '</td> ' +
+                //if (slno % 2 == 0)
+                //    body += '</table > <div><p style="page-break-before: always"></div>< table class="table table-sm table-striped table-bordered table-condensed" >';
+
+                body += '<tr><td align="right">' + slno + '</td> ' +
                     '<td>' + billDetail.DisplayName + '</td> ' +
                     '<td align="right">' + billDetail.Rate + '</td>  ' +
                     '<td align="right">' + billDetail.Quantity + '</td>  '
@@ -98,6 +106,7 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
                         '<td align="right">' + billDetail.DLP + '</td>  '
                 }
                 body += '<td align="right">' + billDetail.Amount + '</td></tr>';
+                
 
                 footer += '<tr>  ' +
                     '<td colspan="' + colspan + '" class="text-right">Total Amount</td>  ' +
@@ -119,14 +128,16 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
                     '<span class="float-right">For <b>EPHRAIM TRADERS</b><br /><br /> Authorised Signatory</span>  ' +
                     '</div>  ' +
                     '</div>  ' +
-                    '</div> <div class="footer"></div> '
+                    '</div> <div><p style="page-break-after: always"></div> '
 
 
             } //end of if billno is same.
             else if (currentBillNo == previousBillNo) {
                 //var i;
                 //for (i = 0; i < billDetail.length; i++) {
-                body += '<tr><td align="right">' + key + 1 + '</td> ' +
+                //if (slno % 2 == 0)
+                //    body += '</table><div><p style="page-break-before: always"></div>< table class="table table-sm table-striped table-bordered table-condensed" >'
+                body += '<tr><td align="right">' + slno + '</td> ' +
                     '<td>' + billDetail.DisplayName + '</td> ' +
                     '<td align="right">' + billDetail.Rate + '</td>  ' +
                     '<td align="right">' + billDetail.Quantity + '</td>  '
@@ -135,6 +146,7 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
                         '<td align="right">' + billDetail.DLP + '</td>  '
                 }
                 body += '<td align="right">' + billDetail.Amount + '</td></tr>';
+                
 
             }
             previousBillNo = currentBillNo;
@@ -155,7 +167,8 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
             mywindow.focus();
 
             mywindow.print();
-        }, 2000);
+            mywindow.close();
+        }, 1000);
         
         //$timeout(function () {
         $location.path('/');
@@ -166,10 +179,13 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
             PrintService.printBill();
         });
     }
-    PrintService.GetSingleBillNPrint = function (BillNo) {
-        PrintService.GetWholeSaleByID(0,BillNo, function () {
-            PrintService.printBill();
-        });
+    PrintService.GetSingleBillNPrint = async function (BillNo) {
+        //return promise = new Promise((resolve, reject) => {
+                   
+        await PrintService.GetWholeSaleByID(0, BillNo);//, function () {
+        await PrintService.printBill();
+        //});
+        //return promise;
     }
     PrintService.GetWholeSaleByID = function (customerId,billNo, callback) {
 
@@ -212,13 +228,14 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
         else
             lstBill.filter = "RetailerId eq " + customerId
 
-        CommonService.GetListItems(lstBill).then(function (response) {
+        var promise =CommonService.GetListItems(lstBill).then(function (response) {
             if (response && response.data.d.results.length > 0) {
                 WholeSale = response.data.d.results;
                 if (callback)
                     callback();
             }
         });
+        return promise;
     };
     PrintService.GetSupplierCustomer = function (callback) {
         var lstBill = {

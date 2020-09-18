@@ -57,5 +57,6 @@ namespace ept.Models
         public virtual DbSet<ReorderRequired> ReorderRequireds { get; set; }
         public virtual DbSet<RoleRightsView> RoleRightsViews { get; set; }
         public virtual DbSet<RightsForAssignment> RightsForAssignments { get; set; }
+        public virtual DbSet<SaleQuantityAmountForReport> SaleQuantityAmountForReports { get; set; }
     }
 }

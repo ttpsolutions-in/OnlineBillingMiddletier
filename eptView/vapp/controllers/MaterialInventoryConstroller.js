@@ -305,8 +305,8 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                                 "AddTransfer": value.AddTransfer.toString(),
                                 "TransferToGodown": value.StoreTransferToGodownId,
                                 "Comments": value.Comments.toString(),
-                                "CreatedBy": 'Mung',
-                                "UpdatedBy": 'Mung',
+                                "CreatedBy": $scope.tokens.UserName.toString(),
+                                "UpdatedBy": $scope.tokens.UserName.toString(),
                                 "CreatedDate": new Date(),
                                 "UpdatedDate": new Date(),
                                 "Active":1
@@ -346,7 +346,7 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
         $scope.init = function () {
 
             GlobalVariableService.validateUrl($location.$$path);
-
+            $scope.tokens = GlobalVariableService.getTokenInfo();
             $scope.GetItemCategory();
             $scope.GetSupplierCustomer();
             $scope.GetGodowns();

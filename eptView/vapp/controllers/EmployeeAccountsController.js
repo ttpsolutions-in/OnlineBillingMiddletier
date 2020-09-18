@@ -14,6 +14,8 @@ ETradersApp.controller("EmployeeAccountController", ['GlobalVariableService','$s
         $scope.TotalAdvance = 0;
         $scope.TotalSalary = 0;
         $scope.TotalBalance = 0;
+        $scope.searchEmployeeName = '';
+        $scope.ShowTotal = false;
 
         $scope.TodaysDate = $filter('date')(new Date(), "dd-MM-yyyy");
         //$scope.EmployeeAccount.PaymentDate = $scope.TodaysDate;
@@ -61,7 +63,7 @@ ETradersApp.controller("EmployeeAccountController", ['GlobalVariableService','$s
                 { width: 100, displayName: 'Remarks', field: 'Remarks', enableCellEdit: false, cellTooltip: true, headerCellClass: 'text-center' },
                 {
                     name: 'Action', width: 80, enableFiltering: false, cellClass: 'text-center', displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
-                        + '<a id="btnView" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditEmployeeAccount/{{row.entity.EmployeeNo}}" ><span data-feather="edit"></span> </a>'
+                        + '<a id="btnView" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditEmployeeAccount/{{row.entity.EmpAccountId}}" ><span data-feather="edit"></span> </a>'
                         + '</div><script>feather.replace()</script>'
                 },
                 { displayName: 'EmpAccountId', field: 'EmpAccountId', enableCellEdit: false, visible: false }
@@ -163,26 +165,38 @@ ETradersApp.controller("EmployeeAccountController", ['GlobalVariableService','$s
                     $scope.TotalAdvance = 0;
                     $scope.TotalSalary = 0;
                     $scope.TotalCarryForwardFromPreviousMonth = 0;
-
-                    angular.forEach($scope.EmployeeAccountList, function (value, key) {
-                        var PaymentDateMonth = new Date(value.PaymentDate).getMonth();
-                        if (value.PaymentType1.PaymentTypeName == "Advance") {
-                            if (PaymentDateMonth < todayMonth) {
-                                $scope.TotalPreviousAdvance += parseFloat(value.Amount);
+                    if ($scope.searchEmployeeName.length > 0) {
+                        $scope.ShowTotal = true;
+                        angular.forEach($scope.EmployeeAccountList, function (value, key) {
+                            var PaymentDateMonth = new Date(value.PaymentDate).getMonth();
+                            if (value.PaymentType1.PaymentTypeName == "Advance") {
+                                if (PaymentDateMonth < todayMonth) {
+                                    $scope.TotalPreviousAdvance += parseFloat(value.Amount);
+                                }
+                                else
+                                    $scope.TotalAdvance += parseFloat(value.Amount);
                             }
-                            else
-                                $scope.TotalAdvance += parseFloat(value.Amount);
-                        }
-                        else {
-                            if (PaymentDateMonth < todayMonth) {
-                                $scope.TotalPreviousSalary += parseFloat(value.Amount);
+                            else {
+                                if (PaymentDateMonth < todayMonth) {
+                                    $scope.TotalPreviousSalary += parseFloat(value.Amount);
+                                }
+                                else
+                                    $scope.TotalSalary += parseFloat(value.Amount);
                             }
-                            else
-                                $scope.TotalSalary += parseFloat(value.Amount);
-                        }
-                    })
-                    $scope.TotalCarryForwardFromPreviousMonth = parseFloat($scope.TotalPreviousSalary) - parseFloat($scope.TotalPreviousAdvance)
-                    $scope.TotalBalance = ($scope.TotalCarryForwardFromPreviousMonth + $scope.TotalSalary) - $scope.TotalAdvance
+                        })
+                        if (parseFloat($scope.TotalPreviousAdvance) > parseFloat($scope.TotalPreviousSalary))
+                            $scope.TotalCarryForwardFromPreviousMonth = parseFloat($scope.TotalPreviousAdvance) - parseFloat($scope.TotalPreviousSalary)
+                        else
+                            $scope.TotalCarryForwardFromPreviousMonth = 0;
+                        //$scope.TotalBalance = ($scope.TotalCarryForwardFromPreviousMonth + $scope.TotalSalary) - $scope.TotalAdvance
+                    }
+                    else {
+                        $scope.ShowTotal = false;
+                        $scope.TotalCarryForwardFromPreviousMonth = 0;
+                        $scope.TotalPreviousAdvance = 0;
+                        $scope.TotalPreviousSalary = 0;
+                        $scope.TotalAdvance = 0;
+                    }
                 }
                 else {
                     $scope.EmployeeAccountList = [];

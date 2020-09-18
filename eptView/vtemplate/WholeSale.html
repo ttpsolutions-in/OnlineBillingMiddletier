@@ -28,8 +28,8 @@
                 </div>
                 <div class="form-group col-md-4">
                     <!-- <label for="txtContactNo">Contact No.</label>-->
-                    <input type="tel" class="form-control input-sm" id="ContactNo" name="ContactNo" placeholder="Enter Contact No." 
-                           ng-disabled="WholeSale.SupplierRetailer > 0"  ng-model="WholeSale.ContactNo">
+                    <input type="tel" class="form-control input-sm" id="ContactNo" name="ContactNo" placeholder="Enter Contact No."
+                           ng-disabled="WholeSale.SupplierRetailer > 0" ng-model="WholeSale.ContactNo">
                     <p ng-show="submitted && addWholeSaleForm.ContactNo.$invalid && !SupplierRetailer.ContactNo.$pristine"
                        class="text-danger">Contact No. is required.</p>
                 </div>
@@ -55,7 +55,6 @@
                     <button type="button" class="btn btn-secondary" ng-if="!ShowSpinnerStatus" btn-sm" ng-click="AddItem()">Add Item</button>
                 </div>
             </div>
-
             <div class="form-row">
                 <div class="col-md-12 nopadding">
                     <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav ui-grid-selection
@@ -79,7 +78,7 @@
                                         Cash <input type="checkbox" ng-checked="SaleTypeCash == 1 ? true : false" ng-model="SaleTypeCash" />
                                     </span>
                                 </div>
-                            <!--<label class="pull-right">Cash <input type="checkbox" ng-checked="true" ng-model="SaleTypeCash" /></label>-->
+                                <!--<label class="pull-right">Cash <input type="checkbox" ng-checked="true" ng-model="SaleTypeCash" /></label>-->
                             </td>
                             <td class="text-right">
                                 <span>
@@ -94,22 +93,20 @@
                             <td class="text-right">&nbsp;&nbsp;  Grand Total</td>
                             <td class="text-right">{{WholeSale.GrandTotal}}</td>
                         </tr>
-                        <!--<tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-right"> <label>Cash <input type="checkbox" ng-model="WholeSale.SaleTypeCash" /></label></td>
-                            <td class="text-right"><label></label></td>
-                        </tr>-->
+                        <tr>
+                            <td colspan="6">
+                                <div class="form-row col-md-offset-5 col-sm-offset-5">
+                                    <a href="#WholeSaleDashboard" class="btn btn-primary float-right btn-sm"><span data-feather="arrow-left"></span> Back</a>&nbsp;&nbsp;&nbsp;
+                                    <!--<button type="button" class="btn btn-primary" ng-click="SubmitItems(addWholeSaleForm.$valid)"><span data-feather="save"></span>Save</button>&nbsp;&nbsp;&nbsp;-->
+                                    <button type="button" class="btn btn-primary" ng-click="SaveNPrint(addWholeSaleForm.$valid)"><span data-feather="save"></span>Save</button>
+
+                                </div>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
-            <div class="form-row col-md-offset-5 col-sm-offset-5">
-                <a href="#WholeSaleDashboard" class="btn btn-primary float-right btn-sm"><span data-feather="arrow-left"></span> Back</a>&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-primary" ng-click="SubmitItems(addWholeSaleForm.$valid)"><span data-feather="save"></span>Save</button>&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-primary" ng-click="SaveNPrint(addWholeSaleForm.$valid)"><span data-feather="save"></span>Save & <span data-feather="printer"></span> Print</button>
-                
-            </div>
+
         </form>
     </div>
 </div>
@@ -121,13 +118,12 @@
 <body>
 </body>
 <script type="text/javascript">
-                    feather.replace();
-                 var gearPage = document.getElementById('GearPage');
-                 if(null != gearPage)
-                 {
-                     gearPage.parentNode.removeChild(gearPage);
-                     document.title = "Error";
-                 }
+    feather.replace();
+    var gearPage = document.getElementById('GearPage');
+    if (null != gearPage) {
+        gearPage.parentNode.removeChild(gearPage);
+        document.title = "Error";
+    }
 </script>
 </html>
 

@@ -9,13 +9,13 @@
   @include caret;
 }
 
-// The dropdown menu
-.dropdown-menu {
+// The dropdown Rights
+.dropdown-Rights {
   position: absolute;
   top: 100%;
   left: 0;
   z-index: $zindex-dropdown;
-  display: none; // none by default, but block on "open" of the menu
+  display: none; // none by default, but block on "open" of the Rights
   float: left;
   min-width: $dropdown-min-width;
   padding: $dropdown-padding-y 0;
@@ -31,10 +31,10 @@
   @include box-shadow($dropdown-box-shadow);
 }
 
-// Allow for dropdowns to go bottom up (aka, dropup-menu)
+// Allow for dropdowns to go bottom up (aka, dropup-Rights)
 // Just add .dropup after the standard .dropdown class and you're set.
 .dropup {
-  .dropdown-menu {
+  .dropdown-Rights {
     margin-top: 0;
     margin-bottom: $dropdown-spacer;
   }
@@ -45,7 +45,7 @@
 }
 
 .dropright {
-  .dropdown-menu {
+  .dropdown-Rights {
     margin-top: 0;
     margin-left: $dropdown-spacer;
   }
@@ -59,7 +59,7 @@
 }
 
 .dropleft {
-  .dropdown-menu {
+  .dropdown-Rights {
     margin-top: 0;
     margin-right: $dropdown-spacer;
   }
@@ -77,7 +77,7 @@
   @include nav-divider($dropdown-divider-bg);
 }
 
-// Links, buttons, and more within the dropdown menu
+// Links, buttons, and more within the dropdown Rights
 //
 // `<button>`-specific styles are denoted with `// For <button>s`
 .dropdown-item {
@@ -116,7 +116,7 @@
   }
 }
 
-.dropdown-menu.show {
+.dropdown-Rights.show {
   display: block;
 }
 

@@ -152,7 +152,7 @@
   browser: >
     Firefox (Windows)
   summary: >
-    Right border of `<select>` menu is sometimes missing when screen is set to uncommon resolution
+    Right border of `<select>` Rights is sometimes missing when screen is set to uncommon resolution
   upstream_bug: >
     Mozilla#545685
   origin: >
@@ -434,7 +434,7 @@
   browser: >
     Safari (iOS)
   summary: >
-    Element which is `position:fixed` disappears after opening a `<select>` menu
+    Element which is `position:fixed` disappears after opening a `<select>` Rights
   upstream_bug: >
     WebKit#162362
   origin: >

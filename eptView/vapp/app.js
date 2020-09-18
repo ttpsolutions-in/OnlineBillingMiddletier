@@ -100,7 +100,7 @@ ETradersApp.config(['$routeProvider', '$locationProvider',
         }).when("/login", {
             templateUrl: '/vtemplate/login.html',
             controller: 'LoginController'
-        }).when("/Register", {
+        }).when("/CreateLogin", {
             templateUrl: 'vtemplate/Register.html',
             controller: 'RegisterController'
         }).when("/AddRetails", {
@@ -193,6 +193,12 @@ ETradersApp.config(['$routeProvider', '$locationProvider',
         }).when("/RightsManagementDashboard", {
             templateUrl: '/vtemplate/RightsManagementDashboard.html',
             controller: 'RightsManagementController'
+        }).when("/ChangePassword", {
+            templateUrl: '/vtemplate/ChangePassword.html',
+            controller: 'RegisterController'
+        }).when("/Statistics", {
+            templateUrl: '/vtemplate/SalesStatistics.html',
+            controller: 'StatisticsController'
         }).when("/invalid", {
             templateUrl: '/vtemplate/InvalidPage.html',
             controller: ''

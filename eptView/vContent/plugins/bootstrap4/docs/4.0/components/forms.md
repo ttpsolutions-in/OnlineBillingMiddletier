@@ -667,7 +667,7 @@ Add the `disabled` attribute to a `<fieldset>` to disable all the controls withi
       <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
     </div>
     <div class="form-group">
-      <label for="disabledSelect">Disabled select menu</label>
+      <label for="disabledSelect">Disabled select Rights</label>
       <select id="disabledSelect" class="form-control">
         <option>Disabled select</option>
       </select>
@@ -961,7 +961,7 @@ Our example forms show native textual `<input>`s above, but form validation styl
 
   <div class="form-group">
     <select class="custom-select" required>
-      <option value="">Open this select menu</option>
+      <option value="">Open this select Rights</option>
       <option value="1">One</option>
       <option value="2">Two</option>
       <option value="3">Three</option>
@@ -1118,13 +1118,13 @@ Custom checkboxes and radios can also be disabled. Add the `disabled` boolean at
 </div>
 {% endexample %}
 
-### Select menu
+### Select Rights
 
-Custom `<select>` menus need only a custom class, `.custom-select` to trigger the custom styles.
+Custom `<select>` Rightss need only a custom class, `.custom-select` to trigger the custom styles.
 
 {% example html %}
 <select class="custom-select">
-  <option selected>Open this select menu</option>
+  <option selected>Open this select Rights</option>
   <option value="1">One</option>
   <option value="2">Two</option>
   <option value="3">Three</option>
@@ -1135,14 +1135,14 @@ You may also choose from small and large custom selects to match our similarly s
 
 {% example html %}
 <select class="custom-select custom-select-lg mb-3">
-  <option selected>Open this select menu</option>
+  <option selected>Open this select Rights</option>
   <option value="1">One</option>
   <option value="2">Two</option>
   <option value="3">Three</option>
 </select>
 
 <select class="custom-select custom-select-sm">
-  <option selected>Open this select menu</option>
+  <option selected>Open this select Rights</option>
   <option value="1">One</option>
   <option value="2">Two</option>
   <option value="3">Three</option>
@@ -1153,7 +1153,7 @@ The `multiple` attribute is also supported:
 
 {% example html %}
 <select class="custom-select" multiple>
-  <option selected>Open this select menu</option>
+  <option selected>Open this select Rights</option>
   <option value="1">One</option>
   <option value="2">Two</option>
   <option value="3">Three</option>
@@ -1164,7 +1164,7 @@ As is the `size` attribute:
 
 {% example html %}
 <select class="custom-select" size="3">
-  <option selected>Open this select menu</option>
+  <option selected>Open this select Rights</option>
   <option value="1">One</option>
   <option value="2">Two</option>
   <option value="3">Three</option>

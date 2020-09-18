@@ -160,7 +160,7 @@ background-color:#FDFD96;
 #sideNavBox .expanded{
 	border:1px solid #efefef;
 }
-#sideNavBox .expanded .ms-core-listMenu-item{
+#sideNavBox .expanded .ms-core-listRights-item{
 	 background: white;
 }
 
@@ -182,7 +182,7 @@ background-color:#FDFD96;
     text-decoration: none;
     position: relative;
 }
-.ms-core-listMenu-selected{	
+.ms-core-listRights-selected{	
   font-weight: normal !important;
 }
 .panel-default{
@@ -196,7 +196,7 @@ background-color:#FDFD96;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
 }
 
-.ms-core-listMenu-item {
+.ms-core-listRights-item {
     background-color: rgba(239, 239, 239, 0.5);
 }
 .panel-body data-ng-form .row.form-group .col-md-6{

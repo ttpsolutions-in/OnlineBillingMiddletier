@@ -18,7 +18,7 @@
 */
 
 /* jshint undef: true */
-/* global L_Menu_BaseUrl, _spUserId, _spPageContextInfo, GipAddSelectedItems, GipRemoveSelectedItems, GipGetGroupData */
+/* global L_Rights_BaseUrl, _spUserId, _spPageContextInfo, GipAddSelectedItems, GipRemoveSelectedItems, GipGetGroupData */
 
 (function ($) {
 
@@ -4186,7 +4186,7 @@
             this.thisUserId = _spPageContextInfo.userId;
             // In SharePoint 2007, we know the UserID only
         } else {
-            this.thisSite = (typeof L_Menu_BaseUrl !== "undefined") ? siteRoot + L_Menu_BaseUrl : "";
+            this.thisSite = (typeof L_Rights_BaseUrl !== "undefined") ? siteRoot + L_Rights_BaseUrl : "";
             this.thisList = "";
             this.thisUserId = (typeof _spUserId !== "undefined") ? _spUserId : undefined;
         }

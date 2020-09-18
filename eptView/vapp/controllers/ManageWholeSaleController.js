@@ -283,7 +283,6 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                         //callback();
                     }
 
-
                     //$location.path('/');
 
                 } else if (!$scope.IsItemSelected && isValid) {
@@ -347,7 +346,9 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                     "DiscountApplied": $scope.IsDiscountApplied,
                     "BillStatus": billStatus,//Cash --> complete, Credit--> pending
                     "PaidAmt": balanceAmount.toString(), //Credit --> 0. cash --> GrandAmount
-                    "BalanceAmt": balanceAmount.toString() // Credit --> GrandAmount ,cash-->0
+                    "BalanceAmt": balanceAmount.toString(), // Credit --> GrandAmount ,cash-->0
+                    "CreatedBy": $scope.tokens.UserName.toString(),
+                    "CreatedOn":new Date()
                 };
                 CommonService.PostData("Bills", postData).then(function (response) {
                     if (response.BillNo > 0) {
@@ -367,7 +368,8 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                                     "BillNo": response.BillNo,
                                     "GodownId": $filter('filter')($scope.GodownData, { GodownName: value.GodownId }, true)[0].GodownId,
                                     "CreatedOn": new Date(),
-                                    "Active": 1
+                                    "Active": 1,
+                                    "ItemCategoryId": value.ItemCategoryId
                                 };
                                 CommonService.PostData("Sales", salesPostDate).then(function (response1) {
                                     if (response1.SaleId > 0) {
@@ -377,7 +379,9 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                                             toaster.pop('success', "", "Data saved successfully", 5000, 'trustedHtml');
                                             isAlertDone = true;
                                             if (callback)
-                                            callback();
+                                                callback();
+                                            else
+                                                $location.path('/');
                                         }
                                     }
                                 });
@@ -473,6 +477,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
         };
         $scope.init = function () {
             GlobalVariableService.validateUrl($location.$$path);
+            $scope.tokens = GlobalVariableService.getTokenInfo();
             $scope.GetItemCategory();
             $scope.GetSupplierRetailer();
             $scope.GetGodowns();

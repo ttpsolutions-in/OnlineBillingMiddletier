@@ -34,7 +34,7 @@ Scroll the area below the navbar and watch the active class change. The dropdown
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-        <div class="dropdown-menu">
+        <div class="dropdown-Rights">
           <a class="dropdown-item" href="#one">one</a>
           <a class="dropdown-item" href="#two">two</a>
           <div role="separator" class="dropdown-divider"></div>
@@ -71,7 +71,7 @@ Scroll the area below the navbar and watch the active class change. The dropdown
     </li>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-      <div class="dropdown-menu">
+      <div class="dropdown-Rights">
         <a class="dropdown-item" href="#one">one</a>
         <a class="dropdown-item" href="#two">two</a>
         <div role="separator" class="dropdown-divider"></div>

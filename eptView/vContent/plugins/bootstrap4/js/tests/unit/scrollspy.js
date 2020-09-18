@@ -636,7 +636,7 @@ $(function () {
 
     var testOffsetMethod = function (type) {
       var $navbar = $(
-        '<nav class="navbar"' + (type === 'data' ? ' id="navbar-offset-method-menu"' : '') + '>' +
+        '<nav class="navbar"' + (type === 'data' ? ' id="navbar-offset-method-Rights"' : '') + '>' +
         '<ul class="nav">' +
         '<li class="nav-item"><a id="li-' + type + 'm-1" class="nav-link" href="#div-' + type + 'm-1">div 1</a></li>' +
         '<li class="nav-item"><a id="li-' + type + 'm-2" class="nav-link" href="#div-' + type + 'm-2">div 2</a></li>' +
@@ -645,7 +645,7 @@ $(function () {
         '</nav>'
       )
       var $content = $(
-        '<div class="content"' + (type === 'data' ? ' data-spy="scroll" data-target="#navbar-offset-method-menu" data-offset="0" data-method="offset"' : '') + ' style="position: relative; overflow: auto; height: 100px">' +
+        '<div class="content"' + (type === 'data' ? ' data-spy="scroll" data-target="#navbar-offset-method-Rights" data-offset="0" data-method="offset"' : '') + ' style="position: relative; overflow: auto; height: 100px">' +
         '<div id="div-' + type + 'm-1" style="position: relative; height: 200px; padding: 0; margin: 0">div 1</div>' +
         '<div id="div-' + type + 'm-2" style="position: relative; height: 150px; padding: 0; margin: 0">div 2</div>' +
         '<div id="div-' + type + 'm-3" style="position: relative; height: 250px; padding: 0; margin: 0">div 3</div>' +
@@ -683,7 +683,7 @@ $(function () {
 
     var testOffsetMethod = function (type) {
       var $navbar = $(
-        '<nav class="navbar"' + (type === 'data' ? ' id="navbar-offset-method-menu"' : '') + '>' +
+        '<nav class="navbar"' + (type === 'data' ? ' id="navbar-offset-method-Rights"' : '') + '>' +
         '<ul class="nav">' +
         '<li class="nav-item"><a class="nav-link" id="li-' + type + 'm-1" href="#div-' + type + 'm-1">div 1</a></li>' +
         '<li class="nav-item"><a class="nav-link" id="li-' + type + 'm-2" href="#div-' + type + 'm-2">div 2</a></li>' +
@@ -692,7 +692,7 @@ $(function () {
         '</nav>'
       )
       var $content = $(
-        '<div class="content"' + (type === 'data' ? ' data-spy="scroll" data-target="#navbar-offset-method-menu" data-offset="0" data-method="position"' : '') + ' style="position: relative; overflow: auto; height: 100px">' +
+        '<div class="content"' + (type === 'data' ? ' data-spy="scroll" data-target="#navbar-offset-method-Rights" data-offset="0" data-method="position"' : '') + ' style="position: relative; overflow: auto; height: 100px">' +
         '<div id="div-' + type + 'm-1" style="position: relative; height: 200px; padding: 0; margin: 0">div 1</div>' +
         '<div id="div-' + type + 'm-2" style="position: relative; height: 150px; padding: 0; margin: 0">div 2</div>' +
         '<div id="div-' + type + 'm-3" style="position: relative; height: 250px; padding: 0; margin: 0">div 3</div>' +

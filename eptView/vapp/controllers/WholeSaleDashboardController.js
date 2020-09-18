@@ -9,6 +9,7 @@ ETradersApp.controller("WholeSaleDashboardController", ['GlobalVariableService',
             $scope.ShowSpinnerStatus = false;
         }
 
+        $scope.ShowButton = false;
         $scope.PageTitle = "Bills";
         //$scope.isAuthenticated = LoginService.isAuthenticated();
         $scope.ID = $routeParams.ID;
@@ -73,7 +74,7 @@ ETradersApp.controller("WholeSaleDashboardController", ['GlobalVariableService',
                     name: 'Action', width: 120, enableFiltering: false, displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
                         + '<a id="btnView" type="button" title="View" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#ViewWholeSale/{{row.entity.BillNo}}" ><span data-feather="eye"></span> </a>'
                         //+ '</div><script>feather.replace()</script>'
-                        + '&nbsp;&nbsp;<a id="btnEdit" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditBill/{{row.entity.BillNo}}" ><span data-feather="edit"></span> </a>'
+                        + '&nbsp;&nbsp;<a id="btnEdit" type="button" title="Edit" style="line-height: 0.5;" ng-if="grid.appScope.checkRights(row.entity)" class="btn btn-primary btn-xs" href="#EditBill/{{row.entity.BillNo}}" ><span data-feather="edit"></span> </a>'
                         + '</div><script>feather.replace()</script>'
                 },
 
@@ -111,12 +112,15 @@ ETradersApp.controller("WholeSaleDashboardController", ['GlobalVariableService',
 
         };
         $scope.printCustomerBills = function () {
-            PrintService.GetCustomerBillsNPrint($scope.WholeSale[0].Bill.RetailerId);
+            PrintService.GetCustomerBillsNPrint($scope.WholeSaleList[0].SupplierRetailer.SupplierRetailerId);
         }
         $scope.print = function () {
             PrintService.GetSingleBillNPrint($scope.WholeSale[0].Bill.BillNo)
         }
+        $scope.checkRights = function (row) {
 
+            return ((row.SaleCategory.CategoryName == "Whole Sale" && $scope.WholeSaleEditRights.length > 0) || (row.SaleCategory.CategoryName == "Retail" && $scope.RetailEditRights.length > 0))
+        }
         $scope.Export = function () {
             html2canvas(document.getElementById('tblCustomers'), {
                 onrendered: function (canvas) {
@@ -175,19 +179,43 @@ ETradersApp.controller("WholeSaleDashboardController", ['GlobalVariableService',
                 else
                     lstBill.filter = lstBill.filter + " and BillNo eq " + $scope.searchBillNo;
             }
+            if ($scope.tokens.UserRole == "Customer") {
+                if (lstBill.filter == undefined)
+                    lstBill.filter = "SupplierRetailer/Email eq '" + $scope.tokens.UserName + "'";
+                else
+                    lstBill.filter += " and SupplierRetailer/Email eq '" + $scope.tokens.UserName + "'";
+
+            }
+
+
+
             //$scope.showSpinner();
             CommonService.GetListItems(lstBill).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
                     $scope.WholeSaleList = response.data.d.results;
+
+                    if ($scope.searchSupplierRetailer > 0)
+                        $scope.ShowButton = true;
+                    else
+                        $scope.ShowButton = false;
+
                     if (callback)
                         callback();
                 }
+
                 $scope.gridOptions.data = $scope.WholeSaleList;
                 $scope.GetTotalCredit();
             });
         };
 
         $scope.GetWholeSaleByID = function () {
+
+            var EmailIdFilter = '';
+            if ($scope.tokens.UserRole == "Customer") {
+
+                EmailIdFilter = " and Bill/RetailerId eq " + $scope.SupplierRetailers[0].SupplierRetailerId;
+            }
+
             var lstBill = {
                 title: "Sales",
                 fields: [
@@ -208,7 +236,7 @@ ETradersApp.controller("WholeSaleDashboardController", ['GlobalVariableService',
                     "Material/RetailRate"
                 ],
                 lookupFields: ["Bill", "Material", "Godown"],
-                filter: ["BillNo eq " + $scope.ID],
+                filter: ["BillNo eq " + $scope.ID + EmailIdFilter],
                 //limitTo: "5000",
                 orderBy: "CreatedOn desc"
             };
@@ -269,7 +297,8 @@ ETradersApp.controller("WholeSaleDashboardController", ['GlobalVariableService',
 
 
 
-        $scope.GetSupplierRetailers = function () {
+        $scope.GetSupplierRetailers = function (callback) {
+
             var lstBill = {
                 title: "SupplierRetailers",
                 fields: ["*"],
@@ -278,9 +307,15 @@ ETradersApp.controller("WholeSaleDashboardController", ['GlobalVariableService',
                 //limitTo: "5000",
                 orderBy: "CreatedOn desc"
             };
+
+            if ($scope.tokens.UserRole == "Customer")
+                lstBill.filter += " and Email eq '" + $scope.tokens.UserName + "'";
+
             CommonService.GetListItems(lstBill).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
                     $scope.SupplierRetailers = response.data.d.results;
+                    if (callback)
+                        callback();
                 }
             });
         };
@@ -304,20 +339,27 @@ ETradersApp.controller("WholeSaleDashboardController", ['GlobalVariableService',
         $scope.init = function () {
 
             GlobalVariableService.validateUrl($location.$$path);
-
-            $scope.GetSupplierRetailers();
+            $scope.tokens = GlobalVariableService.getTokenInfo();
+            //$scope.UserRole = tokens.UserRole;
+            //$scope.UserName = tokens.UserName;
             $scope.GetGSTPercentage();
-            if ($scope.ID > 0) {
-                //$timeout(function () {
-                $scope.GetWholeSaleByID();
-                //}, 200);
+            $scope.GetSupplierRetailers(function () {
 
-            }
-            else {
-                $scope.GetDataForDashboard(function () {
-                    $scope.GetTotalCredit();
-                });
-            }
+                if ($scope.ID > 0) {
+                    //$timeout(function () {
+                    $scope.GetWholeSaleByID();
+                    //}, 200);
+
+                }
+                else {
+                    $scope.GetDataForDashboard(function () {
+                        $scope.GetTotalCredit();
+                    });
+                }
+            });
+            var AllRights = GlobalVariableService.getRoleRights();
+            $scope.WholeSaleEditRights = $filter('filter')(AllRights, { RightsName: "WholeSaleEdit" }, true);
+            $scope.RetailEditRights = $filter('filter')(AllRights, { RightsName: "RetailEdit" }, true);
         };
 
         $scope.init();

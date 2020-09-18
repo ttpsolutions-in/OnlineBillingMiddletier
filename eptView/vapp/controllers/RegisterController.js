@@ -1,4 +1,4 @@
-ETradersApp.controller("RegisterController", ['$scope', '$location', 'LoginService', '$sce', function ($scope, $location, LoginService, $sce) {
+ETradersApp.controller("RegisterController", ['Config', '$window', '$scope', '$location', 'LoginService', '$sce', function (Config, $window, $scope, $location, LoginService, $sce) {
 
     $scope.UserDetails = {
         Email: "",
@@ -7,7 +7,10 @@ ETradersApp.controller("RegisterController", ['$scope', '$location', 'LoginServi
     }
     $scope.errorMessage = '';
     $scope.successMessage = '';
+    $scope.goTologin = function () {
 
+        $window.location.href = Config.ServiceBaseURL + "/login.html";
+    }
     $scope.Register = function () {
         var req = {
             "Email": $scope.UserDetails.Email,
@@ -17,7 +20,6 @@ ETradersApp.controller("RegisterController", ['$scope', '$location', 'LoginServi
         console.log("reg: " + JSON.stringify(req));
 
         LoginService.Register(req).then(function (response) {
-            debugger;
             var str = ''
             $scope.errorMessage = '';
             $scope.successMessage = '';
@@ -30,11 +32,13 @@ ETradersApp.controller("RegisterController", ['$scope', '$location', 'LoginServi
                 $scope.errorMessage = $sce.trustAsHtml(str);
             }
             else {
-                $scope.successMessage = "Registration Successful";
+                $scope.successMessage = "Create Login successful";
                 //$location.path('/next');
             }
 
         });
     }
+
+
     //$scope.Register();
 }]);

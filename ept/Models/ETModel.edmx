@@ -203,7 +203,7 @@
           <Property Name="NoOfPiecePerUnit" Type="int" />
           <Property Name="RetailRate" Type="decimal" Precision="18" Scale="2" />
           <Property Name="WholeSaleRate" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="CostingPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CostingPrice" Type="varchar" MaxLength="50" />
           <Property Name="QuantityInHand" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ReorderLevel" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
@@ -327,17 +327,29 @@ warning 6002: The table/view 'EphraimTraders.dbo.BillDetailsView' does not have 
         <EntityType Name="BillDetailsView">
           <Key>
             <PropertyRef Name="BillNo" />
+            
             <PropertyRef Name="Name" />
             <PropertyRef Name="MaterialId" />
             <PropertyRef Name="Quantity" />
             <PropertyRef Name="Amount" />
             <PropertyRef Name="GodownName" />
             <PropertyRef Name="GodownId" />
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <PropertyRef Name="Rate" />
             <PropertyRef Name="Active" />
+            
+            
           </Key>
           <Property Name="BillNo" Type="int" Nullable="false" />
-          <Property Name="RetailerId" Type="int" />
+          <Property Name="RetailerId" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="MaterialId" Type="int" Nullable="false" />
           <Property Name="DisplayName" Type="varchar" MaxLength="250" />
@@ -347,20 +359,20 @@ warning 6002: The table/view 'EphraimTraders.dbo.BillDetailsView' does not have 
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="GodownName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="GodownId" Type="smallint" Nullable="false" />
-          <Property Name="GSTApplied" Type="tinyint" />
-          <Property Name="SaleTypeId" Type="int" />
-          <Property Name="SaleCategoryId" Type="int" />
-          <Property Name="GSTPercentage" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="GSTAmount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="DiscountApplied" Type="tinyint" />
-          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="GSTApplied" Type="tinyint" Nullable="false" />
+          <Property Name="SaleTypeId" Type="int" Nullable="false" />
+          <Property Name="SaleCategoryId" Type="int" Nullable="false" />
+          <Property Name="GSTPercentage" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GSTAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DiscountApplied" Type="tinyint" Nullable="false" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ShowGSTNo" Type="tinyint" />
-          <Property Name="Contact" Type="varchar" MaxLength="20" />
+          <Property Name="Contact" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Rate" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Active" Type="tinyint" Nullable="false" />
-          <Property Name="BillStatus" Type="tinyint" />
-          <Property Name="SaleDate" Type="date" />
+          <Property Name="BillStatus" Type="tinyint" Nullable="false" />
+          <Property Name="SaleDate" Type="date" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'EphraimTraders.dbo.CurrentUserRoleRightsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -394,16 +406,16 @@ warning 6002: The table/view 'EphraimTraders.dbo.RightsForAssignment' does not h
           <Key>
             <PropertyRef Name="RightsId" />
             <PropertyRef Name="RightsName" />
-            <PropertyRef Name="RoleId" />
             <PropertyRef Name="Active" />
+            <PropertyRef Name="RoleId" />
             <PropertyRef Name="RMActive" />
             <PropertyRef Name="RoleName" />
             <PropertyRef Name="RightsManagementId" />
           </Key>
           <Property Name="RightsId" Type="smallint" Nullable="false" />
           <Property Name="RightsName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="RoleId" Type="tinyint" Nullable="false" />
           <Property Name="Active" Type="tinyint" Nullable="false" />
+          <Property Name="RoleId" Type="tinyint" Nullable="false" />
           <Property Name="RMActive" Type="tinyint" Nullable="false" />
           <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="RightsManagementId" Type="tinyint" Nullable="false" />
@@ -415,17 +427,29 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
             <PropertyRef Name="RightsId" />
             <PropertyRef Name="RightsName" />
             <PropertyRef Name="RoleId" />
+            
           </Key>
           <Property Name="RightsId" Type="smallint" Nullable="false" />
           <Property Name="RightsName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="RoleId" Type="tinyint" Nullable="false" />
-          <Property Name="RoleName" Type="varchar" MaxLength="50" />
-          <Property Name="FeatherName" Type="nvarchar" MaxLength="10" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FeatherName" Type="varchar" MaxLength="20" />
           <Property Name="MenuUrl" Type="varchar" MaxLength="100" />
           <Property Name="DisplayName" Type="varchar" MaxLength="100" />
           <Property Name="PID" Type="smallint" />
           <Property Name="DisplayOrder" Type="tinyint" />
           <Property Name="Menu" Type="tinyint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SaleQuantityAmountForReport">
+          <Key>
+            <PropertyRef Name="SaleDate" />
+          </Key>
+          <Property Name="SaleDate" Type="date" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="Amount" Type="decimal" Precision="38" Scale="2" />
         </EntityType>
         <Association Name="FK__Bills__BillStatu__72C60C4A">
           <End Role="Status" Type="Self.Status" Multiplicity="1" />
@@ -815,8 +839,8 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
             <DefiningQuery>SELECT 
     [RightsForAssignment].[RightsId] AS [RightsId], 
     [RightsForAssignment].[RightsName] AS [RightsName], 
-    [RightsForAssignment].[RoleId] AS [RoleId], 
     [RightsForAssignment].[Active] AS [Active], 
+    [RightsForAssignment].[RoleId] AS [RoleId], 
     [RightsForAssignment].[RMActive] AS [RMActive], 
     [RightsForAssignment].[RoleName] AS [RoleName], 
     [RightsForAssignment].[RightsManagementId] AS [RightsManagementId]
@@ -835,6 +859,14 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
     [RoleRightsView].[DisplayOrder] AS [DisplayOrder], 
     [RoleRightsView].[Menu] AS [Menu]
     FROM [dbo].[RoleRightsView] AS [RoleRightsView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SaleQuantityAmountForReport" EntityType="Self.SaleQuantityAmountForReport" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SaleQuantityAmountForReport].[SaleDate] AS [SaleDate], 
+    [SaleQuantityAmountForReport].[CategoryName] AS [CategoryName], 
+    [SaleQuantityAmountForReport].[Quantity] AS [Quantity], 
+    [SaleQuantityAmountForReport].[Amount] AS [Amount]
+    FROM [dbo].[SaleQuantityAmountForReport] AS [SaleQuantityAmountForReport]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__Bills__BillStatu__72C60C4A" Association="Self.FK__Bills__BillStatu__72C60C4A">
             <End Role="Status" EntitySet="Status" />
@@ -1161,7 +1193,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
           <Property Name="NoOfPiecePerUnit" Type="Int32" />
           <Property Name="RetailRate" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="WholeSaleRate" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CostingPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CostingPrice" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="QuantityInHand" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ReorderLevel" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1311,7 +1343,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
             <PropertyRef Name="Active" />
           </Key>
           <Property Name="BillNo" Type="Int32" Nullable="false" />
-          <Property Name="RetailerId" Type="Int32" />
+          <Property Name="RetailerId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MaterialId" Type="Int32" Nullable="false" />
           <Property Name="DisplayName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
@@ -1321,20 +1353,20 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="GodownName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GodownId" Type="Int16" Nullable="false" />
-          <Property Name="GSTApplied" Type="Byte" />
-          <Property Name="SaleTypeId" Type="Int32" />
-          <Property Name="SaleCategoryId" Type="Int32" />
-          <Property Name="GSTPercentage" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="DiscountApplied" Type="Byte" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="GSTApplied" Type="Byte" Nullable="false" />
+          <Property Name="SaleTypeId" Type="Int32" Nullable="false" />
+          <Property Name="SaleCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="GSTPercentage" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GSTAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DiscountApplied" Type="Byte" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ShowGSTNo" Type="Byte" />
-          <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Rate" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Active" Type="Byte" Nullable="false" />
-          <Property Name="BillStatus" Type="Byte" />
-          <Property Name="SaleDate" Type="DateTime" Precision="0" />
+          <Property Name="BillStatus" Type="Byte" Nullable="false" />
+          <Property Name="SaleDate" Type="DateTime" Precision="0" Nullable="false" />
         </EntityType>
         <EntityType Name="CurrentUserRoleRightsView">
           <Key>
@@ -1367,8 +1399,8 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
           <Property Name="RightsId" Type="Int16" Nullable="false" />
           <Property Name="RightsName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RoleId" Type="Byte" Nullable="false" />
-          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FeatherName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FeatherName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MenuUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PID" Type="Int16" />
@@ -1788,6 +1820,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <EntitySet Name="RightsForAssignments" EntityType="EphraimTradersModel.RightsForAssignment" />
+          <EntitySet Name="SaleQuantityAmountForReports" EntityType="EphraimTradersModel.SaleQuantityAmountForReport" />
         </EntityContainer>
         <EntityType Name="RightsForAssignment">
           <Key>
@@ -1806,6 +1839,15 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
           <Property Name="RMActive" Type="Byte" Nullable="false" />
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RightsManagementId" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SaleQuantityAmountForReport">
+          <Key>
+            <PropertyRef Name="SaleDate" />
+          </Key>
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2233,6 +2275,16 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="RightsName" ColumnName="RightsName" />
                 <ScalarProperty Name="RightsId" ColumnName="RightsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleQuantityAmountForReports">
+            <EntityTypeMapping TypeName="EphraimTradersModel.SaleQuantityAmountForReport">
+              <MappingFragment StoreEntitySet="SaleQuantityAmountForReport">
+                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

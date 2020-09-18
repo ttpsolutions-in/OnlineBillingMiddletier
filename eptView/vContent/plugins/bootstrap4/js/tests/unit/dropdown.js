@@ -49,7 +49,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<button disabled href="#" class="btn dropdown-toggle" data-toggle="dropdown">Dropdown</button>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -72,7 +72,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '</div>' +
@@ -94,7 +94,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-boundary="viewport">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '</div>' +
@@ -110,13 +110,13 @@ $(function () {
     $dropdown.trigger('click')
   })
 
-  QUnit.test('should set aria-expanded="true" on target when dropdown menu is shown', function (assert) {
+  QUnit.test('should set aria-expanded="true" on target when dropdown Rights is shown', function (assert) {
     assert.expect(1)
     var done = assert.async()
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -137,13 +137,13 @@ $(function () {
     $dropdown.trigger('click')
   })
 
-  QUnit.test('should set aria-expanded="false" on target when dropdown menu is hidden', function (assert) {
+  QUnit.test('should set aria-expanded="false" on target when dropdown Rights is hidden', function (assert) {
     assert.expect(1)
     var done = assert.async()
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" aria-expanded="false" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -173,7 +173,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<button href="#" class="btn dropdown-toggle disabled" data-toggle="dropdown">Dropdown</button>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -191,13 +191,13 @@ $(function () {
     $dropdown.trigger($.Event('click'))
   })
 
-  QUnit.test('should add class show to menu if clicked', function (assert) {
+  QUnit.test('should add class show to Rights if clicked', function (assert) {
     assert.expect(1)
     var done = assert.async()
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -221,7 +221,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="/foo/" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -245,7 +245,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -270,13 +270,13 @@ $(function () {
     $dropdown.trigger('click')
   })
 
-  QUnit.test('should remove "show" class if tabbing outside of menu', function (assert) {
+  QUnit.test('should remove "show" class if tabbing outside of Rights', function (assert) {
     assert.expect(2)
     var done = assert.async()
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="dropdown-divider"/>' +
@@ -306,17 +306,17 @@ $(function () {
     assert.expect(7)
     var done = assert.async()
     var dropdownHTML = '<div class="nav">' +
-        '<div class="dropdown" id="testmenu">' +
-        '<a class="dropdown-toggle" data-toggle="dropdown" href="#testmenu">Test menu <span class="caret"/></a>' +
-        '<div class="dropdown-menu">' +
-        '<a class="dropdown-item" href="#sub1">Submenu 1</a>' +
+        '<div class="dropdown" id="testRights">' +
+        '<a class="dropdown-toggle" data-toggle="dropdown" href="#testRights">Test Rights <span class="caret"/></a>' +
+        '<div class="dropdown-Rights">' +
+        '<a class="dropdown-item" href="#sub1">SubRights 1</a>' +
         '</div>' +
         '</div>' +
         '</div>' +
         '<div class="btn-group">' +
         '<button class="btn">Actions</button>' +
         '<button class="btn dropdown-toggle" data-toggle="dropdown"></button>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Action 1</a>' +
         '</div>' +
         '</div>'
@@ -329,40 +329,40 @@ $(function () {
     $first.parent('.dropdown')
       .on('shown.bs.dropdown', function () {
         assert.strictEqual($first.parents('.show').length, 1, '"show" class added on click')
-        assert.strictEqual($('#qunit-fixture .dropdown-menu.show').length, 1, 'only one dropdown is shown')
+        assert.strictEqual($('#qunit-fixture .dropdown-Rights.show').length, 1, 'only one dropdown is shown')
         $(document.body).trigger('click')
       }).on('hidden.bs.dropdown', function () {
-        assert.strictEqual($('#qunit-fixture .dropdown-menu.show').length, 0, '"show" class removed')
+        assert.strictEqual($('#qunit-fixture .dropdown-Rights.show').length, 0, '"show" class removed')
         $last.trigger('click')
       })
 
     $last.parent('.btn-group')
       .on('shown.bs.dropdown', function () {
         assert.strictEqual($last.parent('.show').length, 1, '"show" class added on click')
-        assert.strictEqual($('#qunit-fixture .dropdown-menu.show').length, 1, 'only one dropdown is shown')
+        assert.strictEqual($('#qunit-fixture .dropdown-Rights.show').length, 1, 'only one dropdown is shown')
         $(document.body).trigger('click')
       }).on('hidden.bs.dropdown', function () {
-        assert.strictEqual($('#qunit-fixture .dropdown-menu.show').length, 0, '"show" class removed')
+        assert.strictEqual($('#qunit-fixture .dropdown-Rights.show').length, 0, '"show" class removed')
         done()
       })
     $first.trigger('click')
   })
 
-  QUnit.test('should remove "show" class if body if tabbing outside of menu, with multiple dropdowns', function (assert) {
+  QUnit.test('should remove "show" class if body if tabbing outside of Rights, with multiple dropdowns', function (assert) {
     assert.expect(7)
     var done = assert.async()
     var dropdownHTML = '<div class="nav">' +
-        '<div class="dropdown" id="testmenu">' +
-        '<a class="dropdown-toggle" data-toggle="dropdown" href="#testmenu">Test menu <span class="caret"/></a>' +
-        '<div class="dropdown-menu">' +
-        '<a class="dropdown-item" href="#sub1">Submenu 1</a>' +
+        '<div class="dropdown" id="testRights">' +
+        '<a class="dropdown-toggle" data-toggle="dropdown" href="#testRights">Test Rights <span class="caret"/></a>' +
+        '<div class="dropdown-Rights">' +
+        '<a class="dropdown-item" href="#sub1">SubRights 1</a>' +
         '</div>' +
         '</div>' +
         '</div>' +
         '<div class="btn-group">' +
         '<button class="btn">Actions</button>' +
         '<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"/></button>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Action 1</a>' +
         '</div>' +
         '</div>'
@@ -375,24 +375,24 @@ $(function () {
     $first.parent('.dropdown')
       .on('shown.bs.dropdown', function () {
         assert.strictEqual($first.parents('.show').length, 1, '"show" class added on click')
-        assert.strictEqual($('#qunit-fixture .dropdown-menu.show').length, 1, 'only one dropdown is shown')
+        assert.strictEqual($('#qunit-fixture .dropdown-Rights.show').length, 1, 'only one dropdown is shown')
         var e = $.Event('keyup')
         e.which = 9 // Tab
         $(document.body).trigger(e)
       }).on('hidden.bs.dropdown', function () {
-        assert.strictEqual($('#qunit-fixture .dropdown-menu.show').length, 0, '"show" class removed')
+        assert.strictEqual($('#qunit-fixture .dropdown-Rights.show').length, 0, '"show" class removed')
         $last.trigger('click')
       })
 
     $last.parent('.btn-group')
       .on('shown.bs.dropdown', function () {
         assert.strictEqual($last.parent('.show').length, 1, '"show" class added on click')
-        assert.strictEqual($('#qunit-fixture .dropdown-menu.show').length, 1, 'only one dropdown is shown')
+        assert.strictEqual($('#qunit-fixture .dropdown-Rights.show').length, 1, 'only one dropdown is shown')
         var e = $.Event('keyup')
         e.which = 9 // Tab
         $(document.body).trigger(e)
       }).on('hidden.bs.dropdown', function () {
-        assert.strictEqual($('#qunit-fixture .dropdown-menu.show').length, 0, '"show" class removed')
+        assert.strictEqual($('#qunit-fixture .dropdown-Rights.show').length, 0, '"show" class removed')
         done()
       })
     $first.trigger('click')
@@ -403,7 +403,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -437,7 +437,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -471,7 +471,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -505,7 +505,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -550,7 +550,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item disabled" href="#">Disabled link</a>' +
         '<a class="dropdown-item" href="#">Another link</a>' +
         '</div>' +
@@ -583,7 +583,7 @@ $(function () {
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a id="item1" class="dropdown-item" href="#">A link</a>' +
         '<a id="item2" class="dropdown-item" href="#">Another link</a>' +
         '</div>' +
@@ -622,7 +622,7 @@ $(function () {
     var done = assert.async()
     var dropdownHTML = '<div class="dropdown">' +
         '<button type="button" data-toggle="dropdown">Dropdown</button>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<input id="textField" type="text" />' +
         '</div>' +
         '</div>'
@@ -633,14 +633,14 @@ $(function () {
 
     var $textfield = $('#textField')
     $textfield.on('click', function () {
-      assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown menu is shown')
+      assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown Rights is shown')
       done()
     })
 
     $dropdown
       .parent('.dropdown')
       .on('shown.bs.dropdown', function () {
-        assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown menu is shown')
+        assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown Rights is shown')
         $textfield.trigger($.Event('click'))
       })
     $dropdown.trigger('click')
@@ -651,7 +651,7 @@ $(function () {
     var done = assert.async()
     var dropdownHTML = '<div class="dropdown">' +
         '<button type="button" data-toggle="dropdown">Dropdown</button>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<textarea id="textArea"></textarea>' +
         '</div>' +
         '</div>'
@@ -662,14 +662,14 @@ $(function () {
 
     var $textarea = $('#textArea')
     $textarea.on('click', function () {
-      assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown menu is shown')
+      assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown Rights is shown')
       done()
     })
 
     $dropdown
       .parent('.dropdown')
       .on('shown.bs.dropdown', function () {
-        assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown menu is shown')
+        assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown Rights is shown')
         $textarea.trigger($.Event('click'))
       })
     $dropdown.trigger('click')
@@ -681,7 +681,7 @@ $(function () {
     var html = '<nav class="navbar navbar-expand-md navbar-light bg-light">' +
         '<div class="dropdown">' +
         '  <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>' +
-        '  <div class="dropdown-menu" aria-labelledby="dropdown">' +
+        '  <div class="dropdown-Rights" aria-labelledby="dropdown">' +
         '    <a class="dropdown-item" href="#">Action</a>' +
         '    <a class="dropdown-item" href="#">Another action</a>' +
         '    <a class="dropdown-item" href="#">Something else here</a>' +
@@ -693,25 +693,25 @@ $(function () {
     var $triggerDropdown = $('#qunit-fixture')
       .find('[data-toggle="dropdown"]')
       .bootstrapDropdown()
-    var $dropdownMenu = $triggerDropdown.next()
+    var $dropdownRights = $triggerDropdown.next()
 
     $triggerDropdown
       .parent('.dropdown')
       .on('shown.bs.dropdown', function () {
-        assert.ok(typeof $dropdownMenu.attr('style') === 'undefined', 'No inline style applied by Popper.js')
+        assert.ok(typeof $dropdownRights.attr('style') === 'undefined', 'No inline style applied by Popper.js')
         done()
       })
     $triggerDropdown.trigger($.Event('click'))
   })
 
-  QUnit.test('should ignore keyboard events for <input>s and <textarea>s within dropdown-menu, except for escape key', function (assert) {
+  QUnit.test('should ignore keyboard events for <input>s and <textarea>s within dropdown-Rights, except for escape key', function (assert) {
     assert.expect(7)
     var done = assert.async()
 
     var dropdownHTML = '<div class="tabs">' +
         '<div class="dropdown">' +
         '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-        '<div class="dropdown-menu">' +
+        '<div class="dropdown-Rights">' +
         '<a class="dropdown-item" href="#">Secondary link</a>' +
         '<a class="dropdown-item" href="#">Something else here</a>' +
         '<div class="divider"/>' +
@@ -766,7 +766,7 @@ $(function () {
         $input.trigger('focus').trigger($.Event('keydown', {
           which: 27
         }))
-        assert.ok(!$dropdown.parent('.dropdown').hasClass('show'), 'dropdown menu is not shown')
+        assert.ok(!$dropdown.parent('.dropdown').hasClass('show'), 'dropdown Rights is not shown')
         done()
       })
 
@@ -781,7 +781,7 @@ $(function () {
         '<ul class="nav tabs">' +
         '  <li class="dropdown">' +
         '    <input type="text" id="input" data-toggle="dropdown">' +
-        '    <div class="dropdown-menu" role="menu">' +
+        '    <div class="dropdown-Rights" role="Rights">' +
         '      <a id="item1" class="dropdown-item" href="#">Secondary link</a>' +
         '      <a id="item2" class="dropdown-item" href="#">Something else here</a>' +
         '      <div class="divider"></div>' +
@@ -806,14 +806,14 @@ $(function () {
         $input.trigger('focus').trigger($.Event('keydown', {
           which: 32
         }))
-        assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown menu is shown')
+        assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown Rights is shown')
         assert.ok($(document.activeElement).is($input), 'input is still focused')
 
         // Key escape
         $input.trigger('focus').trigger($.Event('keydown', {
           which: 27
         }))
-        assert.ok(!$dropdown.parent('.dropdown').hasClass('show'), 'dropdown menu is not shown')
+        assert.ok(!$dropdown.parent('.dropdown').hasClass('show'), 'dropdown Rights is not shown')
 
         $dropdown
           .parent('.dropdown')
@@ -849,7 +849,7 @@ $(function () {
         '<ul class="nav tabs">' +
         '  <li class="dropdown">' +
         '    <textarea id="textarea" data-toggle="dropdown"></textarea>' +
-        '    <div class="dropdown-menu" role="menu">' +
+        '    <div class="dropdown-Rights" role="Rights">' +
         '      <a id="item1" class="dropdown-item" href="#">Secondary link</a>' +
         '      <a id="item2" class="dropdown-item" href="#">Something else here</a>' +
         '      <div class="divider"></div>' +
@@ -874,14 +874,14 @@ $(function () {
         $textarea.trigger('focus').trigger($.Event('keydown', {
           which: 32
         }))
-        assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown menu is shown')
+        assert.ok($dropdown.parent('.dropdown').hasClass('show'), 'dropdown Rights is shown')
         assert.ok($(document.activeElement).is($textarea), 'textarea is still focused')
 
         // Key escape
         $textarea.trigger('focus').trigger($.Event('keydown', {
           which: 27
         }))
-        assert.ok(!$dropdown.parent('.dropdown').hasClass('show'), 'dropdown menu is not shown')
+        assert.ok(!$dropdown.parent('.dropdown').hasClass('show'), 'dropdown Rights is not shown')
 
         $dropdown
           .parent('.dropdown')

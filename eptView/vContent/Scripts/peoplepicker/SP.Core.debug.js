@@ -443,7 +443,7 @@ SP.BWsaClient.getSQMLocationFromCUICommandInfo = function SP_BWsaClient$getSQMLo
         else if ($v_1 === 'Jewel') {
             $v_0 = 4;
         }
-        else if ($v_1 === 'ContextMenu') {
+        else if ($v_1 === 'ContextRights') {
             $v_0 = 19;
         }
     }
@@ -1091,11 +1091,11 @@ SP.UI.Orientation.prototype = {
     vertical: 1
 };
 SP.UI.Orientation.registerEnum('SP.UI.Orientation', false);
-SP.UI.AspMenu = function SP_UI_AspMenu(e) {
+SP.UI.AspRights = function SP_UI_AspRights(e) {
     this.$q_2 = [];
-    SP.UI.AspMenu.initializeBase(this, [e]);
+    SP.UI.AspRights.initializeBase(this, [e]);
 };
-SP.UI.AspMenu.$16 = function SP_UI_AspMenu$$16($p0) {
+SP.UI.AspRights.$16 = function SP_UI_AspRights$$16($p0) {
     var $v_0 = null;
 
     for (var $v_1 = 0, $v_2 = $p0.childNodes.length; $v_1 < $v_2; ++$v_1) {
@@ -1108,45 +1108,45 @@ SP.UI.AspMenu.$16 = function SP_UI_AspMenu$$16($p0) {
     }
     return $v_0;
 };
-SP.UI.AspMenu.prototype = {
+SP.UI.AspRights.prototype = {
     $G_2: null,
     $E_2: null,
     $p_2: 500,
     $11_2: 125,
     $z_2: 250,
-    get_menuOrientation: function SP_UI_AspMenu$get_menuOrientation() {
-        if (Sys.UI.DomElement.containsCssClass(this.$G_2.parentNode, 'ms-core-listMenu-horizontalBox')) {
+    get_RightsOrientation: function SP_UI_AspRights$get_RightsOrientation() {
+        if (Sys.UI.DomElement.containsCssClass(this.$G_2.parentNode, 'ms-core-listRights-horizontalBox')) {
             return 0;
         }
         else {
             return 1;
         }
     },
-    set_menuOrientation: function SP_UI_AspMenu$set_menuOrientation(value) {
+    set_RightsOrientation: function SP_UI_AspRights$set_RightsOrientation(value) {
         if (!value) {
-            Sys.UI.DomElement.removeCssClass(this.$G_2.parentNode, 'ms-core-listMenu-verticalBox');
-            Sys.UI.DomElement.addCssClass(this.$G_2.parentNode, 'ms-core-listMenu-horizontalBox');
+            Sys.UI.DomElement.removeCssClass(this.$G_2.parentNode, 'ms-core-listRights-verticalBox');
+            Sys.UI.DomElement.addCssClass(this.$G_2.parentNode, 'ms-core-listRights-horizontalBox');
         }
         else if (value === 1) {
-            Sys.UI.DomElement.removeCssClass(this.$G_2.parentNode, 'ms-core-listMenu-horizontalBox');
-            Sys.UI.DomElement.addCssClass(this.$G_2.parentNode, 'ms-core-listMenu-verticalBox');
+            Sys.UI.DomElement.removeCssClass(this.$G_2.parentNode, 'ms-core-listRights-horizontalBox');
+            Sys.UI.DomElement.addCssClass(this.$G_2.parentNode, 'ms-core-listRights-verticalBox');
         }
         return value;
     },
-    get_disappearAfter: function SP_UI_AspMenu$get_disappearAfter() {
+    get_disappearAfter: function SP_UI_AspRights$get_disappearAfter() {
         return this.$p_2;
     },
-    set_disappearAfter: function SP_UI_AspMenu$set_disappearAfter(value) {
+    set_disappearAfter: function SP_UI_AspRights$set_disappearAfter(value) {
         this.$p_2 = value;
         return value;
     },
-    initialize: function SP_UI_AspMenu$initialize() {
+    initialize: function SP_UI_AspRights$initialize() {
         Sys.Component.prototype.initialize.call(this);
         this.$G_2 = ((this.get_element()).getElementsByTagName('ul'))[0];
         this.$1T_2();
         this.$1U_2();
     },
-    $1T_2: function SP_UI_AspMenu$$1T_2() {
+    $1T_2: function SP_UI_AspRights$$1T_2() {
         var $v_0 = this.$G_2.getElementsByTagName('li');
 
         for (var $v_1 = 0, $v_2 = $v_0.length; $v_1 < $v_2; ++$v_1) {
@@ -1156,7 +1156,7 @@ SP.UI.AspMenu.prototype = {
             this.$1J_2($v_3);
         }
     },
-    $s_2: function SP_UI_AspMenu$$s_2($p0, $p1) {
+    $s_2: function SP_UI_AspRights$$s_2($p0, $p1) {
         for (var $v_0 = $p1; $v_0; $v_0 = $v_0.parentNode) {
             if ($v_0 === $p0) {
                 return true;
@@ -1164,18 +1164,18 @@ SP.UI.AspMenu.prototype = {
         }
         return false;
     },
-    $1J_2: function SP_UI_AspMenu$$1J_2($p0) {
+    $1J_2: function SP_UI_AspRights$$1J_2($p0) {
         var $$t_C = this;
 
         $addHandler($p0, 'mouseover', function($p1_0) {
-            $$t_C.showSubMenu($p0);
+            $$t_C.showSubRights($p0);
         });
         var $$t_D = this;
 
         $addHandler($p0, 'mouseout', function($p1_0) {
-            $$t_D.hideSubMenu($p0);
+            $$t_D.hideSubRights($p0);
         });
-        var $v_0 = $p0.querySelector('.menu-item');
+        var $v_0 = $p0.querySelector('.Rights-item');
 
         if ($v_0) {
             var $$t_E = this;
@@ -1185,7 +1185,7 @@ SP.UI.AspMenu.prototype = {
                     var $v_2 = $p0.parentNode.parentNode;
 
                     if ($v_2 && $v_2.tagName && $v_2.tagName.toUpperCase() === 'LI') {
-                        $$t_E.showSubMenu($v_2);
+                        $$t_E.showSubRights($v_2);
                     }
                 }
             });
@@ -1206,7 +1206,7 @@ SP.UI.AspMenu.prototype = {
             var $$t_H = this;
 
             $addHandler($v_1, 'click', function($p1_0) {
-                if (!$p1_0.target || !Sys.UI.DomElement.containsCssClass($p1_0.target, 'menu-item-text')) {
+                if (!$p1_0.target || !Sys.UI.DomElement.containsCssClass($p1_0.target, 'Rights-item-text')) {
                     var $v_3 = $p0.hoverDebouncer;
                     var $v_4 = 0;
 
@@ -1218,10 +1218,10 @@ SP.UI.AspMenu.prototype = {
                     }
                     $p0.hoverDebouncer = $v_4;
                     if ($v_4 > 1) {
-                        $$t_H.showSubMenu($p0);
+                        $$t_H.showSubRights($p0);
                     }
                     else {
-                        $$t_H.hideSubMenu($p0);
+                        $$t_H.hideSubRights($p0);
                     }
                     SP.UI.UIUtility.cancelEvent($p1_0);
                     return false;
@@ -1229,23 +1229,23 @@ SP.UI.AspMenu.prototype = {
             });
         }
     },
-    $18_2: function SP_UI_AspMenu$$18_2($p0) {
+    $18_2: function SP_UI_AspRights$$18_2($p0) {
         if (!this.$s_2($p0, document.activeElement)) {
             var $v_0 = $p0.hoverDebouncer;
 
             if ($v_0 > 1) {
                 $p0.hoverDebouncer = 1;
             }
-            this.hideSubMenu($p0);
+            this.hideSubRights($p0);
         }
     },
-    $r_2: function SP_UI_AspMenu$$r_2($p0, $p1, $p2, $p3) {
+    $r_2: function SP_UI_AspRights$$r_2($p0, $p1, $p2, $p3) {
         var $v_0 = 0;
         var $v_1 = document.documentElement.dir === 'rtl';
-        var $v_2 = $p0.querySelector('.menu-item-text');
+        var $v_2 = $p0.querySelector('.Rights-item-text');
 
         if (!$v_2) {
-            $v_2 = $p0.querySelector('.menu-item');
+            $v_2 = $p0.querySelector('.Rights-item');
         }
         if (!$p1) {
             $v_0 = (Sys.UI.DomElement.getLocation($v_2)).x - (Sys.UI.DomElement.getLocation($p2)).x;
@@ -1261,7 +1261,7 @@ SP.UI.AspMenu.prototype = {
         }
         return $v_0;
     },
-    showSubMenu: function SP_UI_AspMenu$showSubMenu(flyoutItem) {
+    showSubRights: function SP_UI_AspRights$showSubRights(flyoutItem) {
         var $v_0 = Sys.UI.DomElement.containsCssClass(flyoutItem, 'hover');
         var $v_1 = Sys.UI.DomElement.containsCssClass(flyoutItem, 'hover-off');
 
@@ -1276,12 +1276,12 @@ SP.UI.AspMenu.prototype = {
                     var $v_3 = Sys.Browser.agent === Sys.Browser.InternetExplorer && Sys.Browser.version < 8 && (SP.ScriptUtility.isNullOrUndefined($v_2) || $v_2 < 8);
                     var $v_4 = document.documentElement.dir === 'rtl';
 
-                    if ($v_4 && !this.get_menuOrientation() && $v_3) {
-                        this.showSubMenuCore(flyoutItem, -flyoutItem.offsetWidth, 0);
+                    if ($v_4 && !this.get_RightsOrientation() && $v_3) {
+                        this.showSubRightsCore(flyoutItem, -flyoutItem.offsetWidth, 0);
                         return;
                     }
                 }
-                this.showSubMenuCore(flyoutItem, 0, 0);
+                this.showSubRightsCore(flyoutItem, 0, 0);
             }
         }
         else if (!$v_0) {
@@ -1289,12 +1289,12 @@ SP.UI.AspMenu.prototype = {
             Sys.UI.DomElement.removeCssClass(flyoutItem, 'hover-off');
         }
     },
-    showSubMenuCore: function SP_UI_AspMenu$showSubMenuCore(li, xOffset, yOffset) {
+    showSubRightsCore: function SP_UI_AspRights$showSubRightsCore(li, xOffset, yOffset) {
         if (li.childNodes.length < 1) {
             return;
         }
         if (this.$E_2 && this.$E_2 !== li && !this.$s_2(this.$E_2, li)) {
-            this.hideSubMenuCore(this.$E_2, li);
+            this.hideSubRightsCore(this.$E_2, li);
         }
         if (li) {
             this.$q_2.push(this.$E_2);
@@ -1304,7 +1304,7 @@ SP.UI.AspMenu.prototype = {
         var $v_1 = this.$r_2(li, 1, li, true) + 6;
 
         Sys.UI.DomElement.addCssClass(li, 'hover');
-        var $v_2 = SP.UI.AspMenu.$16(li);
+        var $v_2 = SP.UI.AspRights.$16(li);
 
         if ($v_2) {
             var $v_3 = window.innerWidth;
@@ -1313,7 +1313,7 @@ SP.UI.AspMenu.prototype = {
                 $v_3 = window.document.body.clientWidth;
             }
             var $v_4 = -1;
-            var $v_5 = !this.get_menuOrientation() && Sys.UI.DomElement.containsCssClass(li.parentNode, 'static');
+            var $v_5 = !this.get_RightsOrientation() && Sys.UI.DomElement.containsCssClass(li.parentNode, 'static');
             var $v_6 = $v_2.querySelector('li');
 
             if ($v_5 && li.offsetWidth >= this.$11_2 && li.offsetWidth <= this.$z_2) {
@@ -1344,7 +1344,7 @@ SP.UI.AspMenu.prototype = {
                     $v_2.style.right = $v_4 + xOffset + 'px';
                 }
                 $v_2.style.top = $v_1 + yOffset + 'px';
-                var $v_A = li.querySelector('.menu-item');
+                var $v_A = li.querySelector('.Rights-item');
             }
             else {
                 if (!$v_0) {
@@ -1357,7 +1357,7 @@ SP.UI.AspMenu.prototype = {
             }
         }
     },
-    hideSubMenu: function SP_UI_AspMenu$hideSubMenu(flyoutItem) {
+    hideSubRights: function SP_UI_AspRights$hideSubRights(flyoutItem) {
         var $v_0 = flyoutItem.hoverDebouncer;
 
         if ($v_0 <= 0) {
@@ -1371,15 +1371,15 @@ SP.UI.AspMenu.prototype = {
 
             window.setTimeout(function() {
                 if (Sys.UI.DomElement.containsCssClass(flyoutItem, 'hover-off')) {
-                    $$t_2.hideSubMenuCore(flyoutItem, null);
+                    $$t_2.hideSubRightsCore(flyoutItem, null);
                 }
             }, this.$p_2);
         }
     },
-    hideSubMenuCore: function SP_UI_AspMenu$hideSubMenuCore(li, newLi) {
+    hideSubRightsCore: function SP_UI_AspRights$hideSubRightsCore(li, newLi) {
         do {
             var $v_0 = document.documentElement.dir === 'rtl';
-            var $v_1 = SP.UI.AspMenu.$16(li);
+            var $v_1 = SP.UI.AspRights.$16(li);
 
             if ($v_1) {
                 $v_1.style.top = '';
@@ -1401,7 +1401,7 @@ SP.UI.AspMenu.prototype = {
             }
         } while (li);
     },
-    $1U_2: function SP_UI_AspMenu$$1U_2() {
+    $1U_2: function SP_UI_AspRights$$1U_2() {
         if (!SP.ScriptUtility.isNullOrUndefined(this.$G_2.querySelectorAll)) {
             var $v_0 = this.$G_2.querySelectorAll('a.new-window');
 
@@ -1904,7 +1904,7 @@ SP.BWsaStream.registerClass('SP.BWsaStream');
 SP.BWsaHeader.registerClass('SP.BWsaHeader');
 SP.BWsaData.registerClass('SP.BWsaData');
 SP.BWsaClient.registerClass('SP.BWsaClient');
-SP.UI.AspMenu.registerClass('SP.UI.AspMenu', Sys.UI.Control);
+SP.UI.AspRights.registerClass('SP.UI.AspRights', Sys.UI.Control);
 SP.Utilities.CommandBlock.registerClass('SP.Utilities.CommandBlock');
 SP.Utilities.TaskTelemetry.registerClass('SP.Utilities.TaskTelemetry');
 SP.Utilities.Task.registerClass('SP.Utilities.Task');

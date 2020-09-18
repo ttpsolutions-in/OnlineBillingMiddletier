@@ -62,9 +62,9 @@
                             <td class="text-right">Total Credit</td>
                             <td class="text-right"><label>{{TotalCredit}}</label></td>
                         </tr>
-                        <tr>
-                            <td><button type="button" ng-if="searchSupplierRetailer" class="btn btn-primary col-md-offset-5" ng-click="printCustomerBills()"> <span data-feather="printer"></span>Export to PDF</button></td>
-                            <td><button type="button" ng-if="searchSupplierRetailer" class="btn btn-primary col-md-offset-5" ng-click="paybill()"> <span data-feather="arrow-right-circle"></span>Pay Online</button></td>
+                        <tr ng-if="ShowButton">
+                            <td><button type="button" class="btn btn-primary col-md-offset-6 pull-right" ng-click="printCustomerBills()"> <span data-feather="printer"></span> Customer Bills to PDF</button></td>
+                            <td><button type="button" class="btn btn-primary col-md-offset-3" ng-click="paybill()"> <span data-feather="arrow-right-circle"></span> Pay Online</button></td>
                         </tr>
                     </table>
 

@@ -87,6 +87,9 @@
     <Content Include="vapp\controllers\MaterialsController.js" />
     <Content Include="vapp\controllers\nextController.js" />
     <Content Include="vapp\controllers\RegisterController.js" />
+    <Content Include="vapp\controllers\RightsController.js" />
+    <Content Include="vapp\controllers\RightsManagementController.js" />
+    <Content Include="vapp\controllers\SalesStatisticsController.js" />
     <Content Include="vapp\controllers\SupplierRetailerController.js" />
     <Content Include="vapp\controllers\WholeSaleDashboardController.js" />
     <Content Include="vapp\services\AuthData.js" />

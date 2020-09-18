@@ -35,7 +35,7 @@
 .uib-position-body-scrollbar-measure {
   overflow: scroll !important;
 }
-.uib-datepicker-popup.dropdown-menu {
+.uib-datepicker-popup.dropdown-Rights {
   display: block;
   float: none;
   margin: 0;
@@ -110,6 +110,6 @@
   width: 50px;
 }
 
-[uib-typeahead-popup].dropdown-menu {
+[uib-typeahead-popup].dropdown-Rights {
   display: block;
 }

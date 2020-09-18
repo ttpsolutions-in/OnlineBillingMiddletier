@@ -26488,7 +26488,7 @@ function baseInputType(scope, element, attr, ctrl, $sniffer, $browser) {
       deferListener(event, this, this.value);
     });
 
-    // if user modifies input value using context menu in IE, we need "paste", "cut" and "drop" events to catch it
+    // if user modifies input value using context Rights in IE, we need "paste", "cut" and "drop" events to catch it
     if ($sniffer.hasEvent('paste')) {
       element.on('paste cut drop', deferListener);
     }
@@ -31908,7 +31908,7 @@ var ngOptionsMinErr = minErr('ngOptions');
  * - reduced memory consumption by not creating a new scope for each repeated instance
  * - increased render speed by creating the options in a documentFragment instead of individually
  *
- * When an item in the `<select>` menu is selected, the array element or object property
+ * When an item in the `<select>` Rights is selected, the array element or object property
  * represented by the selected option will be bound to the model identified by the `ngModel`
  * directive.
  *
@@ -35281,7 +35281,7 @@ var SelectController =
  * It also handles dynamic `<option>` elements, which can be added using the {@link ngRepeat `ngRepeat}` or
  * {@link ngOptions `ngOptions`} directives.
  *
- * When an item in the `<select>` menu is selected, the value of the selected option will be bound
+ * When an item in the `<select>` Rights is selected, the value of the selected option will be bound
  * to the model identified by the `ngModel` directive. With static or repeated options, this is
  * the content of the `value` attribute or the textContent of the `<option>`, if the value attribute is missing.
  * Value and textContent can be interpolated.

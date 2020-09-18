@@ -40,7 +40,7 @@
         this.updater = this.options.updater || this.updater;
         this.source = this.options.source;
         this.delay = typeof this.options.delay == 'number' ? this.options.delay : 250;
-        this.$menu = $(this.options.menu);
+        this.$Rights = $(this.options.Rights);
         this.shown = false;
         this.listen();
         this.showHintOnFocus = typeof this.options.showHintOnFocus == 'boolean' ? this.options.showHintOnFocus : false;
@@ -51,7 +51,7 @@
         constructor: Typeahead
 
     , select: function () {
-        var val = this.$menu.find('.active').data('value');
+        var val = this.$Rights.find('.active').data('value');
         if (this.autoSelect || val) {
             this.$element
               .val(this.updater(val))
@@ -77,7 +77,7 @@
             this.options.scrollHeight.call() :
             this.options.scrollHeight;
 
-        this.$menu
+        this.$Rights
           .insertAfter(this.$element)
           .css({
               top: pos.top + pos.height + scrollHeight
@@ -90,7 +90,7 @@
     }
 
     , hide: function () {
-        this.$menu.hide();
+        this.$Rights.hide();
         this.shown = false;
         return this;
     }
@@ -176,27 +176,27 @@
         if (this.autoSelect) {
             items.first().addClass('active');
         }
-        this.$menu.html(items);
+        this.$Rights.html(items);
         return this;
     }
 
     , next: function (event) {
-        var active = this.$menu.find('.active').removeClass('active')
+        var active = this.$Rights.find('.active').removeClass('active')
           , next = active.next();
 
         if (!next.length) {
-            next = $(this.$menu.find('li')[0]);
+            next = $(this.$Rights.find('li')[0]);
         }
 
         next.addClass('active');
     }
 
     , prev: function (event) {
-        var active = this.$menu.find('.active').removeClass('active')
+        var active = this.$Rights.find('.active').removeClass('active')
           , prev = active.prev();
 
         if (!prev.length) {
-            prev = this.$menu.find('li').last();
+            prev = this.$Rights.find('li').last();
         }
 
         prev.addClass('active');
@@ -213,7 +213,7 @@
             this.$element.on('keydown', $.proxy(this.keydown, this));
         }
 
-        this.$menu
+        this.$Rights
           .on('click', $.proxy(this.click, this))
           .on('mouseenter', 'li', $.proxy(this.mouseenter, this))
           .on('mouseleave', 'li', $.proxy(this.mouseleave, this));
@@ -230,7 +230,7 @@
             this.$element.off('keydown');
         }
 
-        this.$menu.remove();
+        this.$Rights.remove();
     }
     , eventSupported: function (eventName) {
         var isSupported = eventName in this.$element;
@@ -329,7 +329,7 @@
 
     , mouseenter: function (e) {
         this.mousedover = true;
-        this.$menu.find('.active').removeClass('active');
+        this.$Rights.find('.active').removeClass('active');
         $(e.currentTarget).addClass('active');
     }
 
@@ -366,7 +366,7 @@
     $.fn.typeahead.defaults = {
         source: []
     , items: 8
-    , menu: '<ul class="typeahead dropdown-menu"></ul>'
+    , Rights: '<ul class="typeahead dropdown-Rights"></ul>'
     , item: '<li><a href="#"></a></li>'
     , minLength: 1
     , scrollHeight: 0

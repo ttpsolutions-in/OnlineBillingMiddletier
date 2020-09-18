@@ -1,9 +1,9 @@
-ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', '$q', '$http', '$location', '$routeParams', '$timeout', 'toaster',
-    'GlobalVariableService', 'CommonService', 'uiGridConstants', 'PrintService', function ($rootScope,$scope, $filter, $q, $http, $location, $routeParams, $timeout,
+ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter', '$q', '$http', '$location', '$routeParams', '$timeout', 'toaster',
+    'GlobalVariableService', 'CommonService', 'uiGridConstants', 'PrintService', function ($rootScope, $scope, $filter, $q, $http, $location, $routeParams, $timeout,
         toaster, GlobalVariableService, CommonService, uiGridConstants, PrintService) {
 
         $scope.tokenInfo = {};
-        
+
 
         $scope.ShowSpinnerStatus = false;
 
@@ -174,7 +174,7 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
             //paramdata.GSTApplied = $scope.WholeSale.GSTApplied;
             //paramdata.GSTPercentage = $scope.WholeSale.GSTPercentage;
             var results = {};
-            
+
             results = CommonService.CalculateGSTNGrandTotal($scope.WholeSale.TotalAmount, $scope.WholeSale.GSTPercentage, $scope.WholeSale.GSTApplied);
 
             $scope.WholeSale.GrandTotal = results.GrandTotal;
@@ -202,8 +202,13 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
                 $scope.WholeSale.ContactNo = "";
             }
         };
-        
+
         $scope.GetBillByID = function () {
+            var EmailIdFilter = '';
+            if ($scope.tokens.UserRole == "Customer") {
+                EmailIdFilter = " and Bill/RetailerId eq '" + $scope.SupplierRetailers.SupplierRetailerId;
+            }
+
             var lstBill = {
                 title: "Sales",
                 fields: [
@@ -221,10 +226,11 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
                     "Material",
                     "Material/WholeSaleRate",
                     "Material/RetailRate",
-                    "Godown/GodownName"
+                    "Godown/GodownName",
+                    "ItemCategoryId"
                 ],
                 lookupFields: ["Bill", "Material", "Godown"],
-                filter: ["BillNo eq " + $scope.ID],
+                filter: ["BillNo eq " + $scope.ID + EmailIdFilter],
                 //limitTo: "5000",
                 orderBy: "CreatedOn desc"
             };
@@ -289,7 +295,7 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
                 if (response && response.data.d.results.length > 0) {
                     $scope.MaterialsData = response.data.d.results;
                 }
-                
+
             });
         };
 
@@ -308,7 +314,7 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
             CommonService.GetListItems(lstItems).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
                     $scope.GodownData = response.data.d.results;
-                    
+
                 }
                 if (callback)
                     callback();
@@ -339,7 +345,7 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
                 if (response && response.data.d.results.length > 0) {
                     $scope.ItemCatogoryList = response.data.d.results;
                     //console.log($scope.ItemCatogoryList);
-                    
+
                 }
                 if (callback)
                     callback();
@@ -348,16 +354,20 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
 
 
         $scope.GetSupplierRetailer = function (callback) {
+            var emailFilter = '';
+            if ($scope.tokens.UserRole == 'Customer') {
+                emailFilter = " and Email eq '" + $scope.tokens.UserName + "'";
+            }
             var postData = {
                 title: "SupplierRetailers",
                 fields: ["*"],
-                filter: ["Category eq " + $scope.Category.Retailer],
+                filter: ["Category eq " + $scope.Category.Retailer + emailFilter],
             };
             CommonService.GetListItems(postData).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
                     $scope.SupplierRetailers = response.data.d.results;
                     //console.log($scope.SupplierRetailers);
-                   
+
                 }
                 if (callback)
                     callback();
@@ -365,9 +375,7 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
         };
 
         $scope.SaveNPrint = function (isFormValid) {
-            $scope.SubmitItems(isFormValid, function () {
-                PrintService.GetSingleBillNPrint($scope.BillNo);
-            });
+            $scope.SubmitItems(isFormValid);
         }
 
         $scope.AddItem = function () {
@@ -391,8 +399,14 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
 
         };
 
+        $scope.FirstSaveDataAndPrint = function () {
 
-        $scope.SubmitItems = function (isFormValid,callback) {
+            $scope.SaveBillDetails('S', function () {
+                PrintService.GetSingleBillNPrint($scope.BillNo);
+            });
+        }
+
+        $scope.SubmitItems = function (isFormValid, callback) {
             try {
                 var isValid = isFormValid;
                 $scope.submitted = !isValid;
@@ -409,12 +423,12 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
                         };
                         $scope.SaveSupplierRetailers(supplierRetailers).then(function (retailerID) {
                             $scope.RetailerId = retailerID;
-                            $scope.SaveBillDetails();
+                            $scope.FirstSaveDataAndPrint();
                         });
 
                     } else {
                         $scope.RetailerId = $scope.WholeSale[0].Bill.RetailerId;
-                        $scope.SaveBillDetails();
+                        $scope.FirstSaveDataAndPrint();
                     }
                     if (callback)
                         callback();
@@ -447,13 +461,13 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
         };
 
 
-        $scope.SaveBillDetails = function (mode) {
+        $scope.SaveBillDetails = function (mode, callback) {
             try {
                 var saleType = 0;
                 var billStatus = 0;
                 var grandAmount = 0;
                 var balanceAmount = 0;
-                if (mode && mode =='c') {
+                if (mode && mode == 'c') {
                     billStatus = $scope.BillStatus.Cancelled;
                 }
                 else
@@ -475,7 +489,7 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
                 var postData = {
                     "RetailerId": $scope.RetailerId,
                     // "SaleCategoryId": $scope.SaleCategoryWholeSale,
-                    "SaleTypeId": saleType,                    
+                    "SaleTypeId": saleType,
                     "GSTApplied": $scope.WholeSale.GSTApplied,
                     "GSTAmount": $scope.WholeSale.GSTAmount.toString(),
                     "GSTPercentage": $scope.GSTPercentage.toString(),
@@ -486,89 +500,99 @@ ETradersApp.controller("EditBillController", ['$rootScope','$scope', '$filter', 
                     "BalanceAmt": balanceAmount.toString(), // Credit --> GrandAmount ,cash-->0
                     "GrandTotal": $scope.WholeSale.GrandTotal.toString(),
                     "ShowGSTNo": $scope.WholeSale[0].Bill.ShowGSTNo,
-                    "UpdatedOn": new Date()
+                    "UpdatedOn": new Date(),
+                    "UpdatedBy": $scope.tokens.UserName.toString()
                 };
 
+                return promise = new Promise((resolve, reject) => {
+                    CommonService.UpdateData("Bills", postData, $scope.ID).then(function (response) {
+                        if (response != undefined) {
+                            // var selectedRows = $filter('filter')($scope.gridOptions.data, { IsSelected: true }, true);
+                            var selectedRowsCount = $scope.gridOptions.data.length;
+                            if (selectedRowsCount > 0) {
+                                var isAlertDone = false;
 
-                CommonService.UpdateData("Bills", postData, $scope.ID).then(function (response) {
-                    if (response != undefined) {
-                        // var selectedRows = $filter('filter')($scope.gridOptions.data, { IsSelected: true }, true);
-                        var selectedRowsCount = $scope.gridOptions.data.length;
-                        if (selectedRowsCount > 0) {
-                            var isAlertDone = false;
-
-                            angular.forEach($scope.DeletedRows, function (value, key) {
-                                CommonService.DeleteData("Sales", value.SaleId).then(function (response) {
-                                    if (response != undefined) {
-                                        console.log("Sale data is deleted");
-                                    }
+                                angular.forEach($scope.DeletedRows, function (value, key) {
+                                    CommonService.DeleteData("Sales", value.SaleId).then(function (response) {
+                                        if (response != undefined) {
+                                            console.log("Sale data is deleted");
+                                        }
+                                    });
                                 });
-                            });
 
 
-                            angular.forEach($scope.gridOptions.data, function (value, key) {
+                                angular.forEach($scope.gridOptions.data, function (value, key) {
 
-                                var salesPostDate = {
-                                    "MaterialId": value.MaterialId,//$filter('filter')($scope.MaterialsData, { DisplayName: value.DisplayName }, true)[0].MaterialId,
-                                    "Rate":value.Rate,
-                                    "Quantity": value.Quantity.toString(),
-                                    "Discount": value.Discount.toString(),
-                                    "DLP": value.DLP.toString(),
-                                    "Amount": value.Amount.toString(),
-                                    "BillNo": $scope.ID,
-                                    "GodownId": $filter('filter')($scope.GodownData, { GodownName: value.Godown.GodownName }, true)[0].GodownId,
-                                    "UpdatedOn": new Date(),
-                                    "Active": billStatus
-                                };
-                                if (value.SaleId == 0) {
-                                    CommonService.PostData("Sales", salesPostDate).then(function (response1) {
-                                        if (response1.SaleId > 0) {
-                                            if (!isAlertDone) {
-                                                toaster.pop('success', "", "Bill Data Updated Successfully", 5000, 'trustedHtml');
-                                                isAlertDone = true;
-                                                $scope.DataSaved = true;
-                                                //$location.path('/');
+                                    var salesPostDate = {
+                                        "MaterialId": value.MaterialId,//$filter('filter')($scope.MaterialsData, { DisplayName: value.DisplayName }, true)[0].MaterialId,
+                                        "Rate": value.Rate,
+                                        "Quantity": value.Quantity.toString(),
+                                        "Discount": value.Discount.toString(),
+                                        "DLP": value.DLP.toString(),
+                                        "Amount": value.Amount.toString(),
+                                        "BillNo": $scope.ID,
+                                        "GodownId": $filter('filter')($scope.GodownData, { GodownName: value.Godown.GodownName }, true)[0].GodownId,
+                                        "UpdatedOn": new Date(),
+                                        "Active": billStatus,
+                                        "ItemCategoryId": value.ItemCategoryId
+                                    };
+                                    if (value.SaleId == 0) {
+                                        CommonService.PostData("Sales", salesPostDate).then(function (response1) {
+                                            if (response1.SaleId > 0) {
+                                                if (!isAlertDone) {
+                                                    toaster.pop('success', "", "Bill Data Updated Successfully", 5000, 'trustedHtml');
+                                                    isAlertDone = true;
+                                                    $scope.DataSaved = true;
+                                                    //$location.path('/');
+                                                }
                                             }
-                                        }
-                                    });
-                                } else {
-                                    CommonService.UpdateData("Sales", salesPostDate, value.SaleId).then(function (response1) {
-                                        if (response1 != undefined) {
-                                            if (!isAlertDone) {
-                                                toaster.pop('success', "", "Bill Data Updated Successfully", 5000, 'trustedHtml');
-                                                isAlertDone = true;
-                                                $location.path('/');
+                                        });
+                                    } else {
+                                        CommonService.UpdateData("Sales", salesPostDate, value.SaleId).then(function (response1) {
+                                            if (response1 != undefined) {
+                                                if (!isAlertDone) {
+                                                    toaster.pop('success', "", "Bill Data Updated Successfully", 5000, 'trustedHtml');
+                                                    isAlertDone = true;
+                                                    $location.path('/');
+                                                }
                                             }
-                                        }
-                                    });
-                                }
+                                        });
+                                    }
 
-                            });
+                                });
+                            }
+                            resolve("data saved");
+                            if (callback)
+                                callback();
                         }
-                    }
+                        else
+                            reject("data save failed");
+                    });
                 });
             } catch (error) {
                 console.log("Exception caught in the SaveClaim function. Exception Logged as " + error.message);
             }
+            return promise;
         };
-        
+
         $scope.init = function () {
-            
-                GlobalVariableService.validateUrl($location.$$path);
-            
+
+            GlobalVariableService.validateUrl($location.$$path);
+            var AllRights = GlobalVariableService.getRoleRights();
+            $scope.CancelBillRights = $filter('filter')(AllRights, { RightsName: $scope.RightsText.CancelBill }, true);
 
             //$scope.showSpinner();
 
-            var tokens= GlobalVariableService.getTokenInfo();
-            
+            $scope.tokens = GlobalVariableService.getTokenInfo();
+
             $scope.GetItemCategory(function () {
                 $scope.GetSupplierRetailer(function () {
                     $scope.GetGodowns(function () {
                         $scope.GetGSTPercentageById(function () {
                             if ($scope.ID > 0) {
                                 $scope.GetBillByID();
-                                $scope.CancelBillRights = GlobalVariableService.getARights(tokens.UserRole,$scope.RightsText.CancelBill);
-                               
+                                //$scope.CancelBillRights = GlobalVariableService.getARights(tokens.UserRole,$scope.RightsText.CancelBill);
+
                             }
                         });
                     });

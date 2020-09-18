@@ -55,7 +55,7 @@
 			
 			
 			//Left Navigation
-			.ms-core-listMenu-verticalBox UL.root > LI > .menu-item{  
+			.ms-core-listRights-verticalBox UL.root > LI > .Rights-item{  
 		  font-weight:bold;  
 		  background-color:#5482AB;  
 		  color:#ffffff;  
@@ -68,28 +68,28 @@
 		  font-size:12px;  
 		  font-family:Arial, Helvetica, Sans-Serif !important;  
 		 }  
-		 .ms-core-listMenu-verticalBox > ul.root > li.static > ul.static > li.static > a:hover {  
+		 .ms-core-listRights-verticalBox > ul.root > li.static > ul.static > li.static > a:hover {  
 		   color: #ffffff !important;  
 		   background-color:#0072C6!important;  
 		   text-decoration:none;  
 		 }  
-		 .ms-core-listMenu-verticalBox > ul.root > li.selected > a {  
+		 .ms-core-listRights-verticalBox > ul.root > li.selected > a {  
 		    background-image:none;  
 		    background-color:#0072C6;  
 		   color:#ffffff !important;  
 		 }  
-		 .ms-core-listMenu-verticalBox > ul.root > li > a:hover {  
+		 .ms-core-listRights-verticalBox > ul.root > li > a:hover {  
 		    background-image:none;  
 		    background-color:#0072C6;  
 		   color:#ffffff !important;  
 		   text-decoration:underline;  
 		 }  
-		 .ms-core-listMenu-verticalBox > ul.root > li.static > ul.static > li > a {  
+		 .ms-core-listRights-verticalBox > ul.root > li.static > ul.static > li > a {  
 		  font-size:12px;  
 		  padding-left:10px;  
 		  font-family:Arial, Helvetica, Sans-Serif !important;  
 		 }  
-		 .ms-core-listMenu-verticalBox > ul.root > li.static > ul.static > li > a.selected {  
+		 .ms-core-listRights-verticalBox > ul.root > li.static > ul.static > li > a.selected {  
 		   background:none;  
 		    color: #0072C6 !important;  
 		   background-color:#ffffff !important;  
@@ -97,11 +97,11 @@
 		    border: 1px #fff solid;  
 		    font-weight:bold;  
 		 }  
-		 .ms-core-listMenu-verticalBox a.selected  
+		 .ms-core-listRights-verticalBox a.selected  
 		 {  
 		  border: 1px #fff solid !important;  
 		 }  
-		 .ms-core-listMenu-verticalBox UL.root UL  
+		 .ms-core-listRights-verticalBox UL.root UL  
 		 {  
 		  margin:0px 0px 10px 0px !important;  
 		 }

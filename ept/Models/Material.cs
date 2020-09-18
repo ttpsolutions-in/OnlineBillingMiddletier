@@ -26,7 +26,7 @@ namespace ept.Models
         public Nullable<int> NoOfPiecePerUnit { get; set; }
         public Nullable<decimal> RetailRate { get; set; }
         public Nullable<decimal> WholeSaleRate { get; set; }
-        public Nullable<decimal> CostingPrice { get; set; }
+        public string CostingPrice { get; set; }
         public Nullable<decimal> QuantityInHand { get; set; }
         public Nullable<decimal> ReorderLevel { get; set; }
         public string CreatedBy { get; set; }

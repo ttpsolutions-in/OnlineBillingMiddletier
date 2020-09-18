@@ -70,7 +70,7 @@
     padding-left: 0;
   }
 
-  .dropdown-menu {
+  .dropdown-Rights {
     position: static;
     float: none;
   }
@@ -158,13 +158,13 @@
         .navbar-nav {
           flex-direction: row;
 
-          .dropdown-menu {
+          .dropdown-Rights {
             position: absolute;
           }
 
-          .dropdown-menu-right {
+          .dropdown-Rights-right {
             right: 0;
-            left: auto; // Reset the default from `.dropdown-menu`
+            left: auto; // Reset the default from `.dropdown-Rights`
           }
 
           .nav-link {
@@ -191,7 +191,7 @@
         }
 
         .dropup {
-          .dropdown-menu {
+          .dropdown-Rights {
             top: auto;
             bottom: 100%;
           }

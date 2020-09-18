@@ -47,17 +47,17 @@ const Dropdown = (($) => {
     DROPUP    : 'dropup',
     DROPRIGHT : 'dropright',
     DROPLEFT  : 'dropleft',
-    MENURIGHT : 'dropdown-menu-right',
-    MENULEFT  : 'dropdown-menu-left',
+    RightsRIGHT : 'dropdown-Rights-right',
+    RightsLEFT  : 'dropdown-Rights-left',
     POSITION_STATIC : 'position-static'
   }
 
   const Selector = {
     DATA_TOGGLE   : '[data-toggle="dropdown"]',
     FORM_CHILD    : '.dropdown form',
-    MENU          : '.dropdown-menu',
+    Rights          : '.dropdown-Rights',
     NAVBAR_NAV    : '.navbar-nav',
-    VISIBLE_ITEMS : '.dropdown-menu .dropdown-item:not(.disabled)'
+    VISIBLE_ITEMS : '.dropdown-Rights .dropdown-item:not(.disabled)'
   }
 
   const AttachmentMap = {
@@ -94,7 +94,7 @@ const Dropdown = (($) => {
       this._element  = element
       this._popper   = null
       this._config   = this._getConfig(config)
-      this._menu     = this._getMenuElement()
+      this._Rights     = this._getRightsElement()
       this._inNavbar = this._detectNavbar()
 
       this._addEventListeners()
@@ -122,9 +122,9 @@ const Dropdown = (($) => {
       }
 
       const parent   = Dropdown._getParentFromElement(this._element)
-      const isActive = $(this._menu).hasClass(ClassName.SHOW)
+      const isActive = $(this._Rights).hasClass(ClassName.SHOW)
 
-      Dropdown._clearMenus()
+      Dropdown._clearRightss()
 
       if (isActive) {
         return
@@ -153,17 +153,17 @@ const Dropdown = (($) => {
         let element = this._element
         // For dropup with alignment we use the parent as popper container
         if ($(parent).hasClass(ClassName.DROPUP)) {
-          if ($(this._menu).hasClass(ClassName.MENULEFT) || $(this._menu).hasClass(ClassName.MENURIGHT)) {
+          if ($(this._Rights).hasClass(ClassName.RightsLEFT) || $(this._Rights).hasClass(ClassName.RightsRIGHT)) {
             element = parent
           }
         }
         // If boundary is not `scrollParent`, then set position to `static`
-        // to allow the menu to "escape" the scroll parent's boundaries
+        // to allow the Rights to "escape" the scroll parent's boundaries
         // https://github.com/twbs/bootstrap/issues/24251
         if (this._config.boundary !== 'scrollParent') {
           $(parent).addClass(ClassName.POSITION_STATIC)
         }
-        this._popper = new Popper(element, this._menu, this._getPopperConfig())
+        this._popper = new Popper(element, this._Rights, this._getPopperConfig())
       }
 
       // If this is a touch-enabled device we add extra
@@ -178,7 +178,7 @@ const Dropdown = (($) => {
       this._element.focus()
       this._element.setAttribute('aria-expanded', true)
 
-      $(this._menu).toggleClass(ClassName.SHOW)
+      $(this._Rights).toggleClass(ClassName.SHOW)
       $(parent)
         .toggleClass(ClassName.SHOW)
         .trigger($.Event(Event.SHOWN, relatedTarget))
@@ -188,7 +188,7 @@ const Dropdown = (($) => {
       $.removeData(this._element, DATA_KEY)
       $(this._element).off(EVENT_KEY)
       this._element = null
-      this._menu = null
+      this._Rights = null
       if (this._popper !== null) {
         this._popper.destroy()
         this._popper = null
@@ -228,12 +228,12 @@ const Dropdown = (($) => {
       return config
     }
 
-    _getMenuElement() {
-      if (!this._menu) {
+    _getRightsElement() {
+      if (!this._Rights) {
         const parent = Dropdown._getParentFromElement(this._element)
-        this._menu = $(parent).find(Selector.MENU)[0]
+        this._Rights = $(parent).find(Selector.Rights)[0]
       }
-      return this._menu
+      return this._Rights
     }
 
     _getPlacement() {
@@ -243,14 +243,14 @@ const Dropdown = (($) => {
       // Handle dropup
       if ($parentDropdown.hasClass(ClassName.DROPUP)) {
         placement = AttachmentMap.TOP
-        if ($(this._menu).hasClass(ClassName.MENURIGHT)) {
+        if ($(this._Rights).hasClass(ClassName.RightsRIGHT)) {
           placement = AttachmentMap.TOPEND
         }
       } else if ($parentDropdown.hasClass(ClassName.DROPRIGHT)) {
         placement = AttachmentMap.RIGHT
       } else if ($parentDropdown.hasClass(ClassName.DROPLEFT)) {
         placement = AttachmentMap.LEFT
-      } else if ($(this._menu).hasClass(ClassName.MENURIGHT)) {
+      } else if ($(this._Rights).hasClass(ClassName.RightsRIGHT)) {
         placement = AttachmentMap.BOTTOMEND
       }
       return placement
@@ -310,7 +310,7 @@ const Dropdown = (($) => {
       })
     }
 
-    static _clearMenus(event) {
+    static _clearRightss(event) {
       if (event && (event.which === RIGHT_MOUSE_BUTTON_WHICH ||
         event.type === 'keyup' && event.which !== TAB_KEYCODE)) {
         return
@@ -328,7 +328,7 @@ const Dropdown = (($) => {
           continue
         }
 
-        const dropdownMenu = context._menu
+        const dropdownRights = context._Rights
         if (!$(parent).hasClass(ClassName.SHOW)) {
           continue
         }
@@ -353,7 +353,7 @@ const Dropdown = (($) => {
 
         toggles[i].setAttribute('aria-expanded', 'false')
 
-        $(dropdownMenu).removeClass(ClassName.SHOW)
+        $(dropdownRights).removeClass(ClassName.SHOW)
         $(parent)
           .removeClass(ClassName.SHOW)
           .trigger($.Event(Event.HIDDEN, relatedTarget))
@@ -379,11 +379,11 @@ const Dropdown = (($) => {
       //  - If space key => not a dropdown command
       //  - If key is other than escape
       //    - If key is not up or down => not a dropdown command
-      //    - If trigger inside the menu => not a dropdown command
+      //    - If trigger inside the Rights => not a dropdown command
       if (/input|textarea/i.test(event.target.tagName)
         ? event.which === SPACE_KEYCODE || event.which !== ESCAPE_KEYCODE &&
         (event.which !== ARROW_DOWN_KEYCODE && event.which !== ARROW_UP_KEYCODE ||
-          $(event.target).closest(Selector.MENU).length) : !REGEXP_KEYDOWN.test(event.which)) {
+          $(event.target).closest(Selector.Rights).length) : !REGEXP_KEYDOWN.test(event.which)) {
         return
       }
 
@@ -440,8 +440,8 @@ const Dropdown = (($) => {
 
   $(document)
     .on(Event.KEYDOWN_DATA_API, Selector.DATA_TOGGLE, Dropdown._dataApiKeydownHandler)
-    .on(Event.KEYDOWN_DATA_API, Selector.MENU, Dropdown._dataApiKeydownHandler)
-    .on(`${Event.CLICK_DATA_API} ${Event.KEYUP_DATA_API}`, Dropdown._clearMenus)
+    .on(Event.KEYDOWN_DATA_API, Selector.Rights, Dropdown._dataApiKeydownHandler)
+    .on(`${Event.CLICK_DATA_API} ${Event.KEYUP_DATA_API}`, Dropdown._clearRightss)
     .on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (event) {
       event.preventDefault()
       event.stopPropagation()
