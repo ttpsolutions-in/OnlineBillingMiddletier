@@ -75,10 +75,10 @@
           <Property Name="RetailerId" Type="int" Nullable="false" />
           <Property Name="SaleCategoryId" Type="int" Nullable="false" />
           <Property Name="SaleTypeId" Type="int" Nullable="false" />
-          <Property Name="GSTApplied" Type="tinyint" Nullable="false" />
-          <Property Name="GSTPercentage" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="GSTAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="DiscountApplied" Type="tinyint" Nullable="false" />
+          <Property Name="GSTApplied" Type="tinyint" />
+          <Property Name="GSTPercentage" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="GSTAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DiscountApplied" Type="tinyint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="date" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -86,7 +86,7 @@
           <Property Name="BillStatus" Type="tinyint" Nullable="false" />
           <Property Name="PaidAmt" Type="decimal" Precision="18" Scale="2" />
           <Property Name="BalanceAmt" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ShowGSTNo" Type="tinyint" />
         </EntityType>
@@ -96,6 +96,18 @@
           </Key>
           <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClientMaster">
+          <Key>
+            <PropertyRef Name="ClientKeyId" />
+          </Key>
+          <Property Name="ClientKeyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ClientSecret" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ClientName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="RefreshTokenLifeTime" Type="int" Nullable="false" />
+          <Property Name="AllowedOrigin" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <EntityType Name="EmployeeAccount">
           <Key>
@@ -107,6 +119,16 @@
           <Property Name="PaymentDate" Type="date" Nullable="false" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="EmployeeAttendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="EmployeeNo" Type="smallint" />
+          <Property Name="Present" Type="tinyint" />
+          <Property Name="Comments" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="EmployeeDesignation">
           <Key>
@@ -199,7 +221,7 @@
             <PropertyRef Name="MaterialId" />
           </Key>
           <Property Name="MaterialId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Descriptioin" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="NoOfPiecePerUnit" Type="int" />
           <Property Name="RetailRate" Type="decimal" Precision="18" Scale="2" />
           <Property Name="WholeSaleRate" Type="decimal" Precision="18" Scale="2" />
@@ -220,6 +242,26 @@
           <Property Name="DisplayName" Type="varchar" MaxLength="250" />
           <Property Name="Active" Type="tinyint" />
         </EntityType>
+        <EntityType Name="OnlinePaymentDetails">
+          <Key>
+            <PropertyRef Name="OnlinePaymentId" />
+          </Key>
+          <Property Name="OnlinePaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="description" Type="varchar" MaxLength="250" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OnlinePaymentType" Type="varchar" MaxLength="20" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="InstamojoPaymentId" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="date" Nullable="false" />
+          <Property Name="currency" Type="varchar" MaxLength="10" />
+          <Property Name="TransactionId" Type="varchar" MaxLength="50" />
+          <Property Name="RequestId" Type="varchar" MaxLength="50" />
+          <Property Name="PaymentStatus" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="PaymentType">
           <Key>
             <PropertyRef Name="PaymentTypeId" />
@@ -227,6 +269,17 @@
           <Property Name="PaymentTypeId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PaymentTypeName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Active" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RefreshToken">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="500" />
+          <Property Name="ClientID" Type="varchar" MaxLength="500" />
+          <Property Name="IssuedTime" Type="datetime" />
+          <Property Name="ExpiredTime" Type="datetime" />
+          <Property Name="ProtectedTicket" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Rights">
           <Key>
@@ -255,7 +308,7 @@
           <Key>
             <PropertyRef Name="SaleCategoryId" />
           </Key>
-          <Property Name="SaleCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaleCategoryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Sales">
@@ -282,7 +335,7 @@
           <Key>
             <PropertyRef Name="SaleTypeId" />
           </Key>
-          <Property Name="SaleTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaleTypeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="SaleType" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Status">
@@ -322,31 +375,41 @@
           <Property Name="UnitId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UnitName" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="500" />
+          <Property Name="Password" Type="varchar" MaxLength="500" />
+          <Property Name="UserRole" Type="varchar" MaxLength="30" />
+          <Property Name="UserEmailId" Type="varchar" MaxLength="30" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'EphraimTraders.dbo.BillDetailsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="BillDetailsView">
           <Key>
             <PropertyRef Name="BillNo" />
-            
+            <PropertyRef Name="RetailerId" />
             <PropertyRef Name="Name" />
             <PropertyRef Name="MaterialId" />
             <PropertyRef Name="Quantity" />
             <PropertyRef Name="Amount" />
             <PropertyRef Name="GodownName" />
             <PropertyRef Name="GodownId" />
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            <PropertyRef Name="GSTApplied" />
+            <PropertyRef Name="SaleTypeId" />
+            <PropertyRef Name="SaleCategoryId" />
+            <PropertyRef Name="GSTPercentage" />
+            <PropertyRef Name="GSTAmount" />
+            <PropertyRef Name="DiscountApplied" />
+            <PropertyRef Name="TotalAmount" />
+            <PropertyRef Name="GrandTotal" />
+            <PropertyRef Name="Contact" />
             <PropertyRef Name="Rate" />
             <PropertyRef Name="Active" />
-            
-            
+            <PropertyRef Name="BillStatus" />
+            <PropertyRef Name="SaleDate" />
           </Key>
           <Property Name="BillNo" Type="int" Nullable="false" />
           <Property Name="RetailerId" Type="int" Nullable="false" />
@@ -388,6 +451,20 @@ warning 6002: The table/view 'EphraimTraders.dbo.CurrentUserRoleRightsView' does
           <Property Name="HasRights" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'EphraimTraders.dbo.EmployeesForAttendance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EmployeesForAttendance">
+          <Key>
+            <PropertyRef Name="EmployeeName" />
+            
+          </Key>
+          <Property Name="EmployeeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AttendanceId" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Present" Type="tinyint" />
+          <Property Name="Comments" Type="varchar" MaxLength="250" />
+          <Property Name="EmployeeNo" Type="smallint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ReorderRequired">
           <Key>
@@ -427,7 +504,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.RoleRightsView' does not have a
             <PropertyRef Name="RightsId" />
             <PropertyRef Name="RightsName" />
             <PropertyRef Name="RoleId" />
-            
+            <PropertyRef Name="RoleName" />
           </Key>
           <Property Name="RightsId" Type="smallint" Nullable="false" />
           <Property Name="RightsName" Type="varchar" MaxLength="50" Nullable="false" />
@@ -448,7 +525,6 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           </Key>
           <Property Name="SaleDate" Type="date" Nullable="false" />
           <Property Name="CategoryName" Type="varchar" MaxLength="50" />
-          <Property Name="Quantity" Type="decimal" Precision="38" Scale="2" />
           <Property Name="Amount" Type="decimal" Precision="38" Scale="2" />
         </EntityType>
         <Association Name="FK__Bills__BillStatu__72C60C4A">
@@ -663,6 +739,18 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeAttendance_EmployeeDetail">
+          <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="0..1" />
+          <End Role="EmployeeAttendance" Type="Self.EmployeeAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="EmployeeNo" />
+            </Principal>
+            <Dependent Role="EmployeeAttendance">
+              <PropertyRef Name="EmployeeNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeDetail_EmployeeDesignation">
           <End Role="EmployeeDesignation" Type="Self.EmployeeDesignation" Multiplicity="0..1" />
           <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="*" />
@@ -759,6 +847,9 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CheckEmailProc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="EphraimTradersModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -768,7 +859,9 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bills" EntityType="Self.Bills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientMaster" EntityType="Self.ClientMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeAccount" EntityType="Self.EmployeeAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeAttendance" EntityType="Self.EmployeeAttendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeDesignation" EntityType="Self.EmployeeDesignation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeDetail" EntityType="Self.EmployeeDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" Schema="dbo" store:Type="Tables" />
@@ -778,7 +871,9 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySet Name="ItemCategory" EntityType="Self.ItemCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialInventory" EntityType="Self.MaterialInventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlinePaymentDetails" EntityType="Self.OnlinePaymentDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RefreshToken" EntityType="Self.RefreshToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rights" EntityType="Self.Rights" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RightsManagement" EntityType="Self.RightsManagement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaleCategory" EntityType="Self.SaleCategory" Schema="dbo" store:Type="Tables" />
@@ -788,6 +883,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySet Name="SupplierRetailer" EntityType="Self.SupplierRetailer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplierRetailType" EntityType="Self.SupplierRetailType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillDetailsView" EntityType="Self.BillDetailsView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [BillDetailsView].[BillNo] AS [BillNo], 
@@ -824,6 +920,16 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
     [CurrentUserRoleRightsView].[RoleId] AS [RoleId], 
     [CurrentUserRoleRightsView].[HasRights] AS [HasRights]
     FROM [dbo].[CurrentUserRoleRightsView] AS [CurrentUserRoleRightsView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EmployeesForAttendance" EntityType="Self.EmployeesForAttendance" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EmployeesForAttendance].[EmployeeName] AS [EmployeeName], 
+    [EmployeesForAttendance].[AttendanceId] AS [AttendanceId], 
+    [EmployeesForAttendance].[Date] AS [Date], 
+    [EmployeesForAttendance].[Present] AS [Present], 
+    [EmployeesForAttendance].[Comments] AS [Comments], 
+    [EmployeesForAttendance].[EmployeeNo] AS [EmployeeNo]
+    FROM [dbo].[EmployeesForAttendance] AS [EmployeesForAttendance]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ReorderRequired" EntityType="Self.ReorderRequired" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -864,7 +970,6 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <DefiningQuery>SELECT 
     [SaleQuantityAmountForReport].[SaleDate] AS [SaleDate], 
     [SaleQuantityAmountForReport].[CategoryName] AS [CategoryName], 
-    [SaleQuantityAmountForReport].[Quantity] AS [Quantity], 
     [SaleQuantityAmountForReport].[Amount] AS [Amount]
     FROM [dbo].[SaleQuantityAmountForReport] AS [SaleQuantityAmountForReport]</DefiningQuery>
           </EntitySet>
@@ -935,6 +1040,10 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <AssociationSet Name="FK_EmployeeAccount_PaymentType" Association="Self.FK_EmployeeAccount_PaymentType">
             <End Role="PaymentType" EntitySet="PaymentType" />
             <End Role="EmployeeAccount" EntitySet="EmployeeAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeAttendance_EmployeeDetail" Association="Self.FK_EmployeeAttendance_EmployeeDetail">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetail" />
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendance" />
           </AssociationSet>
           <AssociationSet Name="FK_EmployeeDetail_EmployeeDesignation" Association="Self.FK_EmployeeDetail_EmployeeDesignation">
             <End Role="EmployeeDesignation" EntitySet="EmployeeDesignation" />
@@ -1041,10 +1150,10 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="RetailerId" Type="Int32" Nullable="false" />
           <Property Name="SaleCategoryId" Type="Int32" Nullable="false" />
           <Property Name="SaleTypeId" Type="Int32" Nullable="false" />
-          <Property Name="GSTApplied" Type="Byte" Nullable="false" />
-          <Property Name="GSTPercentage" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="DiscountApplied" Type="Byte" Nullable="false" />
+          <Property Name="GSTApplied" Type="Byte" />
+          <Property Name="GSTPercentage" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="GSTAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DiscountApplied" Type="Byte" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="0" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1052,7 +1161,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="BillStatus" Type="Byte" Nullable="false" />
           <Property Name="PaidAmt" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="BalanceAmt" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ShowGSTNo" Type="Byte" />
           <NavigationProperty Name="Status" Relationship="Self.FK__Bills__BillStatu__72C60C4A" FromRole="Bills" ToRole="Status" />
@@ -1112,6 +1221,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <NavigationProperty Name="EmployeeDesignation" Relationship="Self.FK_EmployeeDetail_EmployeeDesignation" FromRole="EmployeeDetail" ToRole="EmployeeDesignation" />
           <NavigationProperty Name="EmployeeRole" Relationship="Self.FK__EmployeeD__EmpRo__3B40CD36" FromRole="EmployeeDetail" ToRole="EmployeeRole" />
           <NavigationProperty Name="EmploymentType" Relationship="Self.FK_EmployeeDetail_EmploymentType" FromRole="EmployeeDetail" ToRole="EmploymentType" />
+          <NavigationProperty Name="EmployeeAttendances" Relationship="EphraimTradersModel.FK_EmployeeAttendance_EmployeeDetail" FromRole="EmployeeDetail" ToRole="EmployeeAttendance" />
         </EntityType>
         <EntityType Name="EmployeeRole">
           <Key>
@@ -1189,11 +1299,10 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <PropertyRef Name="MaterialId" />
           </Key>
           <Property Name="MaterialId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descriptioin" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NoOfPiecePerUnit" Type="Int32" />
           <Property Name="RetailRate" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="WholeSaleRate" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CostingPrice" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="CostingPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="QuantityInHand" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ReorderLevel" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1212,6 +1321,27 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <NavigationProperty Name="ItemCategory" Relationship="Self.FK__Materials__ItemC__6225902D" FromRole="Materials" ToRole="ItemCategory" />
           <NavigationProperty Name="MaterialInventories" Relationship="Self.FK_MaterialInventory_Materials" FromRole="Materials" ToRole="MaterialInventory" />
           <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__MaterialI__7B5B524B" FromRole="Materials" ToRole="Sales" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="OnlinePaymentDetail">
+          <Key>
+            <PropertyRef Name="OnlinePaymentId" />
+          </Key>
+          <Property Name="OnlinePaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OnlinePaymentType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="InstamojoPaymentId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="currency" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RequestId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PaymentType">
           <Key>
@@ -1228,14 +1358,14 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           </Key>
           <Property Name="RightsId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RightsName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Active" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="RightsManagements" Relationship="Self.FK_RightsManagement_Rights" FromRole="Rights" ToRole="RightsManagement" />
           <Property Name="FeatherName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MenuUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PID" Type="Int16" />
-          <Property Name="DisplayOrder" Type="Byte" />
           <Property Name="Menu" Type="Byte" />
+          <Property Name="DisplayOrder" Type="Byte" />
+          <Property Name="Active" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="RightsManagements" Relationship="Self.FK_RightsManagement_Rights" FromRole="Rights" ToRole="RightsManagement" />
         </EntityType>
         <EntityType Name="RightsManagement">
           <Key>
@@ -1333,14 +1463,26 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
         <EntityType Name="BillDetailsView">
           <Key>
             <PropertyRef Name="BillNo" />
+            <PropertyRef Name="RetailerId" />
             <PropertyRef Name="Name" />
             <PropertyRef Name="MaterialId" />
             <PropertyRef Name="Quantity" />
             <PropertyRef Name="Amount" />
             <PropertyRef Name="GodownName" />
             <PropertyRef Name="GodownId" />
+            <PropertyRef Name="GSTApplied" />
+            <PropertyRef Name="SaleTypeId" />
+            <PropertyRef Name="SaleCategoryId" />
+            <PropertyRef Name="GSTPercentage" />
+            <PropertyRef Name="GSTAmount" />
+            <PropertyRef Name="DiscountApplied" />
+            <PropertyRef Name="TotalAmount" />
+            <PropertyRef Name="GrandTotal" />
+            <PropertyRef Name="Contact" />
             <PropertyRef Name="Rate" />
             <PropertyRef Name="Active" />
+            <PropertyRef Name="BillStatus" />
+            <PropertyRef Name="SaleDate" />
           </Key>
           <Property Name="BillNo" Type="Int32" Nullable="false" />
           <Property Name="RetailerId" Type="Int32" Nullable="false" />
@@ -1366,7 +1508,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="Rate" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Active" Type="Byte" Nullable="false" />
           <Property Name="BillStatus" Type="Byte" Nullable="false" />
-          <Property Name="SaleDate" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="CurrentUserRoleRightsView">
           <Key>
@@ -1390,11 +1532,30 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="TotalIncomingQuantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="QIH" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
+        <EntityType Name="RightsForAssignment">
+          <Key>
+            <PropertyRef Name="RightsId" />
+            <PropertyRef Name="RightsName" />
+            <PropertyRef Name="Active" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RMActive" />
+            <PropertyRef Name="RoleName" />
+            <PropertyRef Name="RightsManagementId" />
+          </Key>
+          <Property Name="RightsId" Type="Int16" Nullable="false" />
+          <Property Name="RightsName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Byte" Nullable="false" />
+          <Property Name="RoleId" Type="Byte" Nullable="false" />
+          <Property Name="RMActive" Type="Byte" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RightsManagementId" Type="Byte" Nullable="false" />
+        </EntityType>
         <EntityType Name="RoleRightsView">
           <Key>
             <PropertyRef Name="RightsId" />
             <PropertyRef Name="RightsName" />
             <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RoleName" />
           </Key>
           <Property Name="RightsId" Type="Int16" Nullable="false" />
           <Property Name="RightsName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -1406,6 +1567,14 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="PID" Type="Int16" />
           <Property Name="DisplayOrder" Type="Byte" />
           <Property Name="Menu" Type="Byte" />
+        </EntityType>
+        <EntityType Name="SaleQuantityAmountForReport">
+          <Key>
+            <PropertyRef Name="SaleDate" />
+          </Key>
+          <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -1691,7 +1860,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="EphraimTradersEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EphraimTradersEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -1709,6 +1878,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySet Name="ItemCategories" EntityType="Self.ItemCategory" />
           <EntitySet Name="MaterialInventories" EntityType="Self.MaterialInventory" />
           <EntitySet Name="Materials" EntityType="Self.Material" />
+          <EntitySet Name="OnlinePaymentDetails" EntityType="Self.OnlinePaymentDetail" />
           <EntitySet Name="PaymentTypes" EntityType="Self.PaymentType" />
           <EntitySet Name="Rights" EntityType="Self.Right" />
           <EntitySet Name="RightsManagements" EntityType="Self.RightsManagement" />
@@ -1722,7 +1892,9 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySet Name="BillDetailsViews" EntityType="Self.BillDetailsView" />
           <EntitySet Name="CurrentUserRoleRightsViews" EntityType="Self.CurrentUserRoleRightsView" />
           <EntitySet Name="ReorderRequireds" EntityType="Self.ReorderRequired" />
+          <EntitySet Name="RightsForAssignments" EntityType="Self.RightsForAssignment" />
           <EntitySet Name="RoleRightsViews" EntityType="Self.RoleRightsView" />
+          <EntitySet Name="SaleQuantityAmountForReports" EntityType="Self.SaleQuantityAmountForReport" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -1819,42 +1991,92 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="RightsForAssignments" EntityType="EphraimTradersModel.RightsForAssignment" />
-          <EntitySet Name="SaleQuantityAmountForReports" EntityType="EphraimTradersModel.SaleQuantityAmountForReport" />
+          <EntitySet Name="ClientMasters" EntityType="EphraimTradersModel.ClientMaster" />
+          <EntitySet Name="RefreshTokens" EntityType="EphraimTradersModel.RefreshToken" />
+          <EntitySet Name="UserMasters" EntityType="EphraimTradersModel.UserMaster" />
+          <FunctionImport Name="CheckEmailProc" ReturnType="Collection(Int32)">
+          <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="EmployeeAttendances" EntityType="EphraimTradersModel.EmployeeAttendance" />
+          <EntitySet Name="EmployeesForAttendances" EntityType="EphraimTradersModel.EmployeesForAttendance" />
+          <AssociationSet Name="FK_EmployeeAttendance_EmployeeDetail" Association="EphraimTradersModel.FK_EmployeeAttendance_EmployeeDetail">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="EmployeeAttendance" EntitySet="EmployeeAttendances" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="RightsForAssignment">
+        <EntityType Name="ClientMaster">
           <Key>
-            <PropertyRef Name="RightsId" />
-            <PropertyRef Name="RightsName" />
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="Active" />
-            <PropertyRef Name="RMActive" />
-            <PropertyRef Name="RoleName" />
-            <PropertyRef Name="RightsManagementId" />
+            <PropertyRef Name="ClientKeyId" />
           </Key>
-          <Property Name="RightsId" Type="Int16" Nullable="false" />
-          <Property Name="RightsName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RoleId" Type="Byte" Nullable="false" />
-          <Property Name="Active" Type="Byte" Nullable="false" />
-          <Property Name="RMActive" Type="Byte" Nullable="false" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RightsManagementId" Type="Byte" Nullable="false" />
+          <Property Name="ClientKeyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ClientSecret" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="RefreshTokenLifeTime" Type="Int32" Nullable="false" />
+          <Property Name="AllowedOrigin" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="SaleQuantityAmountForReport">
+        <EntityType Name="RefreshToken">
           <Key>
-            <PropertyRef Name="SaleDate" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Quantity" Type="Decimal" Precision="38" Scale="2" />
-          <Property Name="Amount" Type="Decimal" Precision="38" Scale="2" />
-          <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ClientID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IssuedTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpiredTime" Type="DateTime" Precision="3" />
+          <Property Name="ProtectedTicket" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="UserRole" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="UserEmailId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EmployeeAttendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeNo" Type="Int16" />
+          <Property Name="Present" Type="Byte" />
+          <Property Name="Comments" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeDetail" Relationship="EphraimTradersModel.FK_EmployeeAttendance_EmployeeDetail" FromRole="EmployeeAttendance" ToRole="EmployeeDetail" />
+        </EntityType>
+        <EntityType Name="EmployeesForAttendance">
+          <Key>
+            <PropertyRef Name="EmployeeName" />
+          </Key>
+          <Property Name="EmployeeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AttendanceId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Present" Type="Byte" />
+          <Property Name="EmployeeNo" Type="Int16" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_EmployeeAttendance_EmployeeDetail">
+          <End Type="EphraimTradersModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="0..1" />
+          <End Type="EphraimTradersModel.EmployeeAttendance" Role="EmployeeAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="EmployeeNo" />
+            </Principal>
+            <Dependent Role="EmployeeAttendance">
+              <PropertyRef Name="EmployeeNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EphraimTradersModelStoreContainer" CdmEntityContainer="EphraimTradersEntities1">
+        <EntityContainerMapping StorageEntityContainer="EphraimTradersModelStoreContainer" CdmEntityContainer="EphraimTradersEntities2">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="EphraimTradersModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -2052,8 +2274,8 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySetMapping Name="Materials">
             <EntityTypeMapping TypeName="EphraimTradersModel.Material">
               <MappingFragment StoreEntitySet="Materials">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
-                <ScalarProperty Name="Descriptioin" ColumnName="Descriptioin" />
                 <ScalarProperty Name="NoOfPiecePerUnit" ColumnName="NoOfPiecePerUnit" />
                 <ScalarProperty Name="RetailRate" ColumnName="RetailRate" />
                 <ScalarProperty Name="WholeSaleRate" ColumnName="WholeSaleRate" />
@@ -2076,6 +2298,27 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OnlinePaymentDetails">
+            <EntityTypeMapping TypeName="EphraimTradersModel.OnlinePaymentDetail">
+              <MappingFragment StoreEntitySet="OnlinePaymentDetails">
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="OnlinePaymentId" ColumnName="OnlinePaymentId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="OnlinePaymentType" ColumnName="OnlinePaymentType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="InstamojoPaymentId" ColumnName="InstamojoPaymentId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PaymentTypes">
             <EntityTypeMapping TypeName="EphraimTradersModel.PaymentType">
               <MappingFragment StoreEntitySet="PaymentType">
@@ -2088,14 +2331,14 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySetMapping Name="Rights">
             <EntityTypeMapping TypeName="EphraimTradersModel.Right">
               <MappingFragment StoreEntitySet="Rights">
-                <ScalarProperty Name="Menu" ColumnName="Menu" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="PID" ColumnName="PID" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
-                <ScalarProperty Name="FeatherName" ColumnName="FeatherName" />
                 <ScalarProperty Name="RightsId" ColumnName="RightsId" />
                 <ScalarProperty Name="RightsName" ColumnName="RightsName" />
+                <ScalarProperty Name="FeatherName" ColumnName="FeatherName" />
+                <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="Menu" ColumnName="Menu" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2241,19 +2484,41 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RightsForAssignments">
+            <EntityTypeMapping TypeName="EphraimTradersModel.RightsForAssignment">
+              <MappingFragment StoreEntitySet="RightsForAssignment">
+                <ScalarProperty Name="RightsId" ColumnName="RightsId" />
+                <ScalarProperty Name="RightsName" ColumnName="RightsName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RMActive" ColumnName="RMActive" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RightsManagementId" ColumnName="RightsManagementId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RoleRightsViews">
             <EntityTypeMapping TypeName="EphraimTradersModel.RoleRightsView">
               <MappingFragment StoreEntitySet="RoleRightsView">
-                <ScalarProperty Name="Menu" ColumnName="Menu" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="PID" ColumnName="PID" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
-                <ScalarProperty Name="FeatherName" ColumnName="FeatherName" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RightsId" ColumnName="RightsId" />
                 <ScalarProperty Name="RightsName" ColumnName="RightsName" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="FeatherName" ColumnName="FeatherName" />
+                <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Menu" ColumnName="Menu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleQuantityAmountForReports">
+            <EntityTypeMapping TypeName="EphraimTradersModel.SaleQuantityAmountForReport">
+              <MappingFragment StoreEntitySet="SaleQuantityAmountForReport">
+                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2265,26 +2530,63 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="RightsForAssignments">
-            <EntityTypeMapping TypeName="EphraimTradersModel.RightsForAssignment">
-              <MappingFragment StoreEntitySet="RightsForAssignment">
-                <ScalarProperty Name="RightsManagementId" ColumnName="RightsManagementId" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="RMActive" ColumnName="RMActive" />
+          <EntitySetMapping Name="ClientMasters">
+            <EntityTypeMapping TypeName="EphraimTradersModel.ClientMaster">
+              <MappingFragment StoreEntitySet="ClientMaster">
+                <ScalarProperty Name="AllowedOrigin" ColumnName="AllowedOrigin" />
+                <ScalarProperty Name="RefreshTokenLifeTime" ColumnName="RefreshTokenLifeTime" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="RightsName" ColumnName="RightsName" />
-                <ScalarProperty Name="RightsId" ColumnName="RightsId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientSecret" ColumnName="ClientSecret" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ClientKeyId" ColumnName="ClientKeyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SaleQuantityAmountForReports">
-            <EntityTypeMapping TypeName="EphraimTradersModel.SaleQuantityAmountForReport">
-              <MappingFragment StoreEntitySet="SaleQuantityAmountForReport">
-                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <EntitySetMapping Name="RefreshTokens">
+            <EntityTypeMapping TypeName="EphraimTradersModel.RefreshToken">
+              <MappingFragment StoreEntitySet="RefreshToken">
+                <ScalarProperty Name="ProtectedTicket" ColumnName="ProtectedTicket" />
+                <ScalarProperty Name="ExpiredTime" ColumnName="ExpiredTime" />
+                <ScalarProperty Name="IssuedTime" ColumnName="IssuedTime" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="EphraimTradersModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="UserEmailId" ColumnName="UserEmailId" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CheckEmailProc" FunctionName="EphraimTradersModel.Store.CheckEmailProc" />
+          <EntitySetMapping Name="EmployeeAttendances">
+            <EntityTypeMapping TypeName="EphraimTradersModel.EmployeeAttendance">
+              <MappingFragment StoreEntitySet="EmployeeAttendance">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Present" ColumnName="Present" />
+                <ScalarProperty Name="EmployeeNo" ColumnName="EmployeeNo" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeesForAttendances">
+            <EntityTypeMapping TypeName="EphraimTradersModel.EmployeesForAttendance">
+              <MappingFragment StoreEntitySet="EmployeesForAttendance">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="EmployeeNo" ColumnName="EmployeeNo" />
+                <ScalarProperty Name="Present" ColumnName="Present" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

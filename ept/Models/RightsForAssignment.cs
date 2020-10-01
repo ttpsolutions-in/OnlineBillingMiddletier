@@ -16,8 +16,8 @@ namespace ept.Models
     {
         public short RightsId { get; set; }
         public string RightsName { get; set; }
-        public byte RoleId { get; set; }
         public byte Active { get; set; }
+        public byte RoleId { get; set; }
         public byte RMActive { get; set; }
         public string RoleName { get; set; }
         public byte RightsManagementId { get; set; }

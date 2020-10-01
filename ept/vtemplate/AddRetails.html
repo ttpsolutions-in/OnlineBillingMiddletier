@@ -1,0 +1,134 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 60px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>{{PageTitle}}</b>
+        <span style="float:right"><b>Date -</b> {{TodaysDate}}</span>
+    </div>
+    <br />
+    <div ng-if="ShowSpinnerStatus" class="loader"></div>
+    <div class="card-body">
+        <form name="addRetailForm">
+            <div class="form-row">
+
+
+                <div class="form-group col-md-4">
+                    <!-- <label for="txtOthers">Others</label>-->
+                    <input type="text" class="form-control" id="Others" name="Others" placeholder="Enter customer name"
+                           ng-model="RetailData.Others" ng-disabled="RetailData.SupplierRetailer > 0">
+                    <p ng-show="submitted && addRetailForm.Others.$invalid && !SupplierRetailer.Others.$pristine"
+                       class="text-danger">Name is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <!-- <label for="txtContactNo">Contact No.</label>-->
+                    <input type="tel" class="form-control" id="ContactNo" name="ContactNo" placeholder="Enter Contact No."
+                           ng-model="RetailData.ContactNo" ng-disabled="RetailData.SupplierRetailer > 0">
+                    <p ng-show="submitted && addRetailForm.ContactNo.$invalid && !SupplierRetailer.ContactNo.$pristine"
+                       class="text-danger">Contact No. is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <!-- <label for="SupplierRetailer">Name</label> <span class="text-danger">*</span>-->
+                    <select id="SupplierRetailer" name="SupplierRetailer" ng-model="RetailData.SupplierRetailer" ng-change="GetContactNo()" class="form-control"
+                            ng-options="item.SupplierRetailerId as item.Name for item in SupplierCustomers" ng-required="RetailData.Others==undefined || RetailData.Others.length==0" ng-disabled="RetailData.Others.length > 0">
+                        <option value=""> Existing customer <span class="text-danger pull-right">*</span></option>
+                    </select>
+                    <p ng-show="submitted && addRetailForm.SupplierRetailer.$invalid && !SupplierRetailer.SupplierRetailer.$pristine"
+                       class="text-danger">Customer name is required.</p>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
+                    <select select2 id="ddlItemCategory" name="ddlItemCategory" ng-model="RetailData.ItemCategory" class="form-control"
+                            ng-options="item.ItemCategoryId as item.ItemCategoryName for item in ItemCatogoryList" required>
+                        <option value="">--Select material category *--</option>
+                    </select>
+                    <p ng-show="submitted && addRetailForm.ddlItemCategory.$invalid"
+                       class="text-danger">Please select category.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <button type="button" class="btn btn-secondary btn-sm" ng-disabled="DataSaved" ng-click="AddItem()">Add Item</button>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-12 nopadding">
+                    <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav ui-grid-selection
+                         class="myGrid" style="height:300px"></div>
+                    <div class="nodatatxt" data-ng-if="gridOptions.data.length==0">Please Add Item</div>
+                    <table class="table table-sm table-striped table-bordered table-condensed">
+                        <tr>
+                            <td colspan="3"></td>
+                            <td class="text-right">Total Amount</td>
+                            <td class="text-right"><label>{{GetGrandAmount()}}</label></td>
+                        </tr>
+                        <tr>
+
+                            <td colspan="3">
+                                <div class="pull-right">
+                                    <span>
+                                        Include GST No. <input type="checkbox" ng-model="RetailData.ShowGSTNo"
+                                                               ng-true-value="1" ng-false-value="0" />
+                                    </span>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <span>
+                                        Cash <input type="checkbox" ng-checked="SaleType == 1 ? true : false" ng-model="SaleType" />
+                                    </span>
+                                </div>
+
+                                <!-- <label class="pull-right">Cash <input type="checkbox" ng-checked="true" ng-model="RetailData.SaleTypeCash" /></label>-->
+                            </td>
+                            <td class="text-right">
+                                <span>GST ({{RetailData.GSTPercentage}}%)</span>&nbsp;&nbsp;<input type="checkbox" ng-change="CalculateGST()" 
+                                          ng-model="RetailData.GSTApplied" ng-true-value="1" ng-false-value="0" />
+                            </td>
+                            <td class="text-right"><span>{{RetailData.GSTAmount}}</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td width="" class="text-right">&nbsp;&nbsp;  Grand Total</td>
+                            <td class="text-right">{{RetailData.GrandTotal}}</td>
+                        </tr>
+                        <!--<tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-right"> <label>Cash <input type="checkbox" ng-model="RetailData.SaleTypeCash" /></label></td>
+                            <td class="text-right"><label></label></td>
+                        </tr>-->
+                    </table>
+                </div>
+            </div>
+            <div class="form-row col-md-offset-5">
+                <a href="#WholeSaleDashboard" class="btn btn-primary float-right btn-sm"><span data-feather="arrow-left"></span> Back</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <!--<button type="button" class="btn btn-primary" ng-click="SubmitItems(addRetailForm.$valid)"><span data-feather="save"></span>Save</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <button type="button" class="btn btn-primary" ng-click="SaveNPrint(addRetailForm.$valid)"><span data-feather="save"></span> Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX " />
+</head>
+<body>
+</body>
+<script type="text/javascript">
+    feather.replace();
+    var gearPage = document.getElementById('GearPage');
+    if (null != gearPage) {
+        gearPage.parentNode.removeChild(gearPage);
+        document.title = "Error";
+    }
+</script>
+</html>

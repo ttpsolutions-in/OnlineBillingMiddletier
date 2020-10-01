@@ -49,15 +49,15 @@ namespace ept
             // Uncomment the following lines to enable logging in with third party login providers
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",
-            //    clientSecret: "");
+            //    clientSecret: "";
 
             //app.UseTwitterAuthentication(
             //    consumerKey: "",
-            //    consumerSecret: "");
+            //    consumerSecret: "";
 
             //app.UseFacebookAuthentication(
             //    appId: "",
-            //    appSecret: "");
+            //    appSecret: "";
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

@@ -10,6 +10,7 @@ using System.Web.Http.OData.Extensions;
 using ept.Models;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
+using System.Web.Http.Cors;
 
 namespace ept
 {
@@ -17,7 +18,7 @@ namespace ept
     {
         public static void Register(HttpConfiguration config)
         {
-            config.Filters.Add(new AuthorizeAttribute());
+            //config.Filters.Add(new AuthorizeAttribute());
 
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Bill>("Bills");
@@ -47,6 +48,9 @@ namespace ept
             builder.EntitySet<ReorderRequired>("ReorderRequireds");
             builder.EntitySet<BillDetailsView>("BillDetailsViews");
             builder.EntitySet<SaleQuantityAmountForReport>("SaleQuantityAmountForReports");
+            builder.EntitySet<OnlinePaymentDetail>("OnlinePaymentDetails");
+            builder.EntitySet<EmployeeAttendance>("EmployeeAttendances");
+            builder.EntitySet<EmployeesForAttendance>("EmployeesForAttendances");
 
             config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
 
@@ -77,6 +81,8 @@ namespace ept
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
         }
     }
 }

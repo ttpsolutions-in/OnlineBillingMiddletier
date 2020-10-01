@@ -21,7 +21,7 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<GSTPercentage>("GSTPercentages");
+    builder.EntitySet<GSTPercentage>("GSTPercentages";
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class GSTPercentagesController : ODataController

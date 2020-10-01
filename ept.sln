@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ept", "ept\ept.csproj", "{79AB40F0-A2F6-42C2-AB1D-AA4AEEEEEDD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eptView", "eptView\eptView.csproj", "{FAEAB656-8EA4-4BA7-9BD4-CFD4743522CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstamojoAPI", "InstamojoAPI\InstamojoAPI.csproj", "{F7A6F676-8B3B-4AE3-A3A5-B73299BDFB3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{79AB40F0-A2F6-42C2-AB1D-AA4AEEEEEDD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79AB40F0-A2F6-42C2-AB1D-AA4AEEEEEDD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79AB40F0-A2F6-42C2-AB1D-AA4AEEEEEDD5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FAEAB656-8EA4-4BA7-9BD4-CFD4743522CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FAEAB656-8EA4-4BA7-9BD4-CFD4743522CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FAEAB656-8EA4-4BA7-9BD4-CFD4743522CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FAEAB656-8EA4-4BA7-9BD4-CFD4743522CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A6F676-8B3B-4AE3-A3A5-B73299BDFB3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A6F676-8B3B-4AE3-A3A5-B73299BDFB3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A6F676-8B3B-4AE3-A3A5-B73299BDFB3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A6F676-8B3B-4AE3-A3A5-B73299BDFB3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

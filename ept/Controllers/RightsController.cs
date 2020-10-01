@@ -22,8 +22,8 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Right>("Rights");
-    builder.EntitySet<RightsManagement>("RightsManagements"); 
+    builder.EntitySet<Right>("Rights";
+    builder.EntitySet<RightsManagement>("RightsManagements"; 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class RightsController : ODataController

@@ -18,6 +18,7 @@ namespace ept.Models
         public EmployeeDetail()
         {
             this.EmployeeAccounts = new HashSet<EmployeeAccount>();
+            this.EmployeeAttendances = new HashSet<EmployeeAttendance>();
         }
     
         public short EmployeeNo { get; set; }
@@ -39,5 +40,7 @@ namespace ept.Models
         public virtual EmployeeDesignation EmployeeDesignation { get; set; }
         public virtual EmployeeRole EmployeeRole { get; set; }
         public virtual EmploymentType EmploymentType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeAttendance> EmployeeAttendances { get; set; }
     }
 }

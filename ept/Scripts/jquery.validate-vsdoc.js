@@ -362,7 +362,7 @@ $.extend($.validator, {
 			
 			function delegate(event) {
 				var validator = $.data(this[0].form, "validator"),
-					eventType = "on" + event.type.replace(/^validate/, "");
+					eventType = "on" + event.type.replace(/^validate/, "";
 				validator.settings[eventType] && validator.settings[eventType].call(validator, this[0] );
 			}
 			$(this.currentForm)
@@ -512,7 +512,7 @@ $.extend($.validator, {
 					.filter(":visible")
 					.focus()
 					// manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
-					.trigger("focusin");
+					.trigger("focusin";
 				} catch(e) {
 					// ignore IE throwing errors when focusing hidden elements
 				}
@@ -731,7 +731,7 @@ $.extend($.validator, {
 				label = $("<" + this.settings.errorElement + "/>")
 					.attr({"for":  this.idOrName(element), generated: true})
 					.addClass(this.settings.errorClass)
-					.html(message || "");
+					.html(message || "";
 				if ( this.settings.wrapper ) {
 					// make sure the element is visible, even in IE
 					// actually showing the wrapped element is handled elsewhere
@@ -743,7 +743,7 @@ $.extend($.validator, {
 						: label.insertAfter(element);
 			}
 			if ( !message && this.settings.success ) {
-				label.text("");
+				label.text("";
 				typeof this.settings.success == "string"
 					? label.addClass( this.settings.success )
 					: this.settings.success( label );
@@ -1082,7 +1082,7 @@ $.extend($.validator, {
 						validator.showErrors();
 					} else {
 						var errors = {};
-						var message = response || validator.defaultMessage(element, "remote");
+						var message = response || validator.defaultMessage(element, "remote";
 						errors[element.name] = previous.message = $.isFunction(message) ? message(value) : message;
 						validator.showErrors(errors);
 					}
@@ -1168,7 +1168,7 @@ $.extend($.validator, {
 				nDigit = 0,
 				bEven = false;
 
-			value = value.replace(/\D/g, "");
+			value = value.replace(/\D/g, "";
 
 			for (var n = value.length - 1; n >= 0; n--) {
 				var cDigit = value.charAt(n);

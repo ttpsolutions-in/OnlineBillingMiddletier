@@ -1,0 +1,42 @@
+<style>
+    .angular-with-newlines {
+        white-space: pre-wrap;
+    }
+</style>
+<form role="form" name="createLoginForm">
+    <div class="row">
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+        <div class="table col-md-4">
+            <div class="row well bg-light" data-ng-hide="successMessage != ''">
+                <h2 class="form-login-heading col-md-12">Create Login</h2>
+                <div class="form-group col-md-12">
+                    <input type="text" class="form-control" name="txtEmail" placeholder="Enter Email" data-ng-model="UserDetails.Email" required autofocus>
+                    <p ng-if="submitted && createLoginForm.txtEmail.$invalid" class="text-danger">Email is required</p>
+                </div>
+                <div class="form-group col-md-12">
+                    <input type="password" class="form-control" name="txtPassword" placeholder="Password" data-ng-model="UserDetails.Password" required>
+                    <p ng-if="submitted && createLoginForm.txtPassword.$invalid" class="text-danger">Password is required</p>
+                </div>
+                <div class="form-group col-md-12">
+                    <input type="password" class="form-control" name="txtConfirmPassword" placeholder="Confirm Password" data-ng-model="UserDetails.ConfirmPassword" required>
+                    <p ng-if="submitted && createLoginForm.txtConfirmPassword.$invalid" class="text-danger">Please Confirm Password</p>
+                </div>                
+                <div class="form-group col-md-12">
+                    <button class="btn btn-md btn-info btn-block" type="button" ng-click="Register(createLoginForm.$valid)">Submit</button>
+                </div>
+            </div>            
+            <div class="row well bg-light alert-success panel-default" data-ng-hide="successMessage == ''">
+                <span class="col-md-12"  ng-bind-html="successMessage" style="text-align:left"></span>                
+            </div>
+            <div class="row well bg-light alert-danger panel-default" style="text-align:left" data-ng-hide="errorMessage == ''">
+                <span class="col-md-12" ng-bind-html="errorMessage"></span>
+            </div>
+
+        </div>
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+    </div>
+</form>

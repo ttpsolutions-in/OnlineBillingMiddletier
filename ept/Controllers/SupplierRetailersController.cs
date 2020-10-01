@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
@@ -24,6 +25,7 @@ namespace ept.Controllers
     builder.EntitySet<SupplierRetailer>("SupplierRetailers");
     builder.EntitySet<Bill>("Bills"); 
     builder.EntitySet<Category>("Categories"); 
+    builder.EntitySet<MaterialInventory>("MaterialInventories"); 
     builder.EntitySet<SupplierRetailType>("SupplierRetailTypes"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
@@ -46,7 +48,7 @@ namespace ept.Controllers
         }
 
         // PUT: odata/SupplierRetailers(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<SupplierRetailer> patch)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<SupplierRetailer> patch)
         {
             Validate(patch.GetEntity());
 
@@ -55,7 +57,7 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            SupplierRetailer supplierRetailer = db.SupplierRetailers.Find(key);
+            SupplierRetailer supplierRetailer = await db.SupplierRetailers.FindAsync(key);
             if (supplierRetailer == null)
             {
                 return NotFound();
@@ -65,7 +67,7 @@ namespace ept.Controllers
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -83,7 +85,7 @@ namespace ept.Controllers
         }
 
         // POST: odata/SupplierRetailers
-        public IHttpActionResult Post(SupplierRetailer supplierRetailer)
+        public async Task<IHttpActionResult> Post(SupplierRetailer supplierRetailer)
         {
             if (!ModelState.IsValid)
             {
@@ -91,14 +93,14 @@ namespace ept.Controllers
             }
 
             db.SupplierRetailers.Add(supplierRetailer);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return Created(supplierRetailer);
         }
 
         // PATCH: odata/SupplierRetailers(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<SupplierRetailer> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<SupplierRetailer> patch)
         {
             Validate(patch.GetEntity());
 
@@ -107,7 +109,7 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            SupplierRetailer supplierRetailer = db.SupplierRetailers.Find(key);
+            SupplierRetailer supplierRetailer = await db.SupplierRetailers.FindAsync(key);
             if (supplierRetailer == null)
             {
                 return NotFound();
@@ -117,7 +119,7 @@ namespace ept.Controllers
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -135,16 +137,16 @@ namespace ept.Controllers
         }
 
         // DELETE: odata/SupplierRetailers(5)
-        public IHttpActionResult Delete([FromODataUri] int key)
+        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            SupplierRetailer supplierRetailer = db.SupplierRetailers.Find(key);
+            SupplierRetailer supplierRetailer = await db.SupplierRetailers.FindAsync(key);
             if (supplierRetailer == null)
             {
                 return NotFound();
             }
 
             db.SupplierRetailers.Remove(supplierRetailer);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -161,6 +163,13 @@ namespace ept.Controllers
         public SingleResult<Category> GetCategory1([FromODataUri] int key)
         {
             return SingleResult.Create(db.SupplierRetailers.Where(m => m.SupplierRetailerId == key).Select(m => m.Category1));
+        }
+
+        // GET: odata/SupplierRetailers(5)/MaterialInventories
+        [EnableQuery]
+        public IQueryable<MaterialInventory> GetMaterialInventories([FromODataUri] int key)
+        {
+            return db.SupplierRetailers.Where(m => m.SupplierRetailerId == key).SelectMany(m => m.MaterialInventories);
         }
 
         // GET: odata/SupplierRetailers(5)/SupplierRetailType

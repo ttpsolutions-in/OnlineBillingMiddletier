@@ -14,9 +14,8 @@ namespace ept.Models
     
     public partial class SaleQuantityAmountForReport
     {
-        public string CategoryName { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public Nullable<decimal> Amount { get; set; }
         public System.DateTime SaleDate { get; set; }
+        public string CategoryName { get; set; }
+        public Nullable<decimal> Amount { get; set; }
     }
 }

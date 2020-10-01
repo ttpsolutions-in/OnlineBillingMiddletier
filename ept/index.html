@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en" data-ng-app="ETradersApp">
+<head>
+    <title>Ephraim Traders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link type="text/css" href="vContent/style/bootstrap.min.css" rel="stylesheet" />
+    <link type="text/css" href="vContent/style/ng-tags-input.min.css" rel="stylesheet" />
+    <!--<link href="vContent/style/customstyle.css" rel="stylesheet" />-->
+    <link type="text/css" href="vContent/style/select2.min.css" rel="stylesheet" />
+    <link type="text/css" href="vContent/sweetalert.css" rel="stylesheet" />
+    <link type="text/css" href="vContent/style/toaster.min.css" rel="stylesheet" />
+    <link type="text/css" href="vContent/style/dashboard.css" rel="stylesheet" />
+    <link type="text/css" href="vContent/style/ui-grid.min.css" rel="stylesheet" />
+    <link type="text/css" href="vContent/style/libs.min.css" rel="stylesheet" />
+    <link type="text/css" href="vAsset/Content/bootstrap.min.css" rel="stylesheet" />
+    <link type="text/css" href="vContent/style/chartist.min.css" rel="stylesheet" />
+    <!--<link href="vAsset/Content/ProjectStyle.css" rel="stylesheet" />-->
+    <style>
+        .loader {
+            border: 10px solid #f3f3f3; /* Light grey */
+            border-top: 10px solid #90ee90; /* Blue */
+            border-bottom: 10px solid #90ee90;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        html, body, container {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+
+        .collapse {
+            display: none !important;
+        }
+        /*
+        form input.ng-invalid {
+            border-color: red;
+        }
+
+        form input.ng-valid {
+            border-color: transparent;
+        }
+        */
+        input[type="checkbox"] {
+            margin: 0 0 0 !important;
+        }
+
+        .btn {
+            background-color: #6a6868;
+            border: none;
+            color: white;
+            padding: 5px 10px 5px 10px;
+            text-align: center;
+            font-size: 12px;
+            margin: 0px 0px;
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+
+            .btn:hover {
+                opacity: 1
+            }
+
+        .btn-xs {
+            padding: 2px 2px 2px 2px;
+        }
+
+        .logoCls {
+            padding-top: 10px;
+            padding-right: 10px;
+            padding-bottom: 5px;
+            border-radius: 13px;
+            box-shadow: 2px 2px;
+            width: 250px;
+            border: 0;
+        }
+
+        #toast-container {
+            position: absolute;
+        }
+    </style>
+</head>
+<body ng-controller="homeController">
+
+    <div class="container-fluid" style="background-color:#17a2b8;height:80px">
+        <!--<a class="navbar-brand bg-info text-white col-sm-3 col-md-2 mr-0" href="#">
+            <span data-feather="layers"></span>
+            &nbsp; <span style="font-size:25px">Ephraim Traders</span>
+        </a>-->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapseOne">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--<span data-feather="layers"></span>-->
+
+            <img src="../vContent/images/ephraimtraders.png" class="logoCls" />
+
+            <!--&nbsp; <span style="font-size:25px">Ephraim Traders</span>-->
+
+        </div>
+        <div class="collapse navbar-collapse pull-right" id="navCollapse" style="padding-top: 15px">
+            <!--<ul class="nav navbar-nav">-->
+            <table class="table">
+                <tr>
+                    <td>
+                        <span class="btn">{{tokenInfo.UserName}}</span>
+                    </td>
+                    <!--<td>
+                        <a href="#ChangePassword"><span class="btn"> Change Password</span></a>
+                    </td>-->
+                    <td>
+                        <a href="#" ng-click="logOut()"><span class="btn">Logout</span></a>
+                    </td>
+                </tr>
+            </table>
+            <!--</ul>-->
+        </div>
+    </div>
+    <div class="container-fluid" style="margin-top:25px">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="border-radius:5px">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item" ng-repeat="item in UserRights">
+                            <a class="nav-link active" href="{{item.MenuUrl}}">
+                                <span data-feather="{{item.FeatherName}}"></span>
+                                {{item.DisplayName}}<span class="sr-only">(current)</span>
+                            </a>
+                        </li>                        
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <toaster-container toaster-options="{'time-out': 3000,'position-class': 'toast-top-right'}"></toaster-container>
+                <!--<div ng-if="ShowSpinnerStatus" class="loader"></div>-->
+                <div data-ng-view=""></div>
+               
+            </main>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <!--<script src="../../../../../../assets/js/vendor/popper.min.js"></script>-->
+    <!--<script src="../../../../dist/js/bootstrap.min.js"></script>-->
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <!--<script>
+        feather.replace()
+    </script>-->
+    <!--<script src="vContent/Scripts/Chart.min.js"></script>
+    <script src="vContent/Scripts/angular-chart.min.js"></script>-->
+    <!-- Graphs -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                datasets: [{
+                    data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+                    lineTension: 0,
+                    backgroundColor: 'transparent',
+                    borderColor: '#007bff',
+                    borderWidth: 4,
+                    pointBackgroundColor: '#007bff'
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                },
+                legend: {
+                    display: false,
+                }
+            }
+        });
+    </script>-->
+</body>
+</html>
+
+<script type="text/javascript" src="vContent/Scripts/jquery-1.9.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="vContent/Scripts/chartist.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/chartist-plugin-axistitle.js"></script>
+<script type="text/javascript" src="vContent/Scripts/chartist-plugin-tooltip.min.js"></script>
+
+
+<script type="text/javascript" src="vContent/Scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/popper.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular-chartist.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular-route.min.js"></script>
+<script type="text/javascript" src="vAsset/Scripts/angular-local-storage.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular-animate.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular-strap.js"></script>
+<script type="text/javascript" src="vContent/Scripts/angular-strap.tpl.js"></script>
+<script type="text/javascript" src="vContent/Scripts/Chart.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/maskedinput.js"></script>
+<script type="text/javascript" src="vContent/Scripts/select2.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ng-tags-input.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/jszip.js"></script>
+<script type="text/javascript" src="vContent/Scripts/xlsx.full.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/xlsx.js"></script>
+<script type="text/javascript" src="vContent/Scripts/toaster.js"></script>
+<script type="text/javascript" src="vapp/app.js"></script>
+<script type="text/javascript" src="vContent/Scripts/sweetalert-dev.js"></script>
+<script type="text/javascript" src="vContent/Scripts/SweetAlert.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-grid.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-grid.cellnav.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-grid.edit.min.js"></script>
+<script type="text/javascript" src="vContent/Scripts/ui-grid.validate.min.js"></script>
+
+
+
+<script src="vapp/services/DigestService.js"></script>
+<script type="text/javascript" src="vapp/services/loginService.js"></script>
+<script type="text/javascript" src="vapp/controllers/loginController.js"></script>
+<script type="text/javascript" src="vapp/controllers/RegisterController.js"></script>
+<script type="text/javascript" src="vapp/controllers/EditBillController.js"></script>
+<script type="text/javascript" src="vapp/services/ExceptionHandler.js"></script>
+<script type="text/javascript" src="vapp/services/GlobalVariableService.js"></script>
+<script type="text/javascript" src="vapp/services/CommonService.js"></script>
+<script type="text/javascript" src="vapp/services/EtradersService.js"></script>
+<script type="text/javascript" src="vapp/services/PrintService.js"></script>
+<script type="text/javascript" src="vapp/controllers/ManageWholeSaleController.js"></script>
+<script type="text/javascript" src="vapp/controllers/WholeSaleDashboardController.js"></script>
+<script type="text/javascript" src="vapp/controllers/ManageRetailsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/SupplierRetailerController.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/ItemCategoryDashboardController.js"></script>
+<script type="text/javascript" src="vapp/controllers/ManageGodown.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialInventoryConstroller.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialInventoryDashboard.js"></script>
+<script type="text/javascript" src="vapp/controllers/MaterialsCheckQIHController.js"></script>
+<script type="text/javascript" src="vapp/controllers/EmployeesController.js"></script>
+<script type="text/javascript" src="vapp/controllers/EmployeeAccountsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/RightsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/RightsManagementController.js"></script>
+<script type="text/javascript" src="vapp/controllers/homeController.js"></script>
+<script type="text/javascript" src="vapp/controllers/SalesStatisticsController.js"></script>
+<script type="text/javascript" src="vapp/controllers/PaymentOnlineController.js"></script>
+<script type="text/javascript" src="vapp/controllers/ChartController.js"></script>
+<script type="text/javascript" src="vapp/controllers/EmployeeAttendanceController.js"></script>
+<script type="text/javascript">
+    ETradersApp.constant("Version", "1");
+
+</script>
+

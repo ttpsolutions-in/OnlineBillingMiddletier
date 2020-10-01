@@ -21,10 +21,10 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Sale>("Sales");
-    builder.EntitySet<Bill>("Bills"); 
-    builder.EntitySet<Godown>("Godowns"); 
-    builder.EntitySet<Material>("Materials"); 
+    builder.EntitySet<Sale>("Sales";
+    builder.EntitySet<Bill>("Bills"; 
+    builder.EntitySet<Godown>("Godowns"; 
+    builder.EntitySet<Material>("Materials"; 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class SalesController : ODataController

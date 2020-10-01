@@ -22,7 +22,7 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<RightsForAssignment>("RightsForAssignments");
+    builder.EntitySet<RightsForAssignment>("RightsForAssignments";
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class RightsForAssignmentsController : ODataController

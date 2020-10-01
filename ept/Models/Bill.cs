@@ -25,10 +25,10 @@ namespace ept.Models
         public int RetailerId { get; set; }
         public int SaleCategoryId { get; set; }
         public int SaleTypeId { get; set; }
-        public byte GSTApplied { get; set; }
-        public decimal GSTPercentage { get; set; }
-        public decimal GSTAmount { get; set; }
-        public byte DiscountApplied { get; set; }
+        public Nullable<byte> GSTApplied { get; set; }
+        public Nullable<decimal> GSTPercentage { get; set; }
+        public Nullable<decimal> GSTAmount { get; set; }
+        public Nullable<byte> DiscountApplied { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string UpdatedBy { get; set; }
@@ -36,7 +36,7 @@ namespace ept.Models
         public byte BillStatus { get; set; }
         public Nullable<decimal> PaidAmt { get; set; }
         public Nullable<decimal> BalanceAmt { get; set; }
-        public decimal TotalAmount { get; set; }
+        public Nullable<decimal> TotalAmount { get; set; }
         public decimal GrandTotal { get; set; }
         public Nullable<byte> ShowGSTNo { get; set; }
     

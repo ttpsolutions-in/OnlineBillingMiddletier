@@ -21,8 +21,8 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Material>("Materials");
-    builder.EntitySet<Sale>("Sales"); 
+    builder.EntitySet<Material>("Materials";
+    builder.EntitySet<Sale>("Sales"; 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     //[Authorize]

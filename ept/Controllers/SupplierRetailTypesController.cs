@@ -21,8 +21,8 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<SupplierRetailType>("SupplierRetailTypes");
-    builder.EntitySet<SupplierRetailer>("SupplierRetailers"); 
+    builder.EntitySet<SupplierRetailType>("SupplierRetailTypes";
+    builder.EntitySet<SupplierRetailer>("SupplierRetailers"; 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
     public class SupplierRetailTypesController : ODataController
