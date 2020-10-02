@@ -39,6 +39,7 @@ ETradersApp.controller("MaterialsCheckQIHController", ['GlobalVariableService','
             orderBy: "QIH desc"
         };
         $scope.showSpinner();
+        $scope.MaterialList = [];
         CommonService.GetListItems(lstBill).then(function (response) {
             if (response && response.data.d.results.length > 0) {
                 $scope.MaterialList = response.data.d.results;
@@ -53,10 +54,9 @@ ETradersApp.controller("MaterialsCheckQIHController", ['GlobalVariableService','
 
                 //var ReorderRequiredMaterials = $scope.MaterialList.find(ele=>ele.QIH != undefined)
 
-                $scope.gridOptions.data = $scope.MaterialList;
-                $scope.hideSpinner()
-                
             }
+            $scope.gridOptions.data = $scope.MaterialList;
+            $scope.hideSpinner()
         });
     };
 

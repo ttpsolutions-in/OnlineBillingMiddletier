@@ -48,18 +48,23 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
-                    <select select2 id="ddlItemCategory" name="ddlItemCategory" ng-model="RetailData.ItemCategory" class="form-control"
+                    <select select2 id="ddlItemCategory" name="ddlItemCategory" ng-model="RetailData.ItemCategory" ng-change="GetMaterialsByCategoryId()" class="form-control input-sm"
                             ng-options="item.ItemCategoryId as item.ItemCategoryName for item in ItemCatogoryList" required>
-                        <option value="">--Select material category *--</option>
+                        <option value="">--Select material category * --</option>
                     </select>
                     <p ng-show="submitted && addRetailForm.ddlItemCategory.$invalid"
                        class="text-danger">Please select category.</p>
                 </div>
                 <div class="form-group col-md-4">
-                    <button type="button" class="btn btn-secondary btn-sm" ng-disabled="DataSaved" ng-click="AddItem()">Add Item</button>
+                    <select select2 id="ddlMaterial" name="ddlMaterial" ng-model="currentMaterialId" class="form-control input-sm"
+                            ng-options="item.MaterialId as item.DisplayName for item in currentMaterialLst" required>
+                        <option value="">--Select Material * --</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <button type="button" class="btn btn-secondary" ng-if="!ShowSpinnerStatus" btn-sm" ng-click="AddItem()">Add Item</button>
                 </div>
             </div>
-
             <div class="form-row">
                 <div class="col-md-12 nopadding">
                     <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav ui-grid-selection

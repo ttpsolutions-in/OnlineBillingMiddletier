@@ -41,18 +41,30 @@
                        class="text-danger">Contact No. is required.</p>
                 </div>
             </div>
+
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
-                    <select select2 id="ddlItemCategory" name="ddlItemCategory" ng-model="WholeSale.ItemCategory" class="form-control input-sm"
-                            ng-options="item.ItemCategoryId as item.ItemCategoryName for item in ItemCatogoryList">
-                        <option value="">Material Category</option>
+                    <select select2 id="ddlItemCategory" name="ddlItemCategory" ng-model="WholeSale.ItemCategory" ng-change="GetMaterialsByCategoryId()" class="form-control input-sm"
+                            ng-options="item.ItemCategoryId as item.ItemCategoryName for item in ItemCatogoryList" required>
+                        <option value="">--Select material category * --</option>
                     </select>
+                    <p ng-show="submitted && addWholeSaleForm.ddlItemCategory.$invalid"
+                       class="text-danger">Please select category.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <select select2 id="ddlMaterial" name="ddlMaterial" ng-model="currentMaterialId" class="form-control input-sm"
+                            ng-options="item.MaterialId as item.DisplayName for item in currentMaterialLst" required>
+                        <option value="">--Select Material * --</option>
+                    </select>
+                    <p ng-show="submitted && addWholeSaleForm.ddlMaterial.$invalid"
+                       class="text-danger">Please select category.</p>
                 </div>
                 <div class="form-group col-md-4">
                     <button type="button" class="btn btn-secondary" ng-if="!ShowSpinnerStatus" btn-sm" ng-click="AddItem()">Add Item</button>
                 </div>
             </div>
+
             <div class="form-row">
                 <div class="col-md-12 nopadding">
                     <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav ui-grid-selection
@@ -96,8 +108,8 @@
             <div class="form-row col-md-offset-5 col-sm-offset-5">
                 <div class="pr-4"><a href="#WholeSaleDashboard" class="btn btn-primary float-right"><span data-feather="arrow-left"></span> Back</a></div>
                 <!--<div class="pr-4">
-                    <button type="button" class="btn btn-primary" ng-click="SubmitItems(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save</button>
-                </div>-->
+            <button type="button" class="btn btn-primary" ng-click="SubmitItems(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save</button>
+        </div>-->
                 <div class="pr-4">
                     <button type="button" class="btn btn-primary" ng-if="CancelBillRights.length>0" ng-click="SaveBillDetails('c')"><span data-feather="trash"></span> Cancel Bill</button>
                 </div>

@@ -64,14 +64,10 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                     headerCellClass: 'text-right', cellClass: 'text-center', displayName: 'Sl. No', cellTemplate: '<span>{{rowRenderIndex+1}}</span>'
                 },
                 {
-                    name: 'DisplayName', width: 300, displayName: 'Material *', cellTemplate: '<select id="Material" name="Material" class="form-control input-sm"' +
-                            ' ng-options="item.MaterialId as item.DisplayName for item in grid.appScope.currentMaterialLst">'+
-                            '<option value="">Select Material *</option>'+
-                    '</select >',
-                    editDropdownValueLabel: 'DisplayName', editDropdownIdLabel: 'DisplayName'
+                    name: 'DisplayName', width: 300, displayName: 'Material',field:'DisplayName',enableCellEdit:false 
                 },
                 {
-                    displayName: 'Rate *', width: 100, field: 'WholeSaleRate', type: 'number', cellTooltip: true,
+                    displayName: 'Rate', width: 100, field: 'WholeSaleRate', type: 'number', cellTooltip: true,
                     enableCellEdit: false, cellClass: 'text-right', headerCellClass: 'text-center'
                 },
                 {
@@ -100,8 +96,8 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
             console.log($scope.gridApi)
             gridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
                 //$scope.showSpinner();
-                $scope.currentMaterialLst = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
-                $scope.gridOptions.columnDefs[3].editDropdownOptionsArray = $scope.currentMaterialLst;//$filter('filter')($scope.MaterialsData, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
+                
+                //$scope.gridOptions.columnDefs[3].editDropdownOptionsArray = $scope.currentMaterialLst;//$filter('filter')($scope.MaterialsData, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
                 $scope.gridOptions.columnDefs[5].editDropdownOptionsArray = $scope.GodownData;
                 //$scope.hideSpinner();
             });
@@ -178,10 +174,9 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
         };
 
         $scope.GetMaterialsByCategoryId = function () {
-            //$scope.showSpinner();
-            $scope.MaterialLists = $filter('filter')($scope.MaterialsData, { ItemCategoryId: $scope.WholeSale.ItemCategory }, true);
-            //$scope.hideSpinner();
-        };
+            
+            $scope.currentMaterialLst = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.WholeSale.ItemCategory }, true);
+            };
         $scope.GetGodowns = function () {
             var lstItems = {
                 title: "Godowns",
@@ -247,10 +242,11 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
 
                 var item = {
 
-                    "MaterialId": 0,
+                    "MaterialId": $scope.currentMaterialId,
                     "ItemCategoryId": $scope.WholeSale.ItemCategory,
-                    "DisplayName": '-- Select Material --',//$scope.currentMaterialLst[0].DisplayName,
-                    "GodownId": $scope.GodownData[0].GodownName,
+                    "DisplayName": $filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].DisplayName,
+                    "WholeSaleRate":$filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].WholeSaleRate,
+                    "GodownId": "--Select Godown--",
                     "Description": null,
                     "Whole_Sale_Rate": 0,
                     "Quantity": 0,
@@ -304,7 +300,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                     //$location.path('/');
 
                 } else {
-                    toaster.pop('error', "", "Please enter proper data!", 5000, 'trustedHtml');
+                    toaster.pop('error', "", "Please enter complete data!", 5000, 'trustedHtml');
                 }
             } catch (error) {
                 console.log("Exception caught  in ManageWholeSaleController and SubmitItems function. Exception Logged as " + error.message);

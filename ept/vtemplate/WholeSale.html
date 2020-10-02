@@ -32,7 +32,7 @@
                            ng-disabled="WholeSale.SupplierRetailer > 0" ng-model="WholeSale.ContactNo">
                     <p ng-show="submitted && addWholeSaleForm.ContactNo.$invalid && !SupplierRetailer.ContactNo.$pristine"
                        class="text-danger">Contact No. is required.</p>
-                </div>
+                </div> 
                 <div class="form-group col-md-4">
                     <!-- <label for="SupplierRetailer">Name</label> <span class="text-danger">*</span>-->
                     <select id="SupplierRetailer" name="SupplierRetailer" ng-model="WholeSale.SupplierRetailer" ng-change="GetContactNo()" class="form-control input-sm"
@@ -46,9 +46,15 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
-                    <select select2 id="ddlItemCategory" name="ddlItemCategory" ng-model="WholeSale.ItemCategory" class="form-control input-sm"
+                    <select select2 id="ddlItemCategory" name="ddlItemCategory" ng-model="WholeSale.ItemCategory" ng-change="GetMaterialsByCategoryId()" class="form-control input-sm"
                             ng-options="item.ItemCategoryId as item.ItemCategoryName for item in ItemCatogoryList" required>
                         <option value="">--Select material category * --</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <select select2 id="ddlMaterial" name="ddlMaterial" ng-model="currentMaterialId" class="form-control input-sm"
+                            ng-options="item.MaterialId as item.DisplayName for item in currentMaterialLst" required>
+                        <option value="">--Select Material * --</option>
                     </select>
                 </div>
                 <div class="form-group col-md-4">

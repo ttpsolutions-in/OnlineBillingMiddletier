@@ -871,6 +871,7 @@
     <Content Include="vtemplate\EditRightsManagement.html" />
     <Content Include="vtemplate\EditSupplierCustomer.html" />
     <Content Include="vtemplate\EmployeeAccountDashboard.html" />
+    <Content Include="vtemplate\EmployeeAttendanceReport.html" />
     <Content Include="vtemplate\EmployeesDashboard.html" />
     <Content Include="vtemplate\GodownDashboard.html" />
     <Content Include="vtemplate\home.html" />

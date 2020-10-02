@@ -11,7 +11,7 @@ ETradersApp.controller("RightsManagementController", ['$timeout', 'GlobalVariabl
         $scope.searchCategory = '';
         $scope.searchDisplayName = '';
         $scope.searchDescription = '';
-        $scope.MainRoleId = 0;
+        $scope.MainRoleId = null;
         //$scope.TodaysDate = $filter('date')(new Date(), "dd/MM/yyyy");
         $scope.ID = $routeParams.ID;
         $scope.RightsManagementList = [];

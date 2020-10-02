@@ -65,8 +65,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                     enableSorting: true, headerCellClass: 'text-right', cellClass: 'text-center', displayName: 'Sl. No.', cellTemplate: '<span>{{rowRenderIndex+1}}</span>'
                 },
                 {
-                    name: 'DisplayName', displayName: 'Material *', editableCellTemplate: 'ui-grid/dropdownEditor',
-                    editDropdownValueLabel: 'DisplayName', editDropdownIdLabel: 'DisplayName'
+                    name: 'DisplayName', displayName: 'Material',field: 'DisplayName',enableCellEdit:false
                 },
                 { displayName: 'Rate', field: 'RetailRate', cellTooltip: true, enableCellEdit: false, cellClass: 'text-right', headerCellClass: 'text-center' },
                 {
@@ -108,9 +107,9 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
             //console.log($scope.gridApi)
             gridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
                 //$scope.showSpinner();
-                var tempMateriallist = GlobalVariableService.getMaterialList();
-                $scope.currentMaterialLst = $filter('filter')(tempMateriallist, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
-                $scope.gridOptions.columnDefs[3].editDropdownOptionsArray = $scope.currentMaterialLst;//$filter('filter')($scope.currentMaterialLst, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
+                //var tempMateriallist = GlobalVariableService.getMaterialList();
+                //$scope.currentMaterialLst = $filter('filter')(tempMateriallist, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
+                //$scope.gridOptions.columnDefs[3].editDropdownOptionsArray = $scope.currentMaterialLst;//$filter('filter')($scope.currentMaterialLst, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
                 $scope.gridOptions.columnDefs[5].editDropdownOptionsArray = $scope.GodownData;
                 //$scope.hideSpinner();
             });
@@ -127,8 +126,8 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
             });
 
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                rowEntity.RetailRate = $filter('filter')($scope.currentMaterialLst, { DisplayName: rowEntity.DisplayName }, true)[0].RetailRate;
-                rowEntity.MaterialId = $filter('filter')($scope.currentMaterialLst, { DisplayName: rowEntity.DisplayName }, true)[0].MaterialId;
+                //rowEntity.RetailRate = $filter('filter')($scope.currentMaterialLst, { DisplayName: rowEntity.DisplayName }, true)[0].RetailRate;
+                //rowEntity.MaterialId = $filter('filter')($scope.currentMaterialLst, { DisplayName: rowEntity.DisplayName }, true)[0].MaterialId;
 
                 if (parseFloat(newValue) != parseFloat(oldValue)) {
                     $scope.DataSaved = false;
@@ -217,9 +216,9 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
         };
 
         $scope.GetMaterialsByCategoryId = function () {
-            // $scope.showSpinner();
-            $scope.MaterialLists = $filter('filter')($scope.MaterialsData, { ItemCategoryId: $scope.RetailData.ItemCategory }, true);
-            // $scope.hideSpinner();
+                       
+            $scope.currentMaterialLst = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.RetailData.ItemCategory }, true);
+          
         };
         $scope.GetGodowns = function (callback) {
             CommonService.GetGodowns().then(
@@ -227,21 +226,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                     $scope.GodownData = result;
                     if (callback)
                         callback();
-                });
-
-            /*var lstItems = {
-                title: "Godowns",
-                fields: ["GodownId", "GodownName"],
-                filter: ["Active eq 1"],
-                orderBy: "GodownName"
-            };
-            //$scope.showSpinner();
-            CommonService.GetListItems(lstItems).then(function (response) {
-                if (response && response.data.d.results.length > 0) {
-                    $scope.GodownData = response.data.d.results;
-
-                }
-            });*/
+                });            
         };
         $scope.GetGSTPercentageById = function () {
             var postData = {
@@ -291,17 +276,15 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
             });
         };
 
-
         $scope.AddItem = function () {
             if ($scope.RetailData.ItemCategory != undefined) {
                 var item = {
 
-                    "MaterialId": 0,
+                    "MaterialId": $scope.currentMaterialId,
                     "ItemCategoryId": $scope.RetailData.ItemCategory,
-                    "DisplayName": '-- Select Material --',//$scope.currentMaterialLst[0].DisplayName,
-                    "GodownId": $scope.GodownData[0].GodownName,
-                    "Description": null,
-                    "Whole_Sale_Rate": 0,
+                     "DisplayName": $filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].DisplayName,
+                    "RetailRate":$filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].RetailRate,               
+                    "GodownId": "--Select Godown--",
                     "Quantity": 0,
                     "Discount": 0,
                     "DLP": 0,
@@ -313,9 +296,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
             }
             else {
                 toaster.pop('error', "", "Please select Category", 5000, 'trustedHtml');
-
             }
-
         };
 
 
@@ -357,7 +338,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
 
 
                 } else {
-                    toaster.pop('error', "", "Please enter proper data", 5000, 'trustedHtml');
+                    toaster.pop('error', "", "Please enter complete data", 5000, 'trustedHtml');
                 }
             } catch (error) {
                 console.log("Exception caught  in ManageWholeSaleController and SubmitItems function. Exception Logged as " + error.message);
@@ -420,8 +401,8 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                 };
 
                 $scope.currentPostData = postData;
-                delete $scope.currentPostData.CreatedOn;
-                delete $scope.currentPostData.SaleDate;
+                //delete $scope.currentPostData.CreatedOn;
+                //delete $scope.currentPostData.SaleDate;
                 var difference;
                 if ($scope.prePostData != undefined) {
                     difference = CommonService.compareJSON($scope.prePostData, $scope.currentPostData);

@@ -1,13 +1,40 @@
 ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVariableService', '$scope', '$filter', '$http', '$location', '$routeParams', 'toaster', 'CommonService', 'uiGridConstants',
     function ($timeout, GlobalVariableService, $scope, $filter, $http, $location, $routeParams, toaster, CommonService, uiGridConstants) {
         $scope.ShowSpinnerStatus = false;
-        
+
         $scope.showSpinner = function () {
             $scope.ShowSpinnerStatus = true;
         }
         $scope.hideSpinner = function () {
             $scope.ShowSpinnerStatus = false;
         }
+
+        $scope.MonthList = [
+            { "Month": "01" },
+            { "Month": "02" },
+            { "Month": "03" },
+            { "Month": "04" },
+            { "Month": "05" },
+            { "Month": "06" },
+            { "Month": "07" },
+            { "Month": "08" },
+            { "Month": "09" },
+            { "Month": "10" },
+            { "Month": "11" },
+            { "Month": "12" }
+        ]
+        $scope.YearList = [
+
+        ];
+        $scope.makeYear = function () {
+            var year = new Date().getFullYear();
+            var myyear = { "Year": year };
+            $scope.YearList.push(myyear);
+            var newYear = year - 1;
+            myyear = { "Year": newYear };
+            $scope.YearList.push(myyear);
+        }
+
         $scope.searchCategory = '';
         $scope.searchDisplayName = '';
         $scope.searchDescription = '';
@@ -28,7 +55,7 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
         //$scope.ItemCatogoryList = [];
 
         $scope.gridOptions = {
-            enableFiltering: true,
+            //enableFiltering: true,
             enableCellEditOnFocus: false,
             enableRowSelection: false,
             enableRowHeaderSelection: false,
@@ -59,7 +86,8 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
                 //        + '</div><script>feather.replace()</script>'
                 //},
                 { displayName: 'AttendanceId', field: 'AttendanceId', enableCellEdit: false, visible: false },
-                { displayName: 'EmployeeNo', field: 'EmployeeDetail.EmployeeNo', enableCellEdit: false, visible: false }
+                { displayName: 'EmployeeNo', field: 'EmployeeDetail.EmployeeNo', enableCellEdit: false, visible: false },
+                //  { displayName: 'edited', field: 'edited', enableCellEdit: false, visible: false }
 
             ],
             data: []
@@ -69,6 +97,7 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
                 params.entity.Present = 1;
             else
                 params.entity.Present = 0;
+            //params.entity.edited = 1;
         }
         $scope.SaveEmployeeAttendances = function () {
             try {
@@ -170,14 +199,60 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
                 callback();
             });
         };
+        $scope.GetAttendanceReport = function (isFormValid) {
+
+            $scope.submitted = !isFormValid;
+
+            if (isFormValid) {
+
+                $scope.EmployeeAttendanceList = [];
+                $scope.gridOptions.data = null;
+                var mydate = new Date($scope.AttendanceYear,$scope.AttendanceMonth,0);
+                var lastDay = mydate.getDate();
+
+                $scope.AttendanceFromDate = $scope.AttendanceYear + '-' + $scope.AttendanceMonth + '-' + "01";
+                $scope.AttendanceToDate = $scope.AttendanceYear + '-' + $scope.AttendanceMonth + '-' + lastDay;
+                
+                var lstEmployeeAttendance = {
+                    title: "EmployeeAttendances",
+                    fields: ["*", "EmployeeDetail/EmployeeName"],
+                    lookupFields: ["EmployeeDetail"],
+                    filter: ["Date ge datetime'" + $scope.AttendanceFromDate + "' and Date le datetime'" + $scope.AttendanceToDate + "' and EmployeeNo eq " +$scope.EmployeeNo],
+                    //limitTo: 20,
+                    //orderBy: "EmployeeRole/RoleName"
+                };
+
+                CommonService.GetListItems(lstEmployeeAttendance).then(function (response) {
+                    if (response && response.data.d.results.length > 0) {
+                        $scope.EmployeeAttendanceList = response.data.d.results;
+                        angular.forEach($scope.EmployeeAttendanceList, function (value, key) {
+                            value.Present = value.Present == 1 ? true : false;
+                            value.Date = $filter('date')(value.Date, "dd/MM/yyyy");
+                        })                        
+                    }
+                    $scope.gridOptions.data = $scope.EmployeeAttendanceList;
+                });
+            }
+        }
         $scope.GetDataForDashboard = function (isFormValid) {
 
             $scope.submitted = !isFormValid;
 
             if (isFormValid) {
+
                 $scope.EmployeeAttendanceList = null;
                 $scope.gridOptions.data = null;
-                //$scope.AttendanceDate = Date.parse($scope.AttendanceDate);
+                var today = new Date();
+                if ($scope.AttendanceDate == undefined) {
+                    toaster.pop("error", "", "Please select Date.", 5000, "truestedHtml");
+                    return;
+                }
+                else if ($scope.AttendanceDate > today) {
+
+                    toaster.pop("error", "", "Please select Date less than or equal to Today.", 5000, "truestedHtml");
+                    return;
+                }
+
                 $scope.AttendanceMonth = ($scope.AttendanceDate.getMonth() + 1).toString();
                 if ($scope.AttendanceMonth.length == 1)
                     $scope.AttendanceMonth = "0" + $scope.AttendanceMonth;
@@ -202,29 +277,33 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
                 CommonService.GetListItems(lstEmployeeAttendance).then(function (response) {
                     if (response && response.data.d.results.length > 0) {
                         $scope.EmployeeAttendanceList = response.data.d.results;
+                        angular.forEach($scope.EmployeeAttendanceList, function (value, key) {
+                            value.Present = value.Present == 1 ? true : false;
+                            value.Date = $filter('date')(value.Date, "dd/MM/yyyy");
+                        })
                     }
                     else {
                         $scope.EmployeeAttendanceList = [];
 
                         var lstEmployee = {
                             title: "EmployeeDetails",
-                            fields: ["EmployeeName","EmployeeNo"],
+                            fields: ["EmployeeName", "EmployeeNo"],
                             filter: ["Active eq 1"]
                         };
                         CommonService.GetListItems(lstEmployee).then(function (response) {
                             if (response && response.data.d.results.length > 0) {
-                                
+
                                 $scope.EmployeeList = response.data.d.results;
                                 angular.forEach($scope.EmployeeList, function (value, key) {
                                     var AttendanceNew = {
                                         "EmployeeDetail":
-                                            { "EmployeeName": value.EmployeeName, "EmployeeNo": value.EmployeeNo},
+                                            { "EmployeeName": value.EmployeeName, "EmployeeNo": value.EmployeeNo },
                                         "AttendanceId": 0,
-                                        "Date": $scope.DateParam,
-                                        "Present": 0,                                        
+                                        "Date": $filter('date')($scope.DateParam, "dd/MM/yyyy"),
+                                        "Present": false,
                                         "Comments": ""
                                     }
-                                    
+
                                     $scope.EmployeeAttendanceList.push(AttendanceNew);
                                 })
                             }
@@ -235,23 +314,18 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
                 });
             }
         }
-        $scope.GetEmployeeRoles = function (callback) {
+        $scope.GetEmployee = function () {
             var lstRoles = {
-                title: "EmployeeRoles",
-                fields: ["*"],//,"ItemCategory/ItemCategoryName"],
+                title: "EmployeeDetails",
+                fields: ["EmployeeNo", "EmployeeName"],//,"ItemCategory/ItemCategoryName"],
                 filter: ["Active eq 1"]
                 //lookupFields: ["ItemCategory"],
 
             };
             CommonService.GetListItems(lstRoles).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
-                    $scope.EmployeeRolesList = response.data.d.results;
-                    //$scope.gridOptions.data = $scope.MaterialList;
-                    //$scope.hideSpinner()
-                    if (callback)
-                        callback();
+                    $scope.EmployeeList = response.data.d.results;
                 }
-
             });
         };
 
@@ -279,14 +353,11 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
         $scope.init = function () {
 
             GlobalVariableService.validateUrl($location.$$path);
+            $scope.makeYear();
             if ($scope.ID > 0)
                 $scope.GetEmployeeAttendanceById();
             $scope.GetDataForDashboard();
-            $scope.GetEmployeeRoles(function () {
-                //$scope.GetRights(function () {
-                //$scope.GetDataForDashboard();                    
-                //});
-            });
+            $scope.GetEmployee();
         };
 
         $scope.init();

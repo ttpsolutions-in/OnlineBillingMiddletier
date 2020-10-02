@@ -9,7 +9,7 @@ var ETradersApp = angular.module("ETradersApp", ["ngRoute", "ngAnimate", "ui.boo
 //    });
 
 ETradersApp.constant("Config", {
-    "ServiceBaseURL": "http://localhost:44393",
+    "ServiceBaseURL": "http://localhost:8080",
     
 });//http://ephraim.ttpsolutions.in //http://localhost:50503
 
@@ -184,6 +184,9 @@ ETradersApp.config(['$routeProvider', '$locationProvider',
             controller: 'ChartController'
         }).when("/EmployeeAttendance", {
             templateUrl: '/vtemplate/EmployeeAttendanceDashboard.html',
+            controller: 'EmployeeAttendanceController'
+        }).when("/EmployeeAttendanceReport", {
+            templateUrl: '/vtemplate/EmployeeAttendanceReport.html',
             controller: 'EmployeeAttendanceController'
         }).when("/invalid", {
             templateUrl: '/vtemplate/InvalidPage.html',

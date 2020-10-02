@@ -13,23 +13,23 @@
         }
         GlobalVariableService.setTokenInfo = function (data) {
             if (data !=null)
-                $window.sessionStorage[TokenInfoKey] = JSON.stringify(data);
+                $window.localStorage[TokenInfoKey] = JSON.stringify(data);
         }
         GlobalVariableService.setRoleRights = function (data) {
             if (data!=null)
-                $window.sessionStorage[RoleRightsKey] = JSON.stringify(data);
+                $window.localStorage[RoleRightsKey] = JSON.stringify(data);
         }
         GlobalVariableService.getRoleRights = function () {
-            if ($window.sessionStorage[RoleRightsKey] !=null) {
-                //console.log($window.sessionStorage[RoleRightsKey]);
-                return JSON.parse($window.sessionStorage[RoleRightsKey]);
+            if ($window.localStorage[RoleRightsKey] !=null) {
+                //console.log($window.localStorage[RoleRightsKey]);
+                return JSON.parse($window.localStorage[RoleRightsKey]);
             }
             else
                 $window.location.href = LoginURl
         }
         GlobalVariableService.getTokenInfo = function (callback) {
-            if ($window.sessionStorage[TokenInfoKey]!=null) {
-                return JSON.parse($window.sessionStorage[TokenInfoKey]);
+            if ($window.localStorage[TokenInfoKey]!=null) {
+                return JSON.parse($window.localStorage[TokenInfoKey]);
             }
             else
                 $window.location.href = LoginURl;
@@ -39,7 +39,7 @@
         GlobalVariableService.setMaterialList = function (data) {
 
             if (data != undefined && data != null) {
-                $window.sessionStorage[MaterialListKey] = JSON.stringify(data);
+                $window.localStorage[MaterialListKey] = JSON.stringify(data);
             }
         }
         GlobalVariableService.getARights = function (pRoleName, pRightsName) {
@@ -56,32 +56,32 @@
         }
 
         GlobalVariableService.getMaterialList = function () {
-            if ($window.sessionStorage[MaterialListKey] == undefined || $window.sessionStorage[MaterialListKey] == null) {
+            if ($window.localStorage[MaterialListKey] == undefined || $window.localStorage[MaterialListKey] == null) {
                 $location.path(LoginURl);//return GlobalVariableService.getMaterials();
             }
             else
-                return JSON.parse($window.sessionStorage[MaterialListKey]);
+                return JSON.parse($window.localStorage[MaterialListKey]);
 
 
         }
 
         GlobalVariableService.removeToken = function () {
-
-            $window.sessionStorage[TokenInfoKey] = null;
-            $window.sessionStorage[MaterialListKey] = null;
-            $window.sessionStorage[RoleRightsKey] = null;
+            $window.localStorage.clear();
+            //$window.localStorage[TokenInfoKey] = null;
+            //$window.localStorage[MaterialListKey] = null;
+            //$window.localStorage[RoleRightsKey] = null;
         }
 
         //GlobalVariableService.init = function () {
-        //    if ($window.sessionStorage["TokenInfo"]) {
-        //        tokenInfo = JSON.parse($window.sessionStorage["TokenInfo"]);
+        //    if ($window.localStorage["TokenInfo"]) {
+        //        tokenInfo = JSON.parse($window.localStorage["TokenInfo"]);
         //    }
         //}
 
         GlobalVariableService.setHeader = function (http) {
             delete http.defaults.headers.common['X-Requested-With'];
 
-            tokenInfo = JSON.parse($window.sessionStorage[TokenInfoKey]);
+            tokenInfo = JSON.parse($window.localStorage[TokenInfoKey]);
 
             if ((tokenInfo !== undefined) && (tokenInfo.AccessToken !== undefined) && (tokenInfo.AccessToken !== null) && (tokenInfo.AccessToken !== "")) {
                 http.defaults.headers.common['Authorization'] = 'Bearer ' + tokenInfo.AccessToken;
