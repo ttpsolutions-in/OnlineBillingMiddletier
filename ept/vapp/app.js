@@ -59,9 +59,12 @@ ETradersApp.config(['$routeProvider', '$locationProvider',
             requireBase: true
         });
 
-        $routeProvider.when("/home", {
+        $routeProvider.when("/", {
             templateUrl: '/vtemplate/home.html',
             controller: 'homeController'
+        }).when("/home", {
+                templateUrl: '/vtemplate/home.html',
+                controller: 'homeController'
         }).when("/WholeSale", {
             templateUrl: '/vtemplate/WholeSale.html',
             controller: 'ManageWholeSaleController'

@@ -47,7 +47,7 @@ ETradersApp.controller("EmployeesController", ['GlobalVariableService','$scope',
             paginationPageSize: 25,
             columnDefs: [
 
-                { width: 100, displayName: 'Employee No.', field: 'EmployeeNo', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+                { width: 150, displayName: 'Employee No.', field: 'EmployeeNo', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
                 { width: 250, displayName: 'Name', field: 'EmployeeName', cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
                 {
                     width: 250, displayName: 'Address', field: 'Address', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left',
@@ -62,7 +62,7 @@ ETradersApp.controller("EmployeesController", ['GlobalVariableService','$scope',
                 //{ width: 100, displayName: 'Join Date', field: 'JoinDate', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
                 //{ width: 100, displayName: 'Employment Type', field: 'EmploymentType.EmploymentTypeName', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
 
-                { width: 120, displayName: 'Role', field: 'EmployeeRole.RoleName', enableCellEdit: false, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
+                { width: 80, displayName: 'Role', field: 'EmployeeRole.RoleName', enableCellEdit: false, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
                 {
                     name: 'Action', width: 80, enableFiltering: false, cellClass: 'text-center', displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
                         + '<a id="btnView" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditEmployee/{{row.entity.EmployeeNo}}" ><span data-feather="edit"></span> </a>'

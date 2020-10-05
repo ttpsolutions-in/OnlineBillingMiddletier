@@ -32,7 +32,7 @@ namespace ept
             else
                 Session["RetailerId"] = Request.QueryString["RetailerId"];
 
-            
+
 
 
 
@@ -41,7 +41,7 @@ namespace ept
                 db = new EphraimTradersEntities();
                 int RetailerId = 0;
                 RetailerId = Convert.ToInt32(Request.QueryString["RetailerId"]);
-
+                //Session["RetailerId"] = RetailerId;
                 IQueryable<SupplierRetailer> result = db.SupplierRetailers.Where(supplierretailer => supplierretailer.SupplierRetailerId == RetailerId);
                 //Email.Value = Converter<SupplierRetailers>(result
                 foreach (var item in result)
@@ -62,14 +62,25 @@ namespace ept
             Instamojo objClass = InstamojoImplementation.getApi(Insta_client_id, Insta_client_secret, Insta_Endpoint, Insta_Auth_Endpoint);
 
             string responseURL = CreatePaymentOrder(objClass);
-
+            //Response.Write("responseurl: " + responseURL);
+            //writelog(responseURL);
 
             //////////////////////////////////////
 
 
             Response.Redirect(responseURL);
         }
+        public void writelog(string logtxt)
+        {
+            // Set a variable to the Documents path.
+            string docPath = @"C:\Inetpub\vhosts\ephraimtraders.in\"; //Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
+            // Append text to an existing file named "WriteLines.txt".
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "WriteLines.txt"), true))
+            {
+                outputFile.WriteLine(logtxt);
+            }
+        }
         private string CreatePaymentOrder(Instamojo objClass)
         {
             var message = "";
@@ -96,9 +107,9 @@ namespace ept
             objPaymentRequest.amount = Convert.ToInt64(txtAmount.Value);
             //objPaymentRequest.currency = "USD";
 
-            //string randomName = Path.GetRandomFileName();
-            //randomName = randomName.Replace(".", string.Empty);
-            objPaymentRequest.transaction_id = DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "");
+            string randomName = Path.GetRandomFileName();
+            randomName = randomName.Replace(".", string.Empty);
+            objPaymentRequest.transaction_id = randomName;// DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "");
 
             objPaymentRequest.redirect_url = ConfigurationManager.AppSettings["RedirectUrl"];// "https://ettest.ttpsolutions.in/index.html#/PaymentOnline";
             //objPaymentRequest.webhook_url = ConfigurationManager.AppSettings["WebhookUrl"];// "https://your.server.com/webhook";

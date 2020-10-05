@@ -166,15 +166,14 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window','Config','Glob
                 orderBy: "BillNo desc"
             };
             if ($scope.searchFromDate != "" && $scope.searchToDate != "") {
-                var fromDate = $scope.searchFromDate;
-                var toDate = $scope.searchToDate;
-                var fromDateWOTime = fromDate.getFullYear() + '-' + parseInt(fromDate.getMonth()+1) + '-' + fromDate.getDate() + 'T00:00:00.000Z';
-                var toDateWOTime = toDate.getFullYear() + '-' + parseInt(toDate.getMonth()+1)  + '-' + toDate.getDate() + 'T00:00:00.000Z';
-
+                var toDate = $filter('date')($scope.searchToDate, 'yyyy-MM-dd');
+               
+                var fromDate = $filter('date')($scope.searchFromDate,'yyyy-MM-dd');
+               
                 if (lstBill.filter == undefined)
-                    lstBill.filter = "SaleDate ge datetime'" + fromDateWOTime + "' and SaleDate le datetime'" + toDateWOTime + "'";
+                    lstBill.filter = "SaleDate ge datetime'" + fromDate + "' and SaleDate le datetime'" + toDate + "'";
                 else
-                    lstBill.filter = lstBill.filter + " and SaleDate ge datetime'" + fromDateWOTime + "' and SaleDate le datetime'" + toDateWOTime + "'";
+                    lstBill.filter = lstBill.filter + " and SaleDate ge datetime'" + fromDate + "' and SaleDate le datetime'" + toDate + "'";
 
             }
             if ($scope.searchSupplierRetailer > 0) {

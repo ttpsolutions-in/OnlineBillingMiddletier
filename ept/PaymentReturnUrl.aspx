@@ -91,7 +91,7 @@
         }
     </style>
 </head>
-<bod>
+<body>
     <div class="card-body">
         <form name="addPaymentForm" runat="server">
             <div class="form-row">

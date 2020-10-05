@@ -27,7 +27,7 @@ namespace ept
             string id = string.Empty;
             string payment_status = string.Empty;
 
-            
+
             if (Request.QueryString["payment_id"] != null)
             {
                 payment_id = Request.QueryString["payment_id"];
@@ -57,57 +57,63 @@ namespace ept
 
                 if (!id.IsNullOrWhiteSpace())
                 {
-                    try
-                    {
-                        var newPayment = false;
-                        List<string> paymentIdArray=null;
+                    //try
+                    //{
+                    var newPayment = false;
+                    List<string> paymentIdArray = new List<string>();
 
-                        if (Session["PaymentArray"] == null)
+                    if (Session["PaymentArray"] == null)
+                    {
+                        paymentIdArray.Add(payment_id);
+                        Session["PaymentArray"] = paymentIdArray;
+                        newPayment = true;
+                    }
+                    else
+                    {
+                        paymentIdArray = Session["PaymentArray"] as List<string>;
+                        if (!paymentIdArray.Contains(payment_id))
                         {
                             paymentIdArray.Add(payment_id);
-                            Session["PaymentArray"] = paymentIdArray;
                             newPayment = true;
                         }
-                        else
-                        {
-                            paymentIdArray = Session["PaymentArray"] as List<string>;
-                            if (!paymentIdArray.Contains(payment_id))
-                            {
-                                paymentIdArray.Add(payment_id);
-                                newPayment = true;
-                            }
-                        }
-                        if (newPayment)
-                        {
-                            var onlinepayment = db.OnlinePaymentDetails.First(item => item.RequestId == id);
-                            onlinepayment.PaymentStatus = payment_status;
-                            onlinepayment.InstamojoPaymentId = payment_id;
-                            db.SaveChanges();
+                    }
+                    if (newPayment)
+                    {
+                        var onlinepayment = db.OnlinePaymentDetails.First(item => item.TransactionId == transaction_id);
+                        onlinepayment.PaymentStatus = payment_status;
+                        onlinepayment.InstamojoPaymentId = payment_id;
+                        db.SaveChanges();
 
-                            //insert into Bills table only if the payment is successful.
-                            if (payment_status.ToLower() == "credit")
-                            {
-                                //var billduplicate = db.Bills.First(item=>item.SaleCategoryId ==3
-                                Bill objBill = new Bill();
-                                objBill.GrandTotal = onlinepayment.amount;
-                                objBill.RetailerId = Convert.ToInt32(Session["RetailerId"]);
-                                objBill.SaleTypeId = 3;//payment
-                                objBill.TotalAmount = 0;
-                                objBill.PaidAmt = 0;
-                                objBill.GSTAmount = 0;
-                                objBill.GSTApplied = 0;
-                                objBill.GSTPercentage = 0;
-                                objBill.SaleDate = DateTime.Now;
-                                objBill.BillStatus = 1;
-                                db.Bills.Add(objBill);
-                                db.SaveChanges();
-                            }
+                        //insert into Bills table only if the payment is successful.
+                        if (payment_status.ToLower() == "credit")
+                        {
+                            //var billduplicate = db.Bills.First(item=>item.SaleCategoryId ==3
+                            Bill objBill = new Bill();
+                            objBill.GrandTotal = onlinepayment.amount;
+                            objBill.RetailerId = Convert.ToInt32(Session["RetailerId"]);
+                            objBill.SaleTypeId = 3;//payment
+                            objBill.SaleCategoryId = 3;//payment
+                            objBill.TotalAmount = 0;
+                            objBill.PaidAmt = 0;
+                            objBill.GSTAmount = 0;
+                            objBill.GSTApplied = 0;
+                            objBill.GSTPercentage = 0;
+                            objBill.SaleDate = DateTime.Now;
+                            objBill.BillStatus = 1;
+                            db.Bills.Add(objBill);
+                            db.SaveChanges();
+                            lblMessage.Text = "Payment successful.";
                         }
                     }
+                    else
+                    {
+                        lblMessage.Text = "The server gone nuts.";
+                    }
+                    /*}
                     catch (Exception ex)
                     {
-                        lblMessage.Text = ex.Message;
-                    }
+                        lblMessage.Text = ex..Message;
+                    }*/
                 }
             }
         }
