@@ -1,5 +1,5 @@
-ETradersApp.controller("WholeSaleDashboardController", ['$window','Config','GlobalVariableService', 'PrintService', '$scope', '$filter', '$http', '$location', '$routeParams', '$timeout', 'toaster', 'CommonService',
-    'uiGridConstants', 'LoginService', function ($window,Config,GlobalVariableService, PrintService, $scope, $filter, $http, $location, $routeParams, $timeout, toaster, CommonService, uiGridConstants, LoginService) {
+ETradersApp.controller("WholeSaleDashboardController", ['$window', 'Config', 'GlobalVariableService', 'PrintService', '$scope', '$filter', '$http', '$location', '$routeParams', '$timeout', 'toaster', 'CommonService',
+    'uiGridConstants', 'LoginService', function ($window, Config, GlobalVariableService, PrintService, $scope, $filter, $http, $location, $routeParams, $timeout, toaster, CommonService, uiGridConstants, LoginService) {
         $scope.ShowSpinnerStatus = false;
 
         $scope.showSpinner = function () {
@@ -144,6 +144,7 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window','Config','Glob
                     , "SaleDate"
                     , "SupplierRetailer/SupplierRetailerId"
                     , "SupplierRetailer/Name"
+                    , "SupplierRetailer/Email"
                     , "SaleCategory/SaleCategoryId"
                     , "SaleCategory/CategoryName"
                     , "SaleType/SaleTypeId"
@@ -167,9 +168,9 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window','Config','Glob
             };
             if ($scope.searchFromDate != "" && $scope.searchToDate != "") {
                 var toDate = $filter('date')($scope.searchToDate, 'yyyy-MM-dd');
-               
-                var fromDate = $filter('date')($scope.searchFromDate,'yyyy-MM-dd');
-               
+
+                var fromDate = $filter('date')($scope.searchFromDate, 'yyyy-MM-dd');
+
                 if (lstBill.filter == undefined)
                     lstBill.filter = "SaleDate ge datetime'" + fromDate + "' and SaleDate le datetime'" + toDate + "'";
                 else
@@ -204,21 +205,23 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window','Config','Glob
                 if (response && response.data.d.results.length > 0) {
                     $scope.WholeSaleList = response.data.d.results;
 
-                    if ($scope.searchSupplierRetailer > 0)
+                    if ($scope.searchSupplierRetailer > 0) {
+                        $scope.GetOnlinePaymentDetails($scope.WholeSaleList[0].SupplierRetailer.Email);
                         $scope.ShowButton = true;
+                    }
                     else
                         $scope.ShowButton = false;
-
+                    //$scope.searchSupplierRetailer
                     if (callback)
                         callback();
-                }
 
-                $scope.gridOptions.data = $scope.WholeSaleList;
-                $scope.GetTotalCredit();
+                    $scope.gridOptions.data = $scope.WholeSaleList;
+                    $scope.GetTotalCredit();
+                }                
             });
         };
         $scope.payBill = function () {
-            $window.location.href = Config.ServiceBaseURL + "/PaymentOnline.aspx?RetailerId=" + $scope.searchSupplierRetailer;
+            $window.location.href = Config.ServiceBaseURL + "/PaymentOnline.aspx?paymenttype=fromcustomer&RetailerId=" + $scope.searchSupplierRetailer;
             //$location.path("/PaymentOnline");
 
             //$window.location.href= Config.ServiceBaseURL + "/payment.html"
@@ -311,7 +314,28 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window','Config','Glob
             });
         };
 
+        $scope.GetOnlinePaymentDetails = function (email) {
 
+            var lst = {
+                title: "OnlinepaymentFromWebhooks",
+                fields: ["*"],
+                //lookupFields: ["SupplierRetailer", "SaleCategory", "SaleType", "Status"],
+                filter: ["buyer eq '" + email + "' and status eq 'successful'"],
+                //limitTo: "5000",
+                orderBy: "CreatedOn desc"
+            };
+
+            CommonService.GetListItems(lst).then(function (response) {
+
+                if (response && response.data.d.results.length > 0) {
+                    $scope.TotalOnlinePaidlist = response.data.d.results;
+                    $scope.TotalOnlinePaidAmount = 0;
+                    angular.forEach($scope.TotalOnlinePaidlist, function (value, key) {
+                        $scope.TotalOnlinePaidAmount = parseFloat($scope.TotalOnlinePaidAmount) + parseFloat(value.amount);
+                    })
+                }
+            });
+        };
 
         $scope.GetSupplierRetailers = function (callback) {
 
@@ -344,12 +368,10 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window','Config','Glob
 
             if ($scope.WholeSaleList.length > 0) {
                 angular.forEach($scope.WholeSaleList, function (items) {
-                    if (items.SaleType.SaleTypeId == 3)//payment
-                        $scope.TotalCredit -= parseFloat(items.TotalAmount);
-                    else if (items.SaleType.SaleTypeId == 2) //credit
-                        $scope.TotalCredit += parseFloat(items.TotalAmount);
+                    if (items.SaleType.SaleTypeId == 2) //credit
+                        $scope.TotalCredit += parseFloat(items.GrandTotal);
                     else //cash
-                        $scope.TotalCash += parseFloat(items.TotalAmount);
+                        $scope.TotalCash += parseFloat(items.GrandTotal);
                 });
             }
             //return $scope.TotalCredit.toFixed(2);
@@ -357,7 +379,7 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window','Config','Glob
         $scope.init = function () {
             $scope.tokens = GlobalVariableService.getTokenInfo();
             GlobalVariableService.validateUrl($location.$$path);
-           
+
             //$scope.UserRole = tokens.UserRole;
             //$scope.UserName = tokens.UserName;
             $scope.GetGSTPercentage();

@@ -22,30 +22,29 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<OnlinePaymentDetail>("OnlinePaymentDetails");
+    builder.EntitySet<OnlinepaymentFromWebhook>("OnlinepaymentFromWebhooks");
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    [Authorize()]
-    public class OnlinePaymentDetailsController : ODataController
+    public class OnlinepaymentFromWebhooksController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
 
-        // GET: odata/OnlinePaymentDetails
+        // GET: odata/OnlinepaymentFromWebhooks
         [EnableQuery]
-        public IQueryable<OnlinePaymentDetail> GetOnlinePaymentDetails()
+        public IQueryable<OnlinepaymentFromWebhook> GetOnlinepaymentFromWebhooks()
         {
-            return db.OnlinePaymentDetails;
+            return db.OnlinepaymentFromWebhooks;
         }
 
-        // GET: odata/OnlinePaymentDetails(5)
+        // GET: odata/OnlinepaymentFromWebhooks(5)
         [EnableQuery]
-        public SingleResult<OnlinePaymentDetail> GetOnlinePaymentDetail([FromODataUri] int key)
+        public SingleResult<OnlinepaymentFromWebhook> GetOnlinepaymentFromWebhook([FromODataUri] int key)
         {
-            return SingleResult.Create(db.OnlinePaymentDetails.Where(onlinePaymentDetail => onlinePaymentDetail.OnlinePaymentId == key));
+            return SingleResult.Create(db.OnlinepaymentFromWebhooks.Where(onlinepaymentFromWebhook => onlinepaymentFromWebhook.autoId == key));
         }
 
-        // PUT: odata/OnlinePaymentDetails(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<OnlinePaymentDetail> patch)
+        // PUT: odata/OnlinepaymentFromWebhooks(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<OnlinepaymentFromWebhook> patch)
         {
             Validate(patch.GetEntity());
 
@@ -54,22 +53,21 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            OnlinePaymentDetail onlinePaymentDetail = await db.OnlinePaymentDetails.FindAsync(key);
-            if (onlinePaymentDetail == null)
+            OnlinepaymentFromWebhook onlinepaymentFromWebhook = await db.OnlinepaymentFromWebhooks.FindAsync(key);
+            if (onlinepaymentFromWebhook == null)
             {
                 return NotFound();
             }
 
-            patch.Put(onlinePaymentDetail);
+            patch.Put(onlinepaymentFromWebhook);
 
             try
             {
-                
                 await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OnlinePaymentDetailExists(key))
+                if (!OnlinepaymentFromWebhookExists(key))
                 {
                     return NotFound();
                 }
@@ -79,26 +77,26 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(onlinePaymentDetail);
+            return Updated(onlinepaymentFromWebhook);
         }
 
-        // POST: odata/OnlinePaymentDetails
-        public async Task<IHttpActionResult> Post(OnlinePaymentDetail onlinePaymentDetail)
+        // POST: odata/OnlinepaymentFromWebhooks
+        public async Task<IHttpActionResult> Post(OnlinepaymentFromWebhook onlinepaymentFromWebhook)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.OnlinePaymentDetails.Add(onlinePaymentDetail);
+            db.OnlinepaymentFromWebhooks.Add(onlinepaymentFromWebhook);
             await db.SaveChangesAsync();
 
-            return Created(onlinePaymentDetail);
+            return Created(onlinepaymentFromWebhook);
         }
 
-        // PATCH: odata/OnlinePaymentDetails(5)
+        // PATCH: odata/OnlinepaymentFromWebhooks(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<OnlinePaymentDetail> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<OnlinepaymentFromWebhook> patch)
         {
             Validate(patch.GetEntity());
 
@@ -107,13 +105,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            OnlinePaymentDetail onlinePaymentDetail = await db.OnlinePaymentDetails.FindAsync(key);
-            if (onlinePaymentDetail == null)
+            OnlinepaymentFromWebhook onlinepaymentFromWebhook = await db.OnlinepaymentFromWebhooks.FindAsync(key);
+            if (onlinepaymentFromWebhook == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(onlinePaymentDetail);
+            patch.Patch(onlinepaymentFromWebhook);
 
             try
             {
@@ -121,7 +119,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OnlinePaymentDetailExists(key))
+                if (!OnlinepaymentFromWebhookExists(key))
                 {
                     return NotFound();
                 }
@@ -131,19 +129,19 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(onlinePaymentDetail);
+            return Updated(onlinepaymentFromWebhook);
         }
 
-        // DELETE: odata/OnlinePaymentDetails(5)
+        // DELETE: odata/OnlinepaymentFromWebhooks(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            OnlinePaymentDetail onlinePaymentDetail = await db.OnlinePaymentDetails.FindAsync(key);
-            if (onlinePaymentDetail == null)
+            OnlinepaymentFromWebhook onlinepaymentFromWebhook = await db.OnlinepaymentFromWebhooks.FindAsync(key);
+            if (onlinepaymentFromWebhook == null)
             {
                 return NotFound();
             }
 
-            db.OnlinePaymentDetails.Remove(onlinePaymentDetail);
+            db.OnlinepaymentFromWebhooks.Remove(onlinepaymentFromWebhook);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -158,9 +156,9 @@ namespace ept.Controllers
             base.Dispose(disposing);
         }
 
-        private bool OnlinePaymentDetailExists(int key)
+        private bool OnlinepaymentFromWebhookExists(int key)
         {
-            return db.OnlinePaymentDetails.Count(e => e.OnlinePaymentId == key) > 0;
+            return db.OnlinepaymentFromWebhooks.Count(e => e.autoId == key) > 0;
         }
     }
 }

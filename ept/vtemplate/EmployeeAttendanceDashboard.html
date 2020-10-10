@@ -1,4 +1,5 @@
-﻿<style>
+﻿
+<style>
     .nodatatxt {
         position: absolute;
         top: 80px;
@@ -21,12 +22,15 @@
                 <div class="form-group col-md-2">
                     <label for="AttendanceDate">Date</label>
                     <input type="date" class="form-control input-sm" id="AttendanceDate" name="AttendanceDate" placeholder="Enter date"
-                           ng-model="AttendanceDate"/>
+                           ng-model="AttendanceDate" />
                     <p ng-show="submitted && EmployeeAttendanceDashboard.AttendanceDate.$invalid" class="text-danger">Date is required.</p>
                 </div>
                 <div class="form-group col-md-3">
                     <br />
                     &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-secondary" ng-click="GetDataForDashboard(EmployeeAttendanceDashboard.$valid);" style="margin-top:5px">Search</button>
+                </div>
+                <div class="form-group col-md-4" style="align-self:center">
+                    <br /><button type="button" class="btn btn-primary" ng-click="SaveEmployeeAttendances()"><span data-feather="save"></span>Save</button>
                 </div>
             </div>
             <div class="form-row">
@@ -37,10 +41,7 @@
                 </div>
             </div>
             <br />
-            <div class="form-row col-md-offset-5">                
-                <button type="button" class="btn btn-primary" ng-click="SaveEmployeeAttendances()"><span data-feather="save"></span>Save</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <!--<button type="button" class="btn btn-primary" ng-click="SaveNPrint(addRetailForm.$valid)"><span data-feather="save"></span>Save & <span data-feather="printer"></span>Print</button>-->
-            </div>
+            
         </form>
     </div>
 </div>
@@ -49,6 +50,7 @@
 <head>
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
     <meta name="Robots" content="NOINDEX " />
+    
 </head>
 <body>
 </body>

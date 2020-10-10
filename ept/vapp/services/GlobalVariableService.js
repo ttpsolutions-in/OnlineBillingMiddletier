@@ -9,7 +9,8 @@
         var tokenInfo = {
             AccessToken: '',
             UserName: '',
-            UserRole: ''
+            UserRole: '',
+            UserId:0
         }
         GlobalVariableService.setTokenInfo = function (data) {
             if (data !=null)

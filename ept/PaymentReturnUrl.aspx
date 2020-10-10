@@ -95,29 +95,35 @@
     <div class="card-body">
         <form name="addPaymentForm" runat="server">
             <div class="form-row">
-                <div class="form-group col-md-4 col-offset-3">
-                    <label for="Description">Payment Id</label>
-                    <asp:Label runat="server" id="PaymentId" Text=""></asp:Label>
+                <div class="form-group col-md-4 col-md-offset-4">
+                    <label for="PaymentId">Payment Id</label>
+                    <input type="text" class="form-control" id="PaymentId" name="PaymentId" value="Credit Bills Payment"
+                        disabled="disabled" runat="server" />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="Name">Payment Status</label>
-                    <asp:Label id="PaymentStatus" runat="server" Text=""></asp:Label>
-                   
+                <div class="form-group col-md-4 col-md-offset-4">
+                    <label for="RequestId">Request Id</label>
+                    <input type="text" class="form-control" id="RequestId" name="RequestId" value="Credit Bills Payment"
+                        disabled="disabled" runat="server" />
                 </div>
-                <div class="form-group col-md-4 col-offset-3">
-                    <label for="Phone">Request Id</label>
-                    <asp:Label id="RequestId" runat="server" Text=""></asp:Label>
-                </div>
-                <div class="form-group col-md-4 col-offset-3">
+                <div class="form-group col-md-4 col-md-offset-4">
                     <label for="Phone">Transaction Id</label>
-                    <asp:Label id="TransactionId" runat="server" Text=""></asp:Label>
+
+                    <input type="text" class="form-control" id="TransactionId" name="TransactionId" value="Credit Bills Payment"
+                        disabled="disabled" runat="server" />
                 </div>
-                <div class="form-group col-md-4 col-offset-3">
+                <div class="form-group col-md-4 col-md-offset-4">
+                    <label for="PaymentStatus">Payment Status</label>
+                    <input type="text" class="form-control" id="PaymentStatus" name="PaymentStatus" value="Credit Bills Payment"
+                        disabled="disabled" runat="server" />
+                </div>
+                <div class="form-group col-md-4 col-md-offset-4">
+                    <asp:Button runat="server" ID="Redirect" Text="Home" OnClick="Redirect_Click" />
                     
-                    <asp:Label id="lblMessage" runat="server" Text=""></asp:Label>
+                </div>
+                <div class="form-group col-md-4 col-md-offset-4">
+                    <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
                 </div>
             </div>
-
         </form>
     </div>
 </body>

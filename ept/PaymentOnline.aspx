@@ -95,26 +95,26 @@
     <div class="card-body">
         <form name="addPaymentForm" runat="server">
             <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4 col-md-offset-4">
                     <label for="Description">Description</label>
                     <input type="text" class="form-control" id="description" name="description" value="Credit Bills Payment"
                         disabled="disabled" runat="server" />
                 </div>
-                <div class="form-group col-md-3 col-offset-3">
+                <div class="form-group col-md-4 col-md-offset-4">
                     <label for="Name">Name</label>
                     <input disabled="disabled" type="text" class="form-control" id="Name" name="Name" runat="server">
                 </div>
-                <div class="form-group col-md-3 col-offset-3">
+                <div class="form-group col-md-4 col-md-offset-4">
                     <label for="Phone">Phone</label>
                     <input disabled="disabled" type="text" class="form-control" id="Phone" name="Phone"
                         runat="server">
                 </div>
-                <div class="form-group col-md-3 col-offset-3">
+                <div class="form-group col-md-4 col-md-offset-4">
                     <label for="Email">Email</label>
                     <input type="text" disabled="disabled" class="form-control" id="Email" name="Email"
                         runat="server">
                 </div>
-                <div class="form-group col-md-3 col-offset-3">
+                <div class="form-group col-md-4 col-md-offset-4">
                     <label for="Amount">Amount</label>
                     <input type="number" class="form-control" id="txtAmount" runat="server" name="txtAmount" placeholder="Enter amount" />
                     <p ng-show="submitted && addPaymentForm.amount.$invalid && addPaymentForm.amount.$pristine"
@@ -122,9 +122,11 @@
                         Amount is required.
                     </p>
                 </div>
-                <div class="form-group col-md-3 col-offset-3">
+                <div class="form-group col-md-4 col-md-offset-4">
                     <asp:Button ID="submit" runat="server" CssClass="btn btn-primary" Text="Proceed" OnClick="submit_Click" />
                 </div>
+                    <input type="hidden" id="ClientId" runat="server" name="ClientId"/>
+                <input type="hidden" id="ClientSecret" runat="server" name="ClientSecret"/>
             </div>
 
         </form>

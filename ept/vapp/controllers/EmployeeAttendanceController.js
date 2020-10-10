@@ -10,18 +10,18 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
         }
 
         $scope.MonthList = [
-            { "Month": "01" },
-            { "Month": "02" },
-            { "Month": "03" },
-            { "Month": "04" },
-            { "Month": "05" },
-            { "Month": "06" },
-            { "Month": "07" },
-            { "Month": "08" },
-            { "Month": "09" },
-            { "Month": "10" },
-            { "Month": "11" },
-            { "Month": "12" }
+            { "Month": "01","Text":"Jan" },
+            { "Month": "02", "Text": "Feb" },
+            { "Month": "03", "Text": "Mar" },
+            { "Month": "04", "Text": "Apr" },
+            { "Month": "05", "Text": "May" },
+            { "Month": "06", "Text": "Jun" },
+            { "Month": "07", "Text": "Jul" },
+            { "Month": "08", "Text": "Aug" },
+            { "Month": "09", "Text": "Sep" },
+            { "Month": "10", "Text": "Oct" },
+            { "Month": "11", "Text": "Nov" },
+            { "Month": "12", "Text": "Dec" }
         ]
         $scope.YearList = [
 
@@ -107,7 +107,7 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
                     $scope.EmployeeAttendanceList = [];
                     $scope.gridOptions.data = null;
                     toaster.pop('success', "", "Attendance Saved Successfully", 5000, 'trustedHtml');
-                    //$scope.RedirectDashboard();
+                    $scope.RedirectDashboard();
                     //$scope.GetDataForDashboard();
 
                 });
@@ -120,11 +120,11 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
         $scope.SaveProcess = function (callback) {
 
             angular.forEach($scope.gridOptions.data, function (value, key) {
-                var attendanceDate = value.Date == null ? $scope.AttendanceDate : value.Date;
+                //var attendanceDate = value.Date == null ? $scope.AttendanceDate : value.Date;
                 var values = {
                     //"EmployeeAttendanceId": value.EmployeeAttendanceId
                     "EmployeeNo": value.EmployeeDetail.EmployeeNo
-                    , "Date": attendanceDate
+                    , "Date": $filter('date')($scope.AttendanceDate, 'yyyy-MM-dd')
                     , "Present": value.Present == true ? 1 : 0
                 };
                 if (value.AttendanceId == 0 || value.AttendanceId == undefined) {
@@ -347,7 +347,7 @@ ETradersApp.controller("EmployeeAttendanceController", ['$timeout', 'GlobalVaria
         };
 
         $scope.RedirectDashboard = function () {
-            $location.path('/EmployeeForAttendanceDashboard');
+            $location.path('/EmployeeAttendanceReport');
         };
 
         $scope.init = function () {

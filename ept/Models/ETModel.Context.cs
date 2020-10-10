@@ -66,6 +66,7 @@ namespace ept.Models
         public virtual DbSet<UserMaster> UserMasters { get; set; }
         public virtual DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
         public virtual DbSet<EmployeesForAttendance> EmployeesForAttendances { get; set; }
+        public virtual DbSet<OnlinepaymentFromWebhook> OnlinepaymentFromWebhooks { get; set; }
     
         public virtual ObjectResult<Nullable<int>> CheckEmailProc(string email)
         {

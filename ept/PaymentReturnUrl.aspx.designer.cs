@@ -21,16 +21,7 @@ namespace ept
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PaymentId;
-
-        /// <summary>
-        /// PaymentStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PaymentStatus;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText PaymentId;
 
         /// <summary>
         /// RequestId control.
@@ -39,7 +30,7 @@ namespace ept
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RequestId;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText RequestId;
 
         /// <summary>
         /// TransactionId control.
@@ -48,7 +39,25 @@ namespace ept
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label TransactionId;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText TransactionId;
+
+        /// <summary>
+        /// PaymentStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText PaymentStatus;
+
+        /// <summary>
+        /// Redirect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Redirect;
 
         /// <summary>
         /// lblMessage control.

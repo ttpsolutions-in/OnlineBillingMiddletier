@@ -61,7 +61,11 @@ ETradersApp.controller("SupplierCustomerController", ['GlobalVariableService','$
                         "Contact": $scope.SupplierCustomer.ContactNo,
                         "Type": $scope.SupplierCustomer.Type,
                         "Category": $scope.SupplierCustomer.Category,
-                        "CreatedOn": new Date()
+                        "ClientId": $scope.SupplierCustomer.ClientId,
+                        "ClientSecret": $scope.SupplierCustomer.ClientSecret,
+                        "CreatedOn": new Date(),
+                        "UpdatedOn": new Date()
+
                     };
                     CommonService.PostData("SupplierRetailers", supplierCustomers).then(function (response) {
                         console.log("response " + response);
@@ -107,6 +111,8 @@ ETradersApp.controller("SupplierCustomerController", ['GlobalVariableService','$
                         "Contact": $scope.EditSupplierCustomer.Contact,
                         "Type": $scope.EditSupplierCustomer.Type,
                         "Category": $scope.EditSupplierCustomer.Category,
+                        "ClientId": $scope.EditSupplierCustomer.ClientId,
+                        "ClientSecret": $scope.EditSupplierCustomer.ClientSecret,
                         "UpdatedOn": new Date()
                     };
                     CommonService.UpdateData("SupplierRetailers", supplierCustomers, $scope.ID).then(function (response) {
@@ -183,16 +189,20 @@ ETradersApp.controller("SupplierCustomerController", ['GlobalVariableService','$
         $location.path('/SupplierCustomer');
     };
 
-    $scope.init = function () {
+        $scope.init = function () {
 
-        GlobalVariableService.validateUrl($location.$$path);
+            $scope.tokens = GlobalVariableService.getTokenInfo();
+            GlobalVariableService.validateUrl($location.$$path);
 
-        $scope.GetCategories();
-        $scope.GetSupplierCustomerTypes();
-        $scope.GetSupplierCustomersById();
-        $scope.GetSupplierCustomers();
-        
-    };
+            $scope.GetCategories();
+            $scope.GetSupplierCustomerTypes();
+            if ($scope.ID > 0) {
+                $scope.GetSupplierCustomersById();
+            }
+            else
+                $scope.GetSupplierCustomers();
+
+        };
 
     $scope.init();
 }]);

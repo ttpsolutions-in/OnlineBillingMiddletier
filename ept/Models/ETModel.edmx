@@ -260,7 +260,34 @@
           <Property Name="currency" Type="varchar" MaxLength="10" />
           <Property Name="TransactionId" Type="varchar" MaxLength="50" />
           <Property Name="RequestId" Type="varchar" MaxLength="50" />
+          <Property Name="Fees" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MAC" Type="varchar" MaxLength="250" />
+          <Property Name="LongUrl" Type="varchar" MaxLength="250" />
           <Property Name="PaymentStatus" Type="varchar" MaxLength="20" />
+          <Property Name="ShortUrl" Type="varchar" MaxLength="250" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="OnlinepaymentFromWebhook">
+          <Key>
+            <PropertyRef Name="autoId" />
+          </Key>
+          <Property Name="autoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="varchar" MaxLength="250" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="buyer" Type="varchar" MaxLength="250" />
+          <Property Name="buyer_name" Type="varchar" MaxLength="250" />
+          <Property Name="buyer_phone" Type="varchar" MaxLength="20" />
+          <Property Name="currency" Type="varchar" MaxLength="20" />
+          <Property Name="fees" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="mac" Type="varchar" MaxLength="250" />
+          <Property Name="longurl" Type="varchar" MaxLength="250" />
+          <Property Name="payment_id" Type="varchar" MaxLength="250" />
+          <Property Name="payment_request_id" Type="varchar" MaxLength="250" />
+          <Property Name="purpose" Type="varchar" MaxLength="250" />
+          <Property Name="shorturl" Type="varchar" MaxLength="250" />
+          <Property Name="status" Type="varchar" MaxLength="50" />
+          <Property Name="createdon" Type="datetime" />
         </EntityType>
         <EntityType Name="PaymentType">
           <Key>
@@ -356,6 +383,8 @@
           <Property Name="Contact" Type="varchar" MaxLength="20" />
           <Property Name="Type" Type="tinyint" Nullable="false" />
           <Property Name="Category" Type="tinyint" Nullable="false" />
+          <Property Name="ClientId" Type="varchar" MaxLength="250" />
+          <Property Name="ClientSecret" Type="varchar" MaxLength="250" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="date" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -872,6 +901,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySet Name="MaterialInventory" EntityType="Self.MaterialInventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OnlinePaymentDetails" EntityType="Self.OnlinePaymentDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlinepaymentFromWebhook" EntityType="Self.OnlinepaymentFromWebhook" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RefreshToken" EntityType="Self.RefreshToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rights" EntityType="Self.Rights" Schema="dbo" store:Type="Tables" />
@@ -1342,6 +1372,12 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RequestId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PaymentStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Fees" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MAC" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LongUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ShortUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PaymentType">
           <Key>
@@ -1444,6 +1480,8 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <NavigationProperty Name="Category1" Relationship="Self.FK__SupplierR__Categ__6AEFE058" FromRole="SupplierRetailer" ToRole="Category" />
           <NavigationProperty Name="MaterialInventories" Relationship="Self.FK_MaterialInventory_Supplier" FromRole="SupplierRetailer" ToRole="MaterialInventory" />
           <NavigationProperty Name="SupplierRetailType" Relationship="Self.FK__SupplierRe__Type__40058253" FromRole="SupplierRetailer" ToRole="SupplierRetailType" />
+          <Property Name="ClientId" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ClientSecret" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SupplierRetailType">
           <Key>
@@ -2003,6 +2041,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
             <End Role="EmployeeAttendance" EntitySet="EmployeeAttendances" />
           </AssociationSet>
+          <EntitySet Name="OnlinepaymentFromWebhooks" EntityType="EphraimTradersModel.OnlinepaymentFromWebhook" />
         </EntityContainer>
         <EntityType Name="ClientMaster">
           <Key>
@@ -2071,6 +2110,26 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="OnlinepaymentFromWebhook">
+          <Key>
+            <PropertyRef Name="autoId" />
+          </Key>
+          <Property Name="amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="buyer" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="buyer_name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="buyer_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="currency" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="fees" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="mac" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="longurl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="payment_id" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="payment_request_id" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="purpose" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="shorturl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="autoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2301,6 +2360,12 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySetMapping Name="OnlinePaymentDetails">
             <EntityTypeMapping TypeName="EphraimTradersModel.OnlinePaymentDetail">
               <MappingFragment StoreEntitySet="OnlinePaymentDetails">
+                <ScalarProperty Name="ShortUrl" ColumnName="ShortUrl" />
+                <ScalarProperty Name="LongUrl" ColumnName="LongUrl" />
+                <ScalarProperty Name="MAC" ColumnName="MAC" />
+                <ScalarProperty Name="Fees" ColumnName="Fees" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
@@ -2401,6 +2466,8 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySetMapping Name="SupplierRetailers">
             <EntityTypeMapping TypeName="EphraimTradersModel.SupplierRetailer">
               <MappingFragment StoreEntitySet="SupplierRetailer">
+                <ScalarProperty Name="ClientSecret" ColumnName="ClientSecret" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
                 <ScalarProperty Name="SupplierRetailerId" ColumnName="SupplierRetailerId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -2587,6 +2654,27 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
                 <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlinepaymentFromWebhooks">
+            <EntityTypeMapping TypeName="EphraimTradersModel.OnlinepaymentFromWebhook">
+              <MappingFragment StoreEntitySet="OnlinepaymentFromWebhook">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="autoId" ColumnName="autoId" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="shorturl" ColumnName="shorturl" />
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
+                <ScalarProperty Name="payment_request_id" ColumnName="payment_request_id" />
+                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+                <ScalarProperty Name="longurl" ColumnName="longurl" />
+                <ScalarProperty Name="mac" ColumnName="mac" />
+                <ScalarProperty Name="fees" ColumnName="fees" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="buyer_phone" ColumnName="buyer_phone" />
+                <ScalarProperty Name="buyer_name" ColumnName="buyer_name" />
+                <ScalarProperty Name="buyer" ColumnName="buyer" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

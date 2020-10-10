@@ -63,11 +63,14 @@
                             <td class="text-right"><label>{{TotalCredit}}</label></td>
                         </tr>
                         <tr ng-if="ShowButton">
+                            <td class="text-right">Total Online Paid Amount</td>
+                            <td class="text-right"><label>{{$scope.TotalOnlinePaidAmount}}</label></td>
+                        </tr>                        
+                        <tr ng-if="ShowButton">
                             <td><button type="button" class="btn btn-primary col-md-offset-6 pull-right" ng-click="printCustomerBills()"> <span data-feather="printer"></span> Customer Bills to PDF</button></td>
                             <td><button type="button" class="btn btn-primary col-md-offset-3" ng-click="payBill()"> <span data-feather="arrow-right-circle"></span> Pay Online</button></td>
                         </tr>
                     </table>
-
                 </div>
         </form>
      
@@ -79,8 +82,6 @@
     <meta name="Robots" content="NOINDEX " />
 </head>
 <body>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script type="text/javascript">
         feather.replace();
         var gearPage = document.getElementById('GearPage');

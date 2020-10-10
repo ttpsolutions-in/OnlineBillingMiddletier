@@ -20,60 +20,101 @@ namespace ept
     public partial class PaymentOnline : System.Web.UI.Page
     {
         private EphraimTradersEntities db;
+        string paymenttype = string.Empty;
+        int ephraimtradersid = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
+
             string payment_id = string.Empty;
             string transaction_id = string.Empty;
             string id = string.Empty;
             string payment_status = string.Empty;
 
-            if (Request.QueryString["RetailerId"] == null)
-                Response.Write("Id is required.");
+            if (Request.QueryString["paymenttype"] == null)
+                Response.Write("paymenttype is required.");
             else
-                Session["RetailerId"] = Request.QueryString["RetailerId"];
+                paymenttype = Request.QueryString["paymenttype"];
 
-
-
-
-
-            if (Request.QueryString["RetailerId"] != null)
+            if (!IsPostBack)
             {
-                db = new EphraimTradersEntities();
-                int RetailerId = 0;
-                RetailerId = Convert.ToInt32(Request.QueryString["RetailerId"]);
-                //Session["RetailerId"] = RetailerId;
-                IQueryable<SupplierRetailer> result = db.SupplierRetailers.Where(supplierretailer => supplierretailer.SupplierRetailerId == RetailerId);
-                //Email.Value = Converter<SupplierRetailers>(result
-                foreach (var item in result)
+                if (Request.QueryString["RetailerId"] != null)
                 {
-                    Email.Value = item.Email;
-                    Phone.Value = item.Contact;
-                    Name.Value = item.Name;
+                    db = new EphraimTradersEntities();
+                    int RetailerId = 0;
+                    RetailerId = Convert.ToInt32(Request.QueryString["RetailerId"]);
+                    Session["RetailerId"] = RetailerId;
+                    //Session["RetailerId"] = RetailerId;
+                    IQueryable<SupplierRetailer> result = db.SupplierRetailers.Where(supplierretailer => supplierretailer.SupplierRetailerId == RetailerId);
+                    //Email.Value = Converter<SupplierRetailers>(result
+                    foreach (var item in result)
+                    {
+                        Email.Value = item.Email;
+                        Phone.Value = item.Contact;
+                        Name.Value = item.Name;
+                        ClientId.Value = item.ClientId;
+                        ClientSecret.Value = item.ClientSecret;
+                    }
+                }
+
+                if (paymenttype == "tosupplier")
+                {
+                    if (Request.QueryString["payerid"] == null)
+                        Response.Write("Payer Id is missing.");
+                    else
+                        ephraimtradersid = Convert.ToInt32(Request.QueryString["payerid"]);
+
+                    IQueryable<EmployeeDetail> result = db.EmployeeDetails.Where(emp => emp.EmployeeNo == ephraimtradersid); //.SupplierRetailers.Where(supplierretailer => supplierretailer.SupplierRetailerId == RetailerId);
+                                                                                                                             //Email.Value = Converter<SupplierRetailers>(result
+                    foreach (var item in result)
+                    {
+                        Email.Value = item.Email;
+                        Phone.Value = item.ContactNo;
+                        Name.Value = item.EmployeeName;
+                        //ClientId.Value = item.ClientId;
+                        //ClientSecret.Value = item.ClientSecret;
+                    }
+
                 }
             }
-
         }
         protected void submit_Click(object sender, EventArgs e)
         {
-            string Insta_client_id = ConfigurationManager.AppSettings["ClientId"],//   "test_sFhb8ig0JPT0Hc21G2CWZg4RqhO4d3KqMdO",
-              Insta_client_secret = ConfigurationManager.AppSettings["ClientSecret"], //"test_7VCjAHfdUrQMtlvUwYUEtAFbYJuvAGZ1Pu63WUfSBWOgsmW8Oa3rgx6AmOsi8UuXeZ3zbFyuPFJMXbEd9rppVFSTXALInXFS3Oa7Ux1hB5NQKAh9OnzvqTSHcV8",
-              Insta_Endpoint = ConfigurationManager.AppSettings["APIEndpoint"],// InstamojoConstants.INSTAMOJO_API_ENDPOINT,
-            Insta_Auth_Endpoint = ConfigurationManager.AppSettings["AuthEndpoint"];// InstamojoConstants.INSTAMOJO_AUTH_ENDPOINT;
-            Instamojo objClass = InstamojoImplementation.getApi(Insta_client_id, Insta_client_secret, Insta_Endpoint, Insta_Auth_Endpoint);
+            string Insta_client_id = "";// ConfigurationManager.AppSettings["ClientId"],//   "test_sFhb8ig0JPT0Hc21G2CWZg4RqhO4d3KqMdO",
+            string Insta_client_secret = "";//ConfigurationManager.AppSettings["ClientSecret"], //"test_7VCjAHfdUrQMtlvUwYUEtAFbYJuvAGZ1Pu63WUfSBWOgsmW8Oa3rgx6AmOsi8UuXeZ3zbFyuPFJMXbEd9rppVFSTXALInXFS3Oa7Ux1hB5NQKAh9OnzvqTSHcV8",
+            string Insta_Endpoint = "";//ConfigurationManager.AppSettings["APIEndpoint"],// InstamojoConstants.INSTAMOJO_API_ENDPOINT,
+            string Insta_Auth_Endpoint = "";//ConfigurationManager.AppSettings["AuthEndpoint"];// InstamojoConstants.INSTAMOJO_AUTH_ENDPOINT;
+            bool validPayment = false;
+            if (paymenttype == "fromcustomer")
+            {
+                Insta_client_id = ConfigurationManager.AppSettings["ClientId"];
+                Insta_client_secret = ConfigurationManager.AppSettings["ClientSecret"];
+                validPayment = true;
+            }
+            else if (paymenttype == "tosupplier")
+            {
+                Insta_client_id = ClientId.Value;
+                Insta_client_secret = ClientSecret.Value;
+                validPayment = true;
+            }
+            else
+                Response.Write("Invalid Payment type");
 
-            string responseURL = CreatePaymentOrder(objClass);
-            //Response.Write("responseurl: " + responseURL);
-            //writelog(responseURL);
+            if (validPayment)
+            {
+                Insta_Endpoint = ConfigurationManager.AppSettings["APIEndpoint"];
+                Insta_Auth_Endpoint = ConfigurationManager.AppSettings["AuthEndpoint"];
 
-            //////////////////////////////////////
+                Instamojo objClass = InstamojoImplementation.getApi(Insta_client_id, Insta_client_secret, Insta_Endpoint, Insta_Auth_Endpoint);
 
+                string responseURL = CreatePaymentOrder(objClass);
 
-            Response.Redirect(responseURL);
+                Response.Redirect(responseURL);
+            }
         }
         public void writelog(string logtxt)
         {
             // Set a variable to the Documents path.
-            string docPath = @"C:\Inetpub\vhosts\ephraimtraders.in\"; //Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string docPath = @"C:\inetpub\vhosts\PaymentLog\"; //Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             // Append text to an existing file named "WriteLines.txt".
             using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "WriteLines.txt"), true))
@@ -103,7 +144,7 @@ namespace ept
             objPaymentRequest.name = Name.Value;// "ABCD";
             objPaymentRequest.email = Email.Value;// "mung.sukte@gmail.com";
             objPaymentRequest.phone = Phone.Value;// "9920024852";
-            objPaymentRequest.description = description.Value;// "Test description";
+            objPaymentRequest.description = "Payment From " + Name.Value;// "Test description";
             objPaymentRequest.amount = Convert.ToInt64(txtAmount.Value);
             //objPaymentRequest.currency = "USD";
 
@@ -112,42 +153,42 @@ namespace ept
             objPaymentRequest.transaction_id = randomName;// DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(" ", "");
 
             objPaymentRequest.redirect_url = ConfigurationManager.AppSettings["RedirectUrl"];// "https://ettest.ttpsolutions.in/index.html#/PaymentOnline";
-            //objPaymentRequest.webhook_url = ConfigurationManager.AppSettings["WebhookUrl"];// "https://your.server.com/webhook";
+            objPaymentRequest.webhook_url = ConfigurationManager.AppSettings["WebhookUrl"];// "https://your.server.com/webhook";
             //Extra POST parameters 
 
             if (objPaymentRequest.validate())
             {
                 if (objPaymentRequest.emailInvalid)
                 {
-                    Response.Write("Email is not valid");
+                    writelog("Email is not valid");
                 }
                 else if (objPaymentRequest.nameInvalid)
                 {
-                    Response.Write("Name is not valid");
+                    writelog("Name is not valid");
                 }
                 else if (objPaymentRequest.phoneInvalid)
                 {
-                    Response.Write("Phone is not valid");
+                    writelog("Phone is not valid");
                 }
                 else if (objPaymentRequest.amountInvalid)
                 {
-                    Response.Write("Amount is not valid");
+                    writelog("Amount is not valid");
                 }
                 else if (objPaymentRequest.currencyInvalid)
                 {
-                    Response.Write("Currency is not valid");
+                    writelog("Currency is not valid");
                 }
                 else if (objPaymentRequest.transactionIdInvalid)
                 {
-                    Response.Write("Transaction Id is not valid");
+                    writelog("Transaction Id is not valid");
                 }
                 else if (objPaymentRequest.redirectUrlInvalid)
                 {
-                    Response.Write("Redirect Url Id is not valid");
+                    writelog("Redirect Url Id is not valid");
                 }
                 else if (objPaymentRequest.webhookUrlInvalid)
                 {
-                    Response.Write("Webhook URL is not valid");
+                    writelog("Webhook URL is not valid");
                 }
 
             }
@@ -158,61 +199,48 @@ namespace ept
                     db = new EphraimTradersEntities();
                     objPaymentResponse = objClass.createNewPaymentRequest(objPaymentRequest);
                     message = objPaymentResponse.payment_options.payment_url;
-                    OnlinePaymentDetail obj = new OnlinePaymentDetail();
 
-                    obj.name = Name.Value;// "ABCD";
-                    obj.email = Email.Value;// "mung.sukte@gmail.com";
-                    obj.phone = Phone.Value;// "9920024852";
-                    obj.description = description.Value;// "Test description";
-                    obj.amount = Convert.ToInt64(txtAmount.Value);
-                    obj.TransactionId = objPaymentRequest.transaction_id;
-                    obj.CreatedOn = DateTime.Now;
-                    obj.CreatedBy = Email.Value;
-                    obj.Status = "Pending";
-                    db.OnlinePaymentDetails.Add(obj);
-                    db.SaveChanges();
-                    message = objPaymentResponse.payment_options.payment_url;
                 }
                 catch (ArgumentNullException ex)
                 {
-                    Response.Write(ex.Message);
+                    writelog(ex.Message);
                 }
                 catch (WebException ex)
                 {
-                    Response.Write(ex.Message);
+                    writelog(ex.Message);
                 }
                 catch (IOException ex)
                 {
-                    Response.Write(ex.Message);
+                    writelog(ex.Message);
                 }
                 catch (InvalidPaymentOrderException ex)
                 {
                     if (!ex.IsWebhookValid())
                     {
-                        Response.Write("Webhook is invalid");
+                        writelog("Webhook is invalid");
                     }
 
                     if (!ex.IsCurrencyValid())
                     {
-                        Response.Write("Currency is Invalid");
+                        writelog("Currency is Invalid");
                     }
 
                     if (!ex.IsTransactionIDValid())
                     {
-                        Response.Write("Transaction ID is Inavlid");
+                        writelog("Transaction ID is Inavlid");
                     }
                 }
                 catch (ConnectionException ex)
                 {
-                    Response.Write(ex.Message);
+                    writelog(ex.Message);
                 }
                 catch (BaseException ex)
                 {
-                    Response.Write(ex.Message);
+                    writelog(ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    Response.Write("Error:" + ex.Message);
+                    writelog("Error:" + ex.Message);
                 }
             }
             return message;

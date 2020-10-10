@@ -242,6 +242,7 @@
     <Compile Include="Controllers\MaterialInventoriesController.cs" />
     <Compile Include="Controllers\MaterialsController.cs" />
     <Compile Include="Controllers\OnlinePaymentDetailsController.cs" />
+    <Compile Include="Controllers\OnlinepaymentFromWebhooksController.cs" />
     <Compile Include="Controllers\PaymentTypesController.cs" />
     <Compile Include="Controllers\ReorderRequiredsController.cs" />
     <Compile Include="Controllers\RightsController.cs" />
@@ -350,6 +351,9 @@
     <Compile Include="Models\OnlinePaymentDetail.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OnlinepaymentFromWebhook.cs">
+      <DependentUpon>ETModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PaymentType.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
@@ -417,6 +421,13 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="WebHookToInstamojo.aspx.cs">
+      <DependentUpon>WebHookToInstamojo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebHookToInstamojo.aspx.designer.cs">
+      <DependentUpon>WebHookToInstamojo.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -463,6 +474,8 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="vContent\Scripts\feather.min.js" />
+    <Content Include="WebHookToInstamojo.aspx" />
     <EntityDeploy Include="Models\ETModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ETModel.Designer.cs</LastGenOutput>
@@ -494,12 +507,10 @@
     <Content Include="vapp\controllers\ManageGodown.js" />
     <Content Include="vapp\controllers\ManageRetailsController.js" />
     <Content Include="vapp\controllers\ManageWholeSaleController.js" />
-    <Content Include="vapp\controllers\ManageWholeSaleController_bakcup.js" />
     <Content Include="vapp\controllers\MaterialInventoryConstroller.js" />
     <Content Include="vapp\controllers\MaterialInventoryDashboard.js" />
     <Content Include="vapp\controllers\MaterialsCheckQIHController.js" />
     <Content Include="vapp\controllers\MaterialsController.js" />
-    <Content Include="vapp\controllers\nextController.js" />
     <Content Include="vapp\controllers\PaymentOnlineController.js" />
     <Content Include="vapp\controllers\RegisterController.js" />
     <Content Include="vapp\controllers\RightsController.js" />
@@ -508,9 +519,7 @@
     <Content Include="vapp\controllers\SalesStatisticsController.js" />
     <Content Include="vapp\controllers\SupplierRetailerController.js" />
     <Content Include="vapp\controllers\WholeSaleDashboardController.js" />
-    <Content Include="vapp\services\AuthData.js" />
     <Content Include="vapp\services\CommonService.js" />
-    <Content Include="vapp\services\DigestService.js" />
     <Content Include="vapp\services\EtradersService.js" />
     <Content Include="vapp\services\ExceptionHandler.js" />
     <Content Include="vapp\services\GlobalVariableService.js" />

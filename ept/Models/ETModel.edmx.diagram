@@ -69,6 +69,7 @@
         <EntityTypeShape EntityType="EphraimTradersModel.EmployeeAttendance" Width="1.5" PointX="19.375" PointY="3.75" />
         <EntityTypeShape EntityType="EphraimTradersModel.EmployeesForAttendance" Width="1.5" PointX="9.375" PointY="19.75" />
         <AssociationConnector Association="EphraimTradersModel.FK_EmployeeAttendance_EmployeeDetail" />
+        <EntityTypeShape EntityType="EphraimTradersModel.OnlinepaymentFromWebhook" Width="1.5" PointX="19.375" PointY="17.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

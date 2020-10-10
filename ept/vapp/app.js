@@ -9,7 +9,7 @@ var ETradersApp = angular.module("ETradersApp", ["ngRoute", "ngAnimate", "ui.boo
 //    });
 
 ETradersApp.constant("Config", {
-    "ServiceBaseURL": "http://localhost:8080",
+    "ServiceBaseURL": "http://localhost:44393",
     
 });//http://ephraim.ttpsolutions.in //http://localhost:50503
 

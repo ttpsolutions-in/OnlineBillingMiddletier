@@ -1,5 +1,5 @@
-ETradersApp.controller("MaterialInventoryDashboardController", ['GlobalVariableService', '$scope', '$filter', '$http', '$location', '$routeParams', '$timeout',
-    'toaster', 'CommonService', function (GlobalVariableService, $scope, $filter, $http, $location, $routeParams,
+ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$window','GlobalVariableService', '$scope', '$filter', '$http', '$location', '$routeParams', '$timeout',
+    'toaster', 'CommonService', function (Config,$window,GlobalVariableService, $scope, $filter, $http, $location, $routeParams,
         $timeout, toaster, CommonService) {
         $scope.ShowSpinnerStatus = false;
 
@@ -224,6 +224,14 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['GlobalVariableS
                     lstBill.filter = lstBill.filter + " and SupplierId eq " + $scope.searchSupplierRetailer;
 
             }
+            if ($scope.searchItemCategoryId > 0) {
+                if (lstBill.filter == undefined)
+                    lstBill.filter = "Material/ItemCategoryId eq " + $scope.searchItemCategoryId;
+                else
+                    lstBill.filter = lstBill.filter + " and Material/ItemCategoryId eq " + $scope.searchItemCategoryId;
+
+            }
+            
             if ($scope.searchMaterialId != undefined && $scope.searchMaterialId != "") {
                 if (lstBill.filter == undefined)
                     lstBill.filter = "MaterialId eq " + $scope.searchMaterialId;
@@ -362,7 +370,18 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['GlobalVariableS
             });
 
         };
+        $scope.payBill = function () {
 
+            var clientId = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.searchSupplierRetailer }, true)[0].ClientId;
+            var ClientSecret = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.searchSupplierRetailer }, true)[0].ClientSecret;
+            if (clientId == undefined || ClientSecret ==undefined)
+                toaster.pop("warning","","Client Id or Client Secret not defined in the system.");
+            else
+                $window.location.href = Config.ServiceBaseURL + "/PaymentOnline.aspx?payerid=" + $scope.tokens.UserId + "&paymenttype=tosupplier&RetailerId=" + $scope.searchSupplierRetailer;
+            //$location.path("/PaymentOnline");
+
+            //$window.location.href= Config.ServiceBaseURL + "/payment.html"
+        }
         $scope.GetItemCategory = function () {
             var postData = {
                 title: "ItemCategories",
@@ -402,7 +421,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['GlobalVariableS
         $scope.GetSupplierRetailers = function () {
             var lstBill = {
                 title: "SupplierRetailers",
-                fields: ["SupplierRetailerId,Name,Category,Type"],
+                fields: ["SupplierRetailerId,Name,Category,Type,ClientId,ClientSecret"],
                 //lookupFields: ["SupplierRetailer", "SaleCategory", "SaleType", "Status"],
                 filter: ["Category eq " + CommonService.getCategory().Supplier],
                 //limitTo: "5000",
@@ -419,7 +438,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['GlobalVariableS
         };
 
         $scope.init = function () {
-
+            $scope.tokens = GlobalVariableService.getTokenInfo();
             GlobalVariableService.validateUrl($location.$$path);
 
             $scope.GetSupplierRetailers();

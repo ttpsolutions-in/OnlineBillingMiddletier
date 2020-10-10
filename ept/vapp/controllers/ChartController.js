@@ -1,4 +1,4 @@
-ETradersApp.controller("ReportController", ['$scope', '$filter', '$http', '$location', '$routeParams', '$timeout', 'toaster', 'CommonService', 'uiGridConstants', function ($scope, $filter, $http, $location, $routeParams, $timeout, toaster, CommonService, uiGridConstants) {
+ETradersApp.controller("ChartController", ['$scope', '$filter', '$http', '$location', '$routeParams', '$timeout', 'toaster', 'CommonService', 'uiGridConstants', function ($scope, $filter, $http, $location, $routeParams, $timeout, toaster, CommonService, uiGridConstants) {
 
     $scope.lineData = {
         labels: [],

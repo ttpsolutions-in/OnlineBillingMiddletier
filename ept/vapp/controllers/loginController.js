@@ -42,7 +42,8 @@ ETradersApp.controller('LoginController', ['Config', '$scope', 'LoginService', '
         var tokenInfo = {
             AccessToken: '',
             UserName: '',
-            UserRole: ''
+            UserRole: '',
+            UserId:0
         }
         $scope.login = async function () {
             $scope.showSpinner();
@@ -61,7 +62,7 @@ ETradersApp.controller('LoginController', ['Config', '$scope', 'LoginService', '
                     GlobalVariableService.setTokenInfo(tokenInfo);
                     var lstRole = {
                         title: "EmployeeDetails",
-                        fields: ["EmpRoleId", "EmployeeRole/RoleName"],
+                        fields: ["EmployeeNo","EmpRoleId", "EmployeeRole/RoleName"],
                         lookupFields: ["EmployeeRole"],
                         filter: ["Email eq '" + tokenInfo.UserName + "' and Active eq 1"]//,
                         //orderBy: "EmployeeName"
@@ -73,6 +74,7 @@ ETradersApp.controller('LoginController', ['Config', '$scope', 'LoginService', '
                             var result = response.data.d.results[0];
 
                             tokenInfo.UserRole = result.EmployeeRole.RoleName;
+                            tokenInfo.UserId = result.EmployeeNo;
                             GlobalVariableService.setTokenInfo(tokenInfo);
                             //$scope.afterLoginSuccess(tokenInfo.UserRole);                            
                             //$window.location.href = "";

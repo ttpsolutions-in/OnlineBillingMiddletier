@@ -12,26 +12,29 @@
 <div class="card">
     <div class="card-header">
         <b>Employee Attendance Report</b>
-
+        <a class="btn btn-secondary btn-sm float-right" href="#EmployeeAttendance">Employee Attendance</a>
     </div>
 
     <div class="card-body">
         <form name="EmployeeAttendanceDashboard">
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <select id="ddlMonth" ng-model="AttendanceMonth" class="form-control" ng-options="item.Month as item.Month for item in MonthList">
+                    <select id="ddlMonth" ng-model="AttendanceMonth" class="form-control" ng-options="item.Month as item.Text for item in MonthList">
                         <option value="">Select Month</option>
                     </select>
+                    <p class="text-danger" ng-show="submitted && EmployeeAttendanceDashboard.ddlMonth.$invalid">Please select month</p>
                 </div>
                 <div class="form-group col-md-3">
                     <select id="ddlYear" ng-model="AttendanceYear" class="form-control" ng-options="item.Year as item.Year for item in YearList">
                         <option value="">Select Year</option>
                     </select>
+                    <p class="text-danger" ng-show="submitted && EmployeeAttendanceDashboard.ddlYear.$invalid">Please select year</p>
                 </div>
                 <div class="form-group col-md-3">
-                    <select id="ddlYear" ng-model="EmployeeNo" class="form-control" ng-options="item.EmployeeNo as item.EmployeeName for item in EmployeeList">
+                    <select id="ddlEmployeeNo" ng-model="EmployeeNo" class="form-control" ng-options="item.EmployeeNo as item.EmployeeName for item in EmployeeList">
                         <option value="">Select Employee</option>
                     </select>
+                    <p class="text-danger" ng-show="submitted && EmployeeAttendanceDashboard.ddlEmployeeNo.$invalid">Please select employee</p>
                 </div>
                 <div class="form-group col-md-3">
                     <button type="button" class="btn btn-secondary" ng-click="GetAttendanceReport(EmployeeAttendanceDashboard.$valid);">Search</button>
@@ -45,10 +48,10 @@
                 </div>
             </div>
             <br />
-            <div class="form-row col-md-offset-5">
-                <button type="button" class="btn btn-primary" ng-click="SaveEmployeeAttendances()"><span data-feather="save"></span>Save</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!--<div class="form-row col-md-offset-5">
+                <button type="button" class="btn btn-primary" ng-click="SaveEmployeeAttendances()"><span data-feather="save"></span>Save</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
                 <!--<button type="button" class="btn btn-primary" ng-click="SaveNPrint(addRetailForm.$valid)"><span data-feather="save"></span>Save & <span data-feather="printer"></span>Print</button>-->
-            </div>
+            <!--</div>-->
         </form>
     </div>
 </div>

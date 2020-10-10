@@ -143,7 +143,7 @@
                                 <span data-feather="{{item.FeatherName}}"></span>
                                 {{item.DisplayName}}<span class="sr-only">(current)</span>
                             </a>
-                        </li>                        
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -152,7 +152,7 @@
                 <toaster-container toaster-options="{'time-out': 3000,'position-class': 'toast-top-right'}"></toaster-container>
                 <!--<div ng-if="ShowSpinnerStatus" class="loader"></div>-->
                 <div data-ng-view=""></div>
-               
+
             </main>
         </div>
     </div>
@@ -164,10 +164,6 @@
     <!--<script src="../../../../../../assets/js/vendor/popper.min.js"></script>-->
     <!--<script src="../../../../dist/js/bootstrap.min.js"></script>-->
     <!-- Icons -->
-    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-    <script>
-        feather.replace()
-    </script>
     <!--<script src="vContent/Scripts/Chart.min.js"></script>
     <script src="vContent/Scripts/angular-chart.min.js"></script>-->
     <!-- Graphs -->
@@ -203,7 +199,10 @@
     </script>-->
 </body>
 </html>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
 <script type="text/javascript" src="vContent/Scripts/jquery-1.9.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -226,13 +225,13 @@
 <script type="text/javascript" src="vContent/Scripts/maskedinput.js"></script>
 <script type="text/javascript" src="vContent/Scripts/select2.min.js"></script>
 <script type="text/javascript" src="vContent/Scripts/ng-tags-input.min.js"></script>
-<script type="text/javascript" src="vContent/Scripts/jszip.js"></script>
+<!--<script type="text/javascript" src="vContent/Scripts/jszip.js"></script>
 <script type="text/javascript" src="vContent/Scripts/xlsx.full.min.js"></script>
-<script type="text/javascript" src="vContent/Scripts/xlsx.js"></script>
+<script type="text/javascript" src="vContent/Scripts/xlsx.js"></script>-->
 <script type="text/javascript" src="vContent/Scripts/toaster.js"></script>
 <script type="text/javascript" src="vapp/app.js"></script>
-<script type="text/javascript" src="vContent/Scripts/sweetalert-dev.js"></script>
-<script type="text/javascript" src="vContent/Scripts/SweetAlert.min.js"></script>
+<!--<script type="text/javascript" src="vContent/Scripts/sweetalert-dev.js"></script>
+<script type="text/javascript" src="vContent/Scripts/SweetAlert.min.js"></script>-->
 <script type="text/javascript" src="vContent/Scripts/ui-grid.min.js"></script>
 <script type="text/javascript" src="vContent/Scripts/ui-grid.cellnav.min.js"></script>
 <script type="text/javascript" src="vContent/Scripts/ui-grid.edit.min.js"></script>
@@ -241,7 +240,8 @@
 
 
 <script src="vapp/services/DigestService.js"></script>
-<script type="text/javascript" src="vapp/services/loginService.js"></script>
+<script type="text/javascript" src="vapp/compressed.js"></script>
+<!--<script type="text/javascript" src="vapp/services/loginService.js"></script>
 <script type="text/javascript" src="vapp/controllers/loginController.js"></script>
 <script type="text/javascript" src="vapp/controllers/RegisterController.js"></script>
 <script type="text/javascript" src="vapp/controllers/EditBillController.js"></script>
@@ -268,9 +268,11 @@
 <script type="text/javascript" src="vapp/controllers/SalesStatisticsController.js"></script>
 <script type="text/javascript" src="vapp/controllers/PaymentOnlineController.js"></script>
 <script type="text/javascript" src="vapp/controllers/ChartController.js"></script>
-<script type="text/javascript" src="vapp/controllers/EmployeeAttendanceController.js"></script>
+<script type="text/javascript" src="vapp/controllers/EmployeeAttendanceController.js"></script>-->
+
 <script type="text/javascript">
     ETradersApp.constant("Version", "1");
+    
 
 </script>
 

@@ -29,6 +29,7 @@ namespace ept.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            //Startup.OAuthOptions.AccessTokenExpireTimeSpan = TimeSpan.FromHours(24);
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
             ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
@@ -56,7 +57,7 @@ namespace ept.Providers
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
-
+            
             return Task.FromResult<object>(null);
         }
 

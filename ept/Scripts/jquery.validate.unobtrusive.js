@@ -35,7 +35,7 @@
 
     function escapeAttributeValue(value) {
         // As mentioned on http://api.jquery.com/category/selectors/
-        return value.replace(/([!"#$%&'()*+,./:;<=>?@\[\\\]^`{|}~])/g, "\\$1";
+        return value.replace(/([!"#$%&'()*+,./:;<=>?@\[\\\]^`{|}~])/g, "\\$1");
     }
 
     function getModelPrefix(fieldName) {
@@ -54,7 +54,7 @@
             replaceAttrValue = container.attr("data-valmsg-replace"),
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
 
-        container.removeClass("field-validation-valid").addClass("field-validation-error";
+        container.removeClass("field-validation-valid").addClass("field-validation-error");
         error.data("unobtrusiveContainer", container);
 
         if (replace) {
@@ -68,11 +68,11 @@
 
     function onErrors(event, validator) {  // 'this' is the form element
         var container = $(this).find("[data-valmsg-summary=true]"),
-            list = container.find("ul";
+            list = container.find("ul");
 
         if (list && list.length && validator.errorList.length) {
             list.empty();
-            container.addClass("validation-summary-errors").removeClass("validation-summary-valid";
+            container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
 
             $.each(validator.errorList, function () {
                 $("<li />").html(this.message).appendTo(list);
@@ -81,14 +81,14 @@
     }
 
     function onSuccess(error) {  // 'this' is the form element
-        var container = error.data("unobtrusiveContainer";
+        var container = error.data("unobtrusiveContainer");
 
         if (container) {
             var replaceAttrValue = container.attr("data-valmsg-replace"),
                 replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
 
-            container.addClass("field-validation-valid").removeClass("field-validation-error";
-            error.removeData("unobtrusiveContainer";
+            container.addClass("field-validation-valid").removeClass("field-validation-error");
+            error.removeData("unobtrusiveContainer");
 
             if (replace) {
                 container.empty();
@@ -112,13 +112,13 @@
 
         $form.find(".validation-summary-errors")
             .addClass("validation-summary-valid")
-            .removeClass("validation-summary-errors";
+            .removeClass("validation-summary-errors");
         $form.find(".field-validation-error")
             .addClass("field-validation-valid")
             .removeClass("field-validation-error")
             .removeData("unobtrusiveContainer")
             .find(">*")  // If we were using valmsg-replace, get the underlying error
-            .removeData("unobtrusiveContainer";
+            .removeData("unobtrusiveContainer");
     }
 
     function validationInfo(form) {
@@ -237,7 +237,7 @@
                     .addBack()
                     .filter("form")
                     .add($selector.find("form"))
-                    .has("[data-val=true]";
+                    .has("[data-val=true]");
 
             $selector.find("[data-val=true]").each(function () {
                 $jQval.unobtrusive.parseElement(this, true);
@@ -357,17 +357,17 @@
     });
 
     if ($jQval.methods.extension) {
-        adapters.addSingleVal("accept", "mimtype";
-        adapters.addSingleVal("extension", "extension";
+        adapters.addSingleVal("accept", "mimtype");
+        adapters.addSingleVal("extension", "extension");
     } else {
         // for backward compatibility, when the 'extension' validation method does not exist, such as with versions
         // of JQuery Validation plugin prior to 1.10, we should use the 'accept' method for
         // validating the extension, and ignore mime-type validations as they are not supported.
-        adapters.addSingleVal("extension", "extension", "accept";
+        adapters.addSingleVal("extension", "extension", "accept");
     }
 
-    adapters.addSingleVal("regex", "pattern";
-    adapters.addBool("creditcard").addBool("date").addBool("digits").addBool("email").addBool("number").addBool("url";
+    adapters.addSingleVal("regex", "pattern");
+    adapters.addBool("creditcard").addBool("date").addBool("digits").addBool("email").addBool("number").addBool("url");
     adapters.addMinMax("length", "minlength", "maxlength", "rangelength").addMinMax("range", "min", "max", "range";
     adapters.addMinMax("minlength", "minlength").addMinMax("maxlength", "minlength", "maxlength";
     adapters.add("equalto", ["other"], function (options) {

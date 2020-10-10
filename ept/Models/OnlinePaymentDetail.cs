@@ -29,5 +29,11 @@ namespace ept.Models
         public string TransactionId { get; set; }
         public string RequestId { get; set; }
         public string PaymentStatus { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<decimal> Fees { get; set; }
+        public string MAC { get; set; }
+        public string LongUrl { get; set; }
+        public string ShortUrl { get; set; }
     }
 }
