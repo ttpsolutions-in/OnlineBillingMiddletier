@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='content-type' content='text/html; charset=utf-8' />
+
+    <title>bootstrap-treeview.js Tests</title>
+
+    <link rel='stylesheet' href='./lib/qunit-1.12.0.css'>
+
+    <script src='./lib/jquery.js'></script>
+    <script src='./lib/qunit-1.12.0.js'></script>
+    <script src="./lib/blanket.min.js"></script>
+
+    <script data-cover src='./lib/bootstrap-treeview.js'></script>
+
+    <!-- your tests, any and all to run with the given fixtures below -->
+    <script>
+	var myTree = [
+    {
+      text: "Item 1",
+      nodes: [
+        {
+          text: "Item 1-1",
+          nodes: [
+            {
+              text: "Item 1-1-1"
+            },
+            {
+              text: "Item 1-1-2"
+            }
+          ]
+        },
+        {
+          text: "Item 1-2"
+        }
+      ]
+    },
+    {
+      text: "Item 2"
+    },
+    {
+      text: "Item 3"
+    }
+   
+];
+$('#treeview').treeview({
+
+  // expanded to 2 levels
+  levels: 2,
+
+  // custom icons
+  expandIcon: 'glyphicon glyphicon-plus',
+  collapseIcon: 'glyphicon glyphicon-minus',
+  emptyIcon: 'glyphicon',
+  nodeIcon: '',
+  selectedIcon: '',
+  checkedIcon: 'glyphicon glyphicon-check',
+  uncheckedIcon: 'glyphicon glyphicon-unchecked',
+
+  // colors
+  color: undefined, // '#000000',
+  backColor: undefined, // '#FFFFFF',
+  borderColor: undefined, // '#dddddd',
+  onhoverColor: '#F5F5F5',
+  selectedColor: '#FFFFFF',
+  selectedBackColor: '#428bca',
+  searchResultColor: '#D9534F',
+  searchResultBackColor: undefined, //'#FFFFFF',
+
+  // enables links
+  enableLinks: false,
+
+  // highlights selected items
+  highlightSelected: true,
+
+  // highlights search results
+  highlightSearchResults: true,
+
+  // shows borders
+  showBorder: true,
+
+  // shows icons
+  showIcon: true,
+
+  // shows checkboxes
+  showCheckbox: false,
+
+  // shows tags
+  showTags: false,
+
+  // enables multi select
+  multiSelect: false,
+data: myTree
+  
+});
+
+	</script>
+  </head>
+  <body>
+    <div id="qunit"></div> <!-- QUnit fills this with results, etc -->
+    <div id='qunit-fixture'>
+ 
+      <!-- any HTML you want to be present in each test (will be reset for each test) -->
+      <div id="treeview"></div>
+    </div>
+  </body>
+</html>

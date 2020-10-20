@@ -37,10 +37,10 @@ namespace ept.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeAccount> EmployeeAccounts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeAttendance> EmployeeAttendances { get; set; }
         public virtual EmployeeDesignation EmployeeDesignation { get; set; }
         public virtual EmployeeRole EmployeeRole { get; set; }
         public virtual EmploymentType EmploymentType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmployeeAttendance> EmployeeAttendances { get; set; }
     }
 }

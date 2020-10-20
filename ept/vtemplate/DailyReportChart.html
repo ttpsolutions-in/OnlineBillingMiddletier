@@ -122,8 +122,10 @@
         overflow-y: hidden;
     }
 </style>
+
 <div class="row">
     <div class="col-md-12">
+
         <div class="content-box-large" style="height:auto">
             <div class="panel-heading">
                 <div class="panel-title">Report</div>
@@ -131,12 +133,31 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
+                        <form name="ReportChartForm">
+                        <div class="form-control col-md-4">
+                            <input type="date" id="txtFromDate" value="" ng-model="FromDate" required />
+                            <p class="danger" ng-show="submitted && ReportChartForm.txtFromDate.$invalid">Please select from date</p>
+                        </div>
+                        <div class="form-control col-md-4">
+                            <input type="date" id="txtToDate" value="" ng-model="ToDate" required />
+                            <p class="danger" ng-show="submitted && ReportChartForm.txtToDate.$invalid">Please select from date</p>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" ng-click="GetReportData(ReportChartForm.$valid)"><span data-feather="save"></span> Search</button>
+
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="col-md-4">
                         </div>
                         <div class="col-md-8" data-ng-if="ReportData.length > 0">
                             <div class="key">
-                                <div class="key-element key-series-a ct-bar">Current</div>
-                                <div class="key-element key-series-b">Total</div>
+                                <div class="key-element key-series-a ct-bar">Retail</div>
+                                <div class="key-element key-series-b">Whole Sale</div>
                             </div>
                         </div>
                         <br />

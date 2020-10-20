@@ -368,8 +368,8 @@
 
     adapters.addSingleVal("regex", "pattern");
     adapters.addBool("creditcard").addBool("date").addBool("digits").addBool("email").addBool("number").addBool("url");
-    adapters.addMinMax("length", "minlength", "maxlength", "rangelength").addMinMax("range", "min", "max", "range";
-    adapters.addMinMax("minlength", "minlength").addMinMax("maxlength", "minlength", "maxlength";
+    adapters.addMinMax("length", "minlength", "maxlength", "rangelength").addMinMax("range", "min", "max", "range");
+    adapters.addMinMax("minlength", "minlength").addMinMax("maxlength", "minlength", "maxlength");
     adapters.add("equalto", ["other"], function (options) {
         var prefix = getModelPrefix(options.element.name),
             other = options.params.other,
@@ -395,7 +395,7 @@
         $.each(splitAndTrim(options.params.additionalfields || options.element.name), function (i, fieldName) {
             var paramName = appendModelPrefix(fieldName, prefix);
             value.data[paramName] = function () {
-                var field = $(options.form).find(":input").filter("[name='" + escapeAttributeValue(paramName) + "']";
+                var field = $(options.form).find(":input").filter("[name='" + escapeAttributeValue(paramName) + "']");
                 // For checkboxes and radio buttons, only pick up values from checked fields.
                 if (field.is(":checkbox")) {
                     return field.filter(":checked").val() || field.filter(":hidden").val() || '';

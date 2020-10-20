@@ -1,0 +1,71 @@
+﻿
+<html>
+<head>
+    <script type="text/javascript" src="vContent/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="https://js.instamojo.com/v1/checkout.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            var params = getUrlVars();
+            //alert(params);
+            Instamojo.open(params["purl"])
+        });
+
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        $('#imojo-rc-iframe').load(function () {
+            setTimeout(function () {
+                alert($('#imojo-rc-iframe').contents().find('table').length);
+                var data = [];
+                var ele = {};
+                if ($("table").length) {
+                    $("tr").each(function () {
+                        var td = $(this).closest("td");
+                        var value1 = td.val();
+                        if (td.next().length)
+                            value2 = td.next().find(".rupee-container").val();
+                        else
+                            value2 = td.next().val();
+                        ele = { value1, value2 };
+                        data.push(ele);
+                    });
+                    console.log(data);
+                }
+            
+            }, 2000);
+        });
+
+        function loopTable() {
+            var data = [];
+            var ele = {};
+            if ($("table").length) {
+                $("tr").each(function () {
+                    var td = $(this).closest("td");
+                    var value1 = td.val();
+                    if (td.next().length)
+                        value2 = td.next().find(".rupee-container").val();
+                    else
+                        value2 = td.next().val();
+                    ele = { value1, value2 };
+                    data.push(ele);
+                });
+                console.log(data);
+            }
+        }
+        
+    </script>
+</head>
+<body></body>
+<!--<button ng-click="payOnline()">
+    Open Instapay
+</button>-->
+</html>

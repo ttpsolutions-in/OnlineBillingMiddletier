@@ -63,42 +63,10 @@ namespace ept.Providers
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            ///////////////////////////////////////
-            ///
-            //string clientId = string.Empty;
-            //string clientSecret = string.Empty;
-            ////// The TryGetBasicCredentials method checks the Authorization header and
-            ////// Return the ClientId and clientSecret
-            ////if (!context.TryGetBasicCredentials(out clientId, out clientSecret))
-            ////{
-            ////    context.SetError("invalid_client", "Client credentials could not be retrieved through the Authorization header.");
-            ////    return Task.FromResult<object>(null);
-            ////}
-            ////Check the existence of by calling the ValidateClient method
-            //ClientMaster client = (new ClientMasterRepository()).ValidateClient(clientId);//, clientSecret);
-            //if (client == null)
-            //{
-            //    // Client could not be validated.
-            //    context.SetError("invalid_client", "Client credentials are invalid.");
-            //    return Task.FromResult<object>(null);
-            //}
-            //else
-            //{
-            //    if (!client.Active)
-            //    {
-            //        context.SetError("invalid_client", "Client is inactive.");
-            //        return Task.FromResult<object>(null);
-            //    }
-            //    // Client has been verified.
-            //    context.OwinContext.Set<ClientMaster>("ta:client", client);
-            //    context.OwinContext.Set<string>("ta:clientAllowedOrigin", client.AllowedOrigin);
-            //    context.OwinContext.Set<string>("ta:clientRefreshTokenLifeTime", client.RefreshTokenLifeTime.ToString());
-            //    context.Validated();
-            //    return Task.FromResult<object>(null);
-            //}
 
-            ///////////////////////////////////////
-            // Resource owner password credentials does not provide a client ID.
+
+            /////////////////////////////////////
+            //Resource owner password credentials does not provide a client ID.
 
             if (context.ClientId == null)
             {

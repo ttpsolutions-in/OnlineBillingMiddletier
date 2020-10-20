@@ -198,8 +198,6 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window', 'Config', 'Gl
 
             }
 
-
-
             //$scope.showSpinner();
             CommonService.GetListItems(lstBill).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
@@ -314,15 +312,15 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window', 'Config', 'Gl
             });
         };
 
-        $scope.GetOnlinePaymentDetails = function (email) {
+        $scope.GetOnlinePaymentDetails = function (customerEmail) {
 
             var lst = {
                 title: "OnlinepaymentFromWebhooks",
                 fields: ["*"],
                 //lookupFields: ["SupplierRetailer", "SaleCategory", "SaleType", "Status"],
-                filter: ["buyer eq '" + email + "' and status eq 'successful'"],
+                filter: ["buyer eq '" + customerEmail + "' and status eq 'successful'"],
                 //limitTo: "5000",
-                orderBy: "CreatedOn desc"
+                orderBy: "createdon desc"
             };
 
             CommonService.GetListItems(lst).then(function (response) {
@@ -373,6 +371,8 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window', 'Config', 'Gl
                     else //cash
                         $scope.TotalCash += parseFloat(items.GrandTotal);
                 });
+                $scope.TotalCredit = parseFloat($scope.TotalCredit).toFixed(2);
+                $scope.TotalCash = parseFloat($scope.TotalCash).toFixed(2);
             }
             //return $scope.TotalCredit.toFixed(2);
         };

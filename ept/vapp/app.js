@@ -1,5 +1,5 @@
 //Define an angular module for our app 
-var ETradersApp = angular.module("ETradersApp", ["ngRoute", "ngAnimate", "ui.bootstrap", "toaster", "ui.grid", "ui.grid.edit", "ui.grid.cellNav", "ui.grid.validate",
+var ETradersApp = angular.module("ETradersApp", ["angular-chartist","ngRoute", "ngAnimate", "ui.bootstrap", "toaster", "ui.grid", "ui.grid.edit", "ui.grid.cellNav", "ui.grid.validate",
     "ui.grid.pagination", "ui.grid.autoResize", "ui.grid.selection", "ui.grid.resizeColumns", "ui.grid.grouping", "mgcrea.ngStrap"]);//;.run(init);
 //for autocomplete dropdown
 //function init($rootScope, GlobalVariableService) {
@@ -178,7 +178,16 @@ ETradersApp.config(['$routeProvider', '$locationProvider',
             controller: 'RegisterController'
         }).when("/Statistics", {
             templateUrl: '/vtemplate/SalesStatistics.html',
-            controller: 'StatisticsController'
+            controller: 'StatisticsController'            
+        }).when("/AddOnlinePaymentDetailWebHook", {
+            templateUrl: '/vtemplate/AddOnlinePayment.html',
+            controller: 'OnlinePaymentDetailFromWebHookController'
+        }).when("/EditOnlinePaymentDetail/:ID", {
+            templateUrl: '/vtemplate/EditOnlinePayment.html',
+            controller: 'OnlinePaymentDetailFromWebHookController'            
+        }).when("/OnlinePaymentDetailDashboard", {
+            templateUrl: '/vtemplate/OnlinePaymentDashboard.html',
+            controller: 'OnlinePaymentDetailFromWebHookController'
         }).when("/PaymentOnline", {
             templateUrl: '/vtemplate/PaymentForm.html',
             controller: 'PaymentOnlineController'

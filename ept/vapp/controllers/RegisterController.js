@@ -1,17 +1,49 @@
 ETradersApp.controller("RegisterController", ['CommonService', 'Config', '$window', '$scope', '$location', 'LoginService', '$sce',
-    function (CommonService,Config, $window, $scope, $location, LoginService, $sce) {
+    function (CommonService, Config, $window, $scope, $location, LoginService, $sce) {
 
-    $scope.UserDetails = {
-        Email: "",
-        Password: "",
-        ConfirmPassword: ""
-    }
-    $scope.errorMessage = '';
-    $scope.successMessage = '';
-    $scope.goTologin = function () {
+        $scope.UserDetails = {
+            Email: "",
+            Password: "",
+            ConfirmPassword: ""
+        }
+        $scope.errorMessage = '';
+        $scope.successMessage = '';
+        $scope.goTologin = function () {
 
-        $window.location.href = Config.ServiceBaseURL + "/login.html";
-    }
+            $window.location.href = Config.ServiceBaseURL + "/login.html";
+        }
+        $scope.ConfirmPassword = function (isFormValid) {
+            $scope.submitted = !isFormValid
+            if (isFormValid) {
+
+                var req = {
+                    "OldPassword": $scope.UserDetails.OldPassword,
+                    "NewPassword": $scope.UserDetails.NewPassword,
+                    "ConfirmPassword": $scope.UserDetails.ConfirmPassword
+                }
+
+                LoginService.ChangePassword(req).then(function (response) {
+                    var str = ''
+                    $scope.errorMessage = '';
+                    $scope.successMessage = '';
+
+                    if (response.data.ModelState) {
+                        for (var key in response.data.ModelState) {
+                            if (key !== "$id")
+                                str += "<span class='pull-left'>" + response.data.ModelState[key] + "</span>";
+                        }
+                        $scope.errorMessage = $sce.trustAsHtml(str);
+                    }
+                    else {
+                        $scope.successMessage = $sce.trustAsHtml("<span class='pull-left'>Password changed successfully</span>");
+                        GlobalVariableService.removeToken();
+                    }
+
+                });
+            }
+
+
+        }
     $scope.Register = function (isFormValid) {
         $scope.submitted = !isFormValid
         if (isFormValid) {
@@ -46,7 +78,8 @@ ETradersApp.controller("RegisterController", ['CommonService', 'Config', '$windo
                     $scope.errorMessage = $sce.trustAsHtml("<span class='pull-left'>Email address not exists in the system.</span>");
             });
         }
-    }
+        }
+
     $scope.GetEmailById = function (email, callback) {
         $scope.EmailFound = false;
         var lstemp = {

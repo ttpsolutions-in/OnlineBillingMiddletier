@@ -12,14 +12,14 @@ namespace ept.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ClientMaster
+    public partial class Client
     {
-        public int ClientKeyId { get; set; }
-        public string ClientID { get; set; }
-        public string ClientSecret { get; set; }
-        public string ClientName { get; set; }
-        public bool Active { get; set; }
-        public int RefreshTokenLifeTime { get; set; }
+        public string Id { get; set; }
+        public string Secret { get; set; }
+        public string name { get; set; }
+        public string ApplicationType { get; set; }
+        public Nullable<bool> Active { get; set; }
+        public Nullable<int> RefreshTokenLifeTime { get; set; }
         public string AllowedOrigin { get; set; }
     }
 }

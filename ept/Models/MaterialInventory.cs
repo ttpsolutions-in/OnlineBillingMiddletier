@@ -30,6 +30,7 @@ namespace ept.Models
         public string UpdatedBy { get; set; }
         public System.DateTime UpdatedDate { get; set; }
         public Nullable<byte> Active { get; set; }
+        public Nullable<int> OnlinePaymentId { get; set; }
     
         public virtual Godown Godown { get; set; }
         public virtual Godown Godown1 { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -12,6 +13,7 @@ using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Routing;
 using ept.Models;
+using InstamojoAPI;
 
 namespace ept.Controllers
 {
@@ -25,6 +27,7 @@ namespace ept.Controllers
     builder.EntitySet<OnlinepaymentFromWebhook>("OnlinepaymentFromWebhooks");
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
+    [AllowAnonymous]
     public class OnlinepaymentFromWebhooksController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
@@ -83,10 +86,35 @@ namespace ept.Controllers
         // POST: odata/OnlinepaymentFromWebhooks
         public async Task<IHttpActionResult> Post(OnlinepaymentFromWebhook onlinepaymentFromWebhook)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
+            string Insta_client_id = ConfigurationManager.AppSettings["ClientId"];//,//   "test_sFhb8ig0JPT0Hc21G2CWZg4RqhO4d3KqMdO",
+            string Insta_client_secret = ConfigurationManager.AppSettings["ClientSecret"];//, //"test_7VCjAHfdUrQMtlvUwYUEtAFbYJuvAGZ1Pu63WUfSBWOgsmW8Oa3rgx6AmOsi8UuXeZ3zbFyuPFJMXbEd9rppVFSTXALInXFS3Oa7Ux1hB5NQKAh9OnzvqTSHcV8",
+            string Insta_Endpoint = "";//ConfigurationManager.AppSettings["APIEndpoint"],// InstamojoConstants.INSTAMOJO_API_ENDPOINT,
+            string Insta_Auth_Endpoint = "";//ConfigurationManager.AppSettings["AuthEndpoint"];// InstamojoConstants.INSTAMOJO_AUTH_ENDPOINT;
+
+            Insta_Endpoint = ConfigurationManager.AppSettings["APIEndpoint"];
+            Insta_Auth_Endpoint = ConfigurationManager.AppSettings["AuthEndpoint"];
+
+            Insta_client_id = ConfigurationManager.AppSettings["ClientId"];
+            Insta_client_secret = ConfigurationManager.AppSettings["ClientSecret"];
+            Instamojo objClass = InstamojoImplementation.getApi(Insta_client_id, Insta_client_secret, Insta_Endpoint, Insta_Auth_Endpoint);
+
+
+            PaymentOrderDetailsResponse objPaymentRequestStatusResponse = objClass.getPaymentOrderDetails(onlinepaymentFromWebhook.id);
+            List<PaymentOrderDetailsResponse> objlist = new List<PaymentOrderDetailsResponse>();
+            objlist.Add(objPaymentRequestStatusResponse);
+
+            onlinepaymentFromWebhook.status = objPaymentRequestStatusResponse.status;
+            onlinepaymentFromWebhook.buyer = objPaymentRequestStatusResponse.email;
+            onlinepaymentFromWebhook.buyer_name = objPaymentRequestStatusResponse.name;
+            onlinepaymentFromWebhook.buyer_phone = objPaymentRequestStatusResponse.phone;
+            onlinepaymentFromWebhook.purpose = objPaymentRequestStatusResponse.description;
+            onlinepaymentFromWebhook.createdon = Convert.ToDateTime(objPaymentRequestStatusResponse.created_at);
+            onlinepaymentFromWebhook.currency = objPaymentRequestStatusResponse.currency;
+            onlinepaymentFromWebhook.amount = objPaymentRequestStatusResponse.amount;
 
             db.OnlinepaymentFromWebhooks.Add(onlinepaymentFromWebhook);
             await db.SaveChangesAsync();

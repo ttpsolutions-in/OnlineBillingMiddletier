@@ -14,11 +14,11 @@ namespace ept.Models
     
     public partial class RefreshToken
     {
-        public string ID { get; set; }
-        public string UserName { get; set; }
-        public string ClientID { get; set; }
-        public Nullable<System.DateTime> IssuedTime { get; set; }
-        public Nullable<System.DateTime> ExpiredTime { get; set; }
+        public string Id { get; set; }
+        public string Subject { get; set; }
+        public string ClientId { get; set; }
+        public Nullable<System.DateTime> IssuedUtc { get; set; }
+        public Nullable<System.DateTime> ExpiresUtc { get; set; }
         public string ProtectedTicket { get; set; }
     }
 }

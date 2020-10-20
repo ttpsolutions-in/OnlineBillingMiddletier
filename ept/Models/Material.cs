@@ -22,6 +22,7 @@ namespace ept.Models
         }
     
         public int MaterialId { get; set; }
+        public string Description { get; set; }
         public Nullable<int> NoOfPiecePerUnit { get; set; }
         public Nullable<decimal> RetailRate { get; set; }
         public Nullable<decimal> WholeSaleRate { get; set; }
@@ -41,7 +42,6 @@ namespace ept.Models
         public Nullable<short> ItemCategoryId { get; set; }
         public string DisplayName { get; set; }
         public Nullable<byte> Active { get; set; }
-        public string Description { get; set; }
     
         public virtual ItemCategory ItemCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

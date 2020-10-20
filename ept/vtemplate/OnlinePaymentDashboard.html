@@ -1,0 +1,57 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 80px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>Online Payment Details </b>
+       
+    </div>
+    <div class="card-body">
+        <form id="OnlinePaymentDetailDashboard">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="SupplierRetailer">Customer</label>
+                    <select id="SupplierRetailer" name="SupplierRetailer" ng-model="searchSupplierRetailer" class="form-control input-sm"
+                            ng-options="item.SupplierRetailerId as item.Name for item in SupplierRetailers" required>
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <br />
+                    &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-secondary" ng-click="GetDataForDashboard();" style="margin-top:5px">Search</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 nopadding">
+                    <div ui-grid="gridOptions" ui-grid-edit ui-grid-pagination  ui-grid-cellnav
+                         class="myGrid" style="height:480px"></div>
+                    <div class="nodatatxt" data-ng-if="gridOptions.data.length==0">No data found.</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX " />
+</head>
+<body>
+    <script type="text/javascript">
+        
+        var gearPage = document.getElementById('GearPage');
+        if (null != gearPage) {
+            gearPage.parentNode.removeChild(gearPage);
+            document.title = "Error";
+        }
+    </script>
+</body>
+</html>

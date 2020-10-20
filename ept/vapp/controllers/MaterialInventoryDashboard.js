@@ -250,13 +250,35 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
                 if (response && response.data.d.results.length > 0) {
                     $scope.MaterialInventoryList = response.data.d.results;
                     $scope.GetTotalQuantityNPending();
-
+                    if ($scope.searchSupplierRetailer > 0) {
+                        var paidtoEmail = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.SupplierRetailers }, true)[0].Email;
+                        $scope.GetOnlinePaymentDetails(paidtoEmail)
+                    }
                 }
                 $scope.gridOptions.data = $scope.MaterialInventoryList;
                 //  $scope.hideSpinner();
             });
         };
+        $scope.GetOnlinePaymentDetails = function (paidToEmail) {
 
+            var lst = {
+                title: "OnlinepaymentFromWebhooks",
+                fields: ["amount"],                
+                filter: ["buyer eq '" + paidToEmail + "' and status eq 'successful'"],               
+                orderBy: "createdon desc"
+            };
+
+            CommonService.GetListItems(lst).then(function (response) {
+
+                if (response && response.data.d.results.length > 0) {
+                    $scope.TotalOnlinePaidlist = response.data.d.results;
+                    $scope.TotalOnlinePaidAmount = 0;
+                    angular.forEach($scope.TotalOnlinePaidlist, function (value, key) {
+                        $scope.TotalOnlinePaidAmount = parseFloat($scope.TotalOnlinePaidAmount) + parseFloat(value.amount);
+                    })
+                }
+            });
+        };
         $scope.GetMaterialInventoryByID = function () {
             var lstBill = {
                 title: "Sales",
@@ -374,10 +396,18 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
 
             var clientId = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.searchSupplierRetailer }, true)[0].ClientId;
             var ClientSecret = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.searchSupplierRetailer }, true)[0].ClientSecret;
-            if (clientId == undefined || ClientSecret ==undefined)
-                toaster.pop("warning","","Client Id or Client Secret not defined in the system.");
-            else
+            var PaymentURL = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.searchSupplierRetailer }, true)[0].PaymentURL;
+            
+
+            if (PaymentURL != undefined)
+            {
+                //Instamojo.open(PaymentURL);
+                $window.location.href = Config.ServiceBaseURL + "/PaymentForm.html?purl=" + PaymentURL;
+            }
+            else if (clientId != undefined && ClientSecret != undefined)
                 $window.location.href = Config.ServiceBaseURL + "/PaymentOnline.aspx?payerid=" + $scope.tokens.UserId + "&paymenttype=tosupplier&RetailerId=" + $scope.searchSupplierRetailer;
+            else
+                toaster.pop("warning","","Client Id or Client Secret or Payment Url not defined in the system.");
             //$location.path("/PaymentOnline");
 
             //$window.location.href= Config.ServiceBaseURL + "/payment.html"
@@ -421,7 +451,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
         $scope.GetSupplierRetailers = function () {
             var lstBill = {
                 title: "SupplierRetailers",
-                fields: ["SupplierRetailerId,Name,Category,Type,ClientId,ClientSecret"],
+                fields: ["SupplierRetailerId,Name,Email,Category,Type,ClientId,ClientSecret,PaymentURL"],
                 //lookupFields: ["SupplierRetailer", "SaleCategory", "SaleType", "Status"],
                 filter: ["Category eq " + CommonService.getCategory().Supplier],
                 //limitTo: "5000",

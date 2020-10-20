@@ -18,7 +18,7 @@ namespace ept.Models
         public Nullable<int> AttendanceId { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<byte> Present { get; set; }
-        public short EmployeeNo { get; set; }
         public string Comments { get; set; }
+        public short EmployeeNo { get; set; }
     }
 }

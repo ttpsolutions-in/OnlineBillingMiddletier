@@ -1,0 +1,100 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 60px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>Add Payment Details</b>        
+    </div>
+    <div class="card-body">
+        <form name="addOnlinePaymentform">
+            <div class="form-row">
+                <div class="form-group col-md-4 col-md-offset-2">
+                    <label for="PaymentId">Payment Id</label> <span class="text-danger">*</span>
+                    <input type="text" class="form-control" id="PaymentId" name="PaymentId" placeholder="Enter Payment Id"
+                           ng-model="OnlinePaymentDetail.payment_id" required>
+                    <p ng-show="submitted && addOnlinePaymentform.PaymentId.$invalid"
+                       class="text-danger">Payment Id is required.</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Amount">Amount</label> <span class="text-danger">*</span>
+                    <input type="number" class="form-control" id="Amount" name="Amount" placeholder="Enter Amount"
+                           ng-model="OnlinePaymentDetail.amount" required>
+                    <p ng-show="submitted && addOnlinePaymentform.Amount.$invalid"
+                       class="text-danger">Amount is required.</p>
+                </div>
+                <!--<div class="form-group col-md-4 col-md-offset-2">
+        <label for="ContactNo">Contact No.</label> <span class="text-danger">*</span>
+        <input type="tel" class="form-control" id="ContactNo" name="ContactNo" placeholder="Enter Contact No."
+               ng-model="OnlinePaymentDetail.buyer_phone" required>
+        <p ng-show="submitted && addOnlinePaymentform.ContactNo.$invalid"
+           class="text-danger">Phone is required.</p>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="Email">Email</label> <span class="text-danger">*</span>
+        <input type="email" class="form-control" id="Email" name="Email" placeholder="Enter Email"
+               ng-model="OnlinePaymentDetail.buyer" required>
+        <p ng-show="submitted && addOnlinePaymentform.Email.$invalid"
+           class="text-danger">Email is required.</p>
+    </div>
+    <div class="form-group col-md-4 col-md-offset-2">
+        <label for="buyerName">Buyer Name</label> <span class="text-danger">*</span>
+        <input type="text" class="form-control" id="buyerName" name="buyerName" placeholder="Enter Name"
+               ng-model="OnlinePaymentDetail.buyer_name" required>
+        <p ng-show="submitted && addOnlinePaymentform.buyerName.$invalid"
+           class="text-danger">Name Id is required.</p>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="status">Status</label> <span class="text-danger">*</span>
+        <select id="status" name="status" ng-model="OnlinePaymentDetail.status" class="form-control"
+                required>
+            <option value="">-- Select --</option>
+            <option value="Pending">Pending</option>
+            <option value="Successful">Successful</option>
+        </select>
+        <p ng-show="submitted && addOnlinePaymentform.status.$invalid"
+           class="text-danger">Status is required.</p>
+    </div>-->
+                <div class="form-group col-md-4 col-md-offset-2">
+                    <label for="Purpose">Purpose</label> <span class="text-danger">*</span>
+                    <select id="status" name="status" select2 ng-model="OnlinePaymentDetail.status" class="form-control"
+                        ng-options="item.InventoryId as item.InventoryDescription for item in MaterialInventory" required>
+                        <option value="">-- Select --</option>                        
+                    </select>
+                    <p ng-show="submitted && addOnlinePaymentform.Purpose.$invalid"
+                       class="text-danger">Purpose is required.</p>
+                </div>
+            </div>
+            <div><hr /></div>
+            <div class="form-row col-md-offset-5">
+                <button type="button" class="btn btn-primary" ng-click="RedirectDashboard()"><span data-feather="arrow-left"></span> Back</button>&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" ng-click="SaveOnlinepaymentFromWebhooks(addOnlinePaymentform.$valid)"><span data-feather="save"></span> Save</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX " />
+</head>
+<body>
+</body>
+<script type="text/javascript">
+    feather.replace();
+    var gearPage = document.getElementById('GearPage');
+    if (null != gearPage) {
+        gearPage.parentNode.removeChild(gearPage);
+        document.title = "Error";
+    }
+</script>
+</html>

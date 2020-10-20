@@ -244,6 +244,7 @@
     <Compile Include="Controllers\OnlinePaymentDetailsController.cs" />
     <Compile Include="Controllers\OnlinepaymentFromWebhooksController.cs" />
     <Compile Include="Controllers\PaymentTypesController.cs" />
+    <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Controllers\ReorderRequiredsController.cs" />
     <Compile Include="Controllers\RightsController.cs" />
     <Compile Include="Controllers\RightsForAssignmentsController.cs" />
@@ -275,7 +276,6 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AuthenticationRepository.cs" />
     <Compile Include="Models\Bill.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
@@ -285,10 +285,9 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ClientMaster.cs">
+    <Compile Include="Models\Client.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ClientMasterRepository.cs" />
     <Compile Include="Models\CurrentUserRoleRightsView.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
@@ -360,7 +359,13 @@
     <Compile Include="Models\RefreshToken.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RefreshTokenProvider.cs" />
+    <Compile Include="GetPaymentDetails.aspx.cs">
+      <DependentUpon>GetPaymentDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GetPaymentDetails.aspx.designer.cs">
+      <DependentUpon>GetPaymentDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Models\ReorderRequired.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
@@ -441,6 +446,7 @@
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="login.html" />
+    <Content Include="GetPaymentDetails.aspx" />
     <Content Include="Models\ETModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ETModel.edmx</DependentUpon>
@@ -474,7 +480,11 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="vapp\controllers\OnlinePaymentDetailController.js" />
     <Content Include="vContent\Scripts\feather.min.js" />
+    <Content Include="vtemplate\AddOnlinePayment.html" />
+    <Content Include="vtemplate\EditOnlinePayment.html" />
+    <Content Include="vtemplate\OnlinePaymentDashboard.html" />
     <Content Include="WebHookToInstamojo.aspx" />
     <EntityDeploy Include="Models\ETModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -500,7 +510,6 @@
     <Content Include="vapp\controllers\EditBillController.js" />
     <Content Include="vapp\controllers\EmployeeAccountsController.js" />
     <Content Include="vapp\controllers\EmployeesController.js" />
-    <Content Include="vapp\controllers\ExportToPDFController.js" />
     <Content Include="vapp\controllers\homeController.js" />
     <Content Include="vapp\controllers\ItemCategoryDashboardController.js" />
     <Content Include="vapp\controllers\loginController.js" />
@@ -892,7 +901,7 @@
     <Content Include="vtemplate\MaterialInventoryDashboard.html" />
     <Content Include="vtemplate\MaterialQIHDashboard.html" />
     <Content Include="vtemplate\Next.html" />
-    <Content Include="vtemplate\PaymentForm.html" />
+    <Content Include="PaymentForm.html" />
     <Content Include="vtemplate\Register.html" />
     <Content Include="vtemplate\RightsDashboard.html" />
     <Content Include="vtemplate\EmployeeAttendanceDashboard.html" />

@@ -63,6 +63,7 @@ ETradersApp.controller("SupplierCustomerController", ['GlobalVariableService','$
                         "Category": $scope.SupplierCustomer.Category,
                         "ClientId": $scope.SupplierCustomer.ClientId,
                         "ClientSecret": $scope.SupplierCustomer.ClientSecret,
+                        "PaymentURL": $scope.SupplierCustomer.PaymentURL,
                         "CreatedOn": new Date(),
                         "UpdatedOn": new Date()
 
@@ -113,6 +114,7 @@ ETradersApp.controller("SupplierCustomerController", ['GlobalVariableService','$
                         "Category": $scope.EditSupplierCustomer.Category,
                         "ClientId": $scope.EditSupplierCustomer.ClientId,
                         "ClientSecret": $scope.EditSupplierCustomer.ClientSecret,
+                        "PaymentURL": $scope.EditSupplierCustomer.PaymentURL,
                         "UpdatedOn": new Date()
                     };
                     CommonService.UpdateData("SupplierRetailers", supplierCustomers, $scope.ID).then(function (response) {

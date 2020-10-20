@@ -12,8 +12,6 @@ namespace ept.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class EphraimTradersEntities : DbContext
     {
@@ -35,6 +33,7 @@ namespace ept.Models
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<EmployeeAccount> EmployeeAccounts { get; set; }
+        public virtual DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
         public virtual DbSet<EmployeeDesignation> EmployeeDesignations { get; set; }
         public virtual DbSet<EmployeeDetail> EmployeeDetails { get; set; }
         public virtual DbSet<EmployeeRole> EmployeeRoles { get; set; }
@@ -45,6 +44,7 @@ namespace ept.Models
         public virtual DbSet<MaterialInventory> MaterialInventories { get; set; }
         public virtual DbSet<Material> Materials { get; set; }
         public virtual DbSet<OnlinePaymentDetail> OnlinePaymentDetails { get; set; }
+        public virtual DbSet<OnlinepaymentFromWebhook> OnlinepaymentFromWebhooks { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
         public virtual DbSet<Right> Rights { get; set; }
         public virtual DbSet<RightsManagement> RightsManagements { get; set; }
@@ -55,26 +55,15 @@ namespace ept.Models
         public virtual DbSet<SupplierRetailer> SupplierRetailers { get; set; }
         public virtual DbSet<SupplierRetailType> SupplierRetailTypes { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<UserMaster> UserMasters { get; set; }
         public virtual DbSet<BillDetailsView> BillDetailsViews { get; set; }
         public virtual DbSet<CurrentUserRoleRightsView> CurrentUserRoleRightsViews { get; set; }
+        public virtual DbSet<EmployeesForAttendance> EmployeesForAttendances { get; set; }
         public virtual DbSet<ReorderRequired> ReorderRequireds { get; set; }
         public virtual DbSet<RightsForAssignment> RightsForAssignments { get; set; }
         public virtual DbSet<RoleRightsView> RoleRightsViews { get; set; }
         public virtual DbSet<SaleQuantityAmountForReport> SaleQuantityAmountForReports { get; set; }
-        public virtual DbSet<ClientMaster> ClientMasters { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
-        public virtual DbSet<UserMaster> UserMasters { get; set; }
-        public virtual DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
-        public virtual DbSet<EmployeesForAttendance> EmployeesForAttendances { get; set; }
-        public virtual DbSet<OnlinepaymentFromWebhook> OnlinepaymentFromWebhooks { get; set; }
-    
-        public virtual ObjectResult<Nullable<int>> CheckEmailProc(string email)
-        {
-            var emailParameter = email != null ?
-                new ObjectParameter("email", email) :
-                new ObjectParameter("email", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CheckEmailProc", emailParameter);
-        }
     }
 }
