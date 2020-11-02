@@ -9,7 +9,7 @@ var ETradersApp = angular.module("ETradersApp", ["angular-chartist","ngRoute", "
 //    });
 
 ETradersApp.constant("Config", {
-    "ServiceBaseURL": "http://localhost:44393",
+    "ServiceBaseURL": "http://localhost:8080",
     
 });//http://ephraim.ttpsolutions.in //http://localhost:50503
 
@@ -125,6 +125,15 @@ ETradersApp.config(['$routeProvider', '$locationProvider',
         }).when("/EditGodown/:ID", {
             templateUrl: '/vtemplate/EditGodown.html',
             controller: 'GodownController'
+        }).when("/GSTDashboard", {
+            templateUrl: '/vtemplate/GSTDashboard.html',
+            controller: 'GSTController'
+        }).when("/AddGST", {
+            templateUrl: '/vtemplate/AddGST.html',
+            controller: 'GSTController'
+        }).when("/EditGST/:ID", {
+            templateUrl: '/vtemplate/EditGST.html',
+            controller: 'GSTController'
         }).when("/AddMaterialInventory", {
             templateUrl: '/vtemplate/AddMaterialInventory.html',
             controller: 'MaterialInventoryController'

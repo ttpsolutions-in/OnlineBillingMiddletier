@@ -3,6 +3,7 @@
 <style>
     .ct-label {
         font-size: 13px;
+        padding-left:5px;
     }
 
     .ct-series-a .ct-bar {
@@ -128,24 +129,26 @@
 
         <div class="content-box-large" style="height:auto">
             <div class="panel-heading">
-                <div class="panel-title">Report</div>
+                <div class="panel-title">Daily Sales Report</div>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
                         <form name="ReportChartForm">
-                        <div class="form-control col-md-4">
-                            <input type="date" id="txtFromDate" value="" ng-model="FromDate" required />
-                            <p class="danger" ng-show="submitted && ReportChartForm.txtFromDate.$invalid">Please select from date</p>
-                        </div>
-                        <div class="form-control col-md-4">
-                            <input type="date" id="txtToDate" value="" ng-model="ToDate" required />
-                            <p class="danger" ng-show="submitted && ReportChartForm.txtToDate.$invalid">Please select from date</p>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="button" class="btn btn-primary" ng-click="GetReportData(ReportChartForm.$valid)"><span data-feather="save"></span> Search</button>
-
-                        </div>
+                            <div class="form-group col-md-2">
+                                <label for="txtFromDate">From</label> <span class="text-danger">*</span>
+                                <input type="date" id="txtFromDate" class="form-control" value="" ng-model="FromDate" required />
+                                <p class="danger" ng-show="submitted && ReportChartForm.txtFromDate.$invalid">Please select from date</p>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="txtToDate">To</label> <span class="text-danger">*</span>
+                                <input type="date" id="txtToDate" class="form-control" ng-model="ToDate" required />
+                                <p class="danger" ng-show="submitted && ReportChartForm.txtToDate.$invalid">Please select from date</p>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="Date">&nbsp;</label>
+                                <button type="button" class="btn btn-primary form-control" ng-click="GetReportData(ReportChartForm.$valid)"><span data-feather="save"></span> Display</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -156,12 +159,13 @@
                         </div>
                         <div class="col-md-8" data-ng-if="ReportData.length > 0">
                             <div class="key">
-                                <div class="key-element key-series-a ct-bar">Retail</div>
-                                <div class="key-element key-series-b">Whole Sale</div>
+                                <div class="key-element key-series-a ct-bar float-md-right">Retail</div>
+                                <div class="key-element key-series-b float-md-right">Whole Sale</div>
                             </div>
                         </div>
                         <br />
                         <br />
+                        <div class="nodatatxt col-md-offset-2" data-ng-if="ReportData.length==0" style="font-size:20px;top:1px;">No Records Found</div>
                         <div class="chartWrapper">
                             <div class="chartAreaWrapper">
                                 <chartist class="ct-chart ct-test ct-perfect-fourth ng-isolate-scope" chartist-data="lineData"
@@ -169,12 +173,9 @@
                                           chartist-events=""></chartist>
                             </div>
                         </div>
-                        <div class="nodatatxt" data-ng-if="ReportData.length==0" style="font-size:20px;top:1px;">No Records Found</div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -183,12 +184,24 @@
     var $tooltip = $('<div id="dvTooltip" class="tooltip tooltip-hidden" ></div>').appendTo($('.ct-test'));
 
     $(document).on('mouseenter', '.ct-bar', function () {
-        debugger;
+        //debugger;
         var value = $(this).attr('ct:value');
-        $('#dvTooltip').html('<b>Count: </b>' + value);
-        $('#dvTooltip').removeClass('tooltip-hidden');
+        if (value != undefined && value != '') {
+            $('#dvTooltip').html('<b>Total: </b>' + addCommas(value));
+            $('#dvTooltip').removeClass('tooltip-hidden');
+        }
     });
-
+    function addCommas(nStr) {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
     $(document).on('mouseleave', '.ct-bar', function () {
         $('#dvTooltip').addClass('tooltip-hidden');
     });

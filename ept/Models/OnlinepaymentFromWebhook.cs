@@ -15,6 +15,7 @@ namespace ept.Models
     public partial class OnlinepaymentFromWebhook
     {
         public int autoId { get; set; }
+        public string id { get; set; }
         public Nullable<decimal> amount { get; set; }
         public string buyer { get; set; }
         public string buyer_name { get; set; }
@@ -28,9 +29,8 @@ namespace ept.Models
         public string purpose { get; set; }
         public string shorturl { get; set; }
         public string status { get; set; }
-        public Nullable<System.DateTime> createdon { get; set; }
-        public string id { get; set; }
         public string paid_to { get; set; }
         public Nullable<System.DateTime> paid_on { get; set; }
+        public Nullable<System.DateTime> createdon { get; set; }
     }
 }

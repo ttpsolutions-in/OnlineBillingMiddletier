@@ -283,6 +283,41 @@ ETradersApp.factory('CommonService', ['$window', 'GlobalVariableService', '$http
                 }
             }
         }
+
+        CommonService.getUniqueItems = function (arr) {
+
+            var values = [],
+                i,
+                unique,
+                l = arr.length,
+                results = [],
+                obj;
+
+            // Iterate over all objects in the array
+            // and collect all unique values
+            for (i = 0; i < arr.length; i++) {
+
+                obj = arr[i];
+
+                // check for uniqueness
+                unique = true;
+                for (v = 0; v < values.length; v++) {
+                    if (obj.SaleCategory.CategoryName === values[v].SaleCategory.CategoryName && obj.SaleDate === values[v].SaleDate) {
+                        unique = false;
+                    }
+                }
+
+                // If this is indeed unique, add its
+                //   value to our values and push
+                //   it onto the returned array
+                if (unique) {
+                    values.push(obj);
+                    results.push(obj);
+                }
+
+            }
+            return results;
+        }
         return CommonService;
     }]);
 

@@ -206,6 +206,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
                     , "Godown/GodownName"
                     , "Quantity"
                     , "SupplierRetailer/Name"
+                    , "SupplierId"
                     , "AddTransfer"
                     , "Godown1/GodownName"
                     , "Comments"
@@ -346,7 +347,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
                     "InventoryId": InventoryId,
                     "SupplierId": row.entity.SupplierId,
                     "GodownId": row.entity.GodownId,
-                    "TransferToGodown": row.entity.TransferToGodownId,
+                    "TransferToGodown": row.entity.TransferToGodownId == undefined ? null : row.entity.TransferToGodownId,
                     "Quantity": row.entity.Quantity.toString(),
                     "Amount": row.entity.Amount.toString(),
                     "PaymentStatus": row.entity.PaymentStatus.toString(),

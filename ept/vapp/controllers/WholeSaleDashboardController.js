@@ -74,7 +74,7 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window', 'Config', 'Gl
                     name: 'Action', width: 120, enableFiltering: false, displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
                         + '<a id="btnView" type="button" title="View" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#ViewWholeSale/{{row.entity.BillNo}}" ><span data-feather="eye"></span> </a>'
                         //+ '</div><script>feather.replace()</script>'
-                        + '&nbsp;&nbsp;<a id="btnEdit" type="button" title="Edit" style="line-height: 0.5;" ng-if="grid.appScope.checkRights(row.entity)" class="btn btn-primary btn-xs" href="#EditBill/{{row.entity.BillNo}}" ><span data-feather="edit"></span> </a>'
+                        + '&nbsp;&nbsp;<a id="btnEdit" type="button" title="Edit" style="line-height: 0.5;" ng-show="grid.appScope.checkRights(row.entity)" class="btn btn-primary btn-xs" href="#EditBill/{{row.entity.BillNo}}" ><span data-feather="edit"></span> </a>'
                         + '</div><script>feather.replace()</script>'
                 },
 

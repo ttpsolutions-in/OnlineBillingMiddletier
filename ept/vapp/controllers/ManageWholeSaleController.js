@@ -195,7 +195,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
             var postData = {
                 title: "GSTPercentages",
                 fields: ["*"],
-                filter: ["Id eq 1"]
+                filter: ["Active eq 1"]
             };
             CommonService.GetListItems(postData).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
@@ -267,6 +267,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
 
         $scope.SubmitItems = function (isFormValid, callback) {
             try {
+                var errorMessage = '';
                 var isValid = isFormValid;
                 $scope.submitted = !isValid;
                 var count = $scope.gridOptions.data.length;
@@ -274,6 +275,28 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                     toaster.pop('error', "", "No data to save", 5000, 'trustedHtml');
                     return;
                 }
+                else {
+                    angular.forEach($scope.gridOptions.data, function (value, key) {
+                        //var godownId = $filter('filter')($scope.GodownData, { GodownName: value.GodownId }, true)[0].GodownId;
+                        if (value.GodownId == undefined || value.GodownId == '--Select Godown--') {
+                            errorMessage += "At row " + (key + 1) + ", Please select Godown";
+                        }
+                        else if (value.Quantity == undefined || value.Quantity == 0) {
+                            errorMessage += "At row " + (key + 1) + ", Please enter quantity";
+                        }
+
+                    });
+                    if (errorMessage.length > 0) {
+                        toaster.pop("error", "", errorMessage, "7000", "trustedHtml");
+                        return;
+                    }
+                    else {
+                        $scope.submitted = true;
+                        isValid = true;
+                    }
+                }
+
+
                 if (isValid && $scope.DataCorrect) {
                     if ($scope.WholeSale.Others != null && ($scope.WholeSale.SupplierRetailer == "" || $scope.WholeSale.SupplierRetailer == undefined)) {
                         var supplierRetailers = {

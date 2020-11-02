@@ -27,7 +27,7 @@ ETradersApp.controller("OnlinePaymentDetailFromWebHookController", ['GlobalVaria
 
                 // { name: 'No.', field: 'SrNo', width: 50, visible: true, enableFiltering: false, enableSorting: true, headerCellClass: 'text-right', cellClass: 'text-right', displayName: '#', cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+(grid.options.paginationPageSize*(grid.options.paginationCurrentPage-1))+1}}</div>' },
                 { displayName: 'Payment Id', field: 'payment_id', cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
-                { displayName: 'Amount', field: 'amount', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
+                { displayName: 'Amount', field: 'amount', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
                 { displayName: 'Paid By', field: 'buyer', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
                 { displayName: 'Phone', field: 'buyer_phone', enableCellEdit: false, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
                 { displayName: 'Paid To', field: 'paid_to', enableCellEdit: false, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
@@ -204,6 +204,9 @@ ETradersApp.controller("OnlinePaymentDetailFromWebHookController", ['GlobalVaria
             CommonService.GetListItems(lstBill).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
                     $scope.OnlinepaymentFromWebhooksList = response.data.d.results;
+                    angular.forEach($scope.OnlinepaymentFromWebhooksList, function (value,key) {
+                        value.createdon = $filter('date')(value.createdon, 'dd-MM-yyyy');
+                    });                    
                 }
                 else
                     $scope.OnlinepaymentFromWebhooksList = [];
@@ -273,7 +276,7 @@ ETradersApp.controller("OnlinePaymentDetailFromWebHookController", ['GlobalVaria
                     $scope.GetDataForDashboard($scope.ID);
                 }
                 else
-                    $scope.GetOnlinepaymentFromWebhooks();
+                    $scope.GetDataForDashboard();
             });
 
         };

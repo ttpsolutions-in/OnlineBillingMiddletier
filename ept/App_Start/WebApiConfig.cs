@@ -52,6 +52,7 @@ namespace ept
             builder.EntitySet<EmployeeAttendance>("EmployeeAttendances");
             builder.EntitySet<EmployeesForAttendance>("EmployeesForAttendances");
             builder.EntitySet<OnlinepaymentFromWebhook>("OnlinepaymentFromWebhooks");
+            builder.EntitySet<DailySalesReportView>("DailySalesReportViews");
 
             config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
 

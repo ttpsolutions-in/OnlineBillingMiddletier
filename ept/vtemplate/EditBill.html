@@ -91,7 +91,11 @@
                             </td>
                             <td class="text-right">
                                 <label>
-                                    GST ({{GSTPercentage}}%) <input type="checkbox" ng-change="CalculateGST()" ng-model="WholeSale.GSTApplied"
+                                    Update GST <input type="checkbox" ng-change="CalculateGST()" ng-model="UpdateWithCurrentGST"
+                                                      ng-true-value="1" ng-false-value="0" />
+                                </label>&nbsp;&nbsp;&nbsp;
+                                <label>
+                                    GST ({{applicableGST}}%) <input type="checkbox" ng-change="CalculateGST()" ng-model="WholeSale.GSTApplied"
                                                                     ng-true-value="1" ng-false-value="0" />
                                 </label>
                             </td>
@@ -108,8 +112,8 @@
             <div class="form-row col-md-offset-5 col-sm-offset-5">
                 <div class="pr-4"><a href="#WholeSaleDashboard" class="btn btn-primary float-right"><span data-feather="arrow-left"></span> Back</a></div>
                 <!--<div class="pr-4">
-            <button type="button" class="btn btn-primary" ng-click="SubmitItems(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save</button>
-        </div>-->
+                    <button type="button" class="btn btn-primary" ng-click="SubmitItems(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save</button>
+                </div>-->
                 <div class="pr-4">
                     <button type="button" class="btn btn-primary" ng-if="CancelBillRights.length>0" ng-click="SaveBillDetails('c')"><span data-feather="trash"></span> Cancel Bill</button>
                 </div>

@@ -22,37 +22,29 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<SaleQuantityAmountForReport>("SaleQuantityAmountForReports");
+    builder.EntitySet<DailySalesReportView>("DailySalesReportViews");
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class SaleQuantityAmountForReportsController : ODataController
+    public class DailySalesReportViewsController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
 
-        // GET: odata/SaleQuantityAmountForReports
+        // GET: odata/DailySalesReportViews
         [EnableQuery]
-        public IQueryable<SaleQuantityAmountForReport> GetSaleQuantityAmountForReports()
+        public IQueryable<DailySalesReportView> GetDailySalesReportViews()
         {
-            //SaleQuantityAmountForReport obj = new SaleQuantityAmountForReport();
-            //List<SaleQuantityAmountForReport> objlst = new List<SaleQuantityAmountForReport>();
-
-            //foreach (var item in db.SaleQuantityAmountForReports)
-            //{
-            //    objlst.Add(item);
-            //}
-            
-            return db.SaleQuantityAmountForReports;
+            return db.DailySalesReportViews;
         }
 
-        // GET: odata/SaleQuantityAmountForReports(5)
+        // GET: odata/DailySalesReportViews(5)
         [EnableQuery]
-        public SingleResult<SaleQuantityAmountForReport> GetSaleQuantityAmountForReport([FromODataUri] DateTime key)
+        public SingleResult<DailySalesReportView> GetDailySalesReportView([FromODataUri] DateTime key)
         {
-            return SingleResult.Create(db.SaleQuantityAmountForReports.Where(saleQuantityAmountForReport => saleQuantityAmountForReport.SaleDate == key));
+            return SingleResult.Create(db.DailySalesReportViews.Where(dailySalesReportView => dailySalesReportView.SaleDate == key));
         }
 
-        // PUT: odata/SaleQuantityAmountForReports(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] DateTime key, Delta<SaleQuantityAmountForReport> patch)
+        // PUT: odata/DailySalesReportViews(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] DateTime key, Delta<DailySalesReportView> patch)
         {
             Validate(patch.GetEntity());
 
@@ -61,13 +53,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            SaleQuantityAmountForReport saleQuantityAmountForReport = await db.SaleQuantityAmountForReports.FindAsync(key);
-            if (saleQuantityAmountForReport == null)
+            DailySalesReportView dailySalesReportView = await db.DailySalesReportViews.FindAsync(key);
+            if (dailySalesReportView == null)
             {
                 return NotFound();
             }
 
-            patch.Put(saleQuantityAmountForReport);
+            patch.Put(dailySalesReportView);
 
             try
             {
@@ -75,7 +67,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SaleQuantityAmountForReportExists(key))
+                if (!DailySalesReportViewExists(key))
                 {
                     return NotFound();
                 }
@@ -85,18 +77,18 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(saleQuantityAmountForReport);
+            return Updated(dailySalesReportView);
         }
 
-        // POST: odata/SaleQuantityAmountForReports
-        public async Task<IHttpActionResult> Post(SaleQuantityAmountForReport saleQuantityAmountForReport)
+        // POST: odata/DailySalesReportViews
+        public async Task<IHttpActionResult> Post(DailySalesReportView dailySalesReportView)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.SaleQuantityAmountForReports.Add(saleQuantityAmountForReport);
+            db.DailySalesReportViews.Add(dailySalesReportView);
 
             try
             {
@@ -104,7 +96,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateException)
             {
-                if (SaleQuantityAmountForReportExists(saleQuantityAmountForReport.SaleDate))
+                if (DailySalesReportViewExists(dailySalesReportView.SaleDate))
                 {
                     return Conflict();
                 }
@@ -114,12 +106,12 @@ namespace ept.Controllers
                 }
             }
 
-            return Created(saleQuantityAmountForReport);
+            return Created(dailySalesReportView);
         }
 
-        // PATCH: odata/SaleQuantityAmountForReports(5)
+        // PATCH: odata/DailySalesReportViews(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] DateTime key, Delta<SaleQuantityAmountForReport> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] DateTime key, Delta<DailySalesReportView> patch)
         {
             Validate(patch.GetEntity());
 
@@ -128,13 +120,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            SaleQuantityAmountForReport saleQuantityAmountForReport = await db.SaleQuantityAmountForReports.FindAsync(key);
-            if (saleQuantityAmountForReport == null)
+            DailySalesReportView dailySalesReportView = await db.DailySalesReportViews.FindAsync(key);
+            if (dailySalesReportView == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(saleQuantityAmountForReport);
+            patch.Patch(dailySalesReportView);
 
             try
             {
@@ -142,7 +134,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SaleQuantityAmountForReportExists(key))
+                if (!DailySalesReportViewExists(key))
                 {
                     return NotFound();
                 }
@@ -152,19 +144,19 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(saleQuantityAmountForReport);
+            return Updated(dailySalesReportView);
         }
 
-        // DELETE: odata/SaleQuantityAmountForReports(5)
+        // DELETE: odata/DailySalesReportViews(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] DateTime key)
         {
-            SaleQuantityAmountForReport saleQuantityAmountForReport = await db.SaleQuantityAmountForReports.FindAsync(key);
-            if (saleQuantityAmountForReport == null)
+            DailySalesReportView dailySalesReportView = await db.DailySalesReportViews.FindAsync(key);
+            if (dailySalesReportView == null)
             {
                 return NotFound();
             }
 
-            db.SaleQuantityAmountForReports.Remove(saleQuantityAmountForReport);
+            db.DailySalesReportViews.Remove(dailySalesReportView);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -179,9 +171,9 @@ namespace ept.Controllers
             base.Dispose(disposing);
         }
 
-        private bool SaleQuantityAmountForReportExists(DateTime key)
+        private bool DailySalesReportViewExists(DateTime key)
         {
-            return db.SaleQuantityAmountForReports.Count(e => e.SaleDate == key) > 0;
+            return db.DailySalesReportViews.Count(e => e.SaleDate == key) > 0;
         }
     }
 }

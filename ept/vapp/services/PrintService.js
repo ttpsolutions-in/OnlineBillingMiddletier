@@ -27,9 +27,9 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
             '<head><title>Print Preview</title>' +
             '<link href="vContent/style/bootstrap.min.css" rel="stylesheet" />  ' +
             '<script type="text/javascript" src="vContent/Scripts/angular.min.js"></script>' +           
-            //'<style>@media print {'+
-            //        '.footer { page -break-after: always; }' +
-            //'}</style></head>' +
+            '<style>'+
+                '.footer {position:fixed;bottom:0px;left:0px;margin-left:150px;margin-right:150px;margin-bottom:100px;width:70%}' +
+            '</style></head>' +
             '<body>' +
             '<div id="dv" style="margin:25px">  ';
         var previousBillNo = 0;
@@ -108,7 +108,7 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
                 body += '<td align="right">' + billDetail.Amount + '</td></tr>';
                 
 
-                footer += '<tr>  ' +
+                footer += '</table ><div class="footer"><table class="table"><tr>  ' +
                     '<td colspan="' + colspan + '" class="text-right">Total Amount</td>  ' +
                     '<td class="text-right">' + parseFloat(billDetail.TotalAmount).toFixed(2) + '</td>  ' +
                     '</tr>  ' +
@@ -121,12 +121,11 @@ ETradersApp.factory('PrintService', ['$location', '$http', '$alert', '$filter', 
                     '<tr>  ' +
                     '<td colspan="' + colspan + '" class="text-right"> Grand Total</td>  ' +
                     '<td class="text-right">' + billDetail.GrandTotal + '</td>' +
-                    '</tr>  ' +
-                    '</table>  ' +
-                    '<br />  ' +
-                    '<span>Customer Signature</span>  ' +
-                    '<span class="float-right">For <b>EPHRAIM TRADERS</b><br /><br /> Authorised Signatory</span>  ' +
-                    '</div>  ' +
+                    '</tr></table>  ' +
+                    //'<tr><td colspan="' + parseInt(colspan) + 1 +  '">&nbsp;</td></tr>' + 
+                    '<div><span>Customer Signature</span></div> ' +
+                    '<div class="text-right"><span class="float-right">For <b>EPHRAIM TRADERS</b><br /><br /> Authorised Signatory</span></div>  ' +
+                    '</div></div > ' +
                     '</div>  ' +
                     '</div> <div><p style="page-break-after: always"></div> '
 

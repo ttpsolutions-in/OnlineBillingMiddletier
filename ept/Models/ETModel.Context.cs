@@ -32,6 +32,7 @@ namespace ept.Models
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<EmployeeAccount> EmployeeAccounts { get; set; }
         public virtual DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
         public virtual DbSet<EmployeeDesignation> EmployeeDesignations { get; set; }
@@ -46,6 +47,7 @@ namespace ept.Models
         public virtual DbSet<OnlinePaymentDetail> OnlinePaymentDetails { get; set; }
         public virtual DbSet<OnlinepaymentFromWebhook> OnlinepaymentFromWebhooks { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual DbSet<Right> Rights { get; set; }
         public virtual DbSet<RightsManagement> RightsManagements { get; set; }
         public virtual DbSet<SaleCategory> SaleCategories { get; set; }
@@ -58,12 +60,11 @@ namespace ept.Models
         public virtual DbSet<UserMaster> UserMasters { get; set; }
         public virtual DbSet<BillDetailsView> BillDetailsViews { get; set; }
         public virtual DbSet<CurrentUserRoleRightsView> CurrentUserRoleRightsViews { get; set; }
+        public virtual DbSet<DailySalesReportView> DailySalesReportViews { get; set; }
         public virtual DbSet<EmployeesForAttendance> EmployeesForAttendances { get; set; }
         public virtual DbSet<ReorderRequired> ReorderRequireds { get; set; }
         public virtual DbSet<RightsForAssignment> RightsForAssignments { get; set; }
         public virtual DbSet<RoleRightsView> RoleRightsViews { get; set; }
         public virtual DbSet<SaleQuantityAmountForReport> SaleQuantityAmountForReports { get; set; }
-        public virtual DbSet<Client> Clients { get; set; }
-        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

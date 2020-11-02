@@ -228,6 +228,7 @@
     <Compile Include="Controllers\BillDetailsViewsController.cs" />
     <Compile Include="Controllers\BillsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\DailySalesReportViewsController.cs" />
     <Compile Include="Controllers\EmployeeAccountsController.cs" />
     <Compile Include="Controllers\EmployeeAttendancesController.cs" />
     <Compile Include="Controllers\EmployeeDesignationsController.cs" />
@@ -294,6 +295,9 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DailySalesReportView.cs">
+      <DependentUpon>ETModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmployeeAccount.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
@@ -338,6 +342,13 @@
     </Compile>
     <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="GetPaymentDetails.aspx.cs">
+      <DependentUpon>GetPaymentDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GetPaymentDetails.aspx.designer.cs">
+      <DependentUpon>GetPaymentDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Models\ItemCategory.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
@@ -358,13 +369,6 @@
     </Compile>
     <Compile Include="Models\RefreshToken.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetPaymentDetails.aspx.cs">
-      <DependentUpon>GetPaymentDetails.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GetPaymentDetails.aspx.designer.cs">
-      <DependentUpon>GetPaymentDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\ReorderRequired.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
@@ -480,10 +484,14 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="vapp\controllers\GSTPercentageController.js" />
     <Content Include="vapp\controllers\OnlinePaymentDetailController.js" />
     <Content Include="vContent\Scripts\feather.min.js" />
+    <Content Include="vtemplate\AddGST.html" />
     <Content Include="vtemplate\AddOnlinePayment.html" />
+    <Content Include="vtemplate\EditGST.html" />
     <Content Include="vtemplate\EditOnlinePayment.html" />
+    <Content Include="vtemplate\GSTDashboard.html" />
     <Content Include="vtemplate\OnlinePaymentDashboard.html" />
     <Content Include="WebHookToInstamojo.aspx" />
     <EntityDeploy Include="Models\ETModel.edmx">

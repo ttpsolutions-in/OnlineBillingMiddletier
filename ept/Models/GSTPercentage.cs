@@ -16,5 +16,6 @@ namespace ept.Models
     {
         public int Id { get; set; }
         public Nullable<byte> GST { get; set; }
+        public Nullable<byte> Active { get; set; }
     }
 }

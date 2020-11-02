@@ -65,7 +65,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                     enableSorting: true, headerCellClass: 'text-right', cellClass: 'text-center', displayName: 'Sl. No.', cellTemplate: '<span>{{rowRenderIndex+1}}</span>'
                 },
                 {
-                    name: 'DisplayName', displayName: 'Material',field: 'DisplayName',enableCellEdit:false
+                    name: 'DisplayName', displayName: 'Material', field: 'DisplayName', enableCellEdit: false
                 },
                 { displayName: 'Rate', field: 'RetailRate', cellTooltip: true, enableCellEdit: false, cellClass: 'text-right', headerCellClass: 'text-center' },
                 {
@@ -216,9 +216,9 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
         };
 
         $scope.GetMaterialsByCategoryId = function () {
-                       
+
             $scope.currentMaterialLst = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.RetailData.ItemCategory }, true);
-          
+
         };
         $scope.GetGodowns = function (callback) {
             CommonService.GetGodowns().then(
@@ -226,13 +226,13 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                     $scope.GodownData = result;
                     if (callback)
                         callback();
-                });            
+                });
         };
         $scope.GetGSTPercentageById = function () {
             var postData = {
                 title: "GSTPercentages",
                 fields: ["*"],
-                filter: ["Id eq 1"]
+                filter: ["Active eq 1"]
             };
             CommonService.GetListItems(postData).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
@@ -282,8 +282,8 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
 
                     "MaterialId": $scope.currentMaterialId,
                     "ItemCategoryId": $scope.RetailData.ItemCategory,
-                     "DisplayName": $filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].DisplayName,
-                    "RetailRate":$filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].RetailRate,               
+                    "DisplayName": $filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].DisplayName,
+                    "RetailRate": $filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].RetailRate,
                     "GodownId": "--Select Godown--",
                     "Quantity": 0,
                     "Discount": 0,
@@ -299,16 +299,37 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
             }
         };
 
-
         $scope.SubmitItems = function (isFormValid, callback) {
             try {
                 var isValid = isFormValid;
                 $scope.submitted = !isValid;
                 var count = $scope.gridOptions.data.length;
+                var errorMessage = '';
+
                 if (count == 0) {
                     toaster.pop('error', "", "No data to save", 5000, 'trustedHtml');
                     return;
                 }
+                else {
+                    angular.forEach($scope.gridOptions.data, function (value, key) {
+                        if (value.GodownId == undefined || value.GodownId == '--Select Godown--') {
+                            errorMessage += "At row " + (key + 1) + ", Please select Godown";
+                        }
+                        else if (value.Quantity == undefined || value.Quantity == 0) {
+                            errorMessage += "At row " + (key + 1) + ", Please enter quantity";
+                        }
+
+                    });
+                    if (errorMessage.length > 0) {
+                        toaster.pop("error", "", errorMessage, "7000", "trustedHtml");
+                        return;
+                    }
+                    else {
+                        $scope.submitted = true;
+                        isValid = true;
+                    }
+                }
+
                 if (isValid && $scope.DataCorrect) {
                     if ($scope.RetailData.Others != null && ($scope.RetailData.SupplierCustomer == "" || $scope.RetailData.SupplierCustomer == undefined)) {
                         var duplicate = $filter('filter')($scope.SupplierCustomers, { Name: $scope.RetailData.Others }, true);

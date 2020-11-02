@@ -38,6 +38,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
         $scope.submitted = false;
         $scope.DataSaved = true;
         $scope.WholeSale.GSTApplied = 0;
+        $scope.UpdateWithCurrentGST = 0;
         $scope.SaleTypeCash = 1;
         $scope.SaleTypeCredit = 2;
         $scope.SaleCategoryWholeSale = 1;
@@ -165,8 +166,15 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
         $scope.CalculateGST = function () {
 
             var results = {};
+            if ($scope.UpdateWithCurrentGST == 1) {
+                $scope.applicableGST = $scope.GSTPercentage.toFixed(2);
+                $scope.WholeSale.GSTApplied = 1;
+            }
+            else {
+                $scope.applicableGST = $scope.WholeSale.GSTPercentage;
+            }
 
-            results = CommonService.CalculateGSTNGrandTotal($scope.WholeSale.TotalAmount, $scope.WholeSale.GSTPercentage, $scope.WholeSale.GSTApplied);
+            results = CommonService.CalculateGSTNGrandTotal($scope.WholeSale.TotalAmount, $scope.applicableGST, $scope.WholeSale.GSTApplied);
 
             $scope.WholeSale.GrandTotal = results.GrandTotal;
             $scope.WholeSale.GSTAmount = results.GSTAmount;
@@ -220,6 +228,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                     $scope.WholeSale.GSTApplied = $scope.WholeSale[0].Bill.GSTApplied;
                     $scope.WholeSale.TotalAmount = 0;
                     $scope.WholeSale.GSTPercentage = $scope.WholeSale[0].Bill.GSTPercentage;
+                    $scope.applicableGST = $scope.WholeSale.GSTPercentage;
 
                     angular.forEach($scope.WholeSale, function (value) {
                         var rate = 0;
@@ -300,7 +309,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
             var postData = {
                 title: "GSTPercentages",
                 fields: ["*"],
-                filter: ["Id eq 1"]
+                filter: ["Active eq 1"]
             };
             CommonService.GetListItems(postData).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
@@ -424,16 +433,14 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                             }
                     
                     });
-                    if(errorMessage.length > 0)
-                    {
-                        toaster.pop("error","",errorMessage,"7000","trustedHtml");
+                    if (errorMessage.length > 0) {
+                        toaster.pop("error", "", errorMessage, "7000", "trustedHtml");
                         return;
                     }
-                    else
-                    {
-                    $scope.submitted =true;
-                    isValid =true;
-                }
+                    else {
+                        $scope.submitted = true;
+                        isValid = true;
+                    }
                 }
                 
 
@@ -519,7 +526,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                     "SaleTypeId": saleType,
                     "GSTApplied": $scope.WholeSale.GSTApplied,
                     "GSTAmount": $scope.WholeSale.GSTAmount.toString(),
-                    "GSTPercentage": $scope.GSTPercentage.toString(),
+                    "GSTPercentage": $scope.applicableGST.toString(),// $scope.WholeSale.GSTPercentage.toString(),
                     "TotalAmount": $scope.WholeSale.TotalAmount.toString(),
                     "DiscountApplied": $scope.IsDiscountApplied,
                     "BillStatus": billStatus,               //Cash --> complete, Credit--> pending

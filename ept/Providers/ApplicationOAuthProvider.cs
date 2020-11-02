@@ -53,6 +53,7 @@ namespace ept.Providers
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
+            context.Properties.ExpiresUtc = DateTime.UtcNow.AddDays(14);
             foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);

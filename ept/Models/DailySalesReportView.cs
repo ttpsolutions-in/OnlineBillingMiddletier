@@ -12,9 +12,9 @@ namespace ept.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SaleQuantityAmountForReport
+    public partial class DailySalesReportView
     {
-        public Nullable<System.Guid> ColId { get; set; }
+        public long ID { get; set; }
         public string CategoryName { get; set; }
         public System.DateTime SaleDate { get; set; }
         public Nullable<decimal> Amount { get; set; }
