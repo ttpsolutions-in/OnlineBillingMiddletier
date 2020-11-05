@@ -56,6 +56,12 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                     headerCellClass: 'text-center'
                 },
                 {
+                    displayName: 'QPU', field: 'QuantityPerUnit', type: 'number', enableCellEdit: true, enableCellEditOnFocus: true, cellTooltip: true,
+                    cellClass: function (grid, row) { return row.entity.Quantity < 0 ? 'text-right text-danger' : 'text-right'; },
+                    editableCellTemplate: '<input type="number" min="1" required ui-grid-editor ng-model="MODEL_COL_FIELD"><div class="invalid-feedback">Value should be greater than zero.</div>',
+                    headerCellClass: 'text-center'
+                },
+                {
                     displayName: 'Amount', field: 'Amount', type: 'number', enableCellEdit: true, enableCellEditOnFocus: true, cellTooltip: true,
                     cellClass: function (grid, row) { return row.entity.Quantity < 0 ? 'text-right text-danger' : 'text-right'; },
                     editableCellTemplate: '<input type="number" min="1" required ui-grid-editor ng-model="MODEL_COL_FIELD"><div class="invalid-feedback">Value should be greater than zero.</div>',
@@ -259,6 +265,7 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                     "DisplayName": '--Select material--',
                     "GodownId": '--Select godown--',
                     "Quantity": 1,
+                    "QuantityPerUnit":0,
                     "Amount":0,
                     "SupplierId": '--Select supplier--',
                     "Payment Status": "--Select status--",
@@ -312,6 +319,7 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                                 "GodownId": value.StoreGodownId,
                                 "SupplierId": value.StoreSupplierId,
                                 "Quantity": value.Quantity.toString(),
+                                "QuantityPerUnit": value.QuantityPerUnit.toString(),
                                 "AddTransfer": value.AddTransfer.toString(),
                                 "TransferToGodown": value.StoreTransferToGodownId,
                                 "Comments": value.Comments.toString(),

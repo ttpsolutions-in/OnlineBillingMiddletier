@@ -31,6 +31,7 @@ namespace ept.Models
         public System.DateTime UpdatedDate { get; set; }
         public Nullable<byte> Active { get; set; }
         public Nullable<int> OnlinePaymentId { get; set; }
+        public Nullable<decimal> QuantityPerUnit { get; set; }
     
         public virtual Godown Godown { get; set; }
         public virtual Godown Godown1 { get; set; }

@@ -45,6 +45,12 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
                     headerCellClass: 'text-center'
                 },
                 {
+                    displayName: 'QPU', field: 'QuantityPerUnit', width: 80, type: 'number', enableCellEdit: true, enableCellEditOnFocus: true, cellTooltip: true,
+                    cellClass: function (grid, row) { return row.entity.Quantity < 0 ? 'text-right text-danger' : 'text-right'; },
+                    editableCellTemplate: '<input type="number" min="1" required ui-grid-editor ng-model="MODEL_COL_FIELD"><div class="invalid-feedback">Value should be greater than zero.</div>',
+                    headerCellClass: 'text-center'
+                },
+                {
                     displayName: 'Amount', field: 'Amount', width: 80, type: 'number', enableCellEdit: true, enableCellEditOnFocus: true, cellTooltip: true,
                     cellClass: function (grid, row) { return row.entity.Quantity < 0 ? 'text-right text-danger' : 'text-right'; },
                     editableCellTemplate: '<input type="number" min="1" required ui-grid-editor ng-model="MODEL_COL_FIELD"><div class="invalid-feedback">Value should be greater than zero.</div>',
@@ -205,6 +211,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
                     , "GodownId"
                     , "Godown/GodownName"
                     , "Quantity"
+                    ,"QuantityPerUnit"
                     , "SupplierRetailer/Name"
                     , "SupplierId"
                     , "AddTransfer"
@@ -247,13 +254,14 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
             }
 
             //$scope.showSpinner();
+            $scope.QuantityInHand = 0;
             CommonService.GetListItems(lstBill).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
                     $scope.MaterialInventoryList = response.data.d.results;
                     $scope.GetTotalQuantityNPending();
-                    if ($scope.searchSupplierRetailer > 0) {
-                        var paidtoEmail = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.SupplierRetailers }, true)[0].Email;
-                        $scope.GetOnlinePaymentDetails(paidtoEmail)
+                    if ($scope.searchMaterialId > 0) {
+                        $scope.GetMaterialSoldCount($scope.searchMaterialId);
+                        $scope.QuantityInHand = parseFloat($scope.TotalQuantity) - parseFloat($scope.MaterialSoldCount);
                     }
                 }
                 $scope.gridOptions.data = $scope.MaterialInventoryList;
@@ -280,34 +288,25 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
                 }
             });
         };
-        $scope.GetMaterialInventoryByID = function () {
+        $scope.GetMaterialSoldCount = function (MaterialId) {
             var lstBill = {
                 title: "Sales",
                 fields: [
-                    "*",
-                    "Bill/SaleDate",
-                    "Bill/BillNo",
-                    "Bill/RetailerId",
-                    "Bill/PaidAmt",
-                    "Bill/BalanceAmt",
-                    "Bill/GSTApplied",
-                    "Bill/SaleTypeId",
-                    "Bill/SaleCategoryId",
-                    "Material",
-                    "Godown/GodownName",
-                    "Material/WholeSaleRate",
-                    "Material/RetailRate"
+                    "MaterialId"                   
                 ],
-                lookupFields: ["Bill", "Material", "Godown"],
-                filter: ["BillNo eq " + $scope.ID],
+                //lookupFields: ["Bill", "Material", "Godown"],
+                filter: ["MaterialId eq " + MaterialId + ' and Active eq 1']//,
                 //limitTo: "5000",
-                orderBy: "CreatedOn desc"
+                //orderBy: "CreatedOn desc"
             };
-
+            $scope.MaterialSoldCount = 0;
             CommonService.GetListItems(lstBill).then(function (response) {
+                
                 if (response && response.data.d.results.length > 0) {
-                    $scope.MaterialInventoryList = response.data.d.results;
-
+                    $scope.MaterialSoldlist = response.data.d.results;
+                    angular.forEach($scope.MaterialSoldlist, function (val) {
+                        $scope.MaterialSoldCount += 1;
+                    })
                     //$scope.WholeSale[0].Bill.Contact = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.WholeSale[0].Bill.RetailerId }, true)[0].Contact;
                     //$scope.WholeSale[0].Bill.Name = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.WholeSale[0].Bill.RetailerId }, true)[0].Name;
 
@@ -349,6 +348,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
                     "GodownId": row.entity.GodownId,
                     "TransferToGodown": row.entity.TransferToGodownId == undefined ? null : row.entity.TransferToGodownId,
                     "Quantity": row.entity.Quantity.toString(),
+                    "QuantityPerUnit": row.entity.QuantityPerUnit.toString(),
                     "Amount": row.entity.Amount.toString(),
                     "PaymentStatus": row.entity.PaymentStatus.toString(),
                     "AddTransfer": row.entity.AddTransfer.toString(),

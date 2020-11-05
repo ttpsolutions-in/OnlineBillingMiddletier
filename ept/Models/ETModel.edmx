@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EphraimTradersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EphraimTradersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -109,11 +109,6 @@
           <Property Name="RefreshTokenLifeTime" Type="int" />
           <Property Name="AllowedOrigin" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'EphraimTraders.dbo.DaysOfMonth' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="DaysOfMonth">
-          <Property Name="Numb" Type="tinyint" />
-        </EntityType>-->
         <EntityType Name="EmployeeAccount">
           <Key>
             <PropertyRef Name="EmpAccountId" />
@@ -209,6 +204,7 @@ warning 6013: The table/view 'EphraimTraders.dbo.DaysOfMonth' does not have a pr
           <Property Name="MaterialId" Type="int" Nullable="false" />
           <Property Name="GodownId" Type="smallint" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="QuantityPerUnit" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PaymentStatus" Type="varchar" MaxLength="10" />
           <Property Name="PaymentDate" Type="datetime" />
@@ -1137,8 +1133,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <End Role="RightsManagement" EntitySet="RightsManagement" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EphraimTradersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1378,6 +1373,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <NavigationProperty Name="Godown1" Relationship="Self.FK_MaterialInventory_TransferToGodown" FromRole="MaterialInventory" ToRole="Godown" />
           <NavigationProperty Name="Material" Relationship="Self.FK_MaterialInventory_Materials" FromRole="MaterialInventory" ToRole="Materials" />
           <NavigationProperty Name="SupplierRetailer" Relationship="Self.FK_MaterialInventory_Supplier" FromRole="MaterialInventory" ToRole="SupplierRetailer" />
+          <Property Name="QuantityPerUnit" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Material">
           <Key>
@@ -2382,6 +2378,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySetMapping Name="MaterialInventories">
             <EntityTypeMapping TypeName="EphraimTradersModel.MaterialInventory">
               <MappingFragment StoreEntitySet="MaterialInventory">
+                <ScalarProperty Name="QuantityPerUnit" ColumnName="QuantityPerUnit" />
                 <ScalarProperty Name="InventoryId" ColumnName="InventoryId" />
                 <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
                 <ScalarProperty Name="GodownId" ColumnName="GodownId" />
