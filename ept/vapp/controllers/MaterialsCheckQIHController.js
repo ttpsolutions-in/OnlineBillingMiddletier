@@ -22,7 +22,7 @@ ETradersApp.controller("MaterialsCheckQIHController", ['GlobalVariableService','
         columnDefs: [
            
             { name: 'MaterialId', field: 'MaterialId', width: 50, enableFiltering: false, enableSorting: true, headerCellClass: 'text-right', cellClass: 'text-right', displayName: '#', cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+(grid.options.paginationPageSize*(grid.options.paginationCurrentPage-1))+1}}</div>' },
-            { width: 350, displayName: 'Material', field: 'DisplayName', enableFiltering: true, cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
+            { width: 350, displayName: 'Display Name', field: 'DisplayName', enableFiltering: true, cellTooltip: true, enableCellEdit: false, cellClass: 'text-left', headerCellClass: 'text-center' },
             { width: 180, displayName: 'Quantity', field: 'TotalIncomingQuantity', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             { width: 180, displayName: 'Sold Quantity', field: 'SoldQuantity', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
             { width: 180, displayName: 'Reorder Level', field: 'ReorderLevel', enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },

@@ -19,7 +19,6 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
         $scope.subMaterialLists = [];
         $scope.searchItemCategoryId = null;
         $scope.GodownData = [];
-        $scope.DisplayQIH = false;
 
         $scope.gridOptions = {
             enableFiltering: true,
@@ -256,19 +255,14 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
 
             //$scope.showSpinner();
             $scope.QuantityInHand = 0;
-            $scope.DisplayQIH = false;
-            $scope.DisplayTotalPendingAmount = false;
             CommonService.GetListItems(lstBill).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
                     $scope.MaterialInventoryList = response.data.d.results;
                     $scope.GetTotalQuantityNPending();
                     if ($scope.searchMaterialId > 0) {
-                        $scope.GetMaterialSoldCount($scope.searchMaterialId, function () {
-                            $scope.QuantityInHand = parseFloat($scope.TotalQuantity) - parseFloat($scope.MaterialSoldCount);
-                            $scope.DisplayQIH = true;
-                        });                        
+                        $scope.GetMaterialSoldCount($scope.searchMaterialId);
+                        $scope.QuantityInHand = parseFloat($scope.TotalQuantity) - parseFloat($scope.MaterialSoldCount);
                     }
-                    $scope.DisplayTotalPendingAmount = true;
                 }
                 $scope.gridOptions.data = $scope.MaterialInventoryList;
                 //  $scope.hideSpinner();
@@ -294,7 +288,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
                 }
             });
         };
-        $scope.GetMaterialSoldCount = function (MaterialId,callback) {
+        $scope.GetMaterialSoldCount = function (MaterialId) {
             var lstBill = {
                 title: "Sales",
                 fields: [
@@ -315,8 +309,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
                     })
                     //$scope.WholeSale[0].Bill.Contact = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.WholeSale[0].Bill.RetailerId }, true)[0].Contact;
                     //$scope.WholeSale[0].Bill.Name = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.WholeSale[0].Bill.RetailerId }, true)[0].Name;
-                    if (callback)
-                        callback();
+
                 }
             });
         };
@@ -326,8 +319,6 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config','$windo
             $scope.searchMaterialId =null;            
             $scope.searchGodownId;
             $scope.gridOptions.data = [];
-            $scope.DisplayQIH = false;
-            $scope.DisplayTotalPendingAmount = false;
         }
         $scope.Delete = function (row) {
             var index = $scope.gridOptions.data.indexOf(row.entity);

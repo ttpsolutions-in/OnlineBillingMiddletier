@@ -64,7 +64,7 @@
             </div>
             <div class="col-12">
                 <table class="table table-sm table-striped table-bordered table-condensed">
-                    <tr ng-show="DisplayQIH==true">
+                    <tr ng-show="searchMaterialId>0">
                         <td class="text-right">Quantity In Hand</td>
                         <td class="text-right"><label>{{QuantityInHand}}</label></td>
                     </tr>
@@ -72,7 +72,7 @@
                         <td class="text-right">Total Quantity</td>
                         <td class="text-right"><label>{{TotalQuantity}}</label></td>
                     </tr>-->
-                    <tr ng-show="DisplayTotalPendingAmount==true">
+                    <tr>
                         <td class="text-right">Total Pending Amount</td>
                         <td class="text-right"><label>{{TotalPending}}</label></td>
                     </tr>
