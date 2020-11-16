@@ -18,11 +18,11 @@ namespace ept.Models
         public int MaterialId { get; set; }
         public short GodownId { get; set; }
         public decimal Quantity { get; set; }
+        public Nullable<decimal> QuantityPerUnit { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public string PaymentStatus { get; set; }
         public Nullable<System.DateTime> PaymentDate { get; set; }
         public Nullable<int> SupplierId { get; set; }
-        public string AddTransfer { get; set; }
         public Nullable<short> TransferToGodown { get; set; }
         public string Comments { get; set; }
         public string CreatedBy { get; set; }
@@ -31,11 +31,12 @@ namespace ept.Models
         public System.DateTime UpdatedDate { get; set; }
         public Nullable<byte> Active { get; set; }
         public Nullable<int> OnlinePaymentId { get; set; }
-        public Nullable<decimal> QuantityPerUnit { get; set; }
+        public byte InventoryTypeId { get; set; }
     
         public virtual Godown Godown { get; set; }
         public virtual Godown Godown1 { get; set; }
         public virtual Material Material { get; set; }
         public virtual SupplierRetailer SupplierRetailer { get; set; }
+        public virtual InventoryType InventoryType { get; set; }
     }
 }

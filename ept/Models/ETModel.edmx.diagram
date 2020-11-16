@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="69e38f656fce45adbe3d8dc380de431e" Name="Diagram1">
+      <Diagram DiagramId="454dabf83f32457bba1313bcc389c330" Name="Diagram1">
         <EntityTypeShape EntityType="EphraimTradersModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.AspNetRole" Width="1.5" PointX="10.75" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUserClaim" Width="1.5" PointX="15.25" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUserLogin" Width="1.5" PointX="15.25" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUser" Width="1.5" PointX="13" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Bill" Width="1.5" PointX="12.25" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Category" Width="1.5" PointX="7.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.AspNetRole" Width="1.5" PointX="12.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUserClaim" Width="1.5" PointX="17.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUserLogin" Width="1.5" PointX="17.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.AspNetUser" Width="1.5" PointX="15" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Bill" Width="1.5" PointX="10" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Category" Width="1.5" PointX="5.5" PointY="18.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.Client" Width="1.5" PointX="2.75" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.EmployeeAccount" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.EmployeeAttendance" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
@@ -19,33 +19,34 @@
         <EntityTypeShape EntityType="EphraimTradersModel.EmployeeDetail" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.EmployeeRole" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.EmploymentType" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Godown" Width="1.5" PointX="15.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Godown" Width="1.5" PointX="10" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.GSTPercentage" Width="1.5" PointX="4.75" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.ItemCategory" Width="1.5" PointX="13" PointY="21.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.MaterialInventory" Width="1.5" PointX="15.25" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Material" Width="1.5" PointX="15.25" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.OnlinePaymentDetail" Width="1.5" PointX="4.75" PointY="15.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.OnlinepaymentFromWebhook" Width="1.5" PointX="0.75" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.ItemCategory" Width="1.5" PointX="7.75" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.MaterialInventory" Width="1.5" PointX="12.25" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Material" Width="1.5" PointX="10" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.OnlinePaymentDetail" Width="1.5" PointX="0.75" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.OnlinepaymentFromWebhook" Width="1.5" PointX="2.75" PointY="16.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.PaymentType" Width="1.5" PointX="6" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.RefreshToken" Width="1.5" PointX="6.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Prototype" Width="1.5" PointX="14.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.RefreshToken" Width="1.5" PointX="14.75" PointY="13.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.Right" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EphraimTradersModel.RightsManagement" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.SaleCategory" Width="1.5" PointX="10" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Sale" Width="1.5" PointX="17.5" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.SaleType" Width="1.5" PointX="10" PointY="19.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Status" Width="1.5" PointX="10" PointY="21.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.SupplierRetailer" Width="1.5" PointX="10" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.SupplierRetailType" Width="1.5" PointX="7.75" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.Unit" Width="1.5" PointX="10.75" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.UserMaster" Width="1.5" PointX="17.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.BillDetailsView" Width="1.5" PointX="17.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.CurrentUserRoleRightsView" Width="1.5" PointX="17.75" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.DailySalesReportView" Width="1.5" PointX="6.75" PointY="20.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.EmployeesForAttendance" Width="1.5" PointX="19.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.ReorderRequired" Width="1.5" PointX="2.75" PointY="21.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.RightsForAssignment" Width="1.5" PointX="19.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.RoleRightsView" Width="1.5" PointX="19.75" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EphraimTradersModel.SaleQuantityAmountForReport" Width="1.5" PointX="19.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.SaleCategory" Width="1.5" PointX="7.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Sale" Width="1.5" PointX="12.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.SaleType" Width="1.5" PointX="7.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Status" Width="1.5" PointX="7.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.SupplierRetailer" Width="1.5" PointX="7.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.SupplierRetailType" Width="1.5" PointX="5.5" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.Unit" Width="1.5" PointX="10.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.UserMaster" Width="1.5" PointX="14.75" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.BillDetailsView" Width="1.5" PointX="16.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.CurrentUserRoleRightsView" Width="1.5" PointX="4.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.DailySalesReportView" Width="1.5" PointX="16.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.EmployeesForAttendance" Width="1.5" PointX="16.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.ReorderRequired" Width="1.5" PointX="18.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.RightsForAssignment" Width="1.5" PointX="18.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.RoleRightsView" Width="1.5" PointX="18.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EphraimTradersModel.SaleQuantityAmountForReport" Width="1.5" PointX="18.75" PointY="19.5" IsExpanded="true" />
         <AssociationConnector Association="EphraimTradersModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK__Bills__BillStatu__72C60C4A" ManuallyRouted="false" />
@@ -69,8 +70,11 @@
         <AssociationConnector Association="EphraimTradersModel.FK_MaterialInventory_Supplier" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK__Sales__MaterialI__7B5B524B" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK_RightsManagement_Rights" ManuallyRouted="false" />
+        <AssociationConnector Association="EphraimTradersModel.FK_Sales_Status" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.FK__SupplierRe__Type__40058253" ManuallyRouted="false" />
         <AssociationConnector Association="EphraimTradersModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EphraimTradersModel.InventoryType" Width="1.5" PointX="6.375" PointY="0.75" />
+        <AssociationConnector Association="EphraimTradersModel.FK_MaterialInventory_InventoryType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

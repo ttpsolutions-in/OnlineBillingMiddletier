@@ -12,22 +12,19 @@ namespace ept.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Status
+    public partial class InventoryType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Status()
+        public InventoryType()
         {
-            this.Bills = new HashSet<Bill>();
-            this.Sales = new HashSet<Sale>();
+            this.MaterialInventories = new HashSet<MaterialInventory>();
         }
     
-        public byte StatusId { get; set; }
-        public string StatusName { get; set; }
+        public byte InventoryTypeId { get; set; }
+        public string InventoryTypeName { get; set; }
         public Nullable<byte> Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Bill> Bills { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<MaterialInventory> MaterialInventories { get; set; }
     }
 }

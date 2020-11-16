@@ -1,5 +1,5 @@
-ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter', '$q', '$http', '$location', '$routeParams', '$timeout', 'toaster',
-    'GlobalVariableService', 'CommonService', 'uiGridConstants', 'PrintService', function ($rootScope, $scope, $filter, $q, $http, $location, $routeParams, $timeout,
+ETradersApp.controller("EditBillController", ['$mdDialog', '$scope', '$filter', '$q', '$http', '$location', '$routeParams', '$timeout', 'toaster',
+    'GlobalVariableService', 'CommonService', 'uiGridConstants', 'PrintService', function ($mdDialog, $scope, $filter, $q, $http, $location, $routeParams, $timeout,
         toaster, GlobalVariableService, CommonService, uiGridConstants, PrintService) {
 
         $scope.tokenInfo = {};
@@ -48,6 +48,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
             Active: 1,
             Cancelled: 2
         };
+        
         $scope.IsDiscountApplied = 0;
         $scope.IsItemSelected = false;
         $scope.Category = {
@@ -64,6 +65,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
             enableSelectAll: false,
             enableColumnResizing: true,
             showColumnFooter: false,
+            enableVerticalScrollbar: 1,
             columnDefs: [
                 {
                     name: 'ID', field: 'ID', visible: false
@@ -76,7 +78,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                     headerCellClass: 'text-right', cellClass: 'text-center', displayName: 'Sl. No', cellTemplate: '<span>{{rowRenderIndex+1}}</span>'
                 },
                 {
-                    name: 'DisplayName', displayName: 'Material', field: 'DisplayName',enableCellEdit:false
+                    name: 'DisplayName', displayName: 'Material', field: 'DisplayName', enableCellEdit: false
                 },
                 { displayName: 'Rate', field: 'Rate', type: 'number', cellTooltip: true, enableCellEdit: false, cellClass: 'text-right', headerCellClass: 'text-center' },
                 {
@@ -85,14 +87,21 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                     cellClass: 'text-left', headerCellClass: 'text-center'
                 },
                 { displayName: 'Quantity', field: 'Quantity', type: 'number', enableCellEdit: true, enableCellEditOnFocus: true, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+                //{
+                //    displayName: 'Status', field: 'Status.StatusName', cellTooltip: true, enableCellEdit: true,
+                //    editableCellTemplate: 'ui-grid/dropdownEditor', editDropdownValueLabel: 'StatusName', editDropdownIdLabel: 'StatusName',
+                //    cellClass: 'text-left', headerCellClass: 'text-center'
+                //},
                 { displayName: 'Discount', field: 'Discount', type: 'number', enableCellEdit: true, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
                 { displayName: 'DLP', field: 'DLP', type: 'number', enableCellEdit: true, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
                 { displayName: 'Amount', field: 'Amount', type: 'number', aggregationType: uiGridConstants.aggregationTypes.sum, enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+                
                 { displayName: 'SaleId', visible: false, field: 'SaleId', type: 'number', enableCellEdit: true, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
                 { displayName: 'X', field: 'Action', cellTooltip: true, width: 50, cellClass: 'text-center', headerCellClass: 'text-center', cellTemplate: '<button style="line-height: 0.5;" class="btn btn-danger" ng-click="grid.appScope.Delete(row)"> X</button>' },
+
                 {
                     name: 'MaterialId', field: 'MaterialId', visible: false
-                }            ],
+                }],
             data: []
 
         };
@@ -106,6 +115,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
             //   console.log($scope.gridApi)
             gridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
                 $scope.gridOptions.columnDefs[5].editDropdownOptionsArray = $scope.GodownData;
+               // $scope.gridOptions.columnDefs[7].editDropdownOptionsArray = $scope.StatusList;
                 $scope.hideSpinner();
             });
 
@@ -121,10 +131,10 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
             });
 
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                
+
                 if (parseFloat(newValue) != parseFloat(oldValue)) {
                     $scope.DataSaved = false;
-                   
+
                     var result = CommonService.CalculateRowTotalAmount(rowEntity.Rate, rowEntity.Quantity, rowEntity.Discount, rowEntity.DLP);
                     rowEntity.Amount = result.Amount;
                     rowEntity.IsDiscountApplied = result.IsDiscountApplied;
@@ -142,11 +152,14 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
             if ($scope.WholeSale.length > 0) {
                 angular.forEach($scope.WholeSale, function (items) {
                     
-                    if ($scope.DataCorrect == true && (isNaN(parseFloat(items.Amount)) || parseFloat(items.Amount) < 1)) {
-                        $scope.DataCorrect = false;
-                    }
-                    else
-                        $scope.WholeSale.TotalAmount = (parseFloat($scope.WholeSale.TotalAmount) + parseFloat(items.Amount)).toFixed(2);
+                    //if (items.Status.StatusName =="Active")
+                    //{
+                        if ($scope.DataCorrect == true && (isNaN(parseFloat(items.Amount)) || parseFloat(items.Amount) < 1)) {
+                            $scope.DataCorrect = false;
+                        }
+                        else
+                            $scope.WholeSale.TotalAmount = (parseFloat($scope.WholeSale.TotalAmount) + parseFloat(items.Amount)).toFixed(2);
+                   // }
                 });
             }
 
@@ -161,6 +174,22 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
             $scope.DeletedRows.push(row.entity);
             $scope.gridOptions.data.splice(index, 1);
             $scope.GetGrandAmount();
+        };
+        $scope.showConfirm = function (ev) {
+            // Appending dialog to document.body to cover sidenav in docs app
+            var confirm = $mdDialog.confirm()
+                .title('Would you like to delete your debt?')
+                .textContent('All of the banks have agreed to forgive you your debts.')
+                .ariaLabel('Lucky day')
+                .targetEvent(ev)
+                .ok('Please do it!')
+                .cancel('Sounds like a scam');
+
+            $mdDialog.show(confirm).then(function () {
+                $scope.status = 'You decided to get rid of your debt.';
+            }, function () {
+                $scope.status = 'You decided to keep your debt.';
+            });
         };
 
         $scope.CalculateGST = function () {
@@ -213,9 +242,10 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                     "Material/WholeSaleRate",
                     "Material/RetailRate",
                     "Godown/GodownName",
+                    //"Status/StatusName",
                     "ItemCategoryId"
                 ],
-                lookupFields: ["Bill", "Material", "Godown"],
+                lookupFields: ["Bill", "Material", "Godown","Status"],
                 filter: ["BillNo eq " + $scope.ID + EmailIdFilter],
                 //limitTo: "5000",
                 orderBy: "CreatedOn desc"
@@ -287,7 +317,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
         };
 
         $scope.GetMaterialsByCategoryId = function () {
-            $scope.currentMaterialLst = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.WholeSale.ItemCategory }, true);            
+            $scope.currentMaterialLst = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.WholeSale.ItemCategory }, true);
         };
         $scope.GetGodowns = function (callback) {
             var lstItems = {
@@ -336,7 +366,20 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                     callback();
             });
         };
+        $scope.GetStatuses = function () {
+            var lstData = {
+                title: "Status",
+                fields: ["*"],
+                filter: ["Active eq 1"]
+            };
+            CommonService.GetListItems(lstData).then(function (response) {
+                if (response && response.data.d.results.length > 0) {
+                    $scope.StatusList = response.data.d.results;
+                    //console.log($scope.ItemCatogoryList);
 
+                }
+            });
+        };
 
         $scope.GetSupplierRetailer = function (callback) {
             var emailFilter = '';
@@ -364,27 +407,27 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
         }
 
         $scope.AddItem = function () {
-
-            if ($scope.WholeSale.ItemCategory == undefined)
-               { 
+            if ($scope.gridOptions.data.length >= 25) {
+                toaster.pop('warning', "", "It has reached 25 items on this single bill.", 5000, 'trustedHtml');
+                return;
+            }
+            if ($scope.WholeSale.ItemCategory == undefined) {
                 toaster.pop('error', "", "Please select Category", 5000, 'trustedHtml');
                 return;
-               }
-            else if($scope.currentMaterialId ==undefined)
-            { 
+            }
+            else if ($scope.currentMaterialId == undefined) {
                 toaster.pop('error', "", "Please select material", 5000, 'trustedHtml');
                 return;
-               }
-            else
-            {
-             var displayName = $filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].DisplayName
-             var Rate=0;
-             if ($scope.WholeSale[0].Bill.SaleCategoryId == 1) {
+            }
+            else {
+                var displayName = $filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].DisplayName
+                var Rate = 0;
+                if ($scope.WholeSale[0].Bill.SaleCategoryId == 1) {
                     Rate = $filter('filter')($scope.currentMaterialLst, { DisplayName: displayName }, true)[0].WholeSaleRate;
                 } else {
                     Rate = $filter('filter')($scope.currentMaterialLst, { DisplayName: displayName }, true)[0].RetailRate;
                 }
-                
+
                 var item = {
                     "SaleId": 0,
                     "MaterialId": $scope.currentMaterialId,
@@ -395,12 +438,13 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                     "Quantity": 0,
                     "Discount": 0,
                     "DLP": 0,
+                    //"StatusId": "Active",
                     "Amount": 0,
                     "Action": ""
                 };
                 $scope.WholeSale.push(item);
                 $scope.gridOptions.data = $scope.WholeSale;
-           }           
+            }
         };
 
         $scope.FirstSaveDataAndPrint = function () {
@@ -412,7 +456,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
 
         $scope.SubmitItems = function (isFormValid, callback) {
             try {
-                var errorMessage ='';
+                var errorMessage = '';
                 var isValid = isFormValid;
                 $scope.submitted = !isValid;
                 var count = $scope.gridOptions.data.length;
@@ -420,18 +464,15 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                     toaster.pop('error', "", "No data to save", 5000, 'trustedHtml');
                     return;
                 }
-                else
-                {
-                    angular.forEach($scope.gridOptions.data,function(value,key){
-                            if(value.Godown==undefined || value.Godown=='')
-                            {
-                                   errorMessage += "At row " + (key +1) + ", Please select Godown";             
-                            }
-                            else if(value.Quantity==undefined || value.Quantity ==0)
-                            {
-                                   errorMessage += "At row " + (key +1) + ", Please enter quantity";             
-                            }
-                    
+                else {
+                    angular.forEach($scope.gridOptions.data, function (value, key) {
+                        if (value.Godown == undefined || value.Godown == '') {
+                            errorMessage += "At row " + (key + 1) + ", Please select Godown";
+                        }
+                        else if (value.Quantity == undefined || value.Quantity == 0) {
+                            errorMessage += "At row " + (key + 1) + ", Please enter quantity";
+                        }
+
                     });
                     if (errorMessage.length > 0) {
                         toaster.pop("error", "", errorMessage, "7000", "trustedHtml");
@@ -442,7 +483,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                         isValid = true;
                     }
                 }
-                
+
 
                 if (isValid && $scope.DataCorrect) {
                     if ($scope.WholeSale.Others != null && ($scope.WholeSale.SupplierRetailer == "" || $scope.WholeSale.SupplierRetailer == undefined)) {
@@ -467,7 +508,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                     if (callback)
                         callback();
 
-                } else{
+                } else {
                     toaster.pop('error', "", "Please enter complete data!!", 5000, 'trustedHtml');
                 }
             } catch (error) {
@@ -567,7 +608,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                                         "BillNo": $scope.ID,
                                         "GodownId": $filter('filter')($scope.GodownData, { GodownName: value.Godown.GodownName }, true)[0].GodownId,
                                         "UpdatedOn": new Date(),
-                                        "Active": billStatus,
+                                        "StatusId": 1,//$filter('filter')($scope.StatusList, { StatusName: value.Status.StatusName }, true)[0].StatusId,
                                         "ItemCategoryId": value.ItemCategoryId
                                     };
                                     if (value.SaleId == 0) {
@@ -594,10 +635,12 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
                                     }
 
                                 });
+                                resolve("data saved");
+                                setTimeout(function () {
+                                    if (callback)
+                                        callback();
+                                }, 1000);
                             }
-                            resolve("data saved");
-                            if (callback)
-                                callback();
                         }
                         else
                             reject("data save failed");
@@ -618,7 +661,7 @@ ETradersApp.controller("EditBillController", ['$rootScope', '$scope', '$filter',
             //$scope.showSpinner();
 
             $scope.tokens = GlobalVariableService.getTokenInfo();
-
+            //$scope.GetStatuses();
             $scope.GetItemCategory(function () {
                 $scope.GetSupplierRetailer(function () {
                     $scope.GetGodowns(function () {

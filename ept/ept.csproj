@@ -239,6 +239,7 @@
     <Compile Include="Controllers\GodownsController.cs" />
     <Compile Include="Controllers\GSTPercentagesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventoryTypesController.cs" />
     <Compile Include="Controllers\ItemCategoriesController.cs" />
     <Compile Include="Controllers\MaterialInventoriesController.cs" />
     <Compile Include="Controllers\MaterialsController.cs" />
@@ -349,6 +350,9 @@
     <Compile Include="GetPaymentDetails.aspx.designer.cs">
       <DependentUpon>GetPaymentDetails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\InventoryType.cs">
+      <DependentUpon>ETModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ItemCategory.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
@@ -365,6 +369,9 @@
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PaymentType.cs">
+      <DependentUpon>ETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Prototype.cs">
       <DependentUpon>ETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RefreshToken.cs">
@@ -445,6 +452,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="CreateLogin.html" />
+    <Content Include="dialog.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -484,13 +492,17 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="vapp\controllers\InventoryTypeController.js" />
     <Content Include="vapp\controllers\GSTPercentageController.js" />
     <Content Include="vapp\controllers\OnlinePaymentDetailController.js" />
     <Content Include="vContent\Scripts\feather.min.js" />
+    <Content Include="vtemplate\AddInventoryType.html" />
     <Content Include="vtemplate\AddGST.html" />
     <Content Include="vtemplate\AddOnlinePayment.html" />
+    <Content Include="vtemplate\EditInventoryType.html" />
     <Content Include="vtemplate\EditGST.html" />
     <Content Include="vtemplate\EditOnlinePayment.html" />
+    <Content Include="vtemplate\InventoryTypeDashboard.html" />
     <Content Include="vtemplate\GSTDashboard.html" />
     <Content Include="vtemplate\OnlinePaymentDashboard.html" />
     <Content Include="WebHookToInstamojo.aspx" />

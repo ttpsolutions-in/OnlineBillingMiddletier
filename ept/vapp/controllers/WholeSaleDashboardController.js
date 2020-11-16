@@ -66,7 +66,7 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window', 'Config', 'Gl
                 //        + '{{row.entity.DiscountApplied == 1? "Yes" : "No"}}</div><script>feather.replace()</script>'
                 //},
                 { displayName: 'Total', field: 'TotalAmount', width: 100, enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
-                { displayName: 'GST', field: 'GSTAmount', width: 100, enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
+                //{ displayName: 'GST', field: 'GSTAmount', width: 100, enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
                 { displayName: 'Grand Total', field: 'GrandTotal', width: 100, enableCellEdit: false, cellTooltip: true, cellClass: 'text-right', headerCellClass: 'text-center' },
                 { displayName: 'Status', field: 'Status.StatusName', width: 100, enableCellEdit: false, cellTooltip: true, cellClass: 'text-left', headerCellClass: 'text-center' },
 

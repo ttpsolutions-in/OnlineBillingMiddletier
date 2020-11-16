@@ -188,6 +188,14 @@
           <Property Name="GST" Type="tinyint" />
           <Property Name="Active" Type="tinyint" />
         </EntityType>
+        <EntityType Name="InventoryType">
+          <Key>
+            <PropertyRef Name="InventoryTypeId" />
+          </Key>
+          <Property Name="InventoryTypeId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InventoryTypeName" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="tinyint" />
+        </EntityType>
         <EntityType Name="ItemCategory">
           <Key>
             <PropertyRef Name="ItemCategoryId" />
@@ -209,7 +217,7 @@
           <Property Name="PaymentStatus" Type="varchar" MaxLength="10" />
           <Property Name="PaymentDate" Type="datetime" />
           <Property Name="SupplierId" Type="int" />
-          <Property Name="AddTransfer" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="InventoryTypeId" Type="tinyint" Nullable="false" />
           <Property Name="TransferToGodown" Type="smallint" />
           <Property Name="Comments" Type="varchar" MaxLength="300" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
@@ -302,6 +310,26 @@
           <Property Name="PaymentTypeName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Active" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="Prototype">
+          <Key>
+            <PropertyRef Name="Col10" />
+          </Key>
+          <Property Name="Col10" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Col11" Type="varchar" MaxLength="50" />
+          <Property Name="Col12" Type="varchar" MaxLength="50" />
+          <Property Name="Col13" Type="varchar" MaxLength="50" />
+          <Property Name="Col14" Type="varchar" MaxLength="50" />
+          <Property Name="Col15" Type="varchar" MaxLength="50" />
+          <Property Name="Col16" Type="varchar" MaxLength="50" />
+          <Property Name="Col17" Type="varchar" MaxLength="50" />
+          <Property Name="Col18" Type="varchar" MaxLength="50" />
+          <Property Name="Col19" Type="varchar" MaxLength="50" />
+          <Property Name="Col20" Type="varchar" MaxLength="50" />
+          <Property Name="Col21" Type="varchar" MaxLength="50" />
+          <Property Name="Col22" Type="varchar" MaxLength="50" />
+          <Property Name="Col23" Type="varchar" MaxLength="50" />
+          <Property Name="Col24" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="RefreshToken">
           <Key>
             <PropertyRef Name="Id" />
@@ -360,7 +388,7 @@
           <Property Name="GodownId" Type="smallint" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="date" />
-          <Property Name="Active" Type="tinyint" Nullable="false" />
+          <Property Name="StatusId" Type="tinyint" Nullable="false" />
           <Property Name="ItemCategoryId" Type="smallint" />
         </EntityType>
         <EntityType Name="SaleType">
@@ -376,6 +404,7 @@
           </Key>
           <Property Name="StatusId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StatusName" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="tinyint" />
         </EntityType>
         <EntityType Name="SupplierRetailer">
           <Key>
@@ -395,6 +424,7 @@
           <Property Name="CreatedOn" Type="date" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedOn" Type="date" />
+          <Property Name="Active" Type="tinyint" />
         </EntityType>
         <EntityType Name="SupplierRetailType">
           <Key>
@@ -432,19 +462,14 @@ warning 6002: The table/view 'EphraimTraders.dbo.BillDetailsView' does not have 
             <PropertyRef Name="Amount" />
             <PropertyRef Name="GodownName" />
             <PropertyRef Name="GodownId" />
-            <PropertyRef Name="GSTApplied" />
             <PropertyRef Name="SaleTypeId" />
             <PropertyRef Name="SaleCategoryId" />
-            <PropertyRef Name="GSTPercentage" />
-            <PropertyRef Name="GSTAmount" />
-            <PropertyRef Name="DiscountApplied" />
-            <PropertyRef Name="TotalAmount" />
             <PropertyRef Name="GrandTotal" />
             <PropertyRef Name="Contact" />
             <PropertyRef Name="Rate" />
-            <PropertyRef Name="Active" />
             <PropertyRef Name="BillStatus" />
             <PropertyRef Name="SaleDate" />
+            <PropertyRef Name="StatusId" />
           </Key>
           <Property Name="BillNo" Type="int" Nullable="false" />
           <Property Name="RetailerId" Type="int" Nullable="false" />
@@ -457,20 +482,20 @@ warning 6002: The table/view 'EphraimTraders.dbo.BillDetailsView' does not have 
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="GodownName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="GodownId" Type="smallint" Nullable="false" />
-          <Property Name="GSTApplied" Type="tinyint" Nullable="false" />
+          <Property Name="GSTApplied" Type="tinyint" />
           <Property Name="SaleTypeId" Type="int" Nullable="false" />
           <Property Name="SaleCategoryId" Type="int" Nullable="false" />
-          <Property Name="GSTPercentage" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="GSTAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="DiscountApplied" Type="tinyint" Nullable="false" />
-          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GSTPercentage" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="GSTAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DiscountApplied" Type="tinyint" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ShowGSTNo" Type="tinyint" />
           <Property Name="Contact" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Rate" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Active" Type="tinyint" Nullable="false" />
           <Property Name="BillStatus" Type="tinyint" Nullable="false" />
           <Property Name="SaleDate" Type="date" Nullable="false" />
+          <Property Name="StatusId" Type="tinyint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'EphraimTraders.dbo.CurrentUserRoleRightsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -519,6 +544,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.ReorderRequired' does not have 
           </Key>
           <Property Name="MaterialId" Type="int" Nullable="false" />
           <Property Name="DisplayName" Type="varchar" MaxLength="250" />
+          <Property Name="InventoryTypeName" Type="varchar" MaxLength="50" />
           <Property Name="ReorderLevel" Type="decimal" Precision="18" Scale="2" />
           <Property Name="SoldQuantity" Type="decimal" Precision="38" Scale="2" />
           <Property Name="TotalIncomingQuantity" Type="decimal" Precision="18" Scale="2" />
@@ -835,6 +861,18 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MaterialInventory_InventoryType">
+          <End Role="InventoryType" Type="Self.InventoryType" Multiplicity="1" />
+          <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryType">
+              <PropertyRef Name="InventoryTypeId" />
+            </Principal>
+            <Dependent Role="MaterialInventory">
+              <PropertyRef Name="InventoryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MaterialInventory_Materials">
           <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
           <End Role="MaterialInventory" Type="Self.MaterialInventory" Multiplicity="*" />
@@ -895,6 +933,18 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Sales_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EphraimTradersModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -913,12 +963,14 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySet Name="EmploymentType" EntityType="Self.EmploymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Godown" EntityType="Self.Godown" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GSTPercentage" EntityType="Self.GSTPercentage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryType" EntityType="Self.InventoryType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemCategory" EntityType="Self.ItemCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialInventory" EntityType="Self.MaterialInventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OnlinePaymentDetails" EntityType="Self.OnlinePaymentDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OnlinepaymentFromWebhook" EntityType="Self.OnlinepaymentFromWebhook" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prototype" EntityType="Self.Prototype" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RefreshToken" EntityType="Self.RefreshToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rights" EntityType="Self.Rights" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RightsManagement" EntityType="Self.RightsManagement" Schema="dbo" store:Type="Tables" />
@@ -954,9 +1006,9 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
     [BillDetailsView].[ShowGSTNo] AS [ShowGSTNo], 
     [BillDetailsView].[Contact] AS [Contact], 
     [BillDetailsView].[Rate] AS [Rate], 
-    [BillDetailsView].[Active] AS [Active], 
     [BillDetailsView].[BillStatus] AS [BillStatus], 
-    [BillDetailsView].[SaleDate] AS [SaleDate]
+    [BillDetailsView].[SaleDate] AS [SaleDate], 
+    [BillDetailsView].[StatusId] AS [StatusId]
     FROM [dbo].[BillDetailsView] AS [BillDetailsView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="CurrentUserRoleRightsView" EntityType="Self.CurrentUserRoleRightsView" store:Type="Views" store:Schema="dbo">
@@ -989,6 +1041,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <DefiningQuery>SELECT 
     [ReorderRequired].[MaterialId] AS [MaterialId], 
     [ReorderRequired].[DisplayName] AS [DisplayName], 
+    [ReorderRequired].[InventoryTypeName] AS [InventoryTypeName], 
     [ReorderRequired].[ReorderLevel] AS [ReorderLevel], 
     [ReorderRequired].[SoldQuantity] AS [SoldQuantity], 
     [ReorderRequired].[TotalIncomingQuantity] AS [TotalIncomingQuantity], 
@@ -1112,6 +1165,10 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <End Role="Godown" EntitySet="Godown" />
             <End Role="MaterialInventory" EntitySet="MaterialInventory" />
           </AssociationSet>
+          <AssociationSet Name="FK_MaterialInventory_InventoryType" Association="Self.FK_MaterialInventory_InventoryType">
+            <End Role="InventoryType" EntitySet="InventoryType" />
+            <End Role="MaterialInventory" EntitySet="MaterialInventory" />
+          </AssociationSet>
           <AssociationSet Name="FK_MaterialInventory_Materials" Association="Self.FK_MaterialInventory_Materials">
             <End Role="Materials" EntitySet="Materials" />
             <End Role="MaterialInventory" EntitySet="MaterialInventory" />
@@ -1131,6 +1188,10 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <AssociationSet Name="FK_RightsManagement_Rights" Association="Self.FK_RightsManagement_Rights">
             <End Role="Rights" EntitySet="Rights" />
             <End Role="RightsManagement" EntitySet="RightsManagement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Status" Association="Self.FK_Sales_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Sales" EntitySet="Sales" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1356,11 +1417,11 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="MaterialId" Type="Int32" Nullable="false" />
           <Property Name="GodownId" Type="Int16" Nullable="false" />
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="QuantityPerUnit" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PaymentStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="PaymentDate" Type="DateTime" Precision="3" />
           <Property Name="SupplierId" Type="Int32" />
-          <Property Name="AddTransfer" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TransferToGodown" Type="Int16" />
           <Property Name="Comments" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
@@ -1373,7 +1434,8 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <NavigationProperty Name="Godown1" Relationship="Self.FK_MaterialInventory_TransferToGodown" FromRole="MaterialInventory" ToRole="Godown" />
           <NavigationProperty Name="Material" Relationship="Self.FK_MaterialInventory_Materials" FromRole="MaterialInventory" ToRole="Materials" />
           <NavigationProperty Name="SupplierRetailer" Relationship="Self.FK_MaterialInventory_Supplier" FromRole="MaterialInventory" ToRole="SupplierRetailer" />
-          <Property Name="QuantityPerUnit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="InventoryTypeId" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="InventoryType" Relationship="EphraimTradersModel.FK_MaterialInventory_InventoryType" FromRole="MaterialInventory" ToRole="InventoryType" />
         </EntityType>
         <EntityType Name="Material">
           <Key>
@@ -1462,6 +1524,26 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="Active" Type="Byte" Nullable="false" />
           <NavigationProperty Name="EmployeeAccounts" Relationship="Self.FK_EmployeeAccount_PaymentType" FromRole="PaymentType" ToRole="EmployeeAccount" />
         </EntityType>
+        <EntityType Name="Prototype">
+          <Key>
+            <PropertyRef Name="Col10" />
+          </Key>
+          <Property Name="Col10" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Col11" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col12" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col13" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col14" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col15" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col16" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col17" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col18" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col19" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col20" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col21" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col22" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col23" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Col24" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="RefreshToken">
           <Key>
             <PropertyRef Name="Id" />
@@ -1524,11 +1606,12 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="GodownId" Type="Int16" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="0" />
-          <Property Name="Active" Type="Byte" Nullable="false" />
+          <Property Name="StatusId" Type="Byte" Nullable="false" />
           <Property Name="ItemCategoryId" Type="Int16" />
           <NavigationProperty Name="Bill" Relationship="Self.FK__Sales__BillNo__00200768" FromRole="Sales" ToRole="Bills" />
           <NavigationProperty Name="Godown" Relationship="Self.FK__Sales__GodownId__02FC7413" FromRole="Sales" ToRole="Godown" />
           <NavigationProperty Name="Material" Relationship="Self.FK__Sales__MaterialI__7B5B524B" FromRole="Sales" ToRole="Materials" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Sales_Status" FromRole="Sales" ToRole="Status" />
         </EntityType>
         <EntityType Name="SaleType">
           <Key>
@@ -1544,7 +1627,9 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           </Key>
           <Property Name="StatusId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Byte" />
           <NavigationProperty Name="Bills" Relationship="Self.FK__Bills__BillStatu__72C60C4A" FromRole="Status" ToRole="Bills" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Status" FromRole="Status" ToRole="Sales" />
         </EntityType>
         <EntityType Name="SupplierRetailer">
           <Key>
@@ -1564,6 +1649,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="CreatedOn" Type="DateTime" Precision="0" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="0" />
+          <Property Name="Active" Type="Byte" />
           <NavigationProperty Name="Bills" Relationship="Self.FK__Bills__RetailerI__6A30C649" FromRole="SupplierRetailer" ToRole="Bills" />
           <NavigationProperty Name="Category1" Relationship="Self.FK__SupplierR__Categ__6AEFE058" FromRole="SupplierRetailer" ToRole="Category" />
           <NavigationProperty Name="MaterialInventories" Relationship="Self.FK_MaterialInventory_Supplier" FromRole="SupplierRetailer" ToRole="MaterialInventory" />
@@ -1604,19 +1690,14 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <PropertyRef Name="Amount" />
             <PropertyRef Name="GodownName" />
             <PropertyRef Name="GodownId" />
-            <PropertyRef Name="GSTApplied" />
             <PropertyRef Name="SaleTypeId" />
             <PropertyRef Name="SaleCategoryId" />
-            <PropertyRef Name="GSTPercentage" />
-            <PropertyRef Name="GSTAmount" />
-            <PropertyRef Name="DiscountApplied" />
-            <PropertyRef Name="TotalAmount" />
             <PropertyRef Name="GrandTotal" />
             <PropertyRef Name="Contact" />
             <PropertyRef Name="Rate" />
-            <PropertyRef Name="Active" />
             <PropertyRef Name="BillStatus" />
             <PropertyRef Name="SaleDate" />
+            <PropertyRef Name="StatusId" />
           </Key>
           <Property Name="BillNo" Type="Int32" Nullable="false" />
           <Property Name="RetailerId" Type="Int32" Nullable="false" />
@@ -1629,20 +1710,20 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="GodownName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GodownId" Type="Int16" Nullable="false" />
-          <Property Name="GSTApplied" Type="Byte" Nullable="false" />
+          <Property Name="GSTApplied" Type="Byte" />
           <Property Name="SaleTypeId" Type="Int32" Nullable="false" />
           <Property Name="SaleCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="GSTPercentage" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="DiscountApplied" Type="Byte" Nullable="false" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="GSTPercentage" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="GSTAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DiscountApplied" Type="Byte" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ShowGSTNo" Type="Byte" />
           <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Rate" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="Active" Type="Byte" Nullable="false" />
           <Property Name="BillStatus" Type="Byte" Nullable="false" />
           <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StatusId" Type="Byte" Nullable="false" />
         </EntityType>
         <EntityType Name="CurrentUserRoleRightsView">
           <Key>
@@ -1687,6 +1768,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="SoldQuantity" Type="Decimal" Precision="38" Scale="2" />
           <Property Name="TotalIncomingQuantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="QIH" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="InventoryTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="RightsForAssignment">
           <Key>
@@ -2013,6 +2095,18 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Sales_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SupplierRe__Type__40058253">
           <End Role="SupplierRetailType" Type="Self.SupplierRetailType" Multiplicity="1" />
           <End Role="SupplierRetailer" Type="Self.SupplierRetailer" Multiplicity="*" />
@@ -2029,7 +2123,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="EphraimTradersEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EphraimTradersEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -2052,6 +2146,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySet Name="OnlinePaymentDetails" EntityType="Self.OnlinePaymentDetail" />
           <EntitySet Name="OnlinepaymentFromWebhooks" EntityType="Self.OnlinepaymentFromWebhook" />
           <EntitySet Name="PaymentTypes" EntityType="Self.PaymentType" />
+          <EntitySet Name="Prototypes" EntityType="Self.Prototype" />
           <EntitySet Name="RefreshTokens" EntityType="Self.RefreshToken" />
           <EntitySet Name="Rights" EntityType="Self.Right" />
           <EntitySet Name="RightsManagements" EntityType="Self.RightsManagement" />
@@ -2163,6 +2258,10 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <End Role="Rights" EntitySet="Rights" />
             <End Role="RightsManagement" EntitySet="RightsManagements" />
           </AssociationSet>
+          <AssociationSet Name="FK_Sales_Status" Association="Self.FK_Sales_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
           <AssociationSet Name="FK__SupplierRe__Type__40058253" Association="Self.FK__SupplierRe__Type__40058253">
             <End Role="SupplierRetailType" EntitySet="SupplierRetailTypes" />
             <End Role="SupplierRetailer" EntitySet="SupplierRetailers" />
@@ -2171,13 +2270,39 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="InventoryTypes" EntityType="EphraimTradersModel.InventoryType" />
+          <AssociationSet Name="FK_MaterialInventory_InventoryType" Association="EphraimTradersModel.FK_MaterialInventory_InventoryType">
+            <End Role="InventoryType" EntitySet="InventoryTypes" />
+            <End Role="MaterialInventory" EntitySet="MaterialInventories" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="InventoryType">
+          <Key>
+            <PropertyRef Name="InventoryTypeId" />
+          </Key>
+          <Property Name="InventoryTypeId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InventoryTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Byte" />
+          <NavigationProperty Name="MaterialInventories" Relationship="EphraimTradersModel.FK_MaterialInventory_InventoryType" FromRole="InventoryType" ToRole="MaterialInventory" />
+        </EntityType>
+        <Association Name="FK_MaterialInventory_InventoryType">
+          <End Type="EphraimTradersModel.InventoryType" Role="InventoryType" Multiplicity="1" />
+          <End Type="EphraimTradersModel.MaterialInventory" Role="MaterialInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryType">
+              <PropertyRef Name="InventoryTypeId" />
+            </Principal>
+            <Dependent Role="MaterialInventory">
+              <PropertyRef Name="InventoryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EphraimTradersModelStoreContainer" CdmEntityContainer="EphraimTradersEntities3">
+        <EntityContainerMapping StorageEntityContainer="EphraimTradersModelStoreContainer" CdmEntityContainer="EphraimTradersEntities1">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="EphraimTradersModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -2378,16 +2503,16 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySetMapping Name="MaterialInventories">
             <EntityTypeMapping TypeName="EphraimTradersModel.MaterialInventory">
               <MappingFragment StoreEntitySet="MaterialInventory">
-                <ScalarProperty Name="QuantityPerUnit" ColumnName="QuantityPerUnit" />
+                <ScalarProperty Name="InventoryTypeId" ColumnName="InventoryTypeId" />
                 <ScalarProperty Name="InventoryId" ColumnName="InventoryId" />
                 <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
                 <ScalarProperty Name="GodownId" ColumnName="GodownId" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="QuantityPerUnit" ColumnName="QuantityPerUnit" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
                 <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
                 <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="AddTransfer" ColumnName="AddTransfer" />
                 <ScalarProperty Name="TransferToGodown" ColumnName="TransferToGodown" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -2486,6 +2611,27 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Prototypes">
+            <EntityTypeMapping TypeName="EphraimTradersModel.Prototype">
+              <MappingFragment StoreEntitySet="Prototype">
+                <ScalarProperty Name="Col10" ColumnName="Col10" />
+                <ScalarProperty Name="Col11" ColumnName="Col11" />
+                <ScalarProperty Name="Col12" ColumnName="Col12" />
+                <ScalarProperty Name="Col13" ColumnName="Col13" />
+                <ScalarProperty Name="Col14" ColumnName="Col14" />
+                <ScalarProperty Name="Col15" ColumnName="Col15" />
+                <ScalarProperty Name="Col16" ColumnName="Col16" />
+                <ScalarProperty Name="Col17" ColumnName="Col17" />
+                <ScalarProperty Name="Col18" ColumnName="Col18" />
+                <ScalarProperty Name="Col19" ColumnName="Col19" />
+                <ScalarProperty Name="Col20" ColumnName="Col20" />
+                <ScalarProperty Name="Col21" ColumnName="Col21" />
+                <ScalarProperty Name="Col22" ColumnName="Col22" />
+                <ScalarProperty Name="Col23" ColumnName="Col23" />
+                <ScalarProperty Name="Col24" ColumnName="Col24" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RefreshTokens">
             <EntityTypeMapping TypeName="EphraimTradersModel.RefreshToken">
               <MappingFragment StoreEntitySet="RefreshToken">
@@ -2547,7 +2693,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
                 <ScalarProperty Name="GodownId" ColumnName="GodownId" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="ItemCategoryId" ColumnName="ItemCategoryId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2565,6 +2711,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
               <MappingFragment StoreEntitySet="Status">
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2585,6 +2732,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2640,9 +2788,9 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
                 <ScalarProperty Name="ShowGSTNo" ColumnName="ShowGSTNo" />
                 <ScalarProperty Name="Contact" ColumnName="Contact" />
                 <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="BillStatus" ColumnName="BillStatus" />
                 <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2681,6 +2829,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySetMapping Name="ReorderRequireds">
             <EntityTypeMapping TypeName="EphraimTradersModel.ReorderRequired">
               <MappingFragment StoreEntitySet="ReorderRequired">
+                <ScalarProperty Name="InventoryTypeName" ColumnName="InventoryTypeName" />
                 <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
@@ -2737,6 +2886,15 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="InventoryTypes">
+            <EntityTypeMapping TypeName="EphraimTradersModel.InventoryType">
+              <MappingFragment StoreEntitySet="InventoryType">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="InventoryTypeName" ColumnName="InventoryTypeName" />
+                <ScalarProperty Name="InventoryTypeId" ColumnName="InventoryTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

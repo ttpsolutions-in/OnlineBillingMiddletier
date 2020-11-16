@@ -27,11 +27,12 @@ namespace ept.Models
         public short GodownId { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
-        public byte Active { get; set; }
+        public byte StatusId { get; set; }
         public Nullable<short> ItemCategoryId { get; set; }
     
         public virtual Bill Bill { get; set; }
         public virtual Godown Godown { get; set; }
         public virtual Material Material { get; set; }
+        public virtual Status Status { get; set; }
     }
 }

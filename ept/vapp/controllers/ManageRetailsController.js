@@ -277,6 +277,10 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
         };
 
         $scope.AddItem = function () {
+            if ($scope.gridOptions.data.length >= 25) {
+                toaster.pop('warning', "", "It has reached 25 items on this single bill.", 5000, 'trustedHtml');
+                return;
+            }
             if ($scope.RetailData.ItemCategory != undefined) {
                 var item = {
 
@@ -452,7 +456,7 @@ ETradersApp.controller("ManageRetailsController", ['GlobalVariableService', 'Pri
                                         "Amount": value.Amount.toString(),
                                         "BillNo": response.BillNo.toString(),
                                         "CreatedOn": new Date(),
-                                        "Active": 1,
+                                        "StatusId": 1,
                                         "ItemCategoryId": value.ItemCategoryId
                                     };
                                     CommonService.PostData("Sales", salesPostDate).then(function (response1) {

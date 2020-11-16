@@ -9,9 +9,9 @@
         z-index: 1000;
     }
 
-    .ui-grid, .ui-grid-viewport, .ui-grid-contents-wrapper, .ui-grid-canvas {
+    /*  .ui-grid, .ui-grid-viewport, .ui-grid-contents-wrapper, .ui-grid-canvas {
         height: auto !important;
-    }
+    }*/
 </style>
 <div class="card">
     <div class="card-header">
@@ -68,7 +68,7 @@
             <div class="form-row">
                 <div class="col-md-12 nopadding">
                     <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav ui-grid-selection
-                         class="myGrid" style="height:300px"></div>
+                         class="myGrid"></div>
                     <div class="nodatatxt" data-ng-if="gridOptions.data.length==0">Please Add Item</div>
                     <table class="table table-sm table-striped table-bordered table-condensed">
                         <tr>
@@ -85,7 +85,7 @@
                                     </label>
                                     &nbsp;&nbsp;&nbsp;
                                     <label>
-                                        Cash <input type="checkbox" ng-checked="WholeSale[0].Bill.SaleTypeId == 1 ? true : false" ng-model="WholeSale[0].Bill.SaleTypeId" ng-true-value="1" ng-false-value="0"/>
+                                        Cash <input type="checkbox" ng-checked="WholeSale[0].Bill.SaleTypeId == 1 ? true : false" ng-model="WholeSale[0].Bill.SaleTypeId" ng-true-value="1" ng-false-value="0" />
                                     </label>
                                 </div>
                             </td>
@@ -118,13 +118,17 @@
                     <button type="button" class="btn btn-primary" ng-if="CancelBillRights.length>0" ng-click="SaveBillDetails('c')"><span data-feather="trash"></span> Cancel Bill</button>
                 </div>
                 <div class="pr-4">
-                    <button type="button" class="btn btn-primary" ng-click="SaveNPrint(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save</button>
+                    <button type="button" class="btn btn-primary" ng-click="SaveNPrint(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save & <span data-feather="print"></span> Print</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
-
+<div ng-if="status" id="status">
+    <b layout="row" layout-align="center center" class="md-padding">
+        {{status}}
+    </b>
+</div>
 <html>
 <head>
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">

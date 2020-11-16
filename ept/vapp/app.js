@@ -1,5 +1,5 @@
 //Define an angular module for our app 
-var ETradersApp = angular.module("ETradersApp", ["angular-chartist","ngRoute", "ngAnimate", "ui.bootstrap", "toaster", "ui.grid", "ui.grid.edit", "ui.grid.cellNav", "ui.grid.validate",
+var ETradersApp = angular.module("ETradersApp", ["ngMaterial", "ngMessages","angular-chartist","ngRoute", "ngAnimate", "ui.bootstrap", "toaster", "ui.grid", "ui.grid.edit", "ui.grid.cellNav", "ui.grid.validate",
     "ui.grid.pagination", "ui.grid.autoResize", "ui.grid.selection", "ui.grid.resizeColumns", "ui.grid.grouping", "mgcrea.ngStrap"]);//;.run(init);
 //for autocomplete dropdown
 //function init($rootScope, GlobalVariableService) {
@@ -134,6 +134,15 @@ ETradersApp.config(['$routeProvider', '$locationProvider',
         }).when("/EditGST/:ID", {
             templateUrl: '/vtemplate/EditGST.html',
             controller: 'GSTController'
+        }).when("/InventoryTypeDashboard", {
+            templateUrl: '/vtemplate/InventoryTypeDashboard.html',
+            controller: 'InventoryTypeController'
+        }).when("/AddInventoryType", {
+            templateUrl: '/vtemplate/AddInventoryType.html',
+            controller: 'InventoryTypeController'
+        }).when("/EditInventoryType/:ID", {
+            templateUrl: '/vtemplate/EditInventoryType.html',
+            controller: 'InventoryTypeController'
         }).when("/AddMaterialInventory", {
             templateUrl: '/vtemplate/AddMaterialInventory.html',
             controller: 'MaterialInventoryController'

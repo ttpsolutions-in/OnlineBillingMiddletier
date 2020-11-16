@@ -1,0 +1,46 @@
+﻿<style>
+    .nodatatxt {
+        position: absolute;
+        top: 80px;
+        opacity: 0.25;
+        font-size: 1.5em;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <b>Inventory Type Dashboard</b>
+        <a class="btn btn-secondary btn-sm float-right" href="#AddInventoryType">Add Inventory Type</a>
+    </div>
+    
+    <div class="card-body">
+        <form id="InventoryTypeDashboad">
+            <div class="form-row">
+                <div class="col-md-12 nopadding">
+                    <div ui-grid="gridOptions" ui-grid-pagination
+                         class="myGrid" style="height:480px"></div>
+                    <div class="nodatatxt" data-ng-if="gridOptions.data.length==0">No data found.</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX " />
+</head>
+<body>
+</body>
+<script type="text/javascript">
+                 var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+</script>
+</html>

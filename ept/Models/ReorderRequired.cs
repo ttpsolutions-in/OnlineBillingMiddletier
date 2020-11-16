@@ -20,5 +20,6 @@ namespace ept.Models
         public Nullable<decimal> SoldQuantity { get; set; }
         public Nullable<decimal> TotalIncomingQuantity { get; set; }
         public Nullable<decimal> QIH { get; set; }
+        public string InventoryTypeName { get; set; }
     }
 }

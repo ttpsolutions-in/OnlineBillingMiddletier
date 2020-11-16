@@ -47,6 +47,7 @@ namespace ept.Models
         public virtual DbSet<OnlinePaymentDetail> OnlinePaymentDetails { get; set; }
         public virtual DbSet<OnlinepaymentFromWebhook> OnlinepaymentFromWebhooks { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+        public virtual DbSet<Prototype> Prototypes { get; set; }
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual DbSet<Right> Rights { get; set; }
         public virtual DbSet<RightsManagement> RightsManagements { get; set; }
@@ -66,5 +67,6 @@ namespace ept.Models
         public virtual DbSet<RightsForAssignment> RightsForAssignments { get; set; }
         public virtual DbSet<RoleRightsView> RoleRightsViews { get; set; }
         public virtual DbSet<SaleQuantityAmountForReport> SaleQuantityAmountForReports { get; set; }
+        public virtual DbSet<InventoryType> InventoryTypes { get; set; }
     }
 }

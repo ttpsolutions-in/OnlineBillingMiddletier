@@ -25,19 +25,19 @@ namespace ept.Models
         public decimal Amount { get; set; }
         public string GodownName { get; set; }
         public short GodownId { get; set; }
-        public byte GSTApplied { get; set; }
+        public Nullable<byte> GSTApplied { get; set; }
         public int SaleTypeId { get; set; }
         public int SaleCategoryId { get; set; }
-        public decimal GSTPercentage { get; set; }
-        public decimal GSTAmount { get; set; }
-        public byte DiscountApplied { get; set; }
-        public decimal TotalAmount { get; set; }
+        public Nullable<decimal> GSTPercentage { get; set; }
+        public Nullable<decimal> GSTAmount { get; set; }
+        public Nullable<byte> DiscountApplied { get; set; }
+        public Nullable<decimal> TotalAmount { get; set; }
         public decimal GrandTotal { get; set; }
         public Nullable<byte> ShowGSTNo { get; set; }
         public string Contact { get; set; }
         public decimal Rate { get; set; }
-        public byte Active { get; set; }
         public byte BillStatus { get; set; }
         public System.DateTime SaleDate { get; set; }
+        public byte StatusId { get; set; }
     }
 }

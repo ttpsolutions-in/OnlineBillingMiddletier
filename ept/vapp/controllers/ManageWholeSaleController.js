@@ -237,6 +237,10 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
 
 
         $scope.AddItem = function () {
+            if ($scope.gridOptions.data.length >= 25) {
+                toaster.pop('warning', "", "It has reached 25 items on this single bill.", 5000, 'trustedHtml');
+                return;
+            }
             if ($scope.WholeSale.ItemCategory != undefined) {
                 //$scope.currentMaterialLst = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.WholeSale.ItemCategory }, true);
 
@@ -405,7 +409,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                                     "BillNo": response.BillNo,
                                     "GodownId": $filter('filter')($scope.GodownData, { GodownName: value.GodownId }, true)[0].GodownId,
                                     "CreatedOn": new Date(),
-                                    "Active": 1,
+                                    "StatusId": 1,
                                     "ItemCategoryId": value.ItemCategoryId
                                 };
                                 CommonService.PostData("Sales", salesPostDate).then(function (response1) {

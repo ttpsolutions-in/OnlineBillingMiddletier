@@ -22,33 +22,30 @@ namespace ept.Controllers
     using System.Web.Http.OData.Extensions;
     using ept.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Sale>("Sales");
-    builder.EntitySet<Bill>("Bills"); 
-    builder.EntitySet<Godown>("Godowns"); 
-    builder.EntitySet<Material>("Materials"); 
-    builder.EntitySet<Status>("Status"); 
+    builder.EntitySet<InventoryType>("InventoryTypes");
+    builder.EntitySet<MaterialInventory>("MaterialInventories"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class SalesController : ODataController
+    public class InventoryTypesController : ODataController
     {
         private EphraimTradersEntities db = new EphraimTradersEntities();
 
-        // GET: odata/Sales
+        // GET: odata/InventoryTypes
         [EnableQuery]
-        public IQueryable<Sale> GetSales()
+        public IQueryable<InventoryType> GetInventoryTypes()
         {
-            return db.Sales;
+            return db.InventoryTypes;
         }
 
-        // GET: odata/Sales(5)
+        // GET: odata/InventoryTypes(5)
         [EnableQuery]
-        public SingleResult<Sale> GetSale([FromODataUri] int key)
+        public SingleResult<InventoryType> GetInventoryType([FromODataUri] byte key)
         {
-            return SingleResult.Create(db.Sales.Where(sale => sale.SaleId == key));
+            return SingleResult.Create(db.InventoryTypes.Where(inventoryType => inventoryType.InventoryTypeId == key));
         }
 
-        // PUT: odata/Sales(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<Sale> patch)
+        // PUT: odata/InventoryTypes(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] byte key, Delta<InventoryType> patch)
         {
             Validate(patch.GetEntity());
 
@@ -57,13 +54,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Sale sale = await db.Sales.FindAsync(key);
-            if (sale == null)
+            InventoryType inventoryType = await db.InventoryTypes.FindAsync(key);
+            if (inventoryType == null)
             {
                 return NotFound();
             }
 
-            patch.Put(sale);
+            patch.Put(inventoryType);
 
             try
             {
@@ -71,7 +68,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SaleExists(key))
+                if (!InventoryTypeExists(key))
                 {
                     return NotFound();
                 }
@@ -81,26 +78,26 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(sale);
+            return Updated(inventoryType);
         }
 
-        // POST: odata/Sales
-        public async Task<IHttpActionResult> Post(Sale sale)
+        // POST: odata/InventoryTypes
+        public async Task<IHttpActionResult> Post(InventoryType inventoryType)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Sales.Add(sale);
+            db.InventoryTypes.Add(inventoryType);
             await db.SaveChangesAsync();
 
-            return Created(sale);
+            return Created(inventoryType);
         }
 
-        // PATCH: odata/Sales(5)
+        // PATCH: odata/InventoryTypes(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<Sale> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] byte key, Delta<InventoryType> patch)
         {
             Validate(patch.GetEntity());
 
@@ -109,13 +106,13 @@ namespace ept.Controllers
                 return BadRequest(ModelState);
             }
 
-            Sale sale = await db.Sales.FindAsync(key);
-            if (sale == null)
+            InventoryType inventoryType = await db.InventoryTypes.FindAsync(key);
+            if (inventoryType == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(sale);
+            patch.Patch(inventoryType);
 
             try
             {
@@ -123,7 +120,7 @@ namespace ept.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SaleExists(key))
+                if (!InventoryTypeExists(key))
                 {
                     return NotFound();
                 }
@@ -133,50 +130,29 @@ namespace ept.Controllers
                 }
             }
 
-            return Updated(sale);
+            return Updated(inventoryType);
         }
 
-        // DELETE: odata/Sales(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        // DELETE: odata/InventoryTypes(5)
+        public async Task<IHttpActionResult> Delete([FromODataUri] byte key)
         {
-            Sale sale = await db.Sales.FindAsync(key);
-            if (sale == null)
+            InventoryType inventoryType = await db.InventoryTypes.FindAsync(key);
+            if (inventoryType == null)
             {
                 return NotFound();
             }
 
-            db.Sales.Remove(sale);
+            db.InventoryTypes.Remove(inventoryType);
             await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/Sales(5)/Bill
+        // GET: odata/InventoryTypes(5)/MaterialInventories
         [EnableQuery]
-        public SingleResult<Bill> GetBill([FromODataUri] int key)
+        public IQueryable<MaterialInventory> GetMaterialInventories([FromODataUri] byte key)
         {
-            return SingleResult.Create(db.Sales.Where(m => m.SaleId == key).Select(m => m.Bill));
-        }
-
-        // GET: odata/Sales(5)/Godown
-        [EnableQuery]
-        public SingleResult<Godown> GetGodown([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.Sales.Where(m => m.SaleId == key).Select(m => m.Godown));
-        }
-
-        // GET: odata/Sales(5)/Material
-        [EnableQuery]
-        public SingleResult<Material> GetMaterial([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.Sales.Where(m => m.SaleId == key).Select(m => m.Material));
-        }
-
-        // GET: odata/Sales(5)/Status
-        [EnableQuery]
-        public SingleResult<Status> GetStatus([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.Sales.Where(m => m.SaleId == key).Select(m => m.Status));
+            return db.InventoryTypes.Where(m => m.InventoryTypeId == key).SelectMany(m => m.MaterialInventories);
         }
 
         protected override void Dispose(bool disposing)
@@ -188,9 +164,9 @@ namespace ept.Controllers
             base.Dispose(disposing);
         }
 
-        private bool SaleExists(int key)
+        private bool InventoryTypeExists(byte key)
         {
-            return db.Sales.Count(e => e.SaleId == key) > 0;
+            return db.InventoryTypes.Count(e => e.InventoryTypeId == key) > 0;
         }
     }
 }

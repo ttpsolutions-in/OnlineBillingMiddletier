@@ -18,7 +18,6 @@
     <div ng-if="ShowSpinnerStatus" class="loader"></div>
     <div class="card-body">
         <form name="addMaterialInventoryDashboardForm">
-
             <div class="form-row">
                 <div class="form-group col-md-2">
                     <select select2 id="SupplierRetailer" name="SupplierRetailer" ng-model="searchSupplierRetailer" ng-change="GetContactNo()" class="form-control"
@@ -63,23 +62,23 @@
                 </div>
             </div>
             <div class="col-12">
-                <table class="table table-sm table-striped table-bordered table-condensed">
+                <table class="table table-sm table-striped table-bordered table-condensed" style="width:100%">
+                    <tr ng-repeat="item in TotalAll">
+                        <td class="text-right">{{item.Type}}</td>
+                        <td class="text-right"><label>{{item.Total}}</label></td>
+                    </tr>
                     <tr ng-show="searchMaterialId>0">
                         <td class="text-right">Quantity In Hand</td>
                         <td class="text-right"><label>{{QuantityInHand}}</label></td>
                     </tr>
-                    <!--<tr>
-                        <td class="text-right">Total Quantity</td>
-                        <td class="text-right"><label>{{TotalQuantity}}</label></td>
-                    </tr>-->
                     <tr>
                         <td class="text-right">Total Pending Amount</td>
                         <td class="text-right"><label>{{TotalPending}}</label></td>
                     </tr>
-                    
+
                     <!--<tr>
-        <td colspan="2" align="center"><button type="button" ng-if="searchSupplierRetailer && TotalPending >0" class="btn btn-primary col-md-offset-5" ng-click="payBill()">Pay Online <span data-feather="arrow-right-circle"></span></button></td>
-    </tr>-->
+                <td colspan="2" align="center"><button type="button" ng-if="searchSupplierRetailer && TotalPending >0" class="btn btn-primary col-md-offset-5" ng-click="payBill()">Pay Online <span data-feather="arrow-right-circle"></span></button></td>
+            </tr>-->
                 </table>
 
             </div>

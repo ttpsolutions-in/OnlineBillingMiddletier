@@ -1,4 +1,4 @@
-﻿angular.module('dialogApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+﻿angular.module('dialogApp', ['ngMaterial', 'ngMessages'])
 
     .controller('AppCtrl', function ($scope, $mdDialog) {
         $scope.status = '  ';
