@@ -8,6 +8,10 @@
         text-align: center;
         z-index: 1000;
     }
+    .notpadding {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 </style>
 <div class="card">
     <div class="card-header">
@@ -60,12 +64,27 @@
                          class="myGrid" style="height:400px"></div>
                     <div class="nodatatxt" style="margin-top:20px" data-ng-if="gridOptions.data.length==0">No data found</div>
                 </div>
-            </div>
-            <div class="col-12">
-                <table class="table table-sm table-striped table-bordered table-condensed" style="width:100%">
-                    <tr ng-repeat="item in TotalAll">
-                        <td class="text-right">{{item.Type}}</td>
-                        <td class="text-right"><label>{{item.Total}}</label></td>
+            </div>            
+            <div><br />
+                <table class="table table-sm table-striped table-bordered table-condensed" style="width:100%;padding:0px">
+                    <tr ng-show="searchMaterialId>0">
+                        <td class="text-right notpadding">
+                            <table class="table table-sm table-striped table-bordered table-condensed">
+                                <tr ng-repeat="item in ReportArray| limitTo:ReportArray.length/2:0">
+                                    <td class="text-right">{{item.InventoryTypeName}}</td>
+                                    <td class="text-right"><label>{{item.Total}}</label></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td class="text-right notpadding">
+                            <table class="table table-sm table-striped table-bordered table-condensed">
+                                <tr ng-repeat="item in ReportArray| limitTo:(ReportArray.length/2)+1:ReportArray.length/2">
+                                    <td class="text-right">{{item.InventoryTypeName}}</td>
+                                    <td class="text-right"><label>{{item.Total}}</label></td>
+                                </tr>
+                            </table>
+                        </td>
+
                     </tr>
                     <tr ng-show="searchMaterialId>0">
                         <td class="text-right">Quantity In Hand</td>
@@ -77,8 +96,8 @@
                     </tr>
 
                     <!--<tr>
-                <td colspan="2" align="center"><button type="button" ng-if="searchSupplierRetailer && TotalPending >0" class="btn btn-primary col-md-offset-5" ng-click="payBill()">Pay Online <span data-feather="arrow-right-circle"></span></button></td>
-            </tr>-->
+                        <td colspan="2" align="center"><button type="button" ng-if="searchSupplierRetailer && TotalPending >0" class="btn btn-primary col-md-offset-5" ng-click="payBill()">Pay Online <span data-feather="arrow-right-circle"></span></button></td>
+                    </tr>-->
                 </table>
 
             </div>

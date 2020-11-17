@@ -21,12 +21,20 @@
                     <label for="InventoryType">Inventory Type</label> <span class="text-danger">*</span>
                     <input type="text" class="form-control" id="InventoryType" name="InventoryType" placeholder="Enter Inventory Type"
                            ng-model="InventoryType.InventoryTypeName" required>
-                    <p ng-show="submitted && addInventoryTypeForm.Inventory Type.$invalid"
+                    <p ng-show="submitted && addInventoryTypeForm.InventoryType.$invalid"
                        class="text-danger">Inventory Type is required.</p>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="BoxQty">Active</label>
-                    <input type="checkbox" class="form-control" id="chkActive" name="Active" ng-model="InventoryType.Active">
+                    <label for="TypeForQIH">Type for QIH</label> <span class="text-danger">*</span>
+                    <select id="TypeForQIH" name="TypeForQIH" ng-model="InventoryType.TypeForQIH" class="form-control input-sm" required>
+                        <option value="equal">equal</option>
+                        <option value="minus">minus</option>
+                        <option value="plus">plus</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Active">Active</label>
+                    <input type="checkbox" class="form-control" id="Active" name="Active" ng-model="InventoryType.Active">
                 </div>
             </div>
             <div><hr /></div>

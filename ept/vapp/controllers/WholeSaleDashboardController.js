@@ -199,6 +199,7 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window', 'Config', 'Gl
             }
 
             //$scope.showSpinner();
+            $scope.WholeSaleList = [];
             CommonService.GetListItems(lstBill).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
                     $scope.WholeSaleList = response.data.d.results;
@@ -212,10 +213,11 @@ ETradersApp.controller("WholeSaleDashboardController", ['$window', 'Config', 'Gl
                     //$scope.searchSupplierRetailer
                     if (callback)
                         callback();
+                }
 
-                    $scope.gridOptions.data = $scope.WholeSaleList;
-                    $scope.GetTotalCredit();
-                }                
+                $scope.gridOptions.data = $scope.WholeSaleList;
+                $scope.GetTotalCredit();
+
             });
         };
         $scope.payBill = function () {

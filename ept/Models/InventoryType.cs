@@ -23,6 +23,7 @@ namespace ept.Models
         public byte InventoryTypeId { get; set; }
         public string InventoryTypeName { get; set; }
         public Nullable<byte> Active { get; set; }
+        public string TypeForQIH { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialInventory> MaterialInventories { get; set; }

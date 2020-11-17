@@ -261,14 +261,54 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
                     $scope.MaterialInventoryList = response.data.d.results;
                     $scope.GetTotalQuantityNPending();
                     if ($scope.searchMaterialId > 0) {
-                        var returnToSupplier = $filter('filter')($scope.TotalAll, { Type: "Return To Supplier" }, true)[0].Total;
-                        returnToSupplier = returnToSupplier == null ? 0 : returnToSupplier;
+                        var indexOfNewArrival = $scope.ReportArray.findIndex(x => x.InventoryTypeName === "New Arrival");
+                        $scope.TotalQuantity = $scope.ReportArray[indexOfNewArrival].Total;
+                        $scope.ReportArray.splice(indexOfNewArrival, 1);
+
                         $scope.GetMaterialSoldCount($scope.searchMaterialId);
-                        $scope.QuantityInHand = parseFloat($scope.TotalQuantity) - (parseFloat($scope.MaterialSoldCount) + parseFloat(returnToSupplier));
+
+                        angular.forEach($scope.ReportArray, function (value, key) {
+
+                            switch (value.TypeForQIH) {
+                                case "minus":
+                                    $scope.QuantityInHand = parseFloat($scope.TotalQuantity) - (parseFloat($scope.MaterialSoldCount) + parseFloat(value.Total));
+                                    break;
+                                case "plus":
+                                    $scope.QuantityInHand = (parseFloat($scope.TotalQuantity) + parseFloat(value.Total)) - parseFloat($scope.MaterialSoldCount);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        })
+                        //$scope.QuantityInHand = parseFloat($scope.TotalQuantity) - (parseFloat($scope.MaterialSoldCount) + parseFloat(returnToSupplier));
                     }
                 }
                 $scope.gridOptions.data = $scope.MaterialInventoryList;
                 //  $scope.hideSpinner();
+            });
+        };
+        $scope.GetTotalQuantityNPending = function () {
+            $scope.TotalQuantity = 0;
+            $scope.TotalPending = 0;
+            //$scope.TotalAll = [];
+            //var item = {};
+            $scope.ReportArray = null;
+            $scope.ReportArray = JSON.parse(JSON.stringify($scope.InventoryTypeList));
+
+            angular.forEach($scope.MaterialInventoryList, function (items) {
+
+                var matchObj = $filter('filter')($scope.ReportArray, { InventoryTypeName: items.InventoryType.InventoryTypeName }, true)[0];
+                if (matchObj != undefined) {
+                    matchObj.Total += parseFloat(items.Quantity);
+
+                }
+                if (items.InventoryType.InventoryTypeName.toUpperCase() == 'NEW ARRIVAL') {
+                    //$scope.TotalQuantity += parseFloat(items.Quantity);
+                    if (items.PaymentStatus.toUpperCase() == 'PENDING') {
+                        $scope.TotalPending = parseFloat($scope.TotalPending) + parseFloat(items.Amount);
+                    }
+                }
+
             });
         };
         $scope.GetOnlinePaymentDetails = function (paidToEmail) {
@@ -297,8 +337,8 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
                 fields: [
                     "MaterialId"
                 ],
-                //lookupFields: ["Bill", "Material", "Godown"],
-                filter: ["MaterialId eq " + MaterialId + ' and Active eq 1']//,
+                lookupFields: ["Status"],
+                filter: ["MaterialId eq " + MaterialId + " and Status/StatusName eq 'Active'"] //,
                 //limitTo: "5000",
                 //orderBy: "CreatedOn desc"
             };
@@ -405,32 +445,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
             }
 
         }
-        $scope.GetTotalQuantityNPending = function () {
-            $scope.TotalQuantity = 0;
-            $scope.TotalPending = 0;
-            $scope.TotalAll = [];
-            var item = {};
 
-            angular.forEach($scope.MaterialInventoryList, function (items) {
-                item = { "Type": items.InventoryType.InventoryTypeName, "Total": 0 };
-                if (!$scope.TotalAll.includes(item)) {
-                    item.Total = items.Quantity;
-                    $scope.TotalAll.push(item);
-                }
-                else {
-                    var matchObj = $filter('filter')($scope.TotalAll, { Type: items.InventoryType.InventoryTypeName }, true)[0];
-                    matchObj.Total += parseFloat(items.Quantity);
-                }
-                if (items.InventoryType.InventoryTypeName.toUpperCase() == 'NEW ARRIVAL' || items.InventoryType.InventoryTypeName.toUpperCase() == 'RETURN FROM CUSTOMER') {
-                    $scope.TotalQuantity += parseFloat(items.Quantity);
-                    if (items.PaymentStatus.toUpperCase() == 'PENDING') {
-                        $scope.TotalPending = parseFloat($scope.TotalPending) + parseFloat(items.Amount);
-                    }
-                }
-                
-            });
-
-        };
         $scope.payBill = function () {
 
             var clientId = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.searchSupplierRetailer }, true)[0].ClientId;
@@ -490,7 +505,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
             //var GodownData = [];
             var lstItems = {
                 title: "InventoryTypes",
-                fields: ["InventoryTypeId", "InventoryTypeName"],
+                fields: ["InventoryTypeId", "InventoryTypeName", "TypeForQIH"],
                 filter: ["Active eq 1"],
                 orderBy: "InventoryTypeName"
             };
@@ -498,6 +513,9 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
             CommonService.GetListItems(lstItems).then(function (response) {
                 if (response && response.data.d.results.length > 0) {
                     $scope.InventoryTypeList = response.data.d.results;
+                    angular.forEach($scope.InventoryTypeList, function (value, key) {
+                        value.Total = 0;
+                    })
                 }
                 //return GodownData;
             });
@@ -527,9 +545,10 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
 
             $scope.GetSupplierRetailers();
             $scope.GetGodown();
+            $scope.GetInventoryTypes();
             $scope.GetDataForDashboard();
             $scope.GetItemCategory();
-            $scope.GetInventoryTypes();
+
         };
 
         $scope.init();

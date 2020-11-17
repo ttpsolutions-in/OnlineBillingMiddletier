@@ -32,7 +32,8 @@
         columnDefs: [
 
             { width: 350, displayName: 'InventoryType', field: 'InventoryTypeName', cellTooltip: true, enableCellEdit: false, cellClass: 'text-right', headerCellClass: 'text-center' },
-            { width: 150, displayName: 'Active', field: 'Active', enableFiltering: false, enableCellEdit: false, cellTooltip: true, cellClass: 'text-center', headerCellClass: 'text-center' },
+            { width: 350, displayName: 'Type for QIH', field: 'TypeForQIH', cellTooltip: true, enableCellEdit: false, cellClass: 'text-center', headerCellClass: 'text-center' },
+             { width: 150, displayName: 'Active', field: 'Active', enableFiltering: false, enableCellEdit: false, cellTooltip: true, cellClass: 'text-center', headerCellClass: 'text-center' },
             {
                 name: 'Action', width: 80, enableFiltering: false, cellClass: 'text-center', displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
                     + '<a id="btnView" type="button" title="Edit" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#EditInventoryType/{{row.entity.InventoryTypeId}}" ><span data-feather="edit"></span> </a>'
@@ -54,8 +55,9 @@
                 else {
 
                     var values = {
-                        "InventoryTypeName": $scope.InventoryType.InventoryTypeName
-                        , "Active": $scope.InventoryType.Active == true ? '1' : 0
+                        "InventoryTypeName": $scope.InventoryType.InventoryTypeName.toString()
+                        , "TypeForQIH": $scope.InventoryType.TypeForQIH.toString()
+                        , "Active": $scope.InventoryType.Active == true ? 1 : 0
                     };
                     CommonService.PostData("InventoryTypes", values).then(function (response) {
                         //console.log("response " + response);
@@ -92,8 +94,9 @@
                 }
                 else {
                     var values = {
-                        "InventoryTypeName": $scope.EditInventoryType.InventoryTypeName
-                        , "Active": $scope.EditInventoryType.Active == true ? '1' : '0'
+                        "InventoryTypeName": $scope.EditInventoryType.InventoryTypeName.toString()
+                        , "TypeForQIH": $scope.EditInventoryType.TypeForQIH.toString()
+                        , "Active": $scope.EditInventoryType.Active == true ? 1 : 0
                     };
                     CommonService.UpdateData("InventoryTypes", values, $scope.ID).then(function (response) {
                         console.log("response " + response);
@@ -115,7 +118,7 @@
     $scope.GetInventoryTypeList = function () {
         var lstInventoryType = {
             title: "InventoryTypes",
-            fields: ["InventoryTypeId", "InventoryTypeName", "Active"],
+            fields: ["InventoryTypeId", "InventoryTypeName","TypeForQIH", "Active"],
             //filter: ["Active eq true"],
             orderBy: "InventoryTypeId desc"
         };
@@ -132,7 +135,7 @@
     $scope.GetInventoryTypeById = function () {
         var lstInventoryType = {
             title: "InventoryTypes",
-            fields: ["InventoryTypeId", "InventoryTypeName", "Active"],
+            fields: ["InventoryTypeId", "InventoryTypeName","TypeForQIH", "Active"],
             filter: ["InventoryTypeId eq " + $scope.ID]
         };
         $scope.showSpinner();

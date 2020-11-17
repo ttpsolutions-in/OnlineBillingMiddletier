@@ -194,6 +194,7 @@
           </Key>
           <Property Name="InventoryTypeId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="InventoryTypeName" Type="varchar" MaxLength="50" />
+          <Property Name="TypeForQIH" Type="varchar" MaxLength="5" />
           <Property Name="Active" Type="tinyint" />
         </EntityType>
         <EntityType Name="ItemCategory">
@@ -2284,6 +2285,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <Property Name="InventoryTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Active" Type="Byte" />
           <NavigationProperty Name="MaterialInventories" Relationship="EphraimTradersModel.FK_MaterialInventory_InventoryType" FromRole="InventoryType" ToRole="MaterialInventory" />
+          <Property Name="TypeForQIH" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_MaterialInventory_InventoryType">
           <End Type="EphraimTradersModel.InventoryType" Role="InventoryType" Multiplicity="1" />
@@ -2889,6 +2891,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySetMapping Name="InventoryTypes">
             <EntityTypeMapping TypeName="EphraimTradersModel.InventoryType">
               <MappingFragment StoreEntitySet="InventoryType">
+                <ScalarProperty Name="TypeForQIH" ColumnName="TypeForQIH" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="InventoryTypeName" ColumnName="InventoryTypeName" />
                 <ScalarProperty Name="InventoryTypeId" ColumnName="InventoryTypeId" />

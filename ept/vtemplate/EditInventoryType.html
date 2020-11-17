@@ -12,7 +12,7 @@
 <div class="card">
     <div class="card-header">
         <b>Edit Inventory Type</b>
-        
+
     </div>
     <div class="card-body">
         <form name="editInventoryTypeForm">
@@ -25,10 +25,18 @@
                        class="text-danger">Inventory Type is required.</p>
                 </div>
                 <div class="form-group col-md-4">
+                    <label for="TypeForQIH">Type for QIH</label> <span class="text-danger">*</span>
+                    <select id="TypeForQIH" name="TypeForQIH" ng-model="EditInventoryType.TypeForQIH" class="form-control input-sm" required>
+                        <option value="equal">equal</option>
+                        <option value="minus">minus</option>
+                        <option value="plus">plus</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
                     <label for="chkActive">Active</label>
                     <input type="checkbox" class="form-control" id="chkActive" name="Active"
                            ng-model="EditInventoryType.Active">
-                </div>                
+                </div>
             </div>
             <br />
             <br />
@@ -51,11 +59,10 @@
 </body>
 <script type="text/javascript">
     feather.replace();
-                 var gearPage = document.getElementById('GearPage');
-                 if(null != gearPage)
-                 {
-                     gearPage.parentNode.removeChild(gearPage);
-                     document.title = "Error";
-                 }
+    var gearPage = document.getElementById('GearPage');
+    if (null != gearPage) {
+        gearPage.parentNode.removeChild(gearPage);
+        document.title = "Error";
+    }
 </script>
 </html>
