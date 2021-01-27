@@ -14,7 +14,17 @@ namespace ept.Models
     
     public partial class Unit
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Unit()
+        {
+            this.Materials = new HashSet<Material>();
+        }
+    
         public byte UnitId { get; set; }
         public string UnitName { get; set; }
+        public Nullable<byte> Active { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Material> Materials { get; set; }
     }
 }

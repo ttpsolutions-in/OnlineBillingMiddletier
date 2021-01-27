@@ -21,7 +21,7 @@
                     <label for="RightsName">Rights Name</label> <span class="text-danger">*</span>
                     <input type="text" class="form-control" id="RightsName" name="RightsName" placeholder="Enter Rights name"
                            ng-model="EditRights.RightsName" required>
-                    <p ng-show="submitted && editRightsForm.RightsName.$invalid && editRightsForm.RightsName.$pristine"
+                    <p ng-show="submitted && editRightsForm.RightsName.$invalid && !editRightsForm.RightsName.$pristine"
                        class="text-danger">Rights name is required.</p>
                 </div>
                 <div class="form-group col-md-4">

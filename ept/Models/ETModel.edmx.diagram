@@ -75,6 +75,7 @@
         <AssociationConnector Association="EphraimTradersModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EphraimTradersModel.InventoryType" Width="1.5" PointX="6.375" PointY="0.75" />
         <AssociationConnector Association="EphraimTradersModel.FK_MaterialInventory_InventoryType" />
+        <AssociationConnector Association="EphraimTradersModel.FK_Materials_Unit" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -39,13 +39,13 @@ ETradersApp.factory('CommonService', ['$window', 'GlobalVariableService', '$http
             //Return Json File Response
             var promise = $http(req).then(function (response) {
                 return response;
-            }, function (response) {
+            }, function (error) {
                 //Exception Handling
                 console.log("error=" + JSON.stringify(response));
-                if (response.status == 401) {
+                if (error.status == 401) {
                     $window.location.href = Config.ServiceBaseURL + "/login.html";
                 }
-                return response;
+                return error;
             });
 
             return promise;
@@ -172,22 +172,30 @@ ETradersApp.factory('CommonService', ['$window', 'GlobalVariableService', '$http
             return promise;
         };
 
-        CommonService.getMaterials = function (callback) {
+        CommonService.getMaterials = function (catId, callback) {
             var lstItems = {
                 title: "Materials",
-                fields: ["MaterialId", "DisplayName", "RetailRate", "WholeSaleRate", "ItemCategoryId", "ItemCategory/ItemCategoryId"],
-                lookupFields: ["ItemCategory"],
+                fields: ["MaterialId", "DisplayName", "RetailRate", "WholeSaleRate", "Unit/UnitName", "ItemCategoryId", "ItemCategory/ItemCategoryId"],
+                lookupFields: ["ItemCategory", "Unit"],
+                filter: ["ItemCategoryId eq " + catId],
                 orderBy: "DisplayName desc"
             };
-            CommonService.GetListItems(lstItems).then(function (response) {
+
+            var promise= CommonService.GetListItems(lstItems).then(response => {
+
                 if (response && response.data.d.results.length > 0) {
-                    GlobalVariableService.setMaterialList(response.data.d.results);
+                    return response.data.d.results;
+                    //GlobalVariableService.setMaterialList(response.data.d.results);
                     //return JSON.parse($window.sessionStorage["MaterialList"]);                
                 }
-                if (callback)
-                    callback();
+            }).catch(error => {
+                return error;
             });
-            //return promise;
+
+            if (callback)
+                callback();
+
+            return promise;
         }
         CommonService.fetchRoleRights = async function (RoleName, callback) {
 

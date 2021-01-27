@@ -115,10 +115,10 @@
                     <button type="button" class="btn btn-primary" ng-click="SubmitItems(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save</button>
                 </div>-->
                 <div class="pr-4">
-                    <button type="button" class="btn btn-primary" ng-if="CancelBillRights.length>0" ng-click="SaveBillDetails('c')"><span data-feather="trash"></span> Cancel Bill</button>
+                    <button type="button" class="btn btn-primary" ng-if="WholeSale[0].Bill.BillStatus==1 && CancelBillRights.length>0" ng-click="ConfirmCancelBill(BillNo)"><span data-feather="trash"></span> Cancel Bill</button>
                 </div>
                 <div class="pr-4">
-                    <button type="button" class="btn btn-primary" ng-click="SaveNPrint(addWholeSaleForm.$valid)"><span data-feather="save"></span> Save & <span data-feather="print"></span> Print</button>
+                    <button type="button" class="btn btn-primary" ng-if="WholeSale[0].Bill.BillStatus==1" ng-click="SaveNPrint()"><span data-feather="save"></span> Save & <span data-feather="print"></span> Print</button>
                 </div>
             </div>
         </form>
@@ -136,12 +136,15 @@
 </head>
 <body>
 </body>
+</html>
 <script type="text/javascript">
-    feather.replace();
+    $(document).ready(function () {
+        feather.replace();
+    });
+
     var gearPage = document.getElementById('GearPage');
     if (null != gearPage) {
         gearPage.parentNode.removeChild(gearPage);
         document.title = "Error";
     }
 </script>
-</html>

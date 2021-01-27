@@ -41,7 +41,7 @@
                             ng-options="item.SupplierRetailerId as item.Name for item in SupplierCustomers" ng-required="RetailData.Others==undefined || RetailData.Others.length==0" ng-disabled="RetailData.Others.length > 0">
                         <option value=""> Existing customer <span class="text-danger pull-right">*</span></option>
                     </select>
-                    <p ng-show="submitted && addRetailForm.SupplierRetailer.$invalid && !SupplierRetailer.SupplierRetailer.$pristine"
+                    <p ng-show="submitted && addRetailForm.SupplierRetailer.$invalid && !addRetailForm.SupplierRetailer.$pristine"
                        class="text-danger">Customer name is required.</p>
                 </div>
             </div>

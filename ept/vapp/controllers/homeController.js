@@ -60,8 +60,8 @@ ETradersApp.controller('homeController', ['$window','Config', 'GlobalVariableSer
             $scope.tokenInfo = GlobalVariableService.getTokenInfo();
             if ($scope.tokenInfo) {
                 GlobalVariableService.validateUrl($location.url());
-                if (GlobalVariableService.getMaterialList() == null)
-                    CommonService.getMaterials($scope.hideSpinner());                
+                //if (GlobalVariableService.getMaterialList() == null)
+                    //CommonService.getMaterials($scope.hideSpinner());                
                 var AllRights = GlobalVariableService.getRoleRights();
                 $scope.UserRights = $filter('filter')(AllRights, { Menu: 1 }, true);
             }

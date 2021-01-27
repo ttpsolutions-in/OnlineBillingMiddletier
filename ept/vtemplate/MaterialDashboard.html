@@ -18,24 +18,24 @@
     <div class="card-body">
         <form id="MaterialDashboad">
             <div class="form-row">
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3">
                     <label for="searchCategory">Category</label>
                     <select select2 id="searchCategory" name="searchCategory" ng-model="searchCategory" class="form-control input-sm"
                             ng-options="item.ItemCategoryId as item.ItemCategoryName for item in ItemCatogoryList" required>
                         <option value="">-- Select Category --</option>
                     </select>
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3">
                     <label for="searchDescription">Description</label>
                     <input type="text" class="form-control input-sm" id="searchDescription" name="searchDescription"
                            ng-model="searchDescription" placeholder="Enter description">
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-4">
                     <label for="searchDisplayName">Material Name</label>
                     <input type="text" class="form-control input-sm" id="searchDisplayName" name="searchDisplayName"
                            ng-model="searchDisplayName" placeholder="Enter display name">
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <br />
                     &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-secondary" ng-click="GetDataForDashboard();" style="margin-top:5px">Search</button>
                 </div>

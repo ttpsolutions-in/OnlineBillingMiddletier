@@ -253,6 +253,8 @@
           <Property Name="ItemCategoryId" Type="smallint" />
           <Property Name="DisplayName" Type="varchar" MaxLength="250" />
           <Property Name="Active" Type="tinyint" />
+          <Property Name="RateUnitId" Type="tinyint" />
+          <Property Name="Remarks" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="OnlinePaymentDetails">
           <Key>
@@ -440,6 +442,7 @@
           </Key>
           <Property Name="UnitId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UnitName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Active" Type="tinyint" />
         </EntityType>
         <EntityType Name="UserMaster">
           <Key>
@@ -910,6 +913,30 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Materials_ItemCategory">
+          <End Role="ItemCategory" Type="Self.ItemCategory" Multiplicity="0..1" />
+          <End Role="Materials" Type="Self.Materials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemCategory">
+              <PropertyRef Name="ItemCategoryId" />
+            </Principal>
+            <Dependent Role="Materials">
+              <PropertyRef Name="ItemCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materials_Unit">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+          <End Role="Materials" Type="Self.Materials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="UnitId" />
+            </Principal>
+            <Dependent Role="Materials">
+              <PropertyRef Name="RateUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RightsManagement_EmployeeRole">
           <End Role="EmployeeRole" Type="Self.EmployeeRole" Multiplicity="1" />
           <End Role="RightsManagement" Type="Self.RightsManagement" Multiplicity="*" />
@@ -1181,6 +1208,14 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <AssociationSet Name="FK_MaterialInventory_TransferToGodown" Association="Self.FK_MaterialInventory_TransferToGodown">
             <End Role="Godown" EntitySet="Godown" />
             <End Role="MaterialInventory" EntitySet="MaterialInventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materials_ItemCategory" Association="Self.FK_Materials_ItemCategory">
+            <End Role="ItemCategory" EntitySet="ItemCategory" />
+            <End Role="Materials" EntitySet="Materials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materials_Unit" Association="Self.FK_Materials_Unit">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="Materials" EntitySet="Materials" />
           </AssociationSet>
           <AssociationSet Name="FK_RightsManagement_EmployeeRole" Association="Self.FK_RightsManagement_EmployeeRole">
             <End Role="EmployeeRole" EntitySet="EmployeeRole" />
@@ -1466,6 +1501,9 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <NavigationProperty Name="ItemCategory" Relationship="Self.FK__Materials__ItemC__6225902D" FromRole="Materials" ToRole="ItemCategory" />
           <NavigationProperty Name="MaterialInventories" Relationship="Self.FK_MaterialInventory_Materials" FromRole="Materials" ToRole="MaterialInventory" />
           <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__MaterialI__7B5B524B" FromRole="Materials" ToRole="Sales" />
+          <Property Name="RateUnitId" Type="Byte" />
+          <Property Name="Remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Unit" Relationship="EphraimTradersModel.FK_Materials_Unit" FromRole="Material" ToRole="Unit" />
         </EntityType>
         <EntityType Name="OnlinePaymentDetail">
           <Key>
@@ -1670,6 +1708,8 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           </Key>
           <Property Name="UnitId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UnitName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Materials" Relationship="EphraimTradersModel.FK_Materials_Unit" FromRole="Unit" ToRole="Material" />
+          <Property Name="Active" Type="Byte" />
         </EntityType>
         <EntityType Name="UserMaster">
           <Key>
@@ -2276,6 +2316,10 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             <End Role="InventoryType" EntitySet="InventoryTypes" />
             <End Role="MaterialInventory" EntitySet="MaterialInventories" />
           </AssociationSet>
+          <AssociationSet Name="FK_Materials_Unit" Association="EphraimTradersModel.FK_Materials_Unit">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="Material" EntitySet="Materials" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="InventoryType">
           <Key>
@@ -2296,6 +2340,18 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
             </Principal>
             <Dependent Role="MaterialInventory">
               <PropertyRef Name="InventoryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materials_Unit">
+          <End Type="EphraimTradersModel.Unit" Role="Unit" Multiplicity="0..1" />
+          <End Type="EphraimTradersModel.Material" Role="Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="UnitId" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="RateUnitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2529,6 +2585,8 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySetMapping Name="Materials">
             <EntityTypeMapping TypeName="EphraimTradersModel.Material">
               <MappingFragment StoreEntitySet="Materials">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="RateUnitId" ColumnName="RateUnitId" />
                 <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="NoOfPiecePerUnit" ColumnName="NoOfPiecePerUnit" />
@@ -2749,6 +2807,7 @@ warning 6002: The table/view 'EphraimTraders.dbo.SaleQuantityAmountForReport' do
           <EntitySetMapping Name="Units">
             <EntityTypeMapping TypeName="EphraimTradersModel.Unit">
               <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="UnitName" ColumnName="UnitName" />
               </MappingFragment>

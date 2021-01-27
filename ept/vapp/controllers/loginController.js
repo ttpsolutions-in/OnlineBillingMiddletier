@@ -108,11 +108,11 @@ ETradersApp.controller('LoginController', ['Config', '$scope', 'LoginService', '
             GlobalVariableService.removeToken();
         }
         $scope.afterLoginSuccess = function (RoleName) {
-            CommonService.getMaterials(function () {
+            //CommonService.getMaterials(function () {
                 CommonService.fetchRoleRights(RoleName, function () {
                     $window.location.href = Config.ServiceBaseURL + "/index.html#/";
                 });
-            });
+            //});
         }
         $scope.init = function () {
 

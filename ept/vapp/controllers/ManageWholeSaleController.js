@@ -18,7 +18,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
         $scope.WholeSale.GSTAmount = 0;
         $scope.WholeSale.GrandAmount = 0;
         $scope.WholeSale.GSTPercentage = 0;
-        $scope.WholeSale.ShowGSTNo = 0;
+        $scope.ShowGSTNo = 0;
         $scope.WholeSale.ContactNo = null;
         //$scope.MaterialLists = [];
         $scope.MaterialsData = [];
@@ -71,6 +71,10 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                     enableCellEdit: false, cellClass: 'text-right', headerCellClass: 'text-center'
                 },
                 {
+                    displayName: 'Rate Unit', width: 100, field: 'UnitName', cellTooltip: true,
+                    enableCellEdit: false, headerCellClass: 'text-center'
+                },
+                {
                     displayName: 'Godown *', field: 'GodownId', cellTooltip: true, enableCellEdit: true,
                     editableCellTemplate: 'ui-grid/dropdownEditor', editDropdownValueLabel: 'GodownName', editDropdownIdLabel: 'GodownName',
                     cellClass: 'text-left', headerCellClass: 'text-center'
@@ -98,7 +102,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                 //$scope.showSpinner();
                 
                 //$scope.gridOptions.columnDefs[3].editDropdownOptionsArray = $scope.currentMaterialLst;//$filter('filter')($scope.MaterialsData, { ItemCategoryId: newRowCol.row.entity.ItemCategoryId }, true);
-                $scope.gridOptions.columnDefs[5].editDropdownOptionsArray = $scope.GodownData;
+                $scope.gridOptions.columnDefs[6].editDropdownOptionsArray = $scope.GodownData;
                 //$scope.hideSpinner();
             });
 
@@ -174,9 +178,13 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
         };
 
         $scope.GetMaterialsByCategoryId = function () {
-            
-            $scope.currentMaterialLst = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.WholeSale.ItemCategory }, true);
-            };
+            $scope.showSpinner();
+            CommonService.getMaterials($scope.WholeSale.ItemCategory).then(res => {
+                $scope.currentMaterialLst = res;
+            }).catch(error => { throw error; });
+            //$scope.currentMaterialLst = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.WholeSale.ItemCategory }, true);
+            $scope.hideSpinner();
+        };
         $scope.GetGodowns = function () {
             var lstItems = {
                 title: "Godowns",
@@ -243,24 +251,29 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
             }
             if ($scope.WholeSale.ItemCategory != undefined) {
                 //$scope.currentMaterialLst = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.WholeSale.ItemCategory }, true);
+                var WholeSaleRate =$filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].WholeSaleRate;
+                if (WholeSaleRate == 0)
+                    toaster.pop("warning", "", "Whole sale rate for this item is zero! Please update it first.",5000,'trustedHtml');
+                else {
+                    var item = {
 
-                var item = {
-
-                    "MaterialId": $scope.currentMaterialId,
-                    "ItemCategoryId": $scope.WholeSale.ItemCategory,
-                    "DisplayName": $filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].DisplayName,
-                    "WholeSaleRate":$filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].WholeSaleRate,
-                    "GodownId": "--Select Godown--",
-                    "Description": null,
-                    "Whole_Sale_Rate": 0,
-                    "Quantity": 0,
-                    "Discount": 0,
-                    "DLP": 0,
-                    "Amount": 0,
-                    "Action": ""
-                };
-                $scope.ItemLists.push(item);
-                $scope.gridOptions.data = $scope.ItemLists;
+                        "MaterialId": $scope.currentMaterialId,
+                        "ItemCategoryId": $scope.WholeSale.ItemCategory,
+                        "DisplayName": $filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].DisplayName,
+                        "WholeSaleRate": WholeSaleRate,
+                        "UnitName": $filter('filter')($scope.currentMaterialLst, { MaterialId: $scope.currentMaterialId }, true)[0].Unit.UnitName,
+                        "GodownId": "--Select Godown--",
+                        "Description": null,
+                        "Whole_Sale_Rate": 0,
+                        "Quantity": 0,
+                        "Discount": 0,
+                        "DLP": 0,
+                        "Amount": 0,
+                        "Action": ""
+                    };
+                    $scope.ItemLists.push(item);
+                    $scope.gridOptions.data = $scope.ItemLists;
+                }
             } else {
                 toaster.pop('error', "", "Please select Category", 5000, 'trustedHtml');
 
@@ -274,12 +287,15 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                 var errorMessage = '';
                 var isValid = isFormValid;
                 $scope.submitted = !isValid;
+                if (isValid === false)
+                    return;
                 var count = $scope.gridOptions.data.length;
                 if (count == 0) {
                     toaster.pop('error', "", "No data to save", 5000, 'trustedHtml');
                     return;
                 }
                 else {
+
                     angular.forEach($scope.gridOptions.data, function (value, key) {
                         //var godownId = $filter('filter')($scope.GodownData, { GodownName: value.GodownId }, true)[0].GodownId;
                         if (value.GodownId == undefined || value.GodownId == '--Select Godown--') {
@@ -361,7 +377,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                 var GrandTotal = 0;
                 var balanceAmount = 0;
                 //Cash
-                if ($scope.WholeSale.SaleTypeCash) {
+                if ($scope.SaleTypeCash) {
                     saleType = $scope.SaleTypeCash;
                     billStatus = $scope.BillStatus.Active;
                     //GrandTotal = $scope.WholeSale.GrandTotal;
@@ -383,7 +399,7 @@ ETradersApp.controller("ManageWholeSaleController", ['GlobalVariableService', 'P
                     "GSTPercentage": parseFloat($scope.WholeSale.GSTPercentage).toFixed(2),
                     "TotalAmount": parseFloat($scope.WholeSale.TotalAmount).toFixed(2),
                     "GrandTotal": $scope.WholeSale.GrandTotal,
-                    "ShowGSTNo": $scope.WholeSale.ShowGSTNo,
+                    "ShowGSTNo": $scope.ShowGSTNo,
                     "DiscountApplied": $scope.IsDiscountApplied,
                     "BillStatus": billStatus,//Cash --> complete, Credit--> pending
                     "PaidAmt": balanceAmount.toString(), //Credit --> 0. cash --> GrandAmount

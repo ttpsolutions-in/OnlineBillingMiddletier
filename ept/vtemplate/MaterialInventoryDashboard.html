@@ -21,14 +21,23 @@
     <br />
     <div ng-if="ShowSpinnerStatus" class="loader"></div>
     <div class="card-body">
-        <form name="addMaterialInventoryDashboardForm">
+        <form name="searchMaterialInventoryDashboardForm">
             <div class="form-row">
                 <div class="form-group col-md-2">
+                    <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
+                    <select required select2 id="searchGodownId" name="searchGodownId" ng-model="searchGodownId"
+                            class="form-control"
+                            ng-options="item.GodownId as item.GodownName for item in GodownData">
+                        <option value="">--Select Godown-- </option>
+                    </select>
+                    <p ng-show="submitted && searchMaterialInventoryDashboardForm.searchGodownId.$invalid && searchMaterialInventoryDashboardForm.searchGodownId.$pristine" class="text-danger">Godown must be selected.</p>
+                </div>
+                <div class="form-group col-md-2">
                     <select select2 id="SupplierRetailer" name="SupplierRetailer" ng-model="searchSupplierRetailer" ng-change="GetContactNo()" class="form-control"
-                            ng-options="item.SupplierRetailerId as item.Name for item in SupplierRetailers" required>
+                            ng-options="item.SupplierRetailerId as item.Name for item in SupplierRetailers">
                         <option value="">-- Select Supplier --</option>
                     </select>
-                </div>
+                </div>                
                 <div class="form-group col-md-2">
                     <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
                     <select select2 id="ddlItemCategory" name="ddlItemCategory" ng-model="searchItemCategoryId"
@@ -39,20 +48,12 @@
                 <div class="form-group col-md-2">
                     <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
                     <select select2 id="ddlMaterial" name="ddMaterial" ng-model="searchMaterialId" class="form-control"
-                            ng-options="item.MaterialId as item.DisplayName for item in subMaterialLists" required>
+                            ng-options="item.MaterialId as item.DisplayName for item in subMaterialLists">
                         <option value="">--Select Material-- </option>
                     </select>
                 </div>
-                <div class="form-group col-md-2">
-                    <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
-                    <select select2 id="ddlGodown" name="ddGodown" ng-model="searchGodownId"
-                            class="form-control"
-                            ng-options="item.GodownId as item.GodownName for item in GodownData" required>
-                        <option value="">--Select Godown-- </option>
-                    </select>
-                </div>
                 <div class="form-group col-md-4">
-                    <button type="button" class="btn btn-secondary btn-sm" ng-click="GetDataForDashboard()"><span data-feather="search"></span> Search</button>&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn btn-secondary btn-sm" ng-click="GetDataForDashboard(searchMaterialInventoryDashboardForm.$valid)"><span data-feather="search"></span> Search</button>&nbsp;&nbsp;&nbsp;
                     <button type="button" class="btn btn-secondary btn-sm" ng-click="clear()"><span data-feather="circle"></span> Clear</button>
                     <button type="button" ng-if="searchSupplierRetailer && TotalPending >0" class="btn btn-primary col-md-offset-5" ng-click="payBill()">Pay Online <span data-feather="arrow-right-circle"></span></button>
                 </div>
@@ -67,7 +68,7 @@
             </div>            
             <div><br />
                 <table class="table table-sm table-striped table-bordered table-condensed" style="width:100%;padding:0px">
-                    <tr ng-show="searchMaterialId>0">
+                    <tr>
                         <td class="text-right notpadding">
                             <table class="table table-sm table-striped table-bordered table-condensed">
                                 <tr ng-repeat="item in ReportArray| limitTo:ReportArray.length/2:0">
@@ -84,9 +85,8 @@
                                 </tr>
                             </table>
                         </td>
-
                     </tr>
-                    <tr ng-show="searchMaterialId>0">
+                    <tr ng-show="searchMaterialId > 0">
                         <td class="text-right">Quantity In Hand</td>
                         <td class="text-right"><label>{{QuantityInHand}}</label></td>
                     </tr>

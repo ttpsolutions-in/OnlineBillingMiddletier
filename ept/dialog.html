@@ -3,20 +3,104 @@
 
     <!-- AngularJS Material CSS now available via Google CDN; version 1.2.1 used here -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.1/angular-material.min.css">
+    
+    <style>
+        .example-form {
+            min-width: 150px;
+            max-width: 500px;
+            width: 100%;
+        }
 
+        .example-full-width {
+            width: 100%;
+        }
+
+        td {
+            padding-right: 8px;
+        }
+    </style>
+
+    <!-- AngularJS Material Dependencies -->
+
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+
+    <!-- AngularJS Material Javascript now available via Google CDN; version 1.2.1 used here -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.1/angular-material.min.js"></script>
+    <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/assets-cache.js"></script>
+    <script type="text/javascript" src="vapp/appDialog.js"></script>
 </head>
 <body data-ng-app="dialogApp">
 
-    <!-- AngularJS Material Dependencies -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
 
-    <!-- AngularJS Material Javascript now available via Google CDN; version 1.2.1 used here -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.1/angular-material.min.js"></script>
-    <script src="vapp/appDialog.js"></script>
+
     <div ng-controller="AppCtrl" class="md-padding" id="popupContainer" ng-cloak>
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+                <mat-label>Company (disabled)</mat-label>
+                <input matInput disabled value="Google">
+            </mat-form-field>
+
+            <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>First name</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Long Last Name That Will Be Truncated</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+
+            <p>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Address</mat-label>
+                    <textarea matInput placeholder="Ex. 100 Main St">1600 Amphitheatre Pkwy</textarea>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Address 2</mat-label>
+                    <textarea matInput></textarea>
+                </mat-form-field>
+            </p>
+
+            <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>City</mat-label>
+                            <input matInput placeholder="Ex. San Francisco">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>State</mat-label>
+                            <input matInput placeholder="Ex. California">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Postal Code</mat-label>
+                            <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="94043">
+                            <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+
+
         <p class="inset">
             Open a dialog over the app's content. Press escape or click outside to close the dialog and
             send focus back to the triggering button.
@@ -74,5 +158,6 @@
         </div>
 
     </div>
+    
 </body>
 </html>

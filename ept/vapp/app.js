@@ -1,19 +1,28 @@
 //Define an angular module for our app 
-var ETradersApp = angular.module("ETradersApp", ["ngMaterial", "ngMessages","angular-chartist","ngRoute", "ngAnimate", "ui.bootstrap", "toaster", "ui.grid", "ui.grid.edit", "ui.grid.cellNav", "ui.grid.validate",
-    "ui.grid.pagination", "ui.grid.autoResize", "ui.grid.selection", "ui.grid.resizeColumns", "ui.grid.grouping", "mgcrea.ngStrap"]);//;.run(init);
-//for autocomplete dropdown
-//function init($rootScope, GlobalVariableService) {
-//    //ngRoute
-//    $rootScope.$on('$routeChangeStart', function (angularEvent, next, current) {
-//        GlobalVariableService.validateUrl(current);
-//    });
+var ETradersApp = angular.module("ETradersApp", ["ngMaterial", "ngMessages",
+    "angular-chartist", "ngRoute", "ngAnimate", "ui.bootstrap", "toaster", "ui.grid", "ui.grid.edit", "ui.grid.cellNav", "ui.grid.validate",
+    "ui.grid.pagination", "ui.grid.autoResize", "ui.grid.selection", "ui.grid.resizeColumns", "ui.grid.grouping", "mgcrea.ngStrap"]);
+//;.run(init);
 
 ETradersApp.constant("Config", {
     "ServiceBaseURL": "http://localhost:8080",
     
 });//http://ephraim.ttpsolutions.in //http://localhost:50503
 
-
+ETradersApp.directive('ngConfirmClick', [
+    function () {
+        return {
+            link: function (scope, element, attr) {
+                var msg = attr.ngConfirmClick || "Are you sure?";
+                var clickAction = attr.confirmedClick;
+                element.bind('click', function (event) {
+                    if (window.confirm(msg)) {
+                        scope.$eval(clickAction)
+                    }
+                });
+            }
+        };
+    }])
 
 ETradersApp.directive("select2", function ($timeout, $parse) {
     return {
@@ -134,6 +143,15 @@ ETradersApp.config(['$routeProvider', '$locationProvider',
         }).when("/EditGST/:ID", {
             templateUrl: '/vtemplate/EditGST.html',
             controller: 'GSTController'
+        }).when("/RateUnitDashboard", {
+            templateUrl: '/vtemplate/RateUnitDashboard.html',
+            controller: 'RateUnitController'
+        }).when("/AddRateUnit", {
+            templateUrl: '/vtemplate/AddRateUnit.html',
+            controller: 'RateUnitController'
+        }).when("/EditRateUnit/:ID", {
+            templateUrl: '/vtemplate/EditRateUnit.html',
+            controller: 'RateUnitController'
         }).when("/InventoryTypeDashboard", {
             templateUrl: '/vtemplate/InventoryTypeDashboard.html',
             controller: 'InventoryTypeController'
