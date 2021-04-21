@@ -66,8 +66,8 @@ ETradersApp.controller("RightsController", ['GlobalVariableService','$scope', '$
                 var varActive = $scope.Rights.Active == true ? 1 : 0;
                 var duplicate = $filter('filter')($scope.RightsList, { RightsName: $scope.Rights.RightsName }, true);
                 if (duplicate != undefined && duplicate.length > 0) {
-                    sweetAlert("Duplicate", "Rights name already exists!", "error");
-                    //toaster.pop('error', "", "Rights name already exists!", 5000, 'trustedHtml');
+                    //sweetAlert("Duplicate", "Rights name already exists!", "error");
+                    toaster.pop('error', "", "Rights name already exists!", 5000, 'trustedHtml');
                 }
                 else {
                     var values = {

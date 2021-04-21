@@ -18,7 +18,7 @@ namespace ept
     {
         public static void Register(HttpConfiguration config)
         {
-            //config.Filters.Add(new AuthorizeAttribute());
+            config.Filters.Add(new AuthorizeAttribute());
 
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Bill>("Bills");

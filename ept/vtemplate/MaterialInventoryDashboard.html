@@ -8,6 +8,7 @@
         text-align: center;
         z-index: 1000;
     }
+
     .notpadding {
         padding: 0 !important;
         margin: 0 !important;
@@ -23,51 +24,63 @@
     <div class="card-body">
         <form name="searchMaterialInventoryDashboardForm">
             <div class="form-row">
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3 col-sm-12">
                     <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
-                    <select required select2 id="searchGodownId" name="searchGodownId" ng-model="searchGodownId"
+                    <select select2 id="searchGodownId" name="searchGodownId" ng-model="searchGodownId"
                             class="form-control"
                             ng-options="item.GodownId as item.GodownName for item in GodownData">
                         <option value="">--Select Godown-- </option>
                     </select>
-                    <p ng-show="submitted && searchMaterialInventoryDashboardForm.searchGodownId.$invalid && searchMaterialInventoryDashboardForm.searchGodownId.$pristine" class="text-danger">Godown must be selected.</p>
+                    <!--<p ng-show="submitted && searchMaterialInventoryDashboardForm.searchGodownId.$invalid && searchMaterialInventoryDashboardForm.searchGodownId.$pristine" class="text-danger">Godown must be selected.</p>-->
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3 col-sm-12">
+                    <!--<md-input-container>
+                        <label>Select category</label>
+                        <md-select ng-model="searchSupplierRetailer" select2 ng-change="GetContactNo()">
+                            <md-option><em>None</em></md-option>
+                            <md-option ng-repeat="item.SupplierRetailerId in SupplierRetailers" ng-value="item.SupplierRetailerId"
+                                       ng-disabled="$index === 1" class="form-control">
+                                {{item.Name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>-->                    
                     <select select2 id="SupplierRetailer" name="SupplierRetailer" ng-model="searchSupplierRetailer" ng-change="GetContactNo()" class="form-control"
                             ng-options="item.SupplierRetailerId as item.Name for item in SupplierRetailers">
                         <option value="">-- Select Supplier --</option>
                     </select>
-                </div>                
-                <div class="form-group col-md-2">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3 col-sm-12">
                     <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
                     <select select2 id="ddlItemCategory" name="ddlItemCategory" ng-model="searchItemCategoryId"
                             class="form-control" ng-change="GetMaterialsByCategoryId()" ng-options="item.ItemCategoryId as item.ItemCategoryName for item in ItemCatogoryList" required>
                         <option value="">--Select Category--</option>
                     </select>
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-5 col-sm-12">
                     <!--<label for="ddlItemCategory">Item Category</label> <span class="text-danger">*</span>-->
                     <select select2 id="ddlMaterial" name="ddMaterial" ng-model="searchMaterialId" class="form-control"
-                            ng-options="item.MaterialId as item.DisplayName for item in subMaterialLists">
+                            ng-options="item.MaterialId as item.DisplayName for item in MaterialLists">
                         <option value="">--Select Material-- </option>
                     </select>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-4 col-sm-12">
                     <button type="button" class="btn btn-secondary btn-sm" ng-click="GetDataForDashboard(searchMaterialInventoryDashboardForm.$valid)"><span data-feather="search"></span> Search</button>&nbsp;&nbsp;&nbsp;
                     <button type="button" class="btn btn-secondary btn-sm" ng-click="clear()"><span data-feather="circle"></span> Clear</button>
                     <button type="button" ng-if="searchSupplierRetailer && TotalPending >0" class="btn btn-primary col-md-offset-5" ng-click="payBill()">Pay Online <span data-feather="arrow-right-circle"></span></button>
                 </div>
             </div>
-
             <div class="form-row">
                 <div class="col-md-12">
                     <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav ui-grid-selection
                          class="myGrid" style="height:400px"></div>
                     <div class="nodatatxt" style="margin-top:20px" data-ng-if="gridOptions.data.length==0">No data found</div>
                 </div>
-            </div>            
-            <div><br />
-                <table class="table table-sm table-striped table-bordered table-condensed" style="width:100%;padding:0px">
+            </div>
+            <div>
+                <br />
+                <table ng-if="MaterialInventoryList.length>0" class="table table-sm table-striped table-bordered table-condensed" style="width:100%;padding:0px">
                     <tr>
                         <td class="text-right notpadding">
                             <table class="table table-sm table-striped table-bordered table-condensed">
@@ -86,7 +99,7 @@
                             </table>
                         </td>
                     </tr>
-                    <tr ng-show="searchMaterialId > 0">
+                    <tr>
                         <td class="text-right">Quantity In Hand</td>
                         <td class="text-right"><label>{{QuantityInHand}}</label></td>
                     </tr>

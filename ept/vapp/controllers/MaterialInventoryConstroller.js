@@ -123,9 +123,10 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                                 
                 switch (newRowCol.col.field) {
                     case "DisplayName":                       
-                        var tempMateriallist = GlobalVariableService.getMaterialList();
-                        $scope.currentMaterialLst = $filter('filter')(tempMateriallist, { ItemCategoryId: $scope.ItemCategoryId }, true);
-                        $scope.gridOptions.columnDefs[1].editDropdownOptionsArray = $scope.currentMaterialLst;
+                       // var tempMateriallist = GlobalVariableService.getMaterialList();
+                       // $scope.currentMaterialLst = $filter('filter')(tempMateriallist, { ItemCategoryId: $scope.ItemCategoryId }, true);
+                       
+                        $scope.gridOptions.columnDefs[1].editDropdownOptionsArray = $scope.MaterialLists//;$scope.currentMaterialLst;
                             break;                    
                     case "SupplierId":
                         $scope.gridOptions.columnDefs[6].editDropdownOptionsArray = $scope.SupplierCustomers;
@@ -164,8 +165,8 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
                             rowEntity.Quantity = rowEntity.Quantity == null ? 0 : rowEntity.Quantity;
                             break;
                         case "DisplayName":
-                            rowEntity.MaterialId = $filter('filter')($scope.currentMaterialLst, { DisplayName: rowEntity.DisplayName }, true)[0].MaterialId;
-                            rowEntity.MaterialCategoryId = $filter('filter')($scope.currentMaterialLst, { DisplayName: rowEntity.DisplayName }, true)[0].ItemCategoryId;
+                            rowEntity.MaterialId = $filter('filter')($scope.MaterialLists, { DisplayName: rowEntity.DisplayName }, true)[0].MaterialId;
+                            rowEntity.MaterialCategoryId = $filter('filter')($scope.MaterialLists, { DisplayName: rowEntity.DisplayName }, true)[0].ItemCategoryId;
                             break;
                         case "GodownId":
                             rowEntity.StoreGodownId = $filter('filter')($scope.GodownData, { GodownName: rowEntity.GodownName }, true)[0].GodownId;
@@ -203,8 +204,13 @@ ETradersApp.controller("MaterialInventoryController", ['$scope', '$filter', '$q'
         };
 
         $scope.GetMaterialsByCategoryId = function () {
+            $scope.showSpinner();
+            CommonService.getMaterials($scope.ItemCategoryId).then(res => {
+                $scope.MaterialLists = res;
+            }).catch(error => { throw error; });
+            $scope.hideSpinner();
 
-            $scope.MaterialLists = $filter('filter')($scope.MaterialsData, { ItemCategoryId: $scope.ItemCategoryId }, true);
+            //$scope.MaterialLists = $filter('filter')($scope.MaterialsData, { ItemCategoryId: $scope.ItemCategoryId }, true);
 
         };
         $scope.GetGodowns = function () {

@@ -1,6 +1,6 @@
 ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$window', 'GlobalVariableService', '$scope', '$filter', '$http', '$location', '$routeParams', '$timeout',
-    'toaster', 'CommonService', function (Config, $window, GlobalVariableService, $scope, $filter, $http, $location, $routeParams,
-        $timeout, toaster, CommonService) {
+    'toaster', 'CommonService', 'uiGridConstants', 'uiGridValidateService', function (Config, $window, GlobalVariableService, $scope, $filter, $http, $location, $routeParams,
+        $timeout, toaster, CommonService, uiGridConstants, uiGridValidateService) {
         $scope.ShowSpinnerStatus = false;
 
         $scope.showSpinner = function () {
@@ -86,7 +86,7 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
                     name: 'Action', width: 120, enableFiltering: false, displayName: 'Action', cellTemplate: '<div class="ui-grid-cell-contents">'
                         + '<a id="btnView" type="button" title="delete" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#" ng-click="grid.appScope.Update(row,0)" ><span data-feather="trash-2"></span> </a>'
                         //+ '</div><script>feather.replace()</script>'
-                        + '&nbsp;&nbsp;<a id="btnEdit" type="button" title="save" ng-show="grid.appScope.DataEdited==true" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#" ng-click="grid.appScope.Update(row,1)" ><span data-feather="save"></span> </a>'
+                        + '&nbsp;&nbsp;<a id="btnEdit" type="button" title="save" ng-show="grid.appScope.DataEdited==true" style="line-height: 0.5;" class="btn btn-primary btn-xs" href="#" ng-click="grid.appScope.Update(row,1,$event)" ><span data-feather="save"></span> </a>'
                         + '</div><script>feather.replace()</script>'
                 },
                 {
@@ -200,10 +200,10 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
             PrintService.GetWholeSaleByID($scope.ID);
         }
 
-        $scope.GetDataForDashboard = function (isFormValid) {
-            $scope.submitted =!isFormValid;
-            if (isFormValid)
-                return;
+        $scope.GetDataForDashboard = function () {
+            //$scope.submitted =!isFormValid;
+            //if (isFormValid)
+            //    return;
 
             $scope.MaterialInventoryList = [];
             var lstBill = {
@@ -229,34 +229,33 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
                 //limitTo: "20",
                 orderBy: "InventoryId desc"
             };
-
+            var strFilter = '';
+            var strFilterForSales = '';
             if ($scope.searchSupplierRetailer > 0) {
-                if (lstBill.filter == undefined)
-                    lstBill.filter = "SupplierId eq " + $scope.searchSupplierRetailer;
-                else
-                    lstBill.filter = lstBill.filter + " and SupplierId eq " + $scope.searchSupplierRetailer;
-
+                strFilter = " and SupplierId eq " + $scope.searchSupplierRetailer;
+                strFilterForSales = " and Bill/SupplierId eq " + $scope.searchSupplierRetailer;
             }
             if ($scope.searchItemCategoryId > 0) {
-                if (lstBill.filter == undefined)
-                    lstBill.filter = "Material/ItemCategoryId eq " + $scope.searchItemCategoryId;
-                else
-                    lstBill.filter = lstBill.filter + " and Material/ItemCategoryId eq " + $scope.searchItemCategoryId;
-
+                
+                strFilter += " and Material/ItemCategoryId eq " + $scope.searchItemCategoryId;
+                strFilterForSales += " and ItemCategoryId eq " + $scope.searchItemCategoryId;
             }
 
-            if ($scope.searchMaterialId != undefined && $scope.searchMaterialId != "") {
-                if (lstBill.filter == undefined)
-                    lstBill.filter = "MaterialId eq " + $scope.searchMaterialId;
-                else
-                    lstBill.filter = lstBill.filter + " and MaterialId eq " + $scope.searchMaterialId;
+            if ($scope.searchMaterialId != undefined && $scope.searchMaterialId !== "") {
+                strFilter += " and MaterialId eq " + $scope.searchMaterialId;
+                strFilterForSales += " and MaterialId eq " + $scope.searchMaterialId;
             }
-            if ($scope.searchGodownId != undefined && $scope.searchGodownId != "") {
-                if (lstBill.filter == undefined)
-                    lstBill.filter = "GodownId eq " + $scope.searchGodownId;
-                else
-                    lstBill.filter = lstBill.filter + " and GodownId eq " + $scope.searchGodownId;
+            if ($scope.searchGodownId != undefined && $scope.searchGodownId !== "") {
+                
+                strFilter += " and GodownId eq " + $scope.searchGodownId;
+                strFilterForSales += strFilter;// " and GodownId eq " + $scope.searchGodownId;
             }
+
+            if (strFilter.length === 0) {
+                toaster.pop('warning', "", "Please select atleast one search option.", 7000, 'trustedHtml');
+                return;
+            }
+            lstBill.filter += strFilter;
 
             //$scope.showSpinner();
             $scope.QuantityInHand = 0;
@@ -271,25 +270,28 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
 
                     //if ($scope.searchMaterialId > 0) {
 
-                        $scope.GetMaterialSoldCount(function () {
+                    $scope.GetMaterialSoldCount(strFilterForSales,function () {
 
-                            angular.forEach($scope.ReportArray, function (value, key) {
+                        angular.forEach($scope.ReportArray, function (value, key) {
 
-                                switch (value.TypeForQIH) {
-                                    case "minus":
-                                        $scope.QuantityInHand = parseFloat($scope.TotalQuantity) - (parseFloat($scope.MaterialSoldCount) + parseFloat(value.Total));
-                                        break;
-                                    case "plus":
-                                        $scope.QuantityInHand = (parseFloat($scope.TotalQuantity) + parseFloat(value.Total)) - parseFloat($scope.MaterialSoldCount);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            })
-                        });
-                        //$scope.QuantityInHand = parseFloat($scope.TotalQuantity) - (parseFloat($scope.MaterialSoldCount) + parseFloat(returnToSupplier));
+                            switch (value.TypeForQIH) {
+                                case "minus":
+                                    $scope.QuantityInHand = parseFloat($scope.TotalQuantity) - (parseFloat($scope.MaterialSoldCount) + parseFloat(value.Total));
+                                    break;
+                                case "plus":
+                                    $scope.QuantityInHand = (parseFloat($scope.TotalQuantity) + parseFloat(value.Total)) - parseFloat($scope.MaterialSoldCount);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        })
+                    });
+                    //$scope.QuantityInHand = $scope.QuantityInHand < 0 ? 0 : $scope.QuantityInHand;
                     //}
                 }
+                else
+                    $scope.MaterialInventoryList = [];
+              
                 $scope.gridOptions.data = $scope.MaterialInventoryList;
                 //  $scope.hideSpinner();
             });
@@ -319,22 +321,22 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
             });
         };
 
-        $scope.GetMaterialSoldCount = function (callback) {
+        $scope.GetMaterialSoldCount = function (strFilter,callback) {
             var lstBill = {
                 title: "Sales",
                 fields: ["Quantity,MaterialId"],
-                //lookupFields: ["Bills","Status"],
+                lookupFields: ["Bill"],
                 filter: ["StatusId eq 1"] //,
                 //limitTo: "5000",
                 //orderBy: "CreatedOn desc"
             };
 
-            if ($scope.searchMaterialId != undefined && $scope.searchMaterialId != "") {
-                if (lstBill.filter == undefined)
-                    lstBill.filter = "MaterialId eq " + $scope.searchMaterialId;
-                else
-                    lstBill.filter = lstBill.filter + " and MaterialId eq " + $scope.searchMaterialId;
-            }
+            //if ($scope.searchMaterialId != undefined && $scope.searchMaterialId != "") {
+            //    if (lstBill.filter == undefined)
+            //        lstBill.filter = "MaterialId eq " + $scope.searchMaterialId;
+            //    else
+                    lstBill.filter += strFilter;// lstBill.filter + " and MaterialId eq " + $scope.searchMaterialId;
+            //}
 
             $scope.MaterialSoldCount = 0;
             CommonService.GetListItems(lstBill).then(function (response) {
@@ -343,12 +345,10 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
                     $scope.MaterialSoldlist = response.data.d.results;
                     angular.forEach($scope.MaterialSoldlist, function (val) {
                         $scope.MaterialSoldCount += parseFloat(val.Quantity);
-                    })
-                    //$scope.WholeSale[0].Bill.Contact = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.WholeSale[0].Bill.RetailerId }, true)[0].Contact;
-                    //$scope.WholeSale[0].Bill.Name = $filter('filter')($scope.SupplierRetailers, { SupplierRetailerId: $scope.WholeSale[0].Bill.RetailerId }, true)[0].Name;
-                    if (callback)
-                        callback();
+                    })                    
                 }
+                if (callback)
+                    callback();
             });
         };
         $scope.GetOnlinePaymentDetails = function (paidToEmail) {
@@ -375,17 +375,19 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
             $scope.searchItemCategoryId = null;
             $scope.searchSupplierRetailer = null
             $scope.searchMaterialId = null;
-            $scope.searchGodownId = 0;
+            $scope.searchGodownId = null;
             $scope.gridOptions.data = [];
             $scope.SearchButtonClicked = false;
         }
         $scope.Delete = function (row) {
+            
             var index = $scope.gridOptions.data.indexOf(row.entity);
             $scope.DeletedRows.push(row.entity);
             $scope.gridOptions.data.splice(index, 1);
         };
 
-        $scope.Update = function (row, mode) {
+        $scope.Update = function (row, mode, event) {
+            event.stopPropagation();
             var InventoryId = row.entity.InventoryId;
             var postData = [];
             var active = 1;
@@ -497,8 +499,13 @@ ETradersApp.controller("MaterialInventoryDashboardController", ['Config', '$wind
             });
         };
         $scope.GetMaterialsByCategoryId = function () {
+            $scope.showSpinner();
+            CommonService.getMaterials($scope.searchItemCategoryId).then(res => {
+                $scope.MaterialLists = res;
+            }).catch(error => { throw error; });
+            $scope.hideSpinner();
             // $scope.showSpinner();
-            $scope.subMaterialLists = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.searchItemCategoryId }, true);
+           // $scope.subMaterialLists = $filter('filter')(GlobalVariableService.getMaterialList(), { ItemCategoryId: $scope.searchItemCategoryId }, true);
             // $scope.hideSpinner();
         };
         $scope.GetGodown = function () {

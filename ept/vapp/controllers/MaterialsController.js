@@ -214,37 +214,49 @@ ETradersApp.controller("MaterialsController", ['GlobalVariableService', '$scope'
         };
         $scope.GetDataForDashboard = function () {
             $scope.WholeSaleList = [];
+
             var lstMaterial = {
                 title: "Materials",
                 fields: ["*", "ItemCategory/ItemCategoryName", "Unit/UnitName"],
                 lookupFields: ["ItemCategory", "Unit"],
                 filter: ["1 eq 1"],
-                limitTo: 20,
+                //limitTo: 20,
                 orderBy: "CreatedOn desc"
             };
+            var strfilter = '';
             if ($scope.searchDisplayName !== '') {
-                lstMaterial.filter = lstMaterial.filter + " and indexof(DisplayName,'" + $scope.searchDisplayName + "') gt -1";
+                strfilter = " and indexof(DisplayName,'" + $scope.searchDisplayName + "') gt -1";
+                //lstMaterial.filter = lstMaterial.filter + 
             }
             if ($scope.searchDescription !== '') {
-                lstMaterial.filter = lstMaterial.filter + " and indexof(Description,'" + $scope.searchDescription + "') gt -1";
+                strfilter += " and indexof(Description,'" + $scope.searchDescription + "') gt -1";
             }
             if ($scope.searchCategory > 0) {
-                lstMaterial.filter = lstMaterial.filter + " and ItemCategoryId eq " + $scope.searchCategory;
+                strfilter += " and ItemCategoryId eq " + $scope.searchCategory;
+
             }
 
-            $scope.showSpinner();
-            CommonService.GetListItems(lstMaterial).then(function (response) {
-                if (response && response.data.d.results.length > 0) {
-                    $scope.MaterialList = response.data.d.results;
+            if (strfilter.length === 0) {
+                toaster.pop('warning', "", "Please enter atleast one search option", 5000, 'trustedHtml');
+                return;
+            }
+            else {
 
-                }
-                else {
-                    $scope.MaterialList = [];
+                lstMaterial.filter += strfilter;
+                $scope.showSpinner();
+                CommonService.GetListItems(lstMaterial).then(function (response) {
+                    if (response && response.data.d.results.length > 0) {
+                        $scope.MaterialList = response.data.d.results;
 
-                }
-                $scope.gridOptions.data = $scope.MaterialList;
-                $scope.hideSpinner();
-            });
+                    }
+                    else {
+                        $scope.MaterialList = [];
+
+                    }
+                    $scope.gridOptions.data = $scope.MaterialList;
+                    $scope.hideSpinner();
+                });
+            }
         };
         $scope.GetMaterialsList = function () {
             var lstBill = {

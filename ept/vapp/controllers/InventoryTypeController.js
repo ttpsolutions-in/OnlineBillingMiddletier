@@ -31,7 +31,7 @@
         paginationPageSize: 25,
         columnDefs: [
 
-            { width: 350, displayName: 'InventoryType', field: 'InventoryTypeName', cellTooltip: true, enableCellEdit: false, cellClass: 'text-right', headerCellClass: 'text-center' },
+            { width: 350, displayName: 'InventoryType', field: 'InventoryTypeName', cellTooltip: true, enableCellEdit: false, headerCellClass: 'text-center' },
             { width: 350, displayName: 'Type for QIH', field: 'TypeForQIH', cellTooltip: true, enableCellEdit: false, cellClass: 'text-center', headerCellClass: 'text-center' },
              { width: 150, displayName: 'Active', field: 'Active', enableFiltering: false, enableCellEdit: false, cellTooltip: true, cellClass: 'text-center', headerCellClass: 'text-center' },
             {
